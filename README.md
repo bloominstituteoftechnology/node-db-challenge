@@ -43,7 +43,7 @@ spirit of the _Getting Things Done (GTD)_ methodology.
   * a flag that indicates if the project is complete or not.
 * An action belongs to only one project and can be assigned to different contexts. An action has:
   * a unique id.
-  * an description of what needs to be done.
+  * a description of what needs to be done.
   * a notes column to add additional information.
   * a flag that indicates if the action has been completed.
 * A context can appear in multiple actions or projects. A context has:
