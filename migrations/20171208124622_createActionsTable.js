@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
 
         tbl.text('description').notNullable();
         tbl.text('notes');
-        tbl.boolean('completedAction');
+        tbl.boolean('completedAction').defaultTo('false');
     });
 };
 
