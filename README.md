@@ -68,7 +68,7 @@ relationships as you see fit.
 {
   id: 1,
   name: 'project name here',
-  desctiption: 'the project description',
+  description: 'the project description',
   completed: false, // or true
   actions: [
     {
