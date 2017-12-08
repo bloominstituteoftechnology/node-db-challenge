@@ -20,6 +20,9 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
    on another table.
 1. What do we need in order to have a _many to many_ relationship between two
    tables.
+1. What SQL statement is used to retrieve data from a table?
+1. What SQL clause is used to filter the results of a query?
+1. What are `views`? .Provide one example of use case for them.
 
 ## Project description
 
