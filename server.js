@@ -1,17 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-/* CUSTOMIZE ACCORDINGLY */
-// const postsEndpoints = require('./posts/postsEndpoints.js');
-// const tagsEndpoints = require('./tags/tagsEndpoints.js');
-// const usersEndpoints = require('./users/usersEndpoints.js');
+const sqlite = require('sqlite3');
+const knex = require('./db.js');
 
 const server = express();
+
 server.use(bodyParser.json());
 
-/* CUSTOMIZE ACCORDINGLY */
-// server.use('/api/posts', postsEndpoints);
-// server.use('/api/tags', tagsEndpoints);
-// server.use('/api/users', usersEndpoints);
+server.post('/projects', function(req, res) {
+    const { project } = req.body;
+    knex
+        .insert(project)
+        .into('projects')
+        .then(function(ids) {
+            res.status(200).json(ids);
+        })
+        .catch(function(err) {
+            res.status(500).json({ error: 'Could not create projects' });
+        });
+});
 
-server.listen(3000, () => console.log('running on port 3000'));
+// server.get('/projects', function(req, res) {
+//     knex('projects')
+//         .then((post) => {
+
+//         })
+// })
+
+const port = 3000;
+server.listen(port, function () {
+    console.log(`Server Listening on ${port}`);
+});
