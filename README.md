@@ -22,7 +22,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
    tables.
 1. What SQL statement is used to retrieve data from a table?
 1. What SQL clause is used to filter the results of a query?
-1. What are `views`? .Provide one example use case for them.
+1. What are `views`? Provide one example use case for them.
 
 ## Project description
 
