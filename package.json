@@ -1,0 +1,19 @@
+{
+  "name": "SprintChallengeRDBMS",
+  "version": "1.0.0",
+  "description": "This is the Full Stack Sprint for SQL and RDBMS",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": "https://github.com/CosmonautJones/Sprint-Challenge-RDBMS.git",
+  "author": "CosmonautJones",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0",
+    "sqlite3": "^3.1.13"
+  }
+}
