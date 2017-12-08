@@ -8,7 +8,10 @@ exports.up = function(knex, Promise) {
 			.inTable('projects');
 		tbl.string('description', 128).notNullable();
 		tbl.text('notes').notNullable();
-		tbl.boolean('completed').notNullable().defaultTo(false);
+		tbl
+			.boolean('completed')
+			.notNullable()
+			.defaultTo(false);
 	});
 };
 
