@@ -25,6 +25,9 @@ server.post('/projects',(req, res) => {
 });
 server.get('/projects', (req, res) => {
   db('projects')
+    .join('actions', 'projects.action_id', '=', 'actions.action_id')
+    .join('contexts', 'projects.context_id', '=', 'contexts.context_id')
+    .select('projects.*', 'actions.project_action', 'actions.description', 'actions.completed', 'contexts.context')
     .then((post) => {
       res.status(STATUS_OK).json(post);
     })
