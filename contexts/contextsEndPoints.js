@@ -1,6 +1,6 @@
 const express = require('express');
 
-const repository = require('./contentsRepository');
+const repository = require('./contextsRepository.js');
 const statusCodes = require('../common/statusCodes.js');
 const contextsRouter = express.Router();
 
@@ -11,17 +11,19 @@ contextsRouter.get('/' , (req, res) => {
   });
 });
 contextsRouter.get('/:id' , (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   repository.get(id)
-  .then((context) => {
-    if (context.error) return res.status(statusCodes.userError).json(context.error);
-    return res.json(context);
+  .then((contexts) => {
+    if (contexts.error) return res.status(statusCodes.userError).json(contexts.error);
+    return res.json(contexts[0]);
   });
 });
 contextsRouter.post('/', (req, res) => {
-  repository.post(req.body)
+  const { context } = req.body;
+  repository.post(context)
   .then(context => {
     if (context.error) return res.status(statusCodes.userError).json(context.error);
     res.status(statusCodes.created).json(context)
   });
 });
+module.exports = contextsRouter;

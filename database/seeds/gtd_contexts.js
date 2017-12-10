@@ -8,20 +8,20 @@ exports.seed = function(knex, Promise) {
         { context: 'home' },
         { context: 'at computer' },
         { context: 'office' },
-        { content: 'shire' }, // 1
-        { content: 'fellowship of the ring' }, // 2
-        { content: 'frodo' }, // 3
-        { content: 'rivendell' }, // 4
-        { content: 'bree' }, // 5
-        { content: 'sam' }, // 6
-        { content: 'merry' }, // 7
-        { content: 'gimli' }, // 8
-        { content: 'gandalf' }, // 9
-        { content: 'aragorn' }, // 10
-        { content: 'moria' }, // 11
-        { content: 'boromir' }, // 12
-        { content: 'legolas' }, // 13
-        { content: 'prancing pony' } // 14
+        { context: 'shire' }, // 1
+        { context: 'fellowship of the ring' }, // 2
+        { context: 'frodo' }, // 3
+        { context: 'rivendell' }, // 4
+        { context: 'bree' }, // 5
+        { context: 'sam' }, // 6
+        { context: 'merry' }, // 7
+        { context: 'gimli' }, // 8
+        { context: 'gandalf' }, // 9
+        { context: 'aragorn' }, // 10
+        { context: 'moria' }, // 11
+        { context: 'boromir' }, // 12
+        { context: 'legolas' }, // 13
+        { context: 'prancing pony' } // 14
       ]);
     });
 };

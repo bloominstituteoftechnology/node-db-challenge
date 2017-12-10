@@ -1,3 +1,4 @@
+
 const db = require('../configuration/db.js');
 
 module.exports = {
@@ -8,50 +9,86 @@ module.exports = {
     }
     return query.then();
   },
-  getFull: id => {
+  getFull: function(id) {
     if (!id) {
       return { error: new Error('id is required') };
     }
-    query
-      .join('Actions as a', 'p.id', 'ac.projectId')
-      .select('p.* as project', 'a.* as actions')
-      .where('p.id', id)
-      .groupBy('project');
-    const promises = [query, this.getProjectContexts(id)]; // [ posts, tags ]
+    let pquery = db('Projects as p').where('p.id', id);
+    let aquery = db('Actions as a').where('a.projectId', id);
+    const promises = [pquery, aquery, this.getProjectsContexts(id)]; // [ project, actions, contexts ]
     return Promise.all(promises).then(results => {
-      let [projectsPlusActions, projectContexts] = results;
-      let projectPlusActions = projectsPlusActions[0];
-      const actionContexts = this.getActionContexts(
-        projectPlusActions.actions.map(q => q.actions.id)
-      );
-      const distinctContexts = new Set(projectContexts);
-      actionContexts.forEach(ac => {
-        distinctContexts.add(ac);
+      const [projects, actions, projectContexts] = results;
+      const project = projects[0];
+      const distinctContexts = new Set(projectContexts.map(pc => pc.id));
+      const actionsContexts = this.getActionsContexts(actions.map(a => a.id));
+      return actionsContexts.then(contexts => {
+        contexts.forEach(c => {
+          distinctContexts.add(c.id);
+        });
+        return this.getContexts(Array.from(distinctContexts)).then(
+          distinctContextsObject => {
+            project.contexts = distinctContextsObject;
+            project.actions = actions;
+            return project;
+          }
+        );
       });
-      projectPlusActions.contexts = distinctContexts.values;
-      return projectPlusActions;
     });
   },
-  getProjectContexts: id => {
-    return db('Contexts cx')
-      .join('ProjectsContexts as pc, pc.contextId, cx.id')
-      .select('distinct cx.context as pcontext')
-      .where('pc.projectId', id)
+  getContexts: ids => {
+    return db('Contexts as cx').whereIn('cx.id', ids).then();
+  },
+  getProjectsContexts: projectId => {
+    return db('Contexts as cx')
+      .join('ProjectsContexts as pc', 'cx.id', 'pc.contextId')
+      .select('cx.id')
+      .where('pc.projectId', projectId)
       .then();
   },
-  getActionContexts: ids => {
-    return db('Contexts cx')
+  getActionsContexts: actionIds => {
+    return db('Contexts as cx')
       .join('ActionsContexts as ac', 'ac.contextId', 'cx.id')
-      .select('distinct cx.context as acontext')
-      .whereIn('ac.actionId', ids)
+      .select('cx.id')
+      .whereIn('ac.actionId', actionIds)
       .then();
   },
-  post: (project) => {
+  post: project => {
     if (!project) return { error: new Error('project is required') };
-    return db('Projects').insert(project)
-          .then()
-          .catch((err) => {
-            return {error: new Error('insert error:' + err.message)}
-          });   
+    const { name, description, completed = false, contextIds } = project;
+    if (!name || !description)
+      return { error: new Error('name and description are required') };
+    return db('Projects')
+      .insert({ name, description, completed })
+      .then(newProductIds => {
+        if (contextIds) {
+          const projectId = newProductIds[0];
+          project.contextIds.forEach(contextId => {
+            db('ProjectsContexts')
+              .insert({ projectId, contextId })
+              .then()
+              .catch(err => {
+                return {
+                  error: new Error(
+                    'ProductsContexts insert failed:' + err.message
+                  )
+                };
+              });
+          });
+        }
+        return newProduct;
+      })
+      .catch(err => {
+        return { error: new Error('insert error:' + err.message) };
+      });
+  },
+  put: id => {
+    if (!id) {
+      return { error: new Error('id is required') };
+    }
+    let pquery = db('Projects').update('completed', true).where('id', id);
+    let aquery = db('Actions').update('completed', true).where('projectId', id);
+    return Promise.all([pquery, aquery]).then(results => {
+      return {completed: results}
+    });
   }
 };

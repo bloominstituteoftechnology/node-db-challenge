@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const projectsEndpoints = require('../projects/projectsEndPoints.js');
 const actionsEndpoints = require('../actions/actionsEndPoints.js');
-const contextsEndpoints = require('../contexts/contextEndPoints.js');
+const contextsEndpoints = require('../contexts/contextsEndPoints.js');
 
 const server = express();
 
