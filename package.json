@@ -1,0 +1,20 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/invegat/Sprint-Challenge-RDBMS.git",
+  "author": "invegat <mark.c.oliver@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server"
+  },  
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1"
+  }
+}
