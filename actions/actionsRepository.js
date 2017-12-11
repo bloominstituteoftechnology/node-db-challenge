@@ -51,12 +51,12 @@ module.exports = {
         return { error: new Error('insert error:' + err.message) };
       });
   },
-  put: id => {
+  put: (id, completed) => {
     if (!id) {
       return { error: new Error('id is required') };
     }
     return db('Actions')
-      .update('completed', true)
+      .update('completed', completed)
       .where('id', id)
       .then(count => {
         return { completed: count };

@@ -27,9 +27,16 @@ actionsRouter.post('/', (req, res) => {
 });
 actionsRouter.put('/:id', (req, res) => {
   const { id } = req.params;
-  repository.put(id)
-  .then(() => {
-    return res.json({completed: true});
+  repository.put(id, true)
+  .then((result) => {
+    return res.json(result);
+  });
+});
+actionsRouter.put('/:id/reset', (req, res) => {
+  const { id } = req.params;
+  repository.put(id, false)
+  .then((result) => {
+    return res.json(result);
   });
 });
 

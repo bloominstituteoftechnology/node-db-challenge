@@ -81,12 +81,12 @@ module.exports = {
         return { error: new Error('insert error:' + err.message) };
       });
   },
-  put: id => {
+  put: (id, completed) => {
     if (!id) {
       return { error: new Error('id is required') };
     }
-    let pquery = db('Projects').update('completed', true).where('id', id);
-    let aquery = db('Actions').update('completed', true).where('projectId', id);
+    let pquery = db('Projects').update('completed', completed).where('id', id);
+    let aquery = db('Actions').update('completed', completed).where('projectId', id);
     return Promise.all([pquery, aquery]).then(results => {
       return {completed: results}
     });
