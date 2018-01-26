@@ -34,31 +34,20 @@ server.get('/projects', (req,res) => {
         })
 })
 
-server.get('/projects/:id', (req,res) => {
+server.get('/projects/:id', async(req,res) => {
     const {id} = req.params;
-    knex.select('Projects.id',
-        'Projects.name',
-        'Projects.description',
-        'Projects.Completed',
-        'Actions.id',
-        'Actions.description',
-        'Actions.notes',
-        'Actions.completed',
-        'Contexts.id',
-        'Contexts.context',
-    )
-    .from('Projects')
-    .join('Project_Actions','Projects.id','Project_Actions.projectId')
-    .join('Actions','Project_Actions.actionId','Actions.id')
-    .join('Project_Contexts','Projects.id','Project_Contexts.projectId')
-    .join('Contexts','Project_Contexts.contextId','Contexts.id')
-    .where('Projects.id',id)
-        .then(post => {
-            res.status(201).json({post});
-        })
-        .catch(error => {
-            res.status(500).json({ errorMessage: 'Could not get the Post' });
-        })
+    try{
+        const project = await knex.select('*').from('Projects').where('id',id);
+        const actions = await knex.select('*').from('Project_Actions').where('projectId',id);
+        const contexts = await knex.select('*').from('Project_Contexts').where('projectId',id);
+        project.actions = actions;
+        project.contexts = contexts;
+        res.status(201).json({project});
+    }
+    catch(error){
+        res.status(500).json({ errorMessage: 'Could not get the project' });
+    }
+        
 })
 
 // actions
