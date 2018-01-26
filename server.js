@@ -9,15 +9,15 @@ server.use(bodyParser.json());
 server.get("/", function(req, res) {
   res.status(200).json({ success: true });
 });
-server.get("/api/users", function(req, res) {
+server.get("/api/projects", function(req, res) {
   const { id } = req.params;
-  knex("users").then(function(records) {
+  knex("projectss").then(function(records) {
     res.status(200).json(records);
   });
 });
-server.get("/api/users/:id", function(req, res) {
+server.get("/api/projects/:id", function(req, res) {
   const { id } = req.params;
-  knex("users")
+  knex("projects")
     .where("id", id)
     .then(function(records) {
       res.status(200).json(records);
@@ -26,11 +26,11 @@ server.get("/api/users/:id", function(req, res) {
       res.status(500).json({ error });
     });
 });
-server.post("/api/users", function(req, res) {
+server.post("/api/projects", function(req, res) {
   const users = req.body;
   knex
-    .insert(users)
-    .into("users")
+    .insert(projects)
+    .into("projects")
     .then(function(ids) {
       res.status(201).json({ ids });
     })

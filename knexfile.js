@@ -5,18 +5,18 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './database/RDBMS.sqlite3/'
-  },
-},
-
+      filename: './dev.sqlite3'
+      },
   migrations: {
-    tableName: 'knex_migrations',
+    tableName: 'knex_migrations'
   },
+  useNullAsDefault: true
+},
   production: {
-    client: 'Lambda',
+    client: 'mysql',
     connection: {
       host:'localhost',
-      database: 'my_db',
+      database: 'Lambda',
       user:     'Jax',
       password: 'password'
     },
@@ -28,4 +28,5 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
+
 };
