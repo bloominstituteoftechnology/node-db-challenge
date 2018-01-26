@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-        return createUsersTable(knex)
+        return createActionsTable(knex)
           .then(createProjectsTable)
           .then(createContextsTable)
           .then(createActionsTable)
@@ -28,7 +28,7 @@ exports.down = function(knex, Promise) {
           .catch(error => console.log(error));
       };
       
-      function createUsersTable(knex) {
+      function createActionsTable(knex) {
         console.log('creating actions table');
       
         return new Promise(function(resolve, reject) {
@@ -139,97 +139,97 @@ xports.up = function(knex) {
         return knex.schema.dropTableIfExists('tags');
       })
       .then(function() {
-        console.log('dropping posts');
-        return knex.schema.dropTableIfExists('posts');
+        console.log('dropping projects');
+        return knex.schema.dropTableIfExists('projects');
       })
       .then(function() {
-        console.log('dropping users');
-        return knex.schema.dropTableIfExists('users');
+        console.log('dropping actions');
+        return knex.schema.dropTableIfExists('actions');
       })
       .catch(error => console.log(error));
   };
   
-  function createUsersTable(knex) {
-    console.log('creating users table');
+  function createActionsTable(knex) {
+    console.log('creating actions table');
   
     return new Promise(function(resolve, reject) {
       knex.schema
-        .createTable('users', function(users) {
-          users.increments();
-          users.string('name', 128).notNullable();
-          users.timestamp('createdAt').defaultTo(knex.fn.now());
+        .createTable('actions', function(actions) {
+          actions.increments();
+          actions.string('name', 128).notNullable();
+          actions.timestamp('createdAt').defaultTo(knex.fn.now());
   
-          console.log('users table created');
+          console.log('actions table created');
           resolve(knex);
         })
         .catch(error => reject(error));
     });
   }
   
-  function createPostsTable(knex) {
-    console.log('creating posts table');
+  function createProjectsTable(knex) {
+    console.log('creating projects table');
   
     return new Promise(function(resolve, reject) {
       knex.schema
-        .createTable('posts', function(posts) {
-          posts.increments();
-          posts.text('text').notNullable();
-          posts
-            .integer('userId')
+        .createTable('projects', function(projects) {
+          projects.increments();
+          projects.text('text').notNullable();
+          projects
+            .integer('actionId')
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('users');
+            .inTable('actions');
           posts.timestamp('createdAt').defaultTo(knex.fn.now());
   
-          console.log('posts table created');
+          console.log('projects table created');
           resolve(knex);
         })
         .catch(error => reject(error));
     });
   }
   
-  function createTagsTable(knex) {
-    console.log('creating tags table');
+  function createContextsTable(knex) {
+    console.log('creating contexts table');
   
     return new Promise(function(resolve, reject) {
       knex.schema
-        .createTable('tags', function(tags) {
-          tags.increments();
-          tags
-            .string('tag', 80)
+        .createTable('contexts', function(contexts) {
+          contexts.increments();
+          contexts
+            .string('context', 80)
             .notNullable()
-            .unique('tag');
+            .unique('context');
           tags.timestamp('createdAt').defaultTo(knex.fn.now());
   
-          console.log('tags table created');
+          console.log('contexts table created');
           resolve(knex);
         })
         .catch(error => reject(error));
     });
   }
   
-  function createPostTagsTable(knex) {
-    console.log('creating posttags table');
+  function createPostProjectTable(knex) {
+    console.log('creating projectcontext table');
   
     return new Promise(function(resolve, reject) {
       knex.schema
-        .createTable('posttags', function(posttags) {
-          posttags.increments();
-          posttags
-            .integer('postId')
+        .createTable('projectcontexts', function(projectcontexts) {
+          projectcontexts.increments();
+          projectcontexts
+            .integer('projectId')
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('posts');
-          posttags
-            .integer('tagId')
+            .inTable('projects');
+          projectcontexts
+            .integer('contextId')
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('tags');
+            .inTable('contexts');
   
-          console.log('posttags table created');
+          console.log('projectcontext table created');
           resolve(knex);
         })
         .catch(error => console.log(error));
