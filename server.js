@@ -64,7 +64,7 @@ server.put('/projects/:id', (req, res) => {
 });
 
 server.delete('/projects/:id', function(req, res) {
-    const { id } = req.params.id;
+    const { id } = req.params;
 
     const project = knex('projects')
         .where('id', id)
@@ -133,7 +133,7 @@ server.put('/projects/:id', (req, res) => {
 });
 
 server.delete('/actions/:id', function(req, res) {
-    const { id } = req.params.id;
+    const { id } = req.params;
 
     const action = knex('actions')
         .where('id', id)
@@ -202,7 +202,7 @@ server.put('/context/:id', (req, res) => {
 });
 
 server.delete('/context/:id', function(req, res) {
-    const { id } = req.params.id;
+    const { id } = req.params;
 
     const context = knex('context')
         .where('id', id)
