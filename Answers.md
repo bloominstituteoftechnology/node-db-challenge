@@ -5,7 +5,7 @@
 # What is the name given to a table column that references the primary key on another table.
 * Foreign Key
 # What do we need in order to have a many to many relationship between two tables.
-* joins table
+* We need a mapping table. A _mapping table_  stores the relationship between two tables to establish and build a many to many relationship. 
 # What SQL statement is used to retrieve data from a table?
 * Select asterisk from
 # What SQL clause is used to filter the results of a query?
