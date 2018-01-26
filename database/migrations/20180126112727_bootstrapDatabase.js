@@ -11,8 +11,14 @@ exports.up = function (knex, Promise) {
       tbl.string('description').notNullable();
       tbl.text('notes');
       tbl.boolean('completed').defaultTo(false);
+      tbl
+        .integer('projectId')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('projects');
     }),
-    knex.schema.createTable('contexts', tbl => {
+    knex.schema.createTable('contextprojects', tbl => {
       tbl.increments('id');
       tbl.string('context').notNullable();
       tbl
@@ -21,6 +27,10 @@ exports.up = function (knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('projects');
+    }),
+    knex.schema.createTable('contextactions', tbl => {
+      tbl.increments('id');
+      tbl.string('context').notNullable();
       tbl
         .integer('actionId')
         .unsigned()
@@ -35,6 +45,8 @@ exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTableIfExists('projects'),
     knex.schema.dropTableIfExists('actions'),
-    knex.schema.dropTableIfExists('contexts')
+    knex.schema.dropTableIfExists('contextprojects'),
+    knex.schema.dropTableIfExists('contextactions'),
+    knex.schema.dropTableIfExists('context')
   ]);
 };
