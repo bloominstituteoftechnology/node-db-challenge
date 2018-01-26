@@ -30,11 +30,11 @@ function projectsTable(knex) {
       .createTable('projects', (projects) => {
         projects.increments();
         projects.string('name', 128).notNullable();
-        projects.text('text')
+        projects.text('text');
         projects.boolean('completed').defaultTo('false');
 
-      console.log('projects table created');
-      resolve(knex);
+        console.log('projects table created');
+        resolve(knex);
       })
       .catch(error => reject(error));
   });
@@ -75,3 +75,9 @@ function contextTable(knex) {
       })
   })
 }
+
+/*
+My understanding to join the contextTable with the other tables is that I need even more tables to join them.
+
+So one table that connects the context-projects tables and a context-actions table
+*/
