@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-RDBMS#readme",
   "dependencies": {
+    "eslint": "^4.16.0",
     "express": "^4.16.2",
     "knex": "^0.14.2",
     "sqlite3": "^3.1.13"
