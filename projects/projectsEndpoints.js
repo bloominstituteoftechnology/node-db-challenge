@@ -46,8 +46,9 @@ projectsRouter.delete('/:id', (req, res) => {
     });
 });
 
-projectsRouter.get('/', (req, res) => {
-  projects.get().then(projects => {
+projectsRouter.get('/:id', (req, res) => {
+  const { id } = req.params;
+  projects.get(id).then(projects => {
     res.status(200).json(projects);
   }).catch;
   res.status(500).json({ error });

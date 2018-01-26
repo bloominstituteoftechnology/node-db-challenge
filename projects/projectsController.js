@@ -9,5 +9,11 @@ module.exports = {
   },
   remove: id => {
     return db('projects').where('id', id).del();
+  },
+  get: projectId => {
+    return db('actions as a')
+      .join('projects as p, p.id, a.projectId')
+      .select('a.id, a.description, a.notes, a.completed, p.name')
+      .where('a.projectId', proejctId);
   }
 };
