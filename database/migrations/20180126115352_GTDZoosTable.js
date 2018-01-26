@@ -2,11 +2,24 @@ import { Promise } from "../../../../../../Library/Caches/typescript/2.6/node_mo
 
 
 exports.up = function(knex, Promise) {
-
+  return projectsTable(knex)
+    .then(actionsTable)
+    .then(contextTable)
+    .catch(error => reject(error));
 };
 
 exports.down = function(knex, Promise) {
-  
+  return knex.schema
+    .dropTableIfExists('context')
+    .then(() => {
+      console.log('dropping actions')
+      return knex.schema.dropTableIfExists('actions');
+    })
+    .then(() => {
+      console.log('dropping projects');
+      return knex.schema.dropTableIfExists('projects');
+    })
+    .catch(error => reject(error));
 };
 
 function projectsTable(knex) {
