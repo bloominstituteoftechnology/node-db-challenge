@@ -1,5 +1,5 @@
 exports.up = function (knex, Promise) {
-  return promise.all([
+  return Promise.all([
     knex.schema.createTable('projects', tbl => {
       tbl.increments('id');
       tbl.string('name').notNullable();
@@ -21,8 +21,12 @@ exports.up = function (knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('projects');
-      tbl.integer('actionId').unsigned().notNullable().references('id');
-      inTable('actions');
+      tbl
+        .integer('actionId')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('actions');
     })
   ]);
 };
