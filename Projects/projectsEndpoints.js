@@ -1,14 +1,14 @@
 const express = require('express');
 
-const posts = require('./postsController');
+const projects = require('./projectsController');
 
-const postsRouter = express.Router();
+const projectsRouter = express.Router();
 
-postsRouter.post('/', function(req, res) {
-  const post = req.body;
+projectsRouter.post('/', function(req, res) {
+  const project = req.body;
 
-  posts
-    .insert(post)
+  projects
+    .insert(project)
     .then(function(id) {
       res.status(201).json(id);
     })
@@ -17,21 +17,21 @@ postsRouter.post('/', function(req, res) {
     });
 });
 
-postsRouter.get('/', function(req, res) {
-  posts
+projectsRouter.get('/', function(req, res) {
+  projects
     .get()
-    .then(function(posts) {
-      res.status(200).json(posts);
+    .then(function(projects) {
+      res.status(200).json(projects);
     })
     .catch(function(error) {
       res.status(500).json({ error });
     });
 });
 
-postsRouter.get('/:id', function(req, res) {
+projectsRouter.get('/:id', function(req, res) {
   const { id } = req.params;
 
-  posts
+  projects
     .get(id)
     .then(function(post) {
       if (post) {
@@ -48,8 +48,8 @@ postsRouter.get('/:id', function(req, res) {
 postsRouter.get('/:id/tags', function(req, res) {
   const { id } = req.params;
 
-  posts
-    .getPostTags(id)
+  projects
+    .getProjectTags(id)
     .then(function(tags) {
       res.status(200).json(tags);
     })
@@ -58,10 +58,10 @@ postsRouter.get('/:id/tags', function(req, res) {
     });
 });
 
-postsRouter.put('/:id', function(req, res) {
+projectsRouter.put('/:id', function(req, res) {
   const { id } = req.params;
 
-  posts
+  projects
     .update(id, req.body)
     .then(function(count) {
       if (count > 0) {
@@ -75,10 +75,10 @@ postsRouter.put('/:id', function(req, res) {
     });
 });
 
-postsRouter.delete('/:id', function(req, res) {
+projectsRouter.delete('/:id', function(req, res) {
   const { id } = req.params;
 
-  posts
+  projects
     .remove(id)
     .then(function(count) {
       res.status(200).json({ count });
@@ -88,4 +88,4 @@ postsRouter.delete('/:id', function(req, res) {
     });
 });
 
-module.exports = postsRouter;
+module.exports = projectsRouter;

@@ -2,46 +2,46 @@ const db = require('../database/dbConfiguration.js');
 
 module.exports = {
   get: function(id) {
-    let query = db('posts as p');
+    let query = db('projects as p');
 
     if (id) {
       query
-        .join('users as u', 'p.userId', 'u.id')
-        .select('p.text', 'u.name as postedBy')
+        .join('actions as u', 'p.actionId', 'a.id')
+        .select('p.text', 'a.name as postedBy')
         .where('p.id', id);
 
-      const promises = [query, this.getPostTags(id)]; // [ posts, tags ]
+      const promises = [query, this.getProjectsTags(id)]; // [ projects, tags ]
 
       return Promise.all(promises).then(function(results) {
-        let [posts, tags] = results;
-        let post = posts[0];
+        let [projects, tags] = results;
+        let projects = projects[0];
         console.log(tags)
-        post.tags = tags.map(t => t.tag);
+        projects.tags = tags.map(t => t.tag);
 
-        return post;
+        return project;
       });
     }
 
     return query;
   },
-  getPostTags: function(postId) {
+  getProjectTags: function(projectId) {
     return db('tags as t')
-      .join('posttags as pt', 't.id', 'pt.tagId')
+      .join('projecttags as pt', 't.id', 'pt.tagId')
       .select('t.tag')
-      .where('pt.postId', postId);
+      .where('pt.projects', projectId);
   },
-  insert: function(post) {
-    return db('posts')
-      .insert(post)
+  insert: function(project) {
+    return db('projects')
+      .insert(project)
       .then(ids => ({ id: ids[0] }));
   },
-  update: function(id, post) {
-    return db('posts')
+  update: function(id, project) {
+    return db('projects')
       .where('id', id)
-      .update(post);
+      .update(project);
   },
   remove: function(id) {
-    return db('posts')
+    return db('projects')
       .where('id', id)
       .del();
   },
