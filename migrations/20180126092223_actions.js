@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
        .notNullable()
        .string('notes')
        .notNullable()
-       .boolean('completed')
+       .boolean('completed');
   }); 
 };
 
