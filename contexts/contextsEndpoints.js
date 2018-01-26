@@ -1,14 +1,14 @@
 const express = require('express');
 
-const actions = require('./actionsController');
+const contexts = require('./contextsController');
 
-const actionsRouter = express.Router();
+const contextsRouter = express.Router();
 
-actionsRouter.post('/', (req, res) => {
-  const action = req.body;
+contextsRouter.post('/', (req, res) => {
+  const context = req.body;
 
-  actions
-    .insert(action)
+  contexts
+    .insert(context)
     .then(id => {
       res.status(201).json(id);
     })
@@ -17,11 +17,11 @@ actionsRouter.post('/', (req, res) => {
     });
 });
 
-// Update project in the actions table
-actionsRouter.put('/:id', (req, res) => {
+// Update project in the contexts table
+contextsRouter.put('/:id', (req, res) => {
   const { id } = req.params;
 
-  actions
+  contexts
     .update(id, req.body)
     .then(project => {
       res.status(200).json({ success: true });
@@ -32,24 +32,24 @@ actionsRouter.put('/:id', (req, res) => {
 });
 
 // Delete project from projecs table based on id
-actionsRouter.delete('/:id', (req, res) => {
+contextsRouter.delete('/:id', (req, res) => {
   const { id } = req.params;
 
-  actions
+  contexts
     .remove(id)
     .then(() => {
-      res.status(200).json({ message: 'Action has been deleted' });
+      res.status(200).json({ message: 'context has been deleted' });
     })
     .catch(err => {
       res.status(500).json({ error });
     });
 });
 
-actionsRouter.get('/', (req, res) => {
-  actions.get().then(actions => {
-    res.status(200).json(actions);
+contextsRouter.get('/', (req, res) => {
+  contexts.get().then(contexts => {
+    res.status(200).json(contexts);
   }).catch;
   res.status(500).json({ error });
 });
 
-module.exports = actionsRouter;
+module.exports = contextsRouter;

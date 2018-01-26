@@ -46,4 +46,11 @@ projectsRouter.delete('/:id', (req, res) => {
     });
 });
 
+projectsRouter.get('/', (req, res) => {
+  projects.get().then(projects => {
+    res.status(200).json(projects);
+  }).catch;
+  res.status(500).json({ error });
+});
+
 module.exports = projectsRouter;
