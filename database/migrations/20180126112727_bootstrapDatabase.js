@@ -18,6 +18,10 @@ exports.up = function (knex, Promise) {
         .references('id')
         .inTable('projects');
     }),
+    knex.schema.createTable('contexts', tbl => {
+      tbl.increments('id');
+      tbl.string('context').notNullable();
+    }),
     knex.schema.createTable('contextprojects', tbl => {
       tbl.increments('id');
       tbl.string('context').notNullable();
@@ -47,6 +51,6 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTableIfExists('actions'),
     knex.schema.dropTableIfExists('contextprojects'),
     knex.schema.dropTableIfExists('contextactions'),
-    knex.schema.dropTableIfExists('context')
+    knex.schema.dropTableIfExists('contexts')
   ]);
 };
