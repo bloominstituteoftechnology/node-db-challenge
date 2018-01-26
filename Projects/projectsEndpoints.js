@@ -87,5 +87,30 @@ projectsRouter.delete('/:id', function(req, res) {
       res.status(500).json({ error });
     });
 });
+{
+  id: 1,
+  name: 'project name here',
+  desctiption: 'the project description',
+  completed: false, // or true
+  actions: [
+    {
+      id: 1,
+      description: 'action description',
+      notes: 'the action notes',
+      completed: false // or true
+    },
+    {
+      id: 7,
+      description: 'another action description',
+      notes: 'the action notes',
+      completed: false // or true
+    }
+  ],
+  contexts: [
+    { id: 1, context: 'the context' }
+    { id: 5, context: 'another context' }
+  ]
+}
+```
 
 module.exports = projectsRouter;

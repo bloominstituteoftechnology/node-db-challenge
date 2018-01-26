@@ -9,15 +9,15 @@ module.exports = {
     
     return query;
   },
-  insert: function(tag) {
+  insert: function(contexts) {
     return db('contexts')
-      .insert(tag)
+      .insert(context)
       .then(ids => ({ id: ids[0] }));
   },
-  update: function(id, tag) {
+  update: function(id, context) {
     return db('contexts')
       .where('id', id)
-      .update(tag);
+      .update(context);
   },
   remove: function(id) {
     return db('contexts')

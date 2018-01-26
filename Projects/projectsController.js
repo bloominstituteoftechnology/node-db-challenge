@@ -10,13 +10,13 @@ module.exports = {
         .select('p.text', 'a.name as postedBy')
         .where('p.id', id);
 
-      const promises = [query, this.getProjectsTags(id)]; // [ projects, tags ]
+      const promises = [query, this.getProjectsTags(id)]; // [ projects, contexts ]
 
       return Promise.all(promises).then(function(results) {
-        let [projects, tags] = results;
+        let [projects, contexts] = results;
         let projects = projects[0];
-        console.log(tags)
-        projects.tags = tags.map(t => t.tag);
+        console.log(contexts)
+        projects.contexts = contexts.map(t => t.context);
 
         return project;
       });
