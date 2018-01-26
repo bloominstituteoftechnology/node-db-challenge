@@ -4,8 +4,7 @@ exports.up = function (knex, Promise) {
         .then(createActionsTable)
         .then(createContextTable)
         .then(createProjectsActionsTable)
-        .then(createContextTable)
-        .then(createProjectsContextTable)
+        .then(createActionsContextTable)
         .catch(error => {
             console.log(error);
             reject(error);
@@ -15,6 +14,10 @@ exports.up = function (knex, Promise) {
 exports.down = function (knex, Promise) {
     return knex.schema
         .dropTableIfExists('projectscontext')
+        .then(function () {
+            console.log('dropping projectsactions');
+            return knex.schema.dropTableIfExists('projectsactions');
+        })
         .then(function () {
             console.log('dropping context');
             return knex.schema.dropTableIfExists('context');
@@ -27,7 +30,6 @@ exports.down = function (knex, Promise) {
             console.log('dropping projects');
             return knex.schema.dropTableIfExists('projects');
         })
-        .catch(error => console.log(error));
 };
 
 function createProjectsTable(knex) {
@@ -35,9 +37,10 @@ function createProjectsTable(knex) {
     return new Promise(function (resolve, reject) {
         knex.schema
             .createTable('projects', function (projects) {
-                projects.increments();
+                projects.increments().unique();
                 projects.string('name', 128).notNullable();
-                projects.timestamp('createdAt').defaultTo(knex.fn.now());
+                projects.text('description').notNullable;
+                projects.boolean('is_completed');
                 console.log('projects table created');
                 resolve(knex);
             })
@@ -50,15 +53,16 @@ function createActionsTable(knex) {
     return new Promise(function (resolve, reject) {
         knex.schema
             .createTable('actions', function (actions) {
-                actions.increments();
-                actions.text('text').notNullable();
+                actions.increments().unique();
+                actions.text('description').notNullable();
+                actions.text('notes').notNullable();
                 actions
                     .integer('projectId')
                     .unsigned()
                     .notNullable()
                     .references('id')
                     .inTable('actions');
-                actions.timestamp('createdAt').defaultTo(knex.fn.now());
+                actions.boolean('is_completed');
                 console.log('actions table created');
                 resolve(knex);
             })
@@ -71,9 +75,8 @@ function createContextTable(knex) {
     return new Promise(function (resolve, reject) {
         knex.schema
             .createTable('context', function (context) {
-                context.increments();
-                context.text('text').notNullable();
-                context.timestamp('createdAt').defaultTo(knex.fn.now());
+                context.increments().unique();
+                context.string('context').notNullable();
                 console.log('context table created');
                 resolve(knex);
             })
@@ -81,50 +84,52 @@ function createContextTable(knex) {
     });
 }
 
-
 function createProjectsActionsTable(knex) {
-    console.log('creating posts table');
+    console.log('creating projectsactions table');
 
     return new Promise(function (resolve, reject) {
         knex.schema
-            .createTable('posts', function (posts) {
-                posts.increments(); // id for posts
-                posts.text('text').notNullable();
-
-                posts // one user, many posts / fields of poststable must match userstable
-                    .integer('userId') // references userID in userstable
-                    .unsigned() // no negative signs for incremented userID, if not negative then can store much higher number in that space
+            .createTable('projectsactions', function (projectsactions) {
+                projectsactions.increments();
+                projectsactions
+                    .integer('projectsId')
+                    .unsigned()
                     .notNullable()
-                    .references('id') // the userID will ref the id in the users table, foreign key reference primary keys in another table
-                    .inTable('users');
-                posts.timestamp('createdAt').defaultTo(knex.fn.now());
-
-                console.log('posts table created');
+                    .references('id')
+                    .inTable('projects');
+                projectsactions
+                    .integer('actionsId')
+                    .unsigned()
+                    .notNullable()
+                    .references('id')
+                    .inTable('action');
+                console.log('projectsactions table created');
                 resolve(knex);
             })
             .catch(error => reject(error));
     });
 }
 
-
 function createActionsContextTable(knex) {
-    console.log('creating posts table');
+    console.log('creating actionscontext table');
 
     return new Promise(function (resolve, reject) {
         knex.schema
-            .createTable('posts', function (posts) {
-                posts.increments(); // id for posts
-                posts.text('text').notNullable();
-
-                posts // one user, many posts / fields of poststable must match userstable
-                    .integer('userId') // references userID in userstable
-                    .unsigned() // no negative signs for incremented userID, if not negative then can store much higher number in that space
+            .createTable('actionscontext', function (actionscontext) {
+                actionscontext.increments();
+                actionscontext
+                    .integer('actionsId')
+                    .unsigned()
                     .notNullable()
-                    .references('id') // the userID will ref the id in the users table, foreign key reference primary keys in another table
-                    .inTable('users');
-                posts.timestamp('createdAt').defaultTo(knex.fn.now());
-
-                console.log('posts table created');
+                    .references('id')
+                    .inTable('actions');
+                actionscontext
+                    .integer('contextId')
+                    .unsigned()
+                    .notNullable()
+                    .references('id')
+                    .inTable('context');
+                console.log('actionscontext table created');
                 resolve(knex);
             })
             .catch(error => reject(error));
