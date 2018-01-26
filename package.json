@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/LambdaSchool/Sprint-Challenge-RDBMS/issues"
   },
-  "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-RDBMS#readme"
+  "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "sqlite3": "^3.1.13"
+  }
 }
