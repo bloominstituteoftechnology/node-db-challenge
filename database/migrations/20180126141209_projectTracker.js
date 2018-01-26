@@ -51,6 +51,7 @@ const createActionsTable = knex => {
         t.increments();
         t.text('description').notNullable();
         t.text('notes');
+        t.boolean('completed').notNullable();
         t.integer('projectId')
           .unsigned()
           .notNullable()
