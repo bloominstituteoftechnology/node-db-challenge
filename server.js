@@ -1,18 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const postsEndpoints = require('./posts/postsEndpoints.js');
-const tagsEndpoints = require('./tags/tagsEndpoints.js');
-const usersEndpoints = require('./users/usersEndpoints.js');
+const projectsEndpoints = require('./posts/projectsEndpoints.js');
+const actionsEndpoints = require('./tags/actionsEndpoints.js');
+const contextEndpoints = require('./users/contextEndpoints.js');
 
 const server = express();
 
 server.use(bodyParser.json());
 
-// main api routers
-// anything with this particular api, handle with this endpoint
-server.use('/api/posts', postsEndpoints);
-server.use('/api/tags', tagsEndpoints);
-server.use('/api/users', usersEndpoints);
+server.use('/api/posts', projectsEndpoints);
+server.use('/api/tags', actionsEndpoints);
+server.use('/api/users', contextEndpoints);
 
 server.listen(3000, () => console.log('running on port 3000'));
