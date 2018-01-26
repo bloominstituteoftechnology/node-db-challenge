@@ -1,6 +1,7 @@
 
 exports.up = function (knex) {
   return createProjectsTable(knex)
+    .then(createProjectsTable)
     .then(createActionsTable)
     .then(createContextsTable)
     .then(createProjectsContextsTable)

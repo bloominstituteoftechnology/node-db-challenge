@@ -18,7 +18,7 @@ exports.seed = function (knex, Promise) {
         // Inserts seed entries
         const arr = [];
         for (let i = 0; i < 15; i++) {
-          arr.push({ description: faker.lorem.sentence(), description: faker.random.words(), notes: faker.lorem.sentence(), completed: Math.random() >= 0.5 })
+          arr.push({ description: faker.lorem.sentence(), notes: faker.lorem.sentence(), completed: Math.random() >= 0.5, projectId: faker.random.number({min:1, max:10}) })
         }
         return knex('actions').insert(arr);
       }),
@@ -38,7 +38,7 @@ exports.seed = function (knex, Promise) {
         // Inserts seed entries
         const arr = [];
         for (let i = 0; i < 15; i++) {
-          arr.push({ projectId: faker.random.number({min:1, max:15}), contextId: faker.random.number({min:1, max:15}) });
+          arr.push({ projectId: faker.random.number({min:1, max:10}), contextId: faker.random.number({min:1, max:10}) });
         }
         return knex('projectscontexts').insert(arr);
       }),
@@ -48,7 +48,7 @@ exports.seed = function (knex, Promise) {
         // Inserts seed entries
         const arr = [];
         for (let i = 0; i < 15; i++) {
-          arr.push({ actionId: faker.random.number({min:1, max:15}), contextId: faker.random.number({min:1, max:15}) });
+          arr.push({ actionId: faker.random.number({min:1, max:6}), contextId: faker.random.number({min:1, max:6}) });
         }
         return knex('actionscontexts').insert(arr);
       }),
