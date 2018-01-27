@@ -1,4 +1,3 @@
-
 exports.up = function(knex) {
     return createProjectsTable(knex)
         .then(createActionsTable)
@@ -40,16 +39,16 @@ exports.down = function(knex) {
 function createProjectsTable(knex) {
     console.log('creating projects table');
     return new Promise(function(resolve, reject) {
-        knex.schema.createTable('projects', function(projects)  {
-        projects.increments();
-        projects.string('name').notNullable();
-        projects.text('description').notNullable();
-        projects.boolean('completed').notNullable();
-       
-        console.log('projects table created');
-        resolve(knex);
-        }).catch(error => reject(error)); 
-    });
+        knex.schema.createTable('projects', function(projects) {
+            projects.increments();
+            projects.string('name').notNullable();
+            projects.text('description').notNullable();
+            projects.boolean('completed').notNullable();
+        
+            console.log('projects table created');
+            resolve(knex);
+            }).catch(error => reject(error)); 
+        });
 }       
 
 function createActionsTable(knex) {
