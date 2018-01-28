@@ -1,4 +1,8 @@
-// todo cascade on update and delete of data 
+// todo Build the API to perform CRUD operations on all the resources 
+//(projects, actions, contexts).
+// create a junction table projects-actions (with context id) and use it
+// to get the final endpoint (project/actions/contexts)
+// add a redirect to /api/projects if the user types in an invalide url route
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -76,5 +80,68 @@ server.delete('/api/projects/:id', (req,res)=> {
       res.status(500).json({error : 'problem getting the record'});
     })
   });
+
+  server.post('/api/actions', (req,res) => {
+      const action = req.body;
+      knex.insert(action)
+      .into('actions')
+      .then((action) => {
+          res.status(200).json(action);
+      })
+      .catch((error)=>{
+          res.status(500).json(error);
+      })
+  });
+
+  server.get('/api/actions', (req,res) => {
+      knex('actions')
+      .then((actions)=> {
+          res.status(200).json(actions);
+      })
+      .catch(()=> {
+          res.status(500).json({error:'error getting actions'});
+      })
+  });
+
+  server.put('/api/actions/:id', (req,res)=> {
+    const { id } = req.params;
+    const { notes } = req.body;
+    console.log(id , notes);
+    knex('actions')
+    .where('id', id)
+    .update('notes', notes)
+    .then((value)=> {
+      res.status(200).json(value);
+    })
+    .catch((error)=> {
+      res.status(500).json({error : 'problem updating the record'});
+    })
+  });
+
+  server.delete('/api/actions/:id', (req,res) => {
+      const { id } = req.params;
+      console.log(id);
+      knex('actions')
+      .where('id', id)
+      .del()
+     .then((action)=> {
+        res.status(200).json(action);
+      })
+      .catch(()=> {
+        res.status(500).json({error : 'problem getting the record'});
+      })
+
+  });
+
+  /*
+  knex('books')
+.where('published_date', '<', 2000)
+.update({
+  status: 'archived',
+  thisKeyIsSkipped: undefined
+})
+*/
+
+  
 
 server.listen(3000, function(){console.log('server running on port 3000')});
