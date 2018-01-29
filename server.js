@@ -3,6 +3,9 @@
 // create a junction table projects-actions (with context id) and use it
 // to get the final endpoint (project/actions/contexts)
 // add a redirect to /api/projects if the user types in an invalide url route
+// change the migrations file to use promises https://github.com/atiffany/Sprint-Challenge-RDBMS/blob/master/database/migrations/20180126082042_createProjectsTable.js
+// add auth (jwt) to all routes except a public one
+// refactor into controller and routes (like in the final solution video)
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -130,9 +133,62 @@ server.delete('/api/projects/:id', (req,res)=> {
       .catch(()=> {
         res.status(500).json({error : 'problem getting the record'});
       })
+    });
 
-  });
+    server.post('/api/contexts',(req,res)=> {
+      const context = req.body;
+      console.log(context);
+      knex.insert(context)
+      .into('contexts')
+      .then((context)=> {
+          res.status(200).json(context);
+      })
+      .catch(()=> {
+          res.status(500).json({error : 'problem in inserting action'});
+      })
+    });
 
+    server.get('/api/contexts',(req,res)=> {
+        knex('contexts')
+        .then((contexts) => {  
+            res.status(200).json(contexts);
+        })
+        .catch((error) => {
+            res.status(500).json({error:'there was a prob getting contests'});
+        })
+    });
+
+    server.put('/api/contexts/:id',(req,res)=>{
+        const { id } = req.params;
+        const { context } = req.body;
+        console.log(id,context);
+        knex('contexts')
+        .where('id',id)
+        .update('context',context)
+        .then((context)=>{
+            res.status(200).json(context);
+        })
+        .catch((error)=>{
+            res.json(500).json({error:'error update'});
+        })
+    });
+
+    server.delete('/api/contexts/:id', (req,res)=> {
+        const { id } = req.params;
+        console.log(id);
+        knex('contexts')
+        .where('id', id)
+        .del()
+        .then((delItem)=> {
+            res.status(200).json(delItem);
+        })
+        .catch((error)=>{
+            res.status(500).json({error:'prob deleting the item'});
+        })
+    });
+
+
+  
   /*
   knex('books')
 .where('published_date', '<', 2000)
