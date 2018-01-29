@@ -1,8 +1,6 @@
-// todo Build the API to perform CRUD operations on all the resources 
-//(projects, actions, contexts).
 // create a junction table projects-actions (with context id) and use it
 // to get the final endpoint (project/actions/contexts)
-// add a redirect to /api/projects if the user types in an invalide url route
+// add a redirect to /api/projects if the user types in an invalid url route
 // change the migrations file to use promises https://github.com/atiffany/Sprint-Challenge-RDBMS/blob/master/database/migrations/20180126082042_createProjectsTable.js
 // add auth (jwt) to all routes except a public one
 // refactor into controller and routes (like in the final solution video)
