@@ -10,8 +10,8 @@
 1. What do we need in order to have a _many to many_ relationship between two tables.
     * A third table that reference the two tables. 
 1. What SQL statement is used to retrieve data from a table?
-    * `select` and `from`
+    * `select`
 1. What SQL clause is used to filter the results of a query?
-    * `select` and `where`
+    * `where`
 1. What are `views`? Provide one example use case for them.
     * views are virtual tables. They can be used to view and join data in other tables. 
