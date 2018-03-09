@@ -9,7 +9,6 @@ const contextsEndpoint = require('./routes/contexts/contextsEndpoint');
 const projectactioncontextsEndpoint = require('./routes/projectactioncontexts/projectactioncontextsEndpoint');
 
 const projectactioncontexts = require('./routes/projectactioncontexts/projectactioncontextsController');
-const resp = require('./routes/helpers/send');
 
 const server = express();
 
