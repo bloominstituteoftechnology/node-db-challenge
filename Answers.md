@@ -9,7 +9,7 @@
     * The foreign key column references another tables primary key.
 
 4. What do we need in order to have a many to many relationship between two tables.
-    * You need to have two ‘parent’ instances that can contain many children. For example a movie stars many actors, and an actor can star in many films.
+    * You need to have two ‘parent’ instances that can contain many children. For example a movie stars many actors, and an actor can star in many films. **need a third table to combine or link the tables**
 
 5. What SQL statement is used to retrieve data from a table?
     * A ‘select’ clause is used for retrieval.
