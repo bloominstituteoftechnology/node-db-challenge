@@ -1,6 +1,6 @@
 const exporess = require('express');
 const knex = require('../database/db');
-const contexts = require('./contextControl');
+const contexts = require('../controls/contextControl');
 
 const contextRoute = express.Router();
 

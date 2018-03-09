@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('context').notNullable();
       table
-            .integer('projectId')
+            .integer('actionId')
             .unsigned()
             .notNullable()
             .references('id')

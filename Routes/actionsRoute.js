@@ -1,6 +1,6 @@
 const express = require('express');
 const knex = require('../database/db');
-const actions = require('./actionsController');
+const actions = require('../Controls/actionsController');
 
 const actionsRoute = express.Router();
 
