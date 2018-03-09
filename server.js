@@ -13,17 +13,6 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: 'From its slumber, the server rises!' });
 });
 
-// async function createProject(req, res) {
-//     const project = req.body;
-//     try {
-//         const addProject = await knex.insert(project).into('Projects');
-//         res.status(201).json({ addProject });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Project Could Not Be Added' })
-//     }
-// }
-
-// server.post('/projects', createProject);
 
 server.get('/projects', (req, res) => {
     knex.select().from('Projects')
