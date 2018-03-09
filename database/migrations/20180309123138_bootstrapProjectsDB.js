@@ -1,13 +1,15 @@
 exports.up = function(knex) {
-	return createProjectsTable(knex)
-		.then(createActionsTable)
-		.then(createContextsTable)
-		.then(createContextActionTable)
-		.then(createContextProjectTable)
-		.catch(error => {
-			console.log("bootstrap error", error);
-			reject(error);
-		});
+	return (
+		createProjectsTable(knex)
+			.then(createActionsTable)
+			.then(createContextsTable)
+			.then(createContextActionTable)
+			// .then(createContextProjectTable)
+			.catch(error => {
+				console.log("bootstrap error", error);
+				reject(error);
+			})
+	);
 };
 
 exports.down = function(knex) {
@@ -121,32 +123,32 @@ function createContextActionTable(knex) {
 	});
 }
 
-function createContextProjectTable(knex) {
-	console.log("creating contextProject table");
-
-	return new Promise(function(resolve, reject) {
-		knex.schema
-			.createTable("contextProject", cap => {
-				cap.increments();
-
-				cap
-					.integer("contextID")
-					.unsigned()
-					.notNullable()
-					.references("id")
-					.inTable("contexts");
-				cap
-					.integer("projectID")
-					.unsigned()
-					.notNullable()
-					.references("id")
-					.inTable("projects");
-
-				cap.timestamp("createdAt").defaultTo(knex.fn.now());
-
-				console.log("contextProject table created");
-				resolve(knex);
-			})
-			.catch(err => reject(err));
-	});
-}
+// function createContextProjectTable(knex) {
+// 	console.log("creating contextProject table");
+//
+// 	return new Promise(function(resolve, reject) {
+// 		knex.schema
+// 			.createTable("contextProject", cap => {
+// 				cap.increments();
+//
+// 				cap
+// 					.integer("contextID")
+// 					.unsigned()
+// 					.notNullable()
+// 					.references("id")
+// 					.inTable("contexts");
+// 				cap
+// 					.integer("projectID")
+// 					.unsigned()
+// 					.notNullable()
+// 					.references("id")
+// 					.inTable("projects");
+//
+// 				cap.timestamp("createdAt").defaultTo(knex.fn.now());
+//
+// 				console.log("contextProject table created");
+// 				resolve(knex);
+// 			})
+// 			.catch(err => reject(err));
+// 	});
+// }

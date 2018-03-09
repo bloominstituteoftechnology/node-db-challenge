@@ -31,19 +31,16 @@ exports.seed = function(knex, Promise) {
 					item: "Action 6",
 					notes: "Notes for Action 6.",
 					projectID: 3,
-					isComplete: true,
 				},
 				{
 					item: "Action 7",
 					notes: "Notes for Action 7.",
 					projectID: 4,
-					isComplete: true,
 				},
 				{
 					item: "Action 8",
 					notes: "Notes for Action 8.",
 					projectID: 4,
-					isComplete: true,
 				},
 				{
 					item: "Action 9",
@@ -55,19 +52,16 @@ exports.seed = function(knex, Promise) {
 					item: "Action 10",
 					notes: "Notes for Action 10.",
 					projectID: 5,
-					isComplete: true,
 				},
 				{
 					item: "Action 11",
 					notes: "Notes for Action 11.",
 					projectID: 3,
-					isComplete: true,
 				},
 				{
 					item: "Action 12",
 					notes: "Notes for Action 12.",
 					projectID: 6,
-					isComplete: true,
 				},
 				{
 					item: "Action 13",
