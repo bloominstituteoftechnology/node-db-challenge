@@ -1,7 +1,7 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('contexts', (ctx) => {
-        ctx.increments('context_id');
+        ctx.increments();
 
         ctx
             .string('context', 50)

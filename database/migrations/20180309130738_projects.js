@@ -1,7 +1,7 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('projects', (prj) => {
-        prj.increments(project_id);
+        prj.increments();
 
         prj
             .string('name', 180)
@@ -11,7 +11,7 @@ exports.up = function (knex, Promise) {
             .string('description', 256)
             .notNullable();
         prj
-            .boolean('project_complete')
+            .boolean('project_completed')
             .defaultTo(false);
     });
 };
