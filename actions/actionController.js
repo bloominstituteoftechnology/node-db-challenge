@@ -6,7 +6,7 @@ module.exports = {
       .insert(post)
       .then(ids => ({ id: ids[0] }));
   },
-  update: function(id, post) {
+  update: function(id, action) {
     return db('actions')
       .where('id', id)
       .update(action);

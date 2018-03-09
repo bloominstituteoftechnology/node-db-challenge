@@ -20,8 +20,8 @@ projectRouter.post('/', function(req, res) {
 projectRouter.get('/', function(req, res) {
   projects
     .get()
-    .then(function(users) {
-      res.status(200).json(users);
+    .then(function(projects) {
+      res.status(200).json(projects);
     })
     .catch(function(error) {
       res.status(500).json({ error });
@@ -33,9 +33,9 @@ projectRouter.get('/:id', function(req, res) {
 
   projects
     .get(id)
-    .then(function(user) {
-      if (user) {
-        res.status(200).json(user);
+    .then(function(project) {
+      if (project) {
+        res.status(200).json(project);
       } else {
         res.status(404).json(null);
       }
@@ -45,13 +45,13 @@ projectRouter.get('/:id', function(req, res) {
     });
 });
 
-projectRouter.get('/:id/posts', function(req, res) {
+projectRouter.get('/:id/actions', function(req, res) {
   const { id } = req.params;
 
   projects
     .getProjectActions(id)
-    .then(function(posts) {
-      res.status(200).json(posts);
+    .then(function(projects) {
+      res.status(200).json(projects);
     })
     .catch(function(error) {
       res.status(500).json({ error });

@@ -14,7 +14,7 @@ module.exports = {
       .insert(ctxt)
       .then(ids => ({ id: ids[0] }));
   },
-  update: function(id, tag) {
+  update: function(id, ctxt) {
     return db('context')
       .where('id', id)
       .update(ctxt);

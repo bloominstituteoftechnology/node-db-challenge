@@ -20,8 +20,8 @@ actionsRouter.post('/', function(req, res) {
 actionsRouter.get('/', function(req, res) {
   actions
     .get()
-    .then(function(posts) {
-      res.status(200).json(posts);
+    .then(function(actions) {
+      res.status(200).json(actions);
     })
     .catch(function(error) {
       res.status(500).json({ error });
