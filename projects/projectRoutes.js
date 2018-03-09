@@ -25,4 +25,29 @@ projectRouter.post("/", (req, res) => {
     });
 });
 
+projectRouter.put("/:id", (req, res) => {
+  const { id } = req.params;
+  projects
+    .update(id, req.body)
+    .then(success => {
+      res.status(200).json({ msg: `Project ${id} updated!` });
+    })
+    .catch(err => {
+      res.status(500).json({ err });
+    });
+});
+
+projectRouter.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  projects
+    .nuke(id)
+    .then(succ => {
+      res.status(200).json({ msg: "Project deleted." });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ err });
+    });
+});
+
 module.exports = projectRouter;
