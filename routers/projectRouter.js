@@ -29,7 +29,7 @@ projectRouter.get('/:id', (req, res) => {
 	const { id } = req.params;
 	projectDb.getById(id)
 		.then((project) => {
-			if (project.length > 0) {
+			if (project) {
 				res.status(200).json(project);
 			} else {
 				res.status(422).json({ error: 'project not found' });

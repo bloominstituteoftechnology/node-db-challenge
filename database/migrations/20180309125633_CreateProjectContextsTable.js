@@ -7,13 +7,13 @@ exports.up = function(knex, Promise) {
   		.integer('contextId')
   		.unsigned()
   		.references('id')
-  		.inTable('projects')
+  		.inTable('contexts')
 
   	tbl
   		.integer('projectId')
   		.unsigned()
   		.references('id')
-  		.inTable('contexts')
+  		.inTable('projects')
 
   	tbl
   		.timestamp('created_at').defaultTo(knex.fn.now());
