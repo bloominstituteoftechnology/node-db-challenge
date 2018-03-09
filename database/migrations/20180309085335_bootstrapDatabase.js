@@ -80,13 +80,11 @@ const createProjectActionsContextsTable = knex => {
         projectactioncontext
           .integer('projectId')
           .unsigned()
-          .notNullable()
           .references('id')
           .inTable('projects');
         projectactioncontext
           .integer('actionId')
           .unsigned()
-          .notNullable()
           .references('id')
           .inTable('actions');
         projectactioncontext

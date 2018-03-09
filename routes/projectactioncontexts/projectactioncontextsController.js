@@ -1,5 +1,6 @@
 const db = require('../../database/db');
 const resp = require('../helpers/send');
+const knex = require('knex');
 
 const tbl = 'projectactioncontexts';
 
@@ -47,5 +48,30 @@ module.exports = {
       .catch(err =>
         resp(res, 500, { msg: 'Error deleting projectactioncontext', err }),
       );
+  },
+  requestProjectWith: id => {
+    return db('projects as p')
+      .where({ id })
+      .first();
+  },
+  requestProjectWithContext: id => {
+    let q = db(tbl);
+
+    q
+      .join('contexts as c', 'c.id', `${tbl}.contextId`)
+      .where(`${tbl}.projectId`, id)
+      .select('c.id', 'c.context');
+
+    return q;
+  },
+  requestActionsWithContext: id => {
+    let q = db(tbl);
+
+    q
+      .join('actions as a', 'a.id', `${tbl}.actionId`)
+      .where('a.projectId', id)
+      .select('a.id', 'a.description', 'a.notes', 'a.completed');
+
+    return q;
   },
 };
