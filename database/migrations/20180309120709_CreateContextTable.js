@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('context', function(tbl) {
+  return knex.schema.createTable('contexts', function(tbl) {
     tbl.increments();
 
     tbl
@@ -10,5 +10,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('context');
+  return knex.schema.dropTableIfExists('contexts');
 };
