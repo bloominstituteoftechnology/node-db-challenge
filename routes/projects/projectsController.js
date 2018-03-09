@@ -11,7 +11,7 @@ module.exports = {
 
     let q = db(tbl);
 
-    id ? q.where('p.id', id) : null;
+    id ? q.where({ id }) : null;
 
     q
       .then(projects => resp(res, 200, { projects }))
@@ -77,7 +77,15 @@ module.exports = {
     db
       .insert(req.body)
       .into(tbl)
-      .then(id => res.status(201).json(id))
-      .catch(err => res.status(500).json(err));
+      .then(id => resp(res, 201, { id }))
+      .catch(err => resp(res, 500, { msg: 'Error creating project.', err }));
+  },
+  update: (req, res) => {
+    const { id } = req.params;
+    db(tbl)
+      .where({ id })
+      .update(req.body)
+      .then(count => resp(res, 200, count))
+      .catch(err => resp(res, 500, { msg: 'Error updating project.', err }));
   },
 };

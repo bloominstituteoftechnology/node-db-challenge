@@ -19,6 +19,9 @@ router
 //   res.json(projects);
 // })
 
-router.route('/:id').get(projects.request);
+router
+  .route('/:id')
+  .get(projects.request)
+  .put(projects.update);
 
 module.exports = router;
