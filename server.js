@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const projectsRouter = require('./projects/projectsRouter');
 const actionsRouter = require('./actions/actionsRouter');
+const contextsRouter = require('./contexts/contextsRouter');
 
 
 const server = express();
@@ -11,6 +12,7 @@ const PORT  = 5000;
 server.use(bodyParser.json());
 server.use('/projects', projectsRouter);
 server.use('/actions', actionsRouter);
+server.use('/contexts', contextsRouter);
 
 
 
