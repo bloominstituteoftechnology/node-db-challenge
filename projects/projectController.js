@@ -5,8 +5,14 @@ const db = {
     return knex('projects');
   },
   getProjectById: function(id) {
-    return knex('projects')
-      .where({id});
+    return(
+      knex('projects')
+        .where({id})
+      // knex('projects')
+      //   .where({id}),
+      // knex('projectActions')
+      //   .where({ project_id: id})
+      );
   },
   postProject: function(project) {
     return knex

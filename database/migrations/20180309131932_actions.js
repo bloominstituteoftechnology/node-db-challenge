@@ -3,12 +3,6 @@ exports.up = function(knex, Promise) {
     table.increments();
 
     table
-      .integer('project_id')
-      .unsigned()
-      .references('id')
-      .inTable('projects');
-
-    table
       .string('description', 64)
       .notNullable();
 

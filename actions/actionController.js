@@ -17,7 +17,6 @@ const db = {
     return knex('actions')
       .where({id})
       .update({
-        project_id: action.project_id,
         name: action.name,
         description: action.description,
         notes: action.notes,

@@ -31,7 +31,7 @@ actionRouter.get('/:id', (req, res) => {
 actionRouter.post('/', (req, res) => {
   const action = req.body;
 
-  if (action.project_id && action.flag !== null && action.description.length > 0) {
+  if (action.flag !== null && action.description.length > 0) {
     db
       .postAction(action)
       .then(ids => {
@@ -41,7 +41,7 @@ actionRouter.post('/', (req, res) => {
         res.status(500).json({ error: 'Error saving the action.' });
       });
   } else {
-    res.status(500).json({ error: 'You must provide a project id and action description and flag. Notes are optional.' });
+    res.status(500).json({ error: 'You must provide an action description and flag. Notes are optional.' });
   };
 });
 
@@ -50,7 +50,7 @@ actionRouter.put('/:id', (req, res) => {
   const action = req.body;
 
   console.log('putting...');
-  if (action.project_id && action.flag !== null && action.description.length > 0) {
+  if (action.flag !== null && action.description.length > 0) {
     console.log('in Mordor...');
     db
       .putActionById(id, action)
@@ -66,7 +66,7 @@ actionRouter.put('/:id', (req, res) => {
       });
   } else {
     console.log('missed Mordor');
-    res.status(500).json({ error: 'You must provide a project ID, action description, and action flag; action notes are optional.' });
+    res.status(500).json({ error: 'You must provide an action description, and action flag; action notes are optional.' });
   }
 });
 
