@@ -20,37 +20,6 @@ server.get('/', (req, res) => {
   res.json({ api: 'runn1ng . . .' });
 });
 
-/* FACTOR OUT LATER */
-/* FACTOR OUT LATER */
-const db = require('./database/db');
-const knex = require('knex');
-/* FACTOR OUT LATER */
-/* FACTOR OUT LATER */
-
-server.get('/project/:id', (req, res) => {
-  const { id } = req.params;
-
-  db('projects as p')
-    .where({ id })
-    .select(
-      'p.id',
-      'p.name',
-      'p.description',
-      knex.raw(
-        `(case when p.completed = 1 then 'true' else 'false' end) as completed`,
-      ),
-    )
-    .then(project => {
-      db('projectactions as pa')
-        .where({ projectId: id })
-        .then(actions => {
-          res.json(actions);
-        })
-        .catch(err => res.status(500).json(err));
-    })
-    .catch(err => res.status(500).json(err));
-});
-
 server.listen(process.env.PORT || port, _ => {
   console.log(`API running on ${port}`);
 });

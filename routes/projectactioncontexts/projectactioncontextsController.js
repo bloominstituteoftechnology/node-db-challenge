@@ -1,7 +1,7 @@
 const db = require('../../database/db');
 const resp = require('../helpers/send');
 
-const tbl = 'projectcontexts';
+const tbl = 'projectactioncontexts';
 
 module.exports = {
   request: (req, res) => {
@@ -12,9 +12,9 @@ module.exports = {
     id ? q.where({ id }) : null;
 
     q
-      .then(projectcontexts => resp(res, 200, { projectcontexts }))
+      .then(projectactioncontexts => resp(res, 200, { projectactioncontexts }))
       .catch(err =>
-        resp(res, 500, { msg: 'Error retrieving projectcontexts', err }),
+        resp(res, 500, { msg: 'Error retrieving projectactioncontexts', err }),
       );
   },
   create: (req, res) => {
@@ -23,7 +23,7 @@ module.exports = {
       .into(tbl)
       .then(id => resp(res, 201, { id }))
       .catch(err =>
-        resp(res, 500, { msg: 'Error creating projectcontext', err }),
+        resp(res, 500, { msg: 'Error creating projectactioncontext', err }),
       );
   },
   update: (req, res) => {
@@ -34,7 +34,7 @@ module.exports = {
       .update(req.body)
       .then(count => resp(res, 200, count))
       .catch(err =>
-        resp(res, 500, { msg: 'Error updating projectcontext', err }),
+        resp(res, 500, { msg: 'Error updating projectactioncontext', err }),
       );
   },
   del: (req, res) => {
@@ -45,7 +45,7 @@ module.exports = {
       .del()
       .then(count => resp(res, 200, count))
       .catch(err =>
-        resp(res, 500, { msg: 'Error deleting projectcontext', err }),
+        resp(res, 500, { msg: 'Error deleting projectactioncontext', err }),
       );
   },
 };
