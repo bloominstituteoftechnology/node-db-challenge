@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "RDBMS-packages",
+  "version": "1.0.0",
+  "description": "Back-end packages",
+  "main": "index.js",
+  "repository": "https://github.com/juliankohlman/Sprint-Challenge-RDBMS.git",
+  "author": "Julian Kohlman <juliankohlman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.4",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.1",
+    "sqlite3": "^3.1.13"
+  }
+}
