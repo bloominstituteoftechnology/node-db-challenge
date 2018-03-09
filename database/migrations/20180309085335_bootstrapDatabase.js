@@ -3,13 +3,20 @@ exports.up = function(knex, Promise) {
     .then(createActionsTable)
     .then(createContextsTable)
     .then(createProjectActionsTable)
+    .then(createProjectContextsTable)
+    .then(createActionContextsTable)
     .catch(error => console.log(error));
 };
 
 exports.down = function(knex, Promise) {
-  console.log('drop');
   return knex.schema
-    .dropTableIfExists('projectactions')
+    .dropTableIfExists('actioncontexts')
+    .then(_ => {
+      return knex.schema.dropTableIfExists('projectcontexts');
+    })
+    .then(_ => {
+      return knex.schema.dropTableIfExists('projectactions');
+    })
     .then(_ => {
       return knex.schema.dropTableIfExists('contexts');
     })
@@ -27,8 +34,8 @@ const createProjectsTable = knex => {
     knex.schema
       .createTable('projects', project => {
         project.increments();
-        project.string('name', 24).notNullable();
-        project.string('description', 128);
+        project.string('name').notNullable();
+        project.string('description');
         project.boolean('completed').defaultTo(false);
 
         resolve(knex);
@@ -42,8 +49,8 @@ const createActionsTable = knex => {
     knex.schema
       .createTable('actions', action => {
         action.increments();
-        action.string('description', 24).notNullable();
-        action.string('notes', 128);
+        action.string('description').notNullable();
+        action.string('notes');
         action.boolean('completed').defaultTo(false);
 
         resolve(knex);
@@ -62,7 +69,6 @@ const createContextsTable = knex => {
           .notNullable()
           .unique();
 
-        console.log('finished context table');
         resolve(knex);
       })
       .catch(reason => reject(reason));
@@ -70,7 +76,6 @@ const createContextsTable = knex => {
 };
 
 const createProjectActionsTable = knex => {
-  console.log('projectactions');
   return new Promise((resolve, reject) => {
     knex.schema
       .createTable('projectactions', projectaction => {
@@ -88,7 +93,55 @@ const createProjectActionsTable = knex => {
           .references('id')
           .inTable('actions');
 
-        resolve();
+        resolve(knex);
+      })
+      .catch(reason => reject(reason));
+  });
+};
+
+const createProjectContextsTable = knex => {
+  return new Promise((resolve, reject) => {
+    knex.schema
+      .createTable('projectcontexts', projectcontext => {
+        projectcontext.increments();
+        projectcontext
+          .integer('projectId')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('projects');
+        projectcontext
+          .integer('contextId')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('contexts');
+
+        resolve(knex);
+      })
+      .catch(reason => reject(reason));
+  });
+};
+
+const createActionContextsTable = knex => {
+  return new Promise((resolve, reject) => {
+    knex.schema
+      .createTable('actioncontexts', actioncontext => {
+        actioncontext.increments();
+        actioncontext
+          .integer('actionId')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('actions');
+        actioncontext
+          .integer('contextId')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('contexts');
+
+        resolve(knex);
       })
       .catch(reason => reject(reason));
   });

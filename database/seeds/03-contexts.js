@@ -10,6 +10,7 @@ exports.seed = function(knex, Promise) {
         { id: 3, context: 'Home' },
         { id: 4, context: 'Office' },
         { id: 5, context: 'Laptop' },
+        { id: 6, context: 'Chipotle' },
       ]);
     });
 };
