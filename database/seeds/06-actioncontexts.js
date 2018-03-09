@@ -15,6 +15,10 @@ exports.seed = function(knex, Promise) {
         { id: 8, actionId: 5, contextId: 3 },
         { id: 9, actionId: 5, contextId: 5 },
         { id: 10, actionId: 5, contextId: 4 },
+        { id: 11, actionId: 6, contextId: 5 },
+        { id: 12, actionId: 7, contextId: 5 },
+        { id: 13, actionId: 8, contextId: 5 },
+        { id: 14, actionId: 7, contextId: 3 },
       ]);
     });
 };

@@ -10,6 +10,9 @@ exports.seed = function(knex, Promise) {
         { id: 3, projectId: 2, actionId: 3 },
         { id: 4, projectId: 2, actionId: 4 },
         { id: 5, projectId: 2, actionId: 5 },
+        { id: 6, projectId: 3, actionId: 6 },
+        { id: 7, projectId: 3, actionId: 7 },
+        { id: 8, projectId: 3, actionId: 8 },
       ]);
     });
 };

@@ -34,6 +34,21 @@ exports.seed = function(knex, Promise) {
           notes: "This shouldn't be too hard",
           completed: false,
         },
+        {
+          id: 6,
+          description: 'Research new doctor',
+          completed: false,
+        },
+        {
+          id: 7,
+          description: 'Fill in taxes',
+          completed: false,
+        },
+        {
+          id: 8,
+          description: 'Read knex docs',
+          completed: true,
+        },
       ]);
     });
 };

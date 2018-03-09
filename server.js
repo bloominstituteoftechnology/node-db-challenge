@@ -3,12 +3,12 @@ const bodyParser = require('body-parser');
 
 const port = 3030;
 
-const projects = require('./routes/projects/projects');
+const projectsEndpoint = require('./routes/projects/projectsEndpoint');
 
 const server = express();
 
 server.use(bodyParser.json());
-server.use('/api/projects', projects);
+server.use('/api/projects', projectsEndpoint);
 
 server.get('/', (req, res) => {
   res.json({ api: 'runn1ng . . .' });
