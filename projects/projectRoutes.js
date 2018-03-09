@@ -14,6 +14,18 @@ projectRouter.get("/", (req, res) => {
   });
 });
 
+projectRouter.get("/:id", (req, res) => {
+  const { id } = req.params;
+  projects
+    .getOne(id)
+    .then(project => {
+      res.status(200).json(project);
+    })
+    .catch(err => {
+      res.status(500).json({ err });
+    });
+});
+
 projectRouter.post("/", (req, res) => {
   projects
     .addOne(req.body)
