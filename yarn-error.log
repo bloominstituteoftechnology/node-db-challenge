@@ -1,0 +1,33 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js init
+
+PATH: 
+  C:\cygwin64\usr\local\bin;C:\cygwin64\bin;C:\Python27;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files (x86)\GTK2-Runtime\bin;C:\Program Files (x86)\Skype\Phone;C:\Go\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Program Files\MySQL\MySQL Utilities 1.6;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\Microsoft VS Code\bin;C:\Users\Troy\AppData\Roaming\npm;C:\Users\Troy\AppData\Local\Yarn\bin;C:\Users\Troy\AppData\Local\atom\bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  9.4.0
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Can't answer a question unless a user TTY
+      at ConsoleReporter.question (C:\Program Files (x86)\Yarn\lib\cli.js:87314:59)
+      at Object.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:81822:38)
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:92:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:103:13
+      at <anonymous>
+      at process._tickCallback (internal/process/next_tick.js:160:7)

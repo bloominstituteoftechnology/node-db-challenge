@@ -1,0 +1,22 @@
+{
+	"name": "Sprint-Challenge-RDBMS",
+	"version": "1.0.0",
+	"description": "RDBMS Sprint Challenge at Lambda",
+	"main": "server.js",
+	"scripts": {
+		"start": "nodemon server.js"
+	},
+	"repository": "https://github.com/bitcointroy/Sprint-Challenge-RDBMS.git",
+	"author": "<me@bitcointroy.co>",
+	"license": "MIT",
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"cors": "^2.8.4",
+		"express": "^4.16.2",
+		"knex": "^0.14.4",
+		"mysql": "^2.15.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.17.1"
+	}
+}
