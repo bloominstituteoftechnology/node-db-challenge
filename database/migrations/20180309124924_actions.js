@@ -10,14 +10,8 @@ exports.up = function(knex, Promise) {
       .string('name')
       .notNullable()
       .unique();
-    act
-      .text('description')
-      .notNullable()
-      .unique();
-    act
-      .text('notes')
-      .notNullable()
-      .unique();
+    act.string('description');
+    act.string('notes');
     act.boolean('completed');
     act.timestamp('created_at').defaultTo(knex.fn.now());
   });

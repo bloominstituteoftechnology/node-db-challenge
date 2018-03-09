@@ -1,7 +1,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('context', ctxt => {
     ctxt.increments();
-    ctxt.enu('context'[('home', 'office', 'at computer')]);
+    ctxt.string('context');
+
     ctxt.timestamp('created_at').defaultTo(knex.fn.now());
   });
 };
