@@ -4,6 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/Synsyxx/Sprint-Challenge-RDBMS.git",
   "author": "synsyxx <travis_s92@hotmail.com>",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
