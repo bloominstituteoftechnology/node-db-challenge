@@ -14,10 +14,11 @@ const db = {
     return knex('projects').where({ id }).update(projectInfo);
   },
   projectById(id) {
-    return knex('actions').where({projectId: id})
-    .join('projects', 'projects.id', 'actions.projectId')
-    .join('gtd', 'actions.id', 'gtd.actionsId' )
-    .join('contexts', 'contexts.id', 'gtd.contextsId')
+    return knex('projects_contexts').where({projectId: id})
+    .join('projects', 'projects.id', 'projects_contexts.projectId')
+    .join('contexts', 'contexts.id', 'projects_contexts.contextsId' )
+    .join('actions_contexts', 'actions_contexts.contextsId', 'contexts.id')
+    .join('actions', 'actions.id', 'actions_contexts.actionsId')
   }
 }
 
