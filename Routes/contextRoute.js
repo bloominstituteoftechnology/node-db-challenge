@@ -1,4 +1,4 @@
-const exporess = require('express');
+const express = require('express');
 const knex = require('../database/db');
 const contexts = require('../controls/contextControl');
 

@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const knex = require('knex');
-const projectsRoute = require('./projects/projectsRoute');
-const actionsRoute = require('./actions/actionsRoute');
-const contextRoute = require('./contexts/contextRoute');
+const projectsRoute = require('./routes/projectsRoute');
+const actionsRoute = require('./routes/actionsRoute');
+const contextRoute = require('./routes/contextRoute');
 
 const server = express();
 
