@@ -8,6 +8,7 @@ const actionsEndpoint = require('./routes/actions/actionsEndpoint');
 const contextsEndpoint = require('./routes/contexts/contextsEndpoint');
 const projectactionsEndpoint = require('./routes/projectactions/projectactionsEndpoint');
 const projectcontextsEndpoint = require('./routes/projectcontexts/projectcontextsEndpoint');
+const actioncontextsEndpoint = require('./routes/actioncontexts/actioncontextsEndpoint');
 
 const server = express();
 
@@ -17,6 +18,7 @@ server.use('/api/actions', actionsEndpoint);
 server.use('/api/contexts', contextsEndpoint);
 server.use('/api/projectactions', projectactionsEndpoint);
 server.use('/api/projectcontexts', projectcontextsEndpoint);
+server.use('/api/actioncontexts', actioncontextsEndpoint);
 
 server.get('/', (req, res) => {
   res.json({ api: 'runn1ng . . .' });
