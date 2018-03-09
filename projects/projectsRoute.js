@@ -25,4 +25,29 @@ projectsRoute.post('/', (req, res) => {
         });
 });
 
+projectsRoute.put('/:id', (req, res) => {
+    const { id } = req.params;
+    projects
+        .update(id, req.body)
+        .then(success => {
+            res.status(200).json({ msg: `The project: ${id} was successfully updated.` });
+        })
+        .catch(err => {
+            res.status(500).json({ msg: 'There was an error updating your project. Please try again.' });
+        });
+});
+
+projectsRoute.delete(':/id', (req, res) => {
+    const { id } = req.params;
+    projects
+        .nuke(id)
+        .then(success => {
+            res.status(200).json({ msg: 'The project was deleted successfully.' });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ msg: 'There was an error deleting this project. Please try again.' });
+        });
+});
+
 module.exports = projectsRoute;
