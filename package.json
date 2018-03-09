@@ -4,13 +4,16 @@
   "description": "Sprint Challenge for RDBMS",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "helmet": "^3.11.0"
+    "helmet": "^3.11.0",
+    "nodemon": "^1.17.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "author": "JohnJustinn",
   "license": "ISC"
