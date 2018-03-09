@@ -15,7 +15,7 @@ module.exports = {
 
     q
       .then(projects => resp(res, 200, { projects }))
-      .catch(err => resp(res, 500, { msg: 'Error retrieving projects.', err }));
+      .catch(err => resp(res, 500, { msg: 'Error retrieving projects', err }));
 
     // q
     //   .select(
@@ -78,7 +78,7 @@ module.exports = {
       .insert(req.body)
       .into(tbl)
       .then(id => resp(res, 201, { id }))
-      .catch(err => resp(res, 500, { msg: 'Error creating project.', err }));
+      .catch(err => resp(res, 500, { msg: 'Error creating project', err }));
   },
   update: (req, res) => {
     const { id } = req.params;
@@ -87,7 +87,7 @@ module.exports = {
       .where({ id })
       .update(req.body)
       .then(count => resp(res, 200, count))
-      .catch(err => resp(res, 500, { msg: 'Error updating project.', err }));
+      .catch(err => resp(res, 500, { msg: 'Error updating project', err }));
   },
   del: (req, res) => {
     const { id } = req.params;
@@ -95,6 +95,7 @@ module.exports = {
     db(tbl)
       .where({ id })
       .del()
-      .then(count => resp(res, 200, count));
+      .then(count => resp(res, 200, count))
+      .catch(err => resp(res, 500, { msg: 'Error deleting project', err }));
   },
 };

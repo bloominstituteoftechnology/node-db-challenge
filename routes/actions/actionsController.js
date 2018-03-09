@@ -1,31 +1,43 @@
-const db = require('../../database/db.js');
-const knex = require('knex');
+const db = require('../../database/db');
+const resp = require('../helpers/send');
 
 const tbl = 'actions';
 
 module.exports = {
-  request: (req, res, next) => {
+  request: (req, res) => {
     const { id } = req.params;
 
-    let q = db('actions as a');
+    let q = db(tbl);
 
-    id ? q.where('a.id', id) : null;
+    id ? q.where({ id }) : null;
 
     q
-      .select(
-        'a.id',
-        'a.description',
-        'a.notes',
-        knex.raw(
-          `(case when a.completed = 1 then 'true' else 'false' end) as completed`,
-        ),
-      )
-      .then(actions => {
-        req.actions = actions;
-        next();
-      })
-      .catch(err =>
-        res.status(500).json({ msg: 'Server error retrieving actions', err }),
-      );
+      .then(actions => resp(res, 200, { actions }))
+      .catch(err => resp(res, 500, { msg: 'Error retrieving actions', err }));
+  },
+  create: (req, res) => {
+    db
+      .insert(req.body)
+      .into(tbl)
+      .then(id => resp(res, 201, { id }))
+      .catch(err => resp(res, 500, { msg: 'Error creating action', err }));
+  },
+  update: (req, res) => {
+    const { id } = req.params;
+
+    db(tbl)
+      .where({ id })
+      .update(req.body)
+      .then(count => resp(res, 200, count))
+      .catch(err => resp(res, 500, { msg: 'Error updating action', err }));
+  },
+  del: (req, res) => {
+    const { id } = req.params;
+
+    db(tbl)
+      .where({ id })
+      .del()
+      .then(count => resp(res, 200, count))
+      .catch(err => resp(res, 500, { msg: 'Error deleting action', err }));
   },
 };

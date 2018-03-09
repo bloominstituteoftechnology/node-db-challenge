@@ -4,11 +4,13 @@ const bodyParser = require('body-parser');
 const port = 3030;
 
 const projectsEndpoint = require('./routes/projects/projectsEndpoint');
+const actionsEndpoint = require('./routes/actions/actionsEndpoint');
 
 const server = express();
 
 server.use(bodyParser.json());
 server.use('/api/projects', projectsEndpoint);
+server.use('/api/actions', actionsEndpoint);
 
 server.get('/', (req, res) => {
   res.json({ api: 'runn1ng . . .' });
