@@ -2,7 +2,8 @@ exports.up = function(knex) {
 	return createProjectsTable(knex)
 		.then(createActionsTable)
 		.then(createContextsTable)
-		.then(createContextActionProjectTable)
+		.then(createContextActionTable)
+		.then(createContextProjectTable)
 		.catch(error => {
 			console.log("bootstrap error", error);
 			reject(error);
@@ -54,7 +55,15 @@ function createActionsTable(knex) {
 			.createTable("actions", actions => {
 				actions.increments();
 				actions.string("item", 128).notNullable();
-				actions.string("details", 1000).notNullable();
+				actions.string("notes", 1000).notNullable();
+
+				actions
+					.integer("projectID")
+					.unsigned()
+					.notNullable()
+					.references("id")
+					.inTable("projects");
+
 				actions.boolean("isComplete").defaultTo(false);
 				actions.timestamp("createdAt").defaultTo(knex.fn.now());
 
@@ -82,12 +91,12 @@ function createContextsTable(knex) {
 	});
 }
 
-function createContextActionProjectTable(knex) {
+function createContextActionTable(knex) {
 	console.log("creating contextActionProject table");
 
 	return new Promise(function(resolve, reject) {
 		knex.schema
-			.createTable("contextActionProject", cap => {
+			.createTable("contextAction", cap => {
 				cap.increments();
 
 				cap
@@ -102,6 +111,30 @@ function createContextActionProjectTable(knex) {
 					.notNullable()
 					.references("id")
 					.inTable("actions");
+
+				cap.timestamp("createdAt").defaultTo(knex.fn.now());
+
+				console.log("contextAction table created");
+				resolve(knex);
+			})
+			.catch(err => reject(err));
+	});
+}
+
+function createContextProjectTable(knex) {
+	console.log("creating contextProject table");
+
+	return new Promise(function(resolve, reject) {
+		knex.schema
+			.createTable("contextProject", cap => {
+				cap.increments();
+
+				cap
+					.integer("contextID")
+					.unsigned()
+					.notNullable()
+					.references("id")
+					.inTable("contexts");
 				cap
 					.integer("projectID")
 					.unsigned()
@@ -111,7 +144,7 @@ function createContextActionProjectTable(knex) {
 
 				cap.timestamp("createdAt").defaultTo(knex.fn.now());
 
-				console.log("actions table created");
+				console.log("contextProject table created");
 				resolve(knex);
 			})
 			.catch(err => reject(err));
