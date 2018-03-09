@@ -3,7 +3,7 @@ const bodyparser = require('body-parser');
 
 // const projectsRouter = require('./Projects/projectRouter');
 const actionsRouter = require('./Actions/actionsRouter');
-// const contextsRouter = require('./Contexts/contextsRouter');
+const contextsRouter = require('./Contexts/contextsRouter');
 
 
 const PORT = 3000;
@@ -13,7 +13,7 @@ server.use(bodyparser.json());
 
 // server.use('/projects', projectsRouter);
 server.use('/actions', actionsRouter);
-// server.use('/contexts', contextRouter);
+server.use('/contexts', contextsRouter);
 
 
 server.get('/', (req, res) => {
