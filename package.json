@@ -1,0 +1,14 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Synsyxx/Sprint-Challenge-RDBMS.git",
+  "author": "synsyxx <travis_s92@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.4",
+    "mysql": "^2.15.0"
+  }
+}
