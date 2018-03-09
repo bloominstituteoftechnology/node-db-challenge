@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string("context").notNullable();
 
     table
-      .integer("projectId")
+      .bigInteger("projectId")
       .unsigned()
       .notNullable()
       .references("id")
