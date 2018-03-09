@@ -19,9 +19,7 @@ const db = {
         let [projects, contexts] = results;
         let context = contexts[0];
         context.contexts = contexts.map(c => c.context);
-        console.log(contexts[0])
-
-        return projects;
+        return context;
       });
       // .select('p.name as project', 'p.description', 'a.description as action', 'notes')
       // .then(project => {

@@ -56,7 +56,7 @@ projectRouter.get('/:id/full', (req, res) => {
   db
     .getById(id, flag)
     .then(project => {
-      if(project.length > 0) {
+      if(project) {
         res.status(200).send(project);
       } else {
         res.status(404).send({ msg: `Project with ID: ${id} could not be found` });
