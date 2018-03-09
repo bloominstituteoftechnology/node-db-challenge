@@ -5,9 +5,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
-        {id: 1, name: 'Washing Dishes', description: 'finish washing sink of dishes', completed: false },
-        {id: 2, name: 'Read 1984', description: 'read 1984 by George Orwell', completed: false},
-        {id: 3, name: 'Home Renovation', description: 'renovate and remodel home', completed: false}
+        {id: 1, name: 'Washing Dishes', project_description: 'finish washing sink of dishes', project_completed: false },
+        {id: 2, name: 'Read 1984', project_description: 'read 1984 by George Orwell', project_completed: false},
+        {id: 3, name: 'Home Renovation', project_description: 'renovate and remodel home', project_completed: false}
       ]);
     });
 };

@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('description').notNullable();
     table.string('notes');
+    table.integer('projectId').unsigned().references('id').inTable('projects');
     table.boolean('completed').defaultTo(false);
   });
 };

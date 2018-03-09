@@ -12,8 +12,13 @@ const db = {
   },
   update: (id, projectInfo) => {
     return knex('projects').where({ id }).update(projectInfo);
+  },
+  projectById(id) {
+    return knex('actions').where({projectId: id})
+    .join('projects', 'projects.id', 'actions.projectId')
+    .join('gtd', 'actions.id', 'gtd.actionsId' )
+    .join('contexts', 'contexts.id', 'gtd.contextsId')
   }
-
 }
 
 module.exports = db;

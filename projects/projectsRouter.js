@@ -54,4 +54,35 @@ projectRouter.put('/:id', (req, res) => {
     })
 });
 
+projectRouter.get('/:id', (req, res) => {
+  const { id } = req.params;
+  db.projectById(id)
+    .then(project => {
+      const actions = project.map(action => {
+        return {
+          id: action.actionsId,
+          description: action.description,
+          notes: action.notes,
+          completed: action.completed 
+        } 
+      })
+      const contexts = project.map(context => {
+        return {
+          id: context.contextsId,
+          context: context.context
+        }
+      })
+      const projectById = {
+        id: project[0].projectId,
+        description: project[0].project_description,
+        completed: project[0].project_completed,
+        actions,
+        contexts,
+      }
+      res.status(200).json(projectById);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    })
+});
 module.exports = projectRouter;
