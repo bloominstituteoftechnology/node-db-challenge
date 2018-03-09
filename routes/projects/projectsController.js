@@ -82,10 +82,19 @@ module.exports = {
   },
   update: (req, res) => {
     const { id } = req.params;
+
     db(tbl)
       .where({ id })
       .update(req.body)
       .then(count => resp(res, 200, count))
       .catch(err => resp(res, 500, { msg: 'Error updating project.', err }));
+  },
+  del: (req, res) => {
+    const { id } = req.params;
+
+    db(tbl)
+      .where({ id })
+      .del()
+      .then(count => resp(res, 200, count));
   },
 };

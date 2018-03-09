@@ -22,6 +22,7 @@ router
 router
   .route('/:id')
   .get(projects.request)
-  .put(projects.update);
+  .put(projects.update)
+  .delete(projects.del);
 
 module.exports = router;
