@@ -1,43 +1,22 @@
 const express = require('express');
 const bodyparser = require('body-parser');
+const projectsRouter = require('./Projects/projectRouter');
+const actionsRouter = require('./Actions/actionsRouter');
+const contextRouter = require('./Contexts/contextsRouter');
+
+
 const PORT = 3000;
-
-const knex = require('./database/dbConfig');
-
 const server = express();
 
 server.use(bodyparser.json());
+server.use('/projects', projectsRouter);
+server.use('/actions', actionsRouter);
+server.use('/contexts', contextRouter);
 
 
 server.get('/', (req, res) => {
     res.status(200).json({ message: 'From its slumber, the server rises!' });
 });
-
-
-server.get('/projects', (req, res) => {
-    knex.select().from('Projects')
-        .then(allProjects => {
-            res.status(201).json({ allProjects });
-        })
-        .catch(error => {
-            res.status(500).json({ message: 'Could not Retrieve Projects' })
-        })
-})
-
-server.get('/projects/:id', async(req, res) => {
-    const { id } = req.params;
-    try {
-        const project = await knex.select('*').from('Projects').where('id', id);
-        const actions = await knex.select('*').from('Project_Actions').where('projectId', id);
-        const contexts = await knex.select('*').from('Project_Contexts').where('projectId', id);
-        project.actions = actions;
-        project.contexts = contexts;
-        res.status(201).json({ project });
-    }
-    catch(error) {
-        res.status(500).json({ message: 'Could not retrive project' })
-    }
-})
 
 
 

@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     tbl.increments();
 
     tbl
-        .integer('projectId').unsigned().references('id').inTable('Projects');
+        .integer('actionId').unsigned().references('id').inTable('Actions');
     tbl
         .integer('contextId').unsigned().references('id').inTable('Contexts');
     tbl.timestamp('createdAt').defaultTo(knex.fn.now());
