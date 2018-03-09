@@ -1,5 +1,5 @@
 {
-  "name": "Sprint-Challenge-RDBMS",
+  "name": "sprintchallengerdbms",
   "version": "1.0.0",
   "description": "The purpose of this exercise is to get you used to being quizzed on _Interview Questions_ commonly asked about Relational Database Management Systems and SQL.",
   "main": "index.js",
