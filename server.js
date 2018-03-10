@@ -97,18 +97,39 @@ server.get('/projects', (req, res) => {
 		});
 });
 
+// server.get('/projects/:id', (req, res) => {
+// 	const { id } = req.params;
+// 	knex('projects').where({ id })
+// 		.then(project => {
+// 			if (project.length > 0) res.status(200).json(project); 
+// 			else {
+// 				res.status(404).json({message: 'Project does not exist.'});
+// 			}
+// 		})
+// 		.catch(err => {
+// 			res.status(500).json(err);
+// 		});
+// });
+
+// new endpoint should display the project info along with it's associated actions and contexts
 server.get('/projects/:id', (req, res) => {
-	const { id } = req.params;
-	knex('projects').where({ id })
-		.then(project => {
-			if (project.length > 0) res.status(200).json(project); 
-			else {
-				res.status(404).json({message: 'Project does not exist.'});
-			}
-		})
-		.catch(err => {
-			res.status(500).json(err);
-		});
+	const id = req.params.id;
+
+	knex('projects_actions').where('projects_actions.projectId', id)
+		.join('projects', 'projects_actions.projectId', '=', 'projects.id')
+		.join('actions', 'actions.id', '=', 'projects_actions.actionId')
+		.join('projects_contexts', 'projects_contexts.projectId', '=', 'projects_actions.projectId')
+		.join('contexts', 'contexts.id', '=', 'projects_contexts.contextId')
+		// .select('projectId')
+			.then(data => {
+				if (data.length > 0) res.status(200).json(data);
+				else {
+					res.status(404).json({message: 'Project does not exist.'});
+				}
+			})
+			.catch(err => {
+				res.status(500).json(err);
+			});
 });
 
 // update
