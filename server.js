@@ -115,6 +115,15 @@ server.get('/projects', (req, res) => {
 server.get('/projects/:id', (req, res) => {
 	const id = req.params.id;
 
+	let retObj = {
+		id: null,
+		name: 'project name',
+		description: 'project description',
+		completed: false,
+		actions: [],
+		contexts: []
+	}
+
 	knex('projects_actions').where('projects_actions.projectId', id)
 		.join('projects', 'projects_actions.projectId', '=', 'projects.id')
 		.join('actions', 'actions.id', '=', 'projects_actions.actionId')
@@ -122,8 +131,34 @@ server.get('/projects/:id', (req, res) => {
 		.join('contexts', 'contexts.id', '=', 'projects_contexts.contextId')
 		// .select('projectId')
 			.then(data => {
-				if (data.length > 0) res.status(200).json(data);
-				else {
+				if (data.length > 0) {
+					data.forEach(obj => {
+						retObj.id = obj.projectId;
+						retObj.name = obj.name;
+						retObj.description = obj.project_description;
+						// retObj.actions.push(obj.action_description);
+						// retObj.contexts.push(obj.contexts); 
+						if (obj.completed === 1) retObj.completed = true;
+						retObj.actions.push({
+							id: obj.actionId,
+							description: obj.action_description,
+							notes: obj.notes,
+							completed: obj.action_completed	
+						});
+						retObj.contexts.push({
+							id: obj.contextId,
+							context: obj.contexts
+						});
+					});
+					retObj.actions.forEach(action => {
+						if (action.completed === 1) action.completed = true;
+						else {
+							action.completed = false;
+						}
+					})
+					res.status(200).json(retObj);
+					// res.status(200).json(data);
+				} else {
 					res.status(404).json({message: 'Project does not exist.'});
 				}
 			})
