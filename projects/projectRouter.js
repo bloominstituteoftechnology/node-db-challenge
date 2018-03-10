@@ -28,6 +28,20 @@ projectRouter.get('/:id', (req, res) => {
     });
 });
 
+projectRouter.get('/:id/actions', (req, res) => {
+  const { id } = req.params;
+
+  db
+    .getProjectAndActionsById(id)
+    .then(results => {
+      if (results.length > 0) res.status(200).json(results);
+      else res.status(200).json({ message: `There are no actions on the project with ID ${id}.` });
+    })
+    .catch(error => {
+      res.status(500).json({ error: `Error retrieving actions for the project with ID ${id}` });
+    });
+});
+
 projectRouter.post('/', (req, res) => {
   const project = req.body;
 
