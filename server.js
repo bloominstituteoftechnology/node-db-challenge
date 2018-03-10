@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 
-// const projectsRouter = require('./Projects/projectRouter');
+const projectsRouter = require('./Projects/projectsRouter');
 const actionsRouter = require('./Actions/actionsRouter');
 const contextsRouter = require('./Contexts/contextsRouter');
 
@@ -11,7 +11,7 @@ const server = express();
 
 server.use(bodyparser.json());
 
-// server.use('/projects', projectsRouter);
+server.use('/projects', projectsRouter);
 server.use('/actions', actionsRouter);
 server.use('/contexts', contextsRouter);
 
@@ -25,3 +25,4 @@ server.get('/', (req, res) => {
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
+
