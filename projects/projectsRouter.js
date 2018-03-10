@@ -14,10 +14,10 @@ projectRouter.get('/', (req, res) => {
 });
 
 projectRouter.post('/', (req, res) => {
-  const { name, description, completed } = req.body;
+  const { name, project_description, project_completed } = req.body;
 
-  if (!name || !description) {
-    res.status(404).json({message: 'Must provide name, description and completed field for project'});
+  if (!name || !project_description) {
+    res.status(404).json({message: 'Must provide name, project_description and project_completed field for project'});
   } else {
     db.add(req.body)
       .then(response => {
