@@ -129,15 +129,12 @@ server.get('/projects/:id', (req, res) => {
 		.join('actions', 'actions.id', '=', 'projects_actions.actionId')
 		.join('projects_contexts', 'projects_contexts.projectId', '=', 'projects_actions.projectId')
 		.join('contexts', 'contexts.id', '=', 'projects_contexts.contextId')
-		// .select('projectId')
 			.then(data => {
 				if (data.length > 0) {
 					data.forEach(obj => {
 						retObj.id = obj.projectId;
 						retObj.name = obj.name;
 						retObj.description = obj.project_description;
-						// retObj.actions.push(obj.action_description);
-						// retObj.contexts.push(obj.contexts); 
 						if (obj.completed === 1) retObj.completed = true;
 						retObj.actions.push({
 							id: obj.actionId,
