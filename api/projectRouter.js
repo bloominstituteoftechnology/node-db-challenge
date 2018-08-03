@@ -25,4 +25,17 @@ router.get('/:id', (req, res, next) => {
         next(err);
     })
 })
+router.get('/:id/actions', (req, res, next) => {
+    const { id } = req.params;
+    db('actions')
+    .join('projects', 'projects.id', '=', 'actions.project_id')
+    .select('actions.*')
+    .where('projects.id', '=', id)
+    .then(response => {
+        res.status(codes.OK).json(response);
+    })
+    .catch(err => {
+        next(err);
+    })
+})
 module.exports = router;
