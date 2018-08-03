@@ -108,6 +108,25 @@ server.put('/api/projects/:id', (req, res, next) => {
     }
 })
 
+//DELETE Project
+server.delete('/api/projects/:id', (req, res, next) => {
+    let id = req.params.id;
+    projects.remove(id)
+        .then(project => {
+            if (!project) {
+                return next({
+                    code: 404
+                })
+            } else {
+                console.log(project)
+                res.status(200).json('Action successfully deleted')
+            }
+        })
+        .catch(err => next({
+            code: 500
+        }))
+})
+
 //Get Actions
 server.get('/api/actions', (req, res, next) => {
     actions.find()
@@ -170,6 +189,67 @@ server.post('/api/actions', (req, res, next) => {
                 code: err.code
             }))
     }
+})
+
+//UPDATE Action
+server.put('/api/actions/:id', (req, res, next) => {
+    let id = req.params.id;
+    let project_id = req.body.project_id;
+    let notes = req.body.notes;
+    let description = req.body.description;
+    let completed = req.body.completed;
+    if (req.body.completed === "true" || req.body.completed === true) {
+        completed = true;
+    } else {
+        completed = false;
+    }
+    let updatedAction = {
+        notes,
+        project_id,
+        description,
+        completed,
+
+    }
+    if (updatedAction.description.length > 128) {
+        return next({
+            code: 128,
+            message: "Description Field: Character limit exceeded (128 characters)."
+        })
+    }
+    if (!updatedAction.description || !updatedAction.project_id || !updatedAction.notes) {
+        return next({
+            code: 400
+        })
+    } else {
+        actions.update(id, updatedAction)
+            .then(action => {
+                console.log(action)
+                res.status(200).json(action)
+            })
+            .catch(err => next({
+                err,
+                code: err.code
+            }))
+    }
+})
+
+//DELETE Action
+server.delete('/api/actions/:id', (req, res, next) => {
+    let id = req.params.id;
+    actions.remove(id)
+        .then(action => {
+            if (!action) {
+                return next({
+                    code: 404
+                })
+            } else {
+                console.log(action)
+                res.status(200).json('Action successfully deleted')
+            }
+        })
+        .catch(err => next({
+            code: 500
+        }))
 })
 
 //error handler

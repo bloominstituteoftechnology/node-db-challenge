@@ -3,7 +3,8 @@ const db = require('../dbConfig');
 module.exports = {
     find,
     insert,
-    update
+    update,
+    remove
 };
 
 function find(id) {
@@ -19,4 +20,8 @@ function insert(project) {
 
 function update(id, project) {
     return db('projects').where({id}).update(project);
+}
+
+function remove(id) {
+    return db('projects').where({id}).del();
 }
