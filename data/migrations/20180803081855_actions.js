@@ -1,7 +1,7 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('actions', function (tbl) {
-        tbl.increment();
+        tbl.increments();
 
         tbl
             .integer('project_id')

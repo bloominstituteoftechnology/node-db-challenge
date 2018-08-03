@@ -7,6 +7,9 @@
     "nodemon": "^1.18.3",
     "sqlite3": "^4.0.2"
   },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "name": "Sprint-Challenge-RDBMS",
   "version": "1.0.0",
   "main": "index.js",
