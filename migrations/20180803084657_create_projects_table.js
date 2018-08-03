@@ -4,10 +4,10 @@ exports.up = function(knex, Promise) {
       table
         .increments();
       table
-        .string('name')
+        .text('name')
         .notNullable();
       table
-        .string('description')
+        .text('description')
         .notNullable();
       table
         .integer('iscomplete')
