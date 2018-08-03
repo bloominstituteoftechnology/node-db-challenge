@@ -7,6 +7,8 @@ server.use(express.json());
 
 const port = 8000;
 
+
+//project api
 server.get("/projects", (req, res) => {
   db.select().from('project')
   .then(response => {
@@ -48,6 +50,28 @@ server.delete("/projects/:id", (req, res) => {
    })
 })
 
+//actions api
+server.get("/actions", (req, res) => {
+  db.select().from('actions')
+  .then(response => {
+    res.json({response});
+  })
+  .catch(error => {
+   res.status(500).send({ error: "Server Error" })
+ })
+});
+server.post("/actions", (req, res) => {
+  const { description, notes, completed, project_id } = req.body;
+  const toBool = completed == "true";
+  db.insert({"notes": notes,
+              "description" : description,
+              "completed": toBool,
+              "project_id": project_id}).into('actions')
+    .then(response => (res.json(response)))
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
+});
 
 
 
