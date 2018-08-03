@@ -33,7 +33,7 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 ## tasks
 
-- Build the database and tables using knex migrations.
+- Build the database and tables using knex migrations. **Seeding is not needed**.
 - Build the API to perform CRUD operations on projects and actions.
 - Build an endpoint to retrieve a `project` by its `id` that returns an object
   with the following structure:
@@ -65,9 +65,11 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 This section is **optional** and not counted towards MVP. Start working on it after you're done with the main assignment.
 
-Add support for the concept of `contexts`. A context is something like _at home_, _at work_ and _at computer_. The idea is that some actions required a certain `context` in order to be worked on, for example, the action of _working on your taxes with an online service_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, working on your taxes will not show up on the list.
+Use `knext` to add _data seeding_ scripts for projects and actions.
 
-A `context` can be applied to more than one `action`. An action can be assigned more than one context, like in the example above.
+Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some actions require a certain `context` in order to be worked on. For example, the action of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, filing your taxes will not show be one of them.
+
+A `context` can be applied to more than one `action`. An action can required more than one context, like in the example above.
 
 When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
 
