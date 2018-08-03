@@ -85,7 +85,14 @@ server.put("/actions/:id", (req, res) => {
      res.status(500).send({ error: "Server Error" })
    })
 });
-
+server.delete("/actions/:id", (req, res) => {
+  const { id } = req.params
+  db('actions').where("id", id).delete()
+    .then(response => (res.json(response)))
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
+})
 
 
 
