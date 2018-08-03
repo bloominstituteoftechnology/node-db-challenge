@@ -30,7 +30,7 @@ exports.seed = function(knex, Promise) {
         { description: 'Construct Rocket',
           notes: `Let's just get a big cylinder with a cone on top and put a bunch of TNT under it`,
           project_id: 3,
-          completed: false
+          completed: true
         },
         { 
           description: 'Try not to die',
