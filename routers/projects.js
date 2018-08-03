@@ -41,6 +41,21 @@ projects.get('/:id', async (req, res, next) => {
   }
 })
 
+projects.put('/:id', async (req, res, next) => {
+  const id = +req.params.id
+  const { body: project } = req
+
+  try {
+    const updated = await db('projects')
+      .where('id', '=', id)
+      .update(project)
+
+    res.status(200).json({ id, ...project })
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
 projects.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
