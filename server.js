@@ -26,8 +26,8 @@ server.get('/api/projects', (req, res, next) => {
 //Get Specific Project
 server.get('/api/projects/:id', (req, res, next) => {
     let id = req.params.id;
-    projects.find(id).then(response => {
-            var fullProject = {response};
+    projects.find(id).then(project => {
+            var fullProject = project;
             console.log('response', fullProject);
             actions.findProjectActions(id).then(actionsReturned=> {
                 console.log('actionsReturned', actionsReturned)
