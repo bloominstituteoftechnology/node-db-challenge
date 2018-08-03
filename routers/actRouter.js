@@ -28,7 +28,7 @@ act.post('/', async (req,res) => {
 
   try{
     const id = await baseTbl.insert('action', body)
-    const data = await baseTbl.get(id[0])
+    const data = await baseTbl.get('action', id[0])
     res.status(200).json(data)
   }
   catch(err) {
@@ -46,7 +46,7 @@ act.put('/:id', async (req,res) => {
     try{
       const isUpdated = await baseTbl.update('action',id,body)
       if (isUpdated) {
-        const data = await baseTbl.get(id)
+        const data = await baseTbl.get('action', id)
         res.status(200).json({msg:'record updated', payload: data})
       }else res.status(500).json({err: 'Make sure the id is correct'})
     }

@@ -3,9 +3,9 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('project', (tbl) => {
       tbl.increments('id').primary();
-      tbl.string('name');
-      tbl.string('desc').notNullable();
-      tbl.boolean('isComplete').notNullable();;
+      tbl.string('name').notNullable();
+      tbl.string('desc');
+      tbl.boolean('isComplete').notNullable();
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
     }),
     knex.schema.createTable('action', (tbl) => {
