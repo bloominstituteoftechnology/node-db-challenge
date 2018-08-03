@@ -1,12 +1,11 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('projects', function(projects) {
-        projects.increments();
-        projects
-            .text('name', 128)
-            .notNullable();
-        projects.text('Description');
-        projects.boolean('Completed').defaultTo('Not Provided');
+        projects.increments('id').primary();
+        projects.string('name', 256);
+        projects.string('description');
+        projects.boolean('completed').defaultTo('Not Provided');
+        projects.timestamp('createdAt').defaultTo(knex.fn.now());
     })
 };
 
