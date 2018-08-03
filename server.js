@@ -22,8 +22,6 @@ server.get('/api/projects/:id/actions', (req, res) => {
         res.status(404).json({ error: "Entered Id should be a number"});
         }
 
-
-
         else{
 	
 	db('projects')
@@ -33,7 +31,7 @@ server.get('/api/projects/:id/actions', (req, res) => {
         if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
          else {  
 
-                const project = response;
+                const project = response[0];
 		 
 		db('actions')
         	.where('project_id', id)
@@ -58,29 +56,6 @@ server.get('/api/projects/:id/actions', (req, res) => {
 });
 }		
 
-	//db('actions')
-      	//.where('project_id', id)
-
-        //db.select('projects.id', 'projects.name', 'projects.description', 'projects.completed', 'actions.id', 'actions.description','actions.notes', 'actions.completed').from('projects')
-        //.join('actions', 'projects.id', '=', 'actions.project_id')
-
-        //.then(response => {
-        //if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
-        // else {
-                 
-	//	const actions = response;
-                 
-          //      res.status(200).json({actions});
-		 
-         //}
-
-       // })
-
-       // .catch(err => {
-       // res.status(404).json({error: "The project with the specified ID does not exist."});
-       // })
-
-       // }
 });
 
 
@@ -134,39 +109,6 @@ server.get('/api/projects/:id', (req, res) => {
 
         }
 });
-
-
-/*server.get('/api/projects/:id/actions', (req, res) => {
-        const id = req.params.id;
-
-        if(isNaN(id)){
-        res.status(404).json({ error: "Entered Id should be a number"});
-        }
-
-        else{
-
-        db.from('projects')
-	.innerJoin('actions', 'projects.id', 'actions.project_id')
-
-        .then(response => {
-        //if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
-        // else {
-                 res.status(200).json(response);
-        // }
-
-        })
-
-        .catch(err => {
-        res.status(404).json({error: "The project with the specified ID does not exist."});
-        })
-
-        }
-});*/
-
-
-
-
-
 
 
 
@@ -256,8 +198,64 @@ server.post('/api/actions', (req, res) => {
 });
 	
 
+server.put('/api/projects/:id', (req, res) => {
+  const {name, description, completed} = req.body;
+
+  const id =  req.params.id;
+  const project = {name, description, completed}
+
+        if (!name || !description || completed ==="") {
+                res.status(400).json({message: "Please don't leave name, description and completed fields empty for the project."});
+        }
+
+        else{
+        db('projects')
+        .where('id', id)
+        .update(project)	
+
+        .then(response => {
+                if(response===0)  res.status(404).json({ message: "The project with the specified ID does not exist." });
+                else{
+                        message= "Successfully updated the project with new information";
+                        res.status(200).json({message, project});
+                }
+        })
+
+        .catch(error => {
+        res.status(500).json({ message: "Couldn't update the project" });
+        })
+}
+});
 
 
+server.put('/api/actions/:id', (req, res) => {
+  const {notes, description, completed} = req.body;
+
+  const id =  req.params.id;
+  const action = {notes, description, completed}
+
+        if (!notes || !description || completed ==="") {
+                res.status(400).json({message: "Please don't leave notes, description and completed fields empty for the action."});
+        }
+
+        else{
+        db('actions')
+        .where('id', id)
+        .update(action)
+
+        .then(response => {
+                if(response===0)  res.status(404).json({ message: "The action with the specified ID does not exist." });
+                else{
+                        message= "Successfully updated the action with new information";
+                        res.status(200).json({message, action});
+                }
+        })
+        
+        .catch(error => {
+        res.status(500).json({ message: "Couldn't update the action" });
+        })
+}
+});
 
 
 
