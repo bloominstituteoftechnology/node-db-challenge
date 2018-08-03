@@ -168,9 +168,15 @@ server.post('/api/projects', (req, res) => {
 
 server.post('/api/actions', (req, res) => {
 
-        if(isNaN(req.body.project_id)){
+        if(!req.body.project_id){
+	res.status(404).json({ error: "Please provide a project_id"});
+	}
+	
+	else if(isNaN(req.body.project_id)){
         res.status(404).json({ error: "Project_id should be a number" });
         }
+	
+
 
         else {
 
@@ -256,6 +262,63 @@ server.put('/api/actions/:id', (req, res) => {
         })
 }
 });
+
+
+server.delete('/api/projects/:id', (req, res)=> {
+
+        const id = req.params.id;
+        console.log(id);
+
+        if(isNaN(id)) res.status(400).json({errorMessage: "Id should be a number"});
+
+        else{
+         db('projects')
+        .where('id', id)
+        .del()
+        .then(response => {
+
+                if(response===1) {
+                let responseObject ={};
+                responseObject.message = `Successfully deleted project with id ${id}`;
+
+                res.status(200).json(responseObject);
+                }
+
+                else res.status(404).json({ error: "The project with the specified ID does not exist."});
+        })
+
+        .catch(err => res.status(500).json(err));
+        }
+});
+
+
+server.delete('/api/actions/:id', (req, res)=> {
+
+        const id = req.params.id;
+        console.log(id);
+
+        if(isNaN(id)) res.status(400).json({errorMessage: "Id should be a number"});
+
+        else{
+         db('actions')
+        .where('id', id)
+        .del()
+        .then(response => {
+
+                if(response===1) {
+                let responseObject ={};
+                responseObject.message = `Successfully deleted action with id ${id}`;
+
+                res.status(200).json(responseObject);
+                }
+
+                else res.status(404).json({ error: "The action with the specified ID does not exist."});
+        })
+
+        .catch(err => res.status(500).json(err));
+        }
+});
+
 
 
 
