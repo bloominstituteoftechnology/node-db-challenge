@@ -13,6 +13,13 @@ exports.up = function(knex, Promise) {
             .notNullable()
             .defaultTo(false)
         
+        table
+            .integer('project_id')
+            .unsigned()
+            .references('project_id')
+            .inTable('projects')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
     })  
 };
 
