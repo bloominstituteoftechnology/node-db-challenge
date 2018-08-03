@@ -8,7 +8,7 @@ module.exports = {
       filename: './data/projects.sqlite3'
     }
   },
-
+  setNullAsDefault: true,
   staging: {
     client: 'postgresql',
     connection: {
