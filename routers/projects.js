@@ -14,6 +14,15 @@ projects.post('/', async (req, res, next) => {
   }
 })
 
+projects.get('/', async (req, res, next) => {
+  try {
+    const projects = await db('projects')
+    res.status(200).json(projects)
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
 projects.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
