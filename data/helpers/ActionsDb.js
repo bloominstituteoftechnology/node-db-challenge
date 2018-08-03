@@ -1,7 +1,7 @@
 const db = require('./../db');
 
 module.exports = {
-    getProjects: function() {
+    getActions: function() {
         return db('actions')
     },
 
