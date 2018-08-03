@@ -3,7 +3,6 @@
     id: 1, // AUTO-SET
     name: 'text', // REQUIRED & UNIQUE
     description: 'text', 
-    notes: 'text',
     completed: false // DEFAULT SET TO FALSE
 }
 //ACTIONS
