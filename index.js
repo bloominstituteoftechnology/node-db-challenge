@@ -6,6 +6,8 @@ const server = express();
 
 server.use(express.json());
 
+//PROJECTS endpoints
+
 server.post('/projects', (req, res) => {
     const project = req.body;
     db.insert(project)
@@ -68,6 +70,34 @@ server.delete('/projects/:id', (req, res) => {
             res.status(500).json(err);
         })
 });
+
+server.get('/projects/:id/actions', (req, res) => {
+    const {id} = req.params;
+    let project = {};
+    db('projects')
+        .where({id})
+        .then(data => {
+            project = {...data};
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+
+    db('actions')
+        .where({project_id:id})
+        .then(actions => {
+            console.log(actions);
+            console.log(project);
+            project.actions = actions;
+            console.log(project.actions);
+            res.status(200).json(project);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+//ACTIONS endpoints
 
 server.post('/actions', (req, res) => {
     const action = req.body;
