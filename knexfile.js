@@ -9,7 +9,7 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      direction: './data/migrations',
+      directory: './data/migrations',
       tableName: 'gtd_migrations'
     },
     seeds: { directory: './data/seeds' }

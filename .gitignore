@@ -5,3 +5,5 @@
 .*
 
 package-lock.json
+
+data/gtd.sqlite3
