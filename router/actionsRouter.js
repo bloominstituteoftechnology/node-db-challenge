@@ -25,11 +25,13 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const ID = req.params.id;
 
+  // make sure we have an action
   try {
     const action = await actionsDB.get(ID);
     if (typeof action === 'undefined') {
       res.status(400).json({ message: `There is no action with id:${ID}` });
     } else {
+      // we do, so get the contexts
       try {
         const contexts = await actionsDB.getContexts(ID);
         let displayObj = { ...action };
