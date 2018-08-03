@@ -13,8 +13,14 @@ server.get('/api/projects', async (req, res) => {
 
 server.get('/api/projects/:id', async (req, res) => {
   const { id } = req.params;
-  const payload = await db('projects').where('id', '=', id);
-  res.status(200).json(payload[0]);
+  const projectPromise = db('projects').where('id', '=', id);
+  const actionsPromise = db('actions').where('projectId', '=', id);
+  const [[project], actions] = await Promise.all([projectPromise, actionsPromise]);
+  const packagedProject = {
+    ...project,
+    actions,
+  };
+  res.status(200).json(packagedProject);
 });
 
 server.post('/api/projects/', async (req, res) => {
