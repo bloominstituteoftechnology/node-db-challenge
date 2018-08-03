@@ -64,4 +64,18 @@ server.put('/:id', (req, res) => {
     }
 });
 
+// Get actions by project id
+
+server.get('/:id/actions', (req, res) => {
+    db('actions')
+        .where('projectId', req.params.id)
+        .then(action => {
+            if (action.length > 0) res.status(200).json(action);
+            else res.status(200).json({ err });
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
+
  module.exports = server;
