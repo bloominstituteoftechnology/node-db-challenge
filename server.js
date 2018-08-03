@@ -111,6 +111,59 @@ server.delete('/api/actions/:id', async (req, res) => {
   }
 });
 
+server.get('/api/contexts', async (req, res) => {
+  const payload = await db('contexts');
+  res.status(200).json(payload);
+});
+
+server.get('/api/contexts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [payload] = await db('contexts').select().where('id', '=', id)
+    res.status(200).json(payload);
+  }
+  catch (err) {
+    throw err;
+  }
+});
+
+server.post('/api/contexts/', async (req, res) => {
+  const { body } = req;
+  const [id] = await db('contexts').insert(body);
+  res.status(201).json(id);
+});
+
+server.put('/api/contexts/:id', async (req, res) => {
+  const {
+    params: { id },
+    body,
+  } = req;
+  const numberChanged = await db('contexts')
+    .update(body)
+    .where('id', '=', Number(id));
+  if (numberChanged === 1) {
+    res.status(200).json(id);
+  } else {
+    res.status(501).json('An error occured in this transaction');
+  }
+});
+
+server.delete('/api/contexts/:id', async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const deletedNum = await db('contexts')
+    .delete()
+    .where('id', '=', id);
+  if (deletedNum === 0) {
+    res.status(501).json('Request was not implemented in database');
+  } else {
+    res.status(200).json(deletedNum);
+  }
+});
+
+
+
 server.use((err, req, res, next) => {
   console.log(err);
   next();
