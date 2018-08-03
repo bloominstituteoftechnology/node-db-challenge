@@ -39,6 +39,8 @@ router.get('/:id', async (req, res) => {
         }
         if (contextArr.length > 0) {
           displayObj['Contexts'] = contextArr;
+        } else {
+          displayObj['Contexts'] = 'none';
         }
         res.status(200).json(displayObj);
       } catch (err) {}
