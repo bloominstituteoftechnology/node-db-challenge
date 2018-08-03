@@ -31,4 +31,28 @@ projectsRouter.post("/", (req, res) => {
     .catch(err => res.status(500).json(err.message));
 });
 
+projectsRouter.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const changes = req.body;
+  db("projects")
+    .where("id", id)
+    .update(changes)
+    .then(ids => {
+      const id = ids[0];
+      res.status(200).json({ id, ...changes });
+    })
+    .catch(err => res.status(500).json(err.message));
+});
+
+projectsRouter.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  db("posts")
+    .where("id", id)
+    .del()
+    .then(ids => {
+      res.status(200).json("PROJECT DELETED SUCCESSFULLY");
+    })
+    .catch(err => res.status(500).json(err.message));
+});
+
 module.exports = projectsRouter;
