@@ -18,24 +18,24 @@ You'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Proj
 
 ## General Requirements
 
-- A `project` can contain multiple actions and has:
-  - a unique Id.
-  - a name.
-  - a description.
-  - a flag that indicates if the project is complete or not.
-- An `action` belongs to only one project. An action has:
-  - a unique id.
-  - a description of what needs to be done.
-  - a notes column to add additional information.
-  - a flag that indicates if the action has been completed.
+- [ ] A `project` can contain multiple actions and has:
+  - [ ] a unique Id.
+  - [ ] a name.
+  - [ ] a description.
+  - [ ] a flag that indicates if the project is complete or not.
+- [ ] An `action` belongs to only one project. An action has:
+  - [ ] a unique id.
+  - [ ] a description of what needs to be done.
+  - [ ] a notes column to add additional information.
+  - [ ] a flag that indicates if the action has been completed.
 
 Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
 
 ## tasks
 
-- Build the database and tables using knex migrations. **Seeding is not needed**.
-- Build the API to perform CRUD operations on projects and actions.
-- Build an endpoint to retrieve a `project` by its `id` that returns an object
+- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [ ] Build the API to perform CRUD operations on projects and actions.
+- [ ] Build an endpoint to retrieve a `project` by its `id` that returns an object
   with the following structure:
 
 ```js
