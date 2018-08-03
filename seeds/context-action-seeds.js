@@ -26,4 +26,3 @@ exports.seed = knex => knex('actionContextMap')
       contextId: 2,
     },
   ]));
-  

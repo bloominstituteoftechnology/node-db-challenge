@@ -60,9 +60,20 @@ server.get('/api/actions', async (req, res) => {
 });
 
 server.get('/api/actions/:id', async (req, res) => {
-  const { id } = req.params;
-  const payload = await db('actions').where('id', '=', id);
-  res.status(200).json(payload[0]);
+  try {
+    const { id } = req.params;
+    const actionPromise = db('actions').where('id', '=', id);
+    const contextPromise = db('contexts')
+      .innerJoin('actionContextMap', 'contexts.id', '=', 'actionContextMap.contextId')
+      .where('actionContextMap.actionId', '=', id)
+      .select('contexts.name', 'contexts.id');
+    const [[action], contexts] = await Promise.all([actionPromise, contextPromise]);
+    const payload = { ...action, contexts };
+    res.status(200).json(payload);
+  }
+  catch (err) {
+    throw err;
+  }
 });
 
 server.post('/api/actions/', async (req, res) => {
@@ -98,6 +109,11 @@ server.delete('/api/actions/:id', async (req, res) => {
   } else {
     res.status(200).json(deletedNum);
   }
+});
+
+server.use((err, req, res, next) => {
+  console.log(err);
+  next();
 });
 
 server.listen(8000, () => {
