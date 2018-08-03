@@ -6,6 +6,8 @@ exports.up = function(knex, Promise) {
     t.text('notes').nullable()
     t.boolean('completed').notNullable().defaultTo(false)
     t.timestamp('createdAt').notNullable().defaultTo(knex.fn.now())
+    t.onUpdate('CASCADE')
+    t.onDelete('CASCADE')
   })
 };
 
