@@ -38,6 +38,35 @@ actions.get('/:id', async (req, res, next) => {
   }
 })
 
+actions.put('/:id', async (req, res) => {
+  const id = +req.params.id
+  const { body: action } = req
+
+  try {
+    const updated = await db('actions')
+      .where('id', '=', id)
+      .update(action)
+
+    res.status(200).json({ id, ...action })
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
+actions.delete('/:id', async (req, res) => {
+  const id = +req.params.id
+
+  try {
+    const deleted = await db('actions')
+      .where('id', '=', id)
+      .del()
+
+    res.status(200).send(`[Action: ${id}] successfully deleted`)
+  } catch(e) {
+    sendError(500, e.message, next) 
+  }
+})
+
 actions.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
