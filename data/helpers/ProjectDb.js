@@ -31,6 +31,24 @@ module.exports = {
         return query.join('contexts as c', 'c.projectId', 'p.id')
         .select('projects', 'contexts')
         .where('c.projectId', id)
+    },
+
+    insert: function(project) {
+        return db('projects')
+        .insert(project)
+        .select(ids => ({id: ids[0]}));
+    },
+
+    update: function(id, project) {
+        return db('projects')
+        .where('id', id)
+        .update(project)
+    },
+
+    delete: function(id) {
+        return db('projects')
+        .delete()
+        .where('id', id)
     }
 
     

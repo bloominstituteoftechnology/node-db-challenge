@@ -13,5 +13,38 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+    const project = req.body;
+    db.insert(project)
+    .then(response => {
+        res.status(201).json(response)
+    })
+    .catch(err =>{
+        res.status(500).json({error: 'There was an error saving the project to the database.'})
+    })
+})
+
+router.put('/:id', (req, res) => {
+    const project = req.body;
+    const id = req.params.id;
+    db.update(id, project)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(err => {
+        res.status(500).json({error: 'There was an error saving changes to the database.'})
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    db.delete(id)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(err => {
+        res.status(500).json({error: 'Project could not be deleted.'})
+    })
+})
 
 module.exports = router;
