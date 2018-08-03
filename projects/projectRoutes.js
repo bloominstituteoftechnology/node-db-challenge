@@ -1,87 +1,86 @@
 const express = require('express');
-const db = require('../data/dbConfig.js');
+const db = require('../helpers/projectsDb.js');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  db('projects')
-    .then( projects => {
-      res.status(200).json(projects);
-    })
-    .catch(err => res.status(500).json(err));
+router.get('/', async (req, res) => {
+  try {
+    const projects = await db.getAll();
+    res.status(200).json(projects);
+  } catch (err) {
+    res.status(500).send({ error: 'The projects could not be retrieved.' })
+  }
 });
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  db('projects')
-    .where({ id })
-    .then(project => {
-      if (project.length === 0) {
-        res.status(200).send({ error: 'A project with this id does not exist.'});
-      }
+router.get('/:id', async (req, res) => {
+  try {
+    const project = await db.get(req.params.id);
+    if (project.length === 0) {
+      res.status(404).send({ error: 'The project with the specified ID does not exist.'});
+    } else {
       res.status(200).json(project);
-    })
-    .catch(err => res.status(500).json(err));
+    }
+  } catch (err) {
+    res.status(500).send({ error: 'The project information could not be retrieved.' });
+  }
 });
 
-router.post('/', (req, res) => {
-  const project = req.body;
-
-  db.insert(project).into('projects')
-    .then(ids => {
-      const id = ids[0]
-      res.status(201).json({id, ...project});
-    })
-    .catch(err => res.status(500).json(err));
+router.get('/:id/details', async (req, res) => {
+  try {
+    const project = await db.getProject(req.params.id);
+    if (project.length === 0) {
+      res.status(404).send({ error: 'The project with the specified ID has no actions.'});
+    } else {
+      const formattedProject = {};
+      const firstProject = project[0];
+      formattedProject.name = firstProject.projectName;
+      formattedProject.description = firstProject.projectDescription;formattedProject.completed = firstProject.projectIsComplete;
+      formattedProject.actions = project.map(item => {
+        return {description: item.actionDescription, notes: item.actionNotes, completed: item.actionIsComplete};
+      });
+      res.status(200).json(formattedProject);
+    }
+  } catch (err) {
+    res.status(500).send({ error: 'The project information could not be retrieved.' });
+  }
 });
 
-router.put('/:id', (req, res) => {
-  const { name, description, iscomplete } = req.body;
-  const { id } = req.params;
-
-  db('projects')
-    .where({ id })
-    .update({ name, description, iscomplete })
-    .then(count => {
-      if (count) {
-        db('projects')
-          .where({ id })
-          .then(project => {
-            res.status(200).json(project);
-          })
-          .catch(err => res.status(500).json(err));
-      } else {
-        res.status(200).send({ error: 'A project with this id does not exist.'});
-      }
-    })
-    .catch(err => res.status(500).json(err));
+router.post('/', async (req, res) => {
+  try {
+    const added = await db.insert(req.body);
+    const project = await db.get(added.id);
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).send({ error: 'There was an error while saving the project to the database.' });
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  let deletedproject;
+router.put('/:id', async (req, res) => {
+  try {
+    let project = await db.get(req.params.id);
+    if (project.length === 0) {
+      res.status(404).send({ error: 'The project with the specified ID does not exist.' })
+    } else {
+      await db.update(req.params.id, req.body);
+      project = await db.get(req.params.id);
+      res.status(200).json(project);
+    }
+  } catch (err) {
+    res.status(500).send({ error: 'The project information could not be modified.' });
+  }
+});
 
-  db('projects')
-    .where({ id })
-    .then(project => {
-      if (project.length === 0) {
-        res.status(200).send({ error: 'A project with this id does not exist.'});
-      }
-      deletedproject = project;
-    })
-    .catch(err => res.status(500).json(err));
-
-  db('projects')
-    .where({ id })
-    .del()
-    .then(count => {
-      if (count) {
-        res.status(200).json(deletedproject);
-      } else {
-        res.status(200).send({ error: 'A project with this id does not exist.'});
-      }
-    })
-    .catch(err => res.status(500).json(err));
+router.delete('/:id', async (req, res) => {
+  try {
+    const project = await db.get(req.params.id);
+    if (project.length === 0) {
+      res.status(404).send({ error: 'The project with the specified ID does not exist.' })
+    } else {
+      await db.remove(req.params.id)
+      res.status(200).json(project);
+    }
+  } catch (err) {
+    res.status(500).send({ error: 'The project could not be removed.' });
+  }
 });
 
 module.exports = router;
