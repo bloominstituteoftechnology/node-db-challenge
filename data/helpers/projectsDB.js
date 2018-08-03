@@ -9,12 +9,6 @@ module.exports = {
 
     return query;
   },
-  /*
-  select p.id, p.name, p.description, p.done, a.p_id as ActionID, a.description, a.notes, a.done
-   from projects as p
-  join actions as a on p.Id = a.p_id
-  where p.id  = 3
-*/
   getProjectsActions: function(projectId) {
     return db('projects')
       .select(
