@@ -1,6 +1,8 @@
 const express = require('express');
 
 const db = require('./data/db.js');
+const projectModel = require("./helpers/projectModel");
+
 
 const server = express();
 
@@ -90,8 +92,39 @@ server.delete('/projects/:id', (req, res) => {
     });
 })
 
+//Get Project by ID
+
+// server.get('/projects/:id', (req, res) => {
+//     const {id} = req.params;
+//     db('projects')
+//     .where('id', Number(id))
+//     .then(project => {
+//         if (project.length === 0) {
+//             res
+//               .status(404)
+//               .json({ mesage: "The project with the specified ID does not exist." });
+//           }
+//         res.status(200).json(project)
+//     })
+//     .catch(err => {
+//         res.status(500).json(err);
+//     });
+// })
 
 
+
+server.get('/projects/:id', (req, res) => {
+    projectModel
+    .get(req.params.id)
+   .then(project => {
+       res.status(200).json(project)
+   })
+   .catch(err => {
+    res
+      .status(500)
+      .json({ error: "The project information could not be retrieved." });
+  })
+})
 
 
 // ACTIONS------------------------------------------------------------------------------
