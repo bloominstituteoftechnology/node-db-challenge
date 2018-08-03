@@ -130,6 +130,5 @@ router.use((err, req, res, next) => {
   }
 })
 
-
 //EXPRESS ROUTER EXPORT
 module.exports = router;

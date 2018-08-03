@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const context = await dbConfig('context').where('id', req.params.id).first();
+    const context = await dbConfig('contexts').where('id', req.params.id).first();
     res.status(200).json(context);
   } catch (err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
