@@ -9,5 +9,8 @@ module.exports = {
   },
   update: (id, body) => {
     return db('action').where({id}).update(body)
-  } 
+  },
+  delete: (id) => {
+    return db('action').where({id}).del()
+  }  
 }

@@ -10,7 +10,6 @@ act.get('/', async (req,res) => {
     res.status(200).json(data)
   }
   catch(err) {res.status(500).json({err})}
-
 })
 
 
@@ -36,7 +35,6 @@ act.post('/', async (req,res) => {
     if(err.errno == 19) res.status(500).send('Check to make sure all required fields are being sent')
     res.status(500).json({err:err})
   }
-
 })
 
 act.put('/:id', async (req,res) => {
@@ -57,7 +55,21 @@ act.put('/:id', async (req,res) => {
       else res.status(500).json({err:err})
     }
   }
+})
 
+act.delete('/:id', async (req,res) => {
+  const {id} = req.params
+
+    try{
+      const numRowsDel = await actionTbl.delete(id)
+      
+      numRowsDel === 0 ? res.status(500).json({err: 'Make sure the id is correct'}) :
+        res.status(200).json({msg:`record with id = ${id} has been deleted`})
+    }
+    catch(err) {
+      if(err.errno == 19) res.status(500).send('Check to make sure all required fields are being sent')
+      else res.status(500).json({err:err})
+    }
 })
 
 
