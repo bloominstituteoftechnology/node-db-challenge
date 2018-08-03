@@ -40,6 +40,65 @@ server.get('/api/actions', (req, res)=>{
 });
 
 
+server.get('/api/projects/:id', (req, res) => {
+        const id = req.params.id;
+
+        if(isNaN(id)){
+        res.status(404).json({ error: "Entered Id should be a number"});
+        }
+
+        else{
+        
+	db('projects')
+	.where('id', id)	
+
+        .then(response => {
+        if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
+         else {
+                 res.status(200).json(response);
+         }
+
+        })
+
+        .catch(err => {
+        res.status(404).json({error: "The project with the specified ID does not exist."});
+        })
+
+        }
+});
+
+
+server.get('/api/actions/:id', (req, res) => {
+        const id = req.params.id;
+
+        if(isNaN(id)){
+        res.status(404).json({ error: "Entered Id should be a number"});
+        }
+
+        else{
+        
+        db('actions')
+        .where('id', id)
+        
+        .then(response => {
+        if(response.length==0) res.status(404).json({ error: "The action with the specified ID does not exist." });
+         else {
+                 res.status(200).json(response);
+         }
+
+        })
+
+        .catch(err => {
+        res.status(404).json({error: "The action with the specified ID does not exist."});
+        })
+
+        }
+});
+
+
+
+
+
 
 
 
