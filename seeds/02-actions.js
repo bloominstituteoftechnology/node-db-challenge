@@ -5,13 +5,13 @@ exports.seed = function(knex, Promise) {
       return knex('actions').insert([
         { 
           description: 'Jam the matter fluxerator into the cheese',
-          notes: 'DO NOT FLIP THE SWITCH THAT SAYS "FLIP ME"',
+          notes: 'DO NOT FLIP THE SWITCH THAT SAYS FLIP ME',
           project_id: 1,
-          completed: false
+          completed: true
         },
         { 
           description: 'Flip the switch',
-          notes: 'The one that says "FLIP ME"',
+          notes: 'The one that says FLIP ME',
           project_id: 1,
           completed: false
         },

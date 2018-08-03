@@ -13,7 +13,6 @@ module.exports = {
     return (
       db('actions')
         .where('project_id', Number(id))
-        // .first()
     )
   }
 }
