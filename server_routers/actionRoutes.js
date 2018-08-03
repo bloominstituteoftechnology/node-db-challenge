@@ -23,12 +23,12 @@ router.get('/', async (req, res, next) => {
 })
 
 //endpoint for GET with id
-router.get('/:id', async(req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const id = req.params.id;
-    
+
     try {
         const response = await db.get(id);
-        if (response.length===0) {
+        if (response.length === 0) {
             return next(sendError(404, 'Failed to retrieve action information', 'The action for this specific id does no exist.'))
         }
         res.status(200).json(response);
@@ -58,7 +58,7 @@ router.delete('/:id', async (req, res, next) => {
 
     try {
         const action = await db.get(id);
-        if (action.length===0) {
+        if (action.length === 0) {
             return next(sendError(404, 'Failed to remove action.', 'The action for this specific id does no exist.'))
         }
         await db.remove(id);
@@ -73,11 +73,11 @@ router.put('/:id', async (req, res, next) => {
     const id = req.params.id;
     if ((!req.body.description && !req.body.notes && !req.body.project_id)) {
         return next(sendError(400, "Fail to update actions.", "Please provide information of action to be updated."))
-    } 
+    }
 
     try {
         const response = await db.update(id, req.body);
-        if (response===null) {
+        if (response === null) {
             return next(sendError(404, 'Failed to update action.', 'The action for this specific id does no exist.'))
         }
         res.status(200).json(response);
