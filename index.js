@@ -36,13 +36,13 @@ server.get('/api/projects/:id', (req,res) => {
         // .join('actions as a', 'p.id', 'a.project_id')
         .where({['p.id'] : id})
         .then(project => {
-            console.log("Hello, I'm here", project)
+            project = project[0]
+            project.completed ? project.completed = true : project.completed = false
             db('actions')
                 .where({project_id : id})
                 .then(actions => {
-                    console.log(actions)
-                    project[0]['actions'] = actions
-                    res.status(200).json(project[0])
+                    project['actions'] = actions
+                    res.status(200).json(project)
                 })
                 .catch(err => res.status(500).json(err.message))
             
