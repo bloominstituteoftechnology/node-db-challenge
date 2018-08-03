@@ -1,7 +1,8 @@
 const db = require('../dbConfig');
 
 module.exports = {
-    find
+    find,
+    insert
 };
 
 function find(id) {
@@ -9,4 +10,8 @@ function find(id) {
         return db('projects')
         .where({id});
     }else return db('projects');
+}
+
+function insert(project) {
+    return db('projects').insert(project);
 }
