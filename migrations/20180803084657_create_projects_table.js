@@ -7,8 +7,7 @@ exports.up = function(knex, Promise) {
         .text('name')
         .notNullable();
       table
-        .text('description')
-        .notNullable();
+        .text('description');
       table
         .integer('iscomplete')
         .unsigned()
