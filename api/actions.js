@@ -13,6 +13,17 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    db.getActionById(id)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(err => {
+        res.status(500).json({error: 'The actions information could not be retrieved.'})
+    })
+})
+
 router.post('/', (req, res) => {
     const action = req.body;
     db.insert(action)

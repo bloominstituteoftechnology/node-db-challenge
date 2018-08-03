@@ -6,16 +6,8 @@ module.exports = {
     },
 
     getContextById: function(id) {
-        const query = db('contexts as c');
-        const promises = [query, this.joinAct(id), this.joinCont(id)]
-        return Promise.all(promises).then(function(results) {
-            let [projects, actions, contexts] = results;
-            let project = projects[0];
-            project.actions = actions.map(a => {return a});
-            project.contexts = contexts.map(c => {return c});
-
-            return project;
-        })
+        return db('contexts')
+        .where('id', id)
     },
 
 
