@@ -87,24 +87,4 @@ server.get('/api/actions', (req, res) => {
 server.listen(port, () => 
     console.log(`Rock-n-Roll @port: ${port}`)
 );
-//////////////
-server.get('/api/recipes/:id', async (req, res) => {
-    const { id } = req.params;
-    const recipePromise = db('recipes')
-      .where('recipes.id', '=', id)
-      .leftJoin('dishes', 'recipes.dishId', '=', 'dishes.id')
-      .select(db.ref('recipes.name').as('recipeName'), db.ref('dishes.name').as('dishName'));
-    const ingredientsPromise = db('ingredients').where('recipeId', '=', id);
-    const stepsPromise = db('steps')
-      .where('recipeId', '=', id)
-      .orderBy('stepNumber')
-      .select('description');
-    const dataLump = await Promise.all([recipePromise, ingredientsPromise, stepsPromise]);
-    const [[recipe], ingredients, steps] = dataLump;
-    const payload = {
-      ...recipe,
-      ingredients,
-      steps,
-    };
-    res.status(200).json(payload);
-  });
+
