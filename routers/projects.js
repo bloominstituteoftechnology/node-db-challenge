@@ -23,6 +23,24 @@ projects.get('/', async (req, res, next) => {
   }
 })
 
+projects.get('/:id', async (req, res, next) => {
+  const id = +req.params.id
+
+  try {
+    let project = await db('projects')
+      .where('id', '=', id)
+   
+    project = project[0]
+
+    const actions = await db('actions')
+      .where('projectId', '=', id)
+
+    res.status(200).json({ ...project, actions })
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
 projects.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
