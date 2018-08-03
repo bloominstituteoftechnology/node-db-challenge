@@ -23,7 +23,25 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
+    const project = await projects
+      .select()
+      .from("projects")
+      .where(req.params)
+      .first();
+    try {
+      const action = await projects.where("project_id", id).from("actions");
+      console.log("action is: ", action);
+      project.action = action;
+      res.status(200).json(project);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+  /*try {
     const project = await projects
       .select()
       .from("projects")
@@ -36,7 +54,7 @@ router.get("/:id", async (req, res) => {
     }
   } catch (err) {
     res.status(404).json({ message: err.message });
-  }
+  }*/
 });
 
 router.delete("/:id", async (req, res) => {
