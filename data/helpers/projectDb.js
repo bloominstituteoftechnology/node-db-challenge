@@ -11,7 +11,12 @@ module.exports = {
 
             return Promise.all(promises).then(results => {
                 let [project, actions] = results;
-                project.actions = actions;
+                if (actions.length > 0) {
+                    project.actions = actions;
+                    let result = { ...project, completed: project.completed === 1 ? true : false };
+                    result.actions = result.actions.map(action => ({ ...action, completed: action.completed === 1 ? true : false }))
+                    return result;
+                }
                 return { ...project, completed: project.completed === 1 ? true : false };
             })
         }
