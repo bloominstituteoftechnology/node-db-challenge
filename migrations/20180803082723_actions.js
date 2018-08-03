@@ -7,7 +7,9 @@ exports.up = function (knex, Promise) {
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('projects');
+            .inTable('projects')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
 
         actions.text('description').notNullable();
         actions.text('notes').notNullable();

@@ -9,4 +9,5 @@ module.exports = {
     },
     useNullAsDefault: true
   },
+  seeds: { directory: './data/seeds' }
 };
