@@ -6,7 +6,7 @@ exports.seed = function(knex, Promise) {
       return knex('actions').insert([
         {
           id: 1, 
-          projectId: 1
+          projectId: 1,
           description: 'study many-to-many relationships',
           notes: 'create a table with foreign keys of interest' 
         },
