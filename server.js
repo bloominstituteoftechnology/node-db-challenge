@@ -27,7 +27,7 @@ server.post('/api/projects', (req, res) => {
         return; 
     };
     db('projects').insert(newProject).then(response => {
-        res.status(201).json(response)
+        res.status(201).json({id: `${response}`});
     }).catch(err => {
         console.log(err);
         res.status(500).json({error: 'Did not save to server!', err});
@@ -50,8 +50,26 @@ server.get('/api/projects/:id', async (req, res) => {
     const [project, actions] = dataBundle;
     const response = {project, actions}
     res.status(200).json(response)    
-})
-
+});
+//DELETE PROJECT
+server.delete('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects').where({id: id}).del().then(response => {
+        //console.log(response);
+        if (response === 0) {
+            res.status(404).json({ERROR: 'ID Not found'});
+            console.log('FAIL, ID Not found');
+            return;
+        } else if (response === 1) {
+            res.status(200).json({successfulDelete: `id: ${id}`});
+            console.log('SUCCESS');
+        };
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({serverError: 'FAIL'});
+        res.end();
+    });
+});
 //POST CREATE NEW ACTION
 server.post('/api/actions', (req, res) => {
     const { project_id, description, notes, completed } = req.body;
@@ -67,7 +85,7 @@ server.post('/api/actions', (req, res) => {
         return; 
     };
     db('actions').insert(newAction).then(response => {
-        res.status(201).json(response)
+        res.status(201).json({id: `${response}`});
     }).catch(err => {
         console.log(err);
         res.status(500).json({error: 'Did not save to server!', err});
@@ -77,6 +95,26 @@ server.post('/api/actions', (req, res) => {
 server.get('/api/actions', (req, res) => {
     db('actions').then(actions => {
         res.status(200).json({actions});
+    });
+});
+
+//DELETE actions
+server.delete('/api/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions').where({id: id}).del().then(response => {
+        //console.log(response);
+        if (response === 0) {
+            res.status(404).json({ERROR: 'ID Not found'});
+            console.log('FAIL, ID Not found');
+            return;
+        } else if (response === 1) {
+            res.status(200).json({successfulDelete: `id: ${id}`});
+            console.log('SUCCESS');
+        };
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({serverError: 'FAIL'});
+        res.end();
     });
 });
 
