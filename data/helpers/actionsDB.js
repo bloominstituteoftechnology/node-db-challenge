@@ -9,6 +9,9 @@ module.exports = {
 
     return query;
   },
+  getPK: function(id) {
+    return (query = db('actions').where('p_id', Number(id)));
+  },
   insert: function(action) {
     return db('actions')
       .insert(action)

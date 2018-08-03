@@ -47,6 +47,43 @@ server.get('/api/projects/:id', async (req, res) => {
   }
 });
 
+// get a project's actions
+server.get('/api/projects/:id/actions', async (req, res) => {
+  const ID = req.params.id;
+
+  // try {
+  //   const projects = projectsDB.getProjectsActions(ID);
+  //   console.log("PROJECTS", projects);
+  //   res.status(200).send(projects);
+  // } catch (err) {
+  //   res.status(500).send(`${err}`);
+  // }
+
+  try {
+    let project = await projectsDB.get(ID);
+    if (typeof project === 'undefined') {
+      res.status(400).json({ message: `There is no project with id:${ID}` });
+    } else {
+      try {
+        const actions = await actionsDB.getPK(ID);
+        if (typeof actions === 'undefined') {
+          res
+            .status(400)
+            .json({ message: `There are no actions with p_id:${ID}` });
+        } else {
+          project = { ...project, actions: actions };
+          console.log('PROJECT', project);
+          res.status(200).json(project);
+        }
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
 // add a project
 server.post('/api/projects', projectConstraints, async (req, res) => {
   const NAME = req.body.name;
@@ -70,7 +107,7 @@ server.post('/api/projects', projectConstraints, async (req, res) => {
   }
 });
 
-// add an action
+// add an action to a project
 /* prettier-ignore */
 server.post('/api/projects/:id/actions', actionConstraints, async (req, res) => {
   const ID = req.params.id;

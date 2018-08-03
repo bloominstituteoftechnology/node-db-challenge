@@ -9,11 +9,28 @@ module.exports = {
 
     return query;
   },
+  /*
+  select p.id, p.name, p.description, p.done, a.p_id as ActionID, a.description, a.notes, a.done
+   from projects as p
+  join actions as a on p.Id = a.p_id
+  where p.id  = 3
+*/
   getProjectsActions: function(projectId) {
-    // return db('posts as p')
-    //   .join('users as u', 'u.id', 'p.userId')
-    //   .select('p.id', 'p.text', 'u.name as postedBy')
-    //   .where('p.userId', projectId);
+    return db
+      .select(
+        'p.id, p.name, p.description, p.done, a.p_id as ActionID, a.description, a.notes, a.done',
+      )
+      .from('projects as p')
+      .join('actions as a', 'p.id', 'a.p_id')
+      .where('p.id', projectId)
+      .first();
+
+    // return db('projects as p')
+    //   .select(
+    //     'p.id, p.name, p.description, p.done, a.p_id as ActionID, a.description, a.notes, a.done',
+    //   )
+    //   .join('actions as a', 'p.id', 'a.p_id')
+    //   .where('p.id', projectId);
   },
   insert: function(project) {
     return db('projects')
