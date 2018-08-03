@@ -15,4 +15,12 @@ router.get('/:id', (req, res) => {
     }) 
 })
 
+router.get('/:id/actions', (req, res) => {
+    const { id } = req.params
+    db('actions').where({project_id: id}).then(id => {
+        res.status(200).json(id);
+    })
+})
+
+
 module.exports = router;
