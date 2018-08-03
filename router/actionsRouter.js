@@ -30,6 +30,18 @@ router.get('/:id', async (req, res) => {
     if (typeof action === 'undefined') {
       res.status(400).json({ message: `There is no action with id:${ID}` });
     } else {
+      try {
+        const contexts = await actionsDB.getContexts(ID);
+        let displayObj = { ...action };
+        let contextArr = [];
+        for (let i = 0; i < contexts.length; i++) {
+          contextArr.push(contexts[i].name);
+        }
+        if (contextArr.length > 0) {
+          displayObj['Contexts'] = contextArr;
+        }
+        res.status(200).json(displayObj);
+      } catch (err) {}
       res.status(200).json(action);
     }
   } catch (err) {

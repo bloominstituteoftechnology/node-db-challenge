@@ -2,7 +2,12 @@ const db = require('../dbConfig.js');
 
 module.exports = {
   get: function(id) {
-    let query = db('projects');
+    let query = db('projects').select(
+      'id',
+      'name',
+      'description',
+      'done as completed',
+    );
     if (id) {
       query.where('id', Number(id)).first();
     }
