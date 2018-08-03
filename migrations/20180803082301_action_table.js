@@ -16,6 +16,15 @@ exports.up = function(knex, Promise) {
       .boolean("completed")
       .notNullable()
       .defaultTo(false);
+
+    tbl
+      .integer("project_id")
+      .unsigned()
+      .notNullable()
+      .references("id")
+      .inTable("projects")
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
   });
 };
 
