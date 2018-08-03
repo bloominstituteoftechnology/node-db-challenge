@@ -1,65 +1,41 @@
 # Sprint Challenge for RDBMS and SQL
 
-The purpose of this exercise is to get you used to being quizzed on _Interview
-Questions_ commonly asked about Relational Database Management Systems and SQL.
+The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.
 
-Answers to your written questions will be recorded in _Answers.md_
-
-Please work on this challenge alone, but feel free to use outside resources. You can _reference_ any old code you may have, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something. 
-
-**Start by forking and cloning this repository.**
-
-## Questions - Self Study 
-You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
-
-1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key
-   on another table.
-1. What do we need in order to have a _many to many_ relationship between two
-   tables.
-1. What SQL statement is used to retrieve data from a table?
-1. What SQL clause is used to filter the results of a query?
-1. What are `views`? Provide one example use case for them.
-
-## Project description
-
-**This is just a backend. Testing your application will require the use
-of Postman or something simliar.**
-
-For this Project we'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful
-API for a `Project Tracker` application that persists data to either _SQLite_ or
-_MySQL_.
-
-## General Requirements
-
-The application let the users track `Projects`, `Actions` and `Contexts` in the
-spirit of the _Getting Things Done (GTD)_ methodology.
-
-* A project can contain many actions and can be assigned to different contexts.
-  A project has:
-  * a unique Id.
-  * a name.
-  * a description.
-  * a flag that indicates if the project is complete or not.
-* An action belongs to only one project and can be assigned to different contexts. An action has:
-  * a unique id.
-  * a description of what needs to be done.
-  * a notes column to add additional information.
-  * a flag that indicates if the action has been completed.
-* A context can appear in multiple actions or projects. A context has:
-  * a unique id.
-  * a context column ('home', 'office', 'at computer').
-
-Feel free to name the tables and fields anyway you want. Add constraints and
-relationships as you see fit.
+Please work on this challenge alone, but feel free to use outside resources. You can _reference_ any old code you may have, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 
 ## Assignment
 
-* Build the database and tables.
-* Build the API to perform CRUD operations on all the resources (projects,
-  actions, contexts).
-* Build an endpoint to retrieve a `project` by its `id` that returns an object
+**Start by forking and cloning this repository.**
+
+Open the _Review.md_ file and answer the questions inside, then move on to working on the following project.
+
+## Project description
+
+The application lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
+
+You'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
+
+## General Requirements
+
+- A `project` can contain multiple actions and has:
+  - a unique Id.
+  - a name.
+  - a description.
+  - a flag that indicates if the project is complete or not.
+- An `action` belongs to only one project. An action has:
+  - a unique id.
+  - a description of what needs to be done.
+  - a notes column to add additional information.
+  - a flag that indicates if the action has been completed.
+
+Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
+
+## tasks
+
+- Build the database and tables using knex migrations.
+- Build the API to perform CRUD operations on projects and actions.
+- Build an endpoint to retrieve a `project` by its `id` that returns an object
   with the following structure:
 
 ```js
@@ -81,13 +57,19 @@ relationships as you see fit.
       notes: 'the action notes',
       completed: false // or true
     }
-  ],
-  contexts: [
-    { id: 1, context: 'the context' }
-    { id: 5, context: 'another context' }
   ]
 }
 ```
+
+## Stretch Problem
+
+This section is **optional** and not counted towards MVP. Start working on it after you're done with the main assignment.
+
+Add support for the concept of `contexts`. A context is something like _at home_, _at work_ and _at computer_. The idea is that some actions required a certain `context` in order to be worked on, for example, the action of _working on your taxes with an online service_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, working on your taxes will not show up on the list.
+
+A `context` can be applied to more than one `action`. An action can be assigned more than one context, like in the example above.
+
+When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
 
 Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.
 
