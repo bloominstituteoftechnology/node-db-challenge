@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     const { name, description, completed } = req.body;
-    if (!name || !description) return res.status(404).json({ error: 'Please provide name and description' });
+    if (!name || !description) return res.status(400).json({ error: 'Please provide name and description' });
     try {
         const response = await projectDb.insert({ name, description, completed });
         return res.status(201).json(response);
