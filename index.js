@@ -46,6 +46,13 @@ server.put('/projects/:id', (req, res) => {
       })
       .catch(err => res.status(500).json({ error: "The project could not be updated" }))
 });
+server.get('/projects/:id', (req, res) => {
+    projectsDb.read(req.params.id)
+      .then(response => {
+        res.status(200).json(response)
+      })
+      .catch(err => res.status(500).json({ error: "The project information could not be retrieved." }))
+});
 
 // Actions
 server.get('/actions', (req, res) => {
