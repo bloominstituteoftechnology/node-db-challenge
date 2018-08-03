@@ -20,9 +20,19 @@ server.get("/projects", (req, res) => {
 });
 server.get("/projects/:id", (req, res) => {
   const { id } = req.params;
-  db.select().from('project').innerJoin('actions', 'actions.project_id', 'project.id')
+  let actions = {};
+  db.select().from('actions').where('id', id)
     .then(response => {
-      res.json(response)
+      actions = response;
+    })
+    .catch(response => {
+      console.log(response);
+    })
+  db.select().from('project').where('id', id)//innerJoin('actions', 'actions.project_id', 'project.id')
+    .then(response => {
+      let newResponse = response[0];
+      Object.assign(newResponse, {actions})
+      res.json(newResponse)
     })
     .catch(error => {
      res.status(500).send({ error: "Server Error" })
