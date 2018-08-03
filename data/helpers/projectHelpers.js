@@ -4,7 +4,7 @@ const helpers = ('./helpers');
 module.exports = {
     get: function(id) {
         let query = db('projects');
-        if (id) {
+        if(id) {
             query.where('projects.id', id).first();
 
             const promises = [query, this.getProjectActions(id)];
@@ -18,6 +18,18 @@ module.exports = {
         }
         return query.then(projects => {
             return projects.map(project => helpers.projectToBody(project));
+        });
+    },
+    get: function(id) {
+        let query = db('actions');
+        if(id) {
+            return query
+            .where('id', id)
+            .first()
+            .then(action => helpers.actionToBody(action));
+        }
+        return query.then(actions => {
+            return actions.map(action => helpers.actionToBody(action));
         });
     },
     getProjectActions: function(projectId) {
