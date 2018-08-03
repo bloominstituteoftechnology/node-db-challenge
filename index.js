@@ -86,6 +86,76 @@ server.put('/project/:id', (req, res) => {
 /////////////////////////////////////////////////////////////////////////////END OF PROJECT ENDPOINTS
 
 
+server.get('/action', (req, res) => {
+    db('action')
+        .then(act => res.status(200).json(act))
+        .catch(err => res.status(500).json({error:'These actions dont exist'})
+    )
+})
+
+server.get('/action/:id', (req, res) => {
+    db('action')
+        .where('id', req.params.id)
+        .then(act => {
+            if(act.length === 0) {
+                res.status(404).json({ message:'ID DONT EXIST'});
+            }
+            res.status(200).json(act);
+        })
+        .catch(error => {
+            res.status(500).json({error:'Well this is embarrassing:Something went wrong'})
+        });
+})
+
+server.post('/action', (req, res) => {
+    const { project_id, description, notes, completed } = req.body;
+    if (!project_id || !description || !notes || !completed) 
+    res.status(400).json({errorMessage: 'Required project_id, description, notes and whether or not you completed with a 0 or 1'});
+    db
+        .insert({ project_id, description, notes, completed })
+        .into('action')
+        .then(proj => res.status(201).json({project_id, description, notes, completed}))
+        .catch(err => res.status(400).json({error: 'Error posting that action'}))
+})
+
+server.delete('/action/:id', (req, res) => {
+    const { id } = req.params;
+    db('action')
+        .where('id', (id))
+        .delete()
+        .then(act => {
+            if(act === 0) {
+                res.status(404).json({message: "That ID does not exist, therefore, you cannot delete it"});
+            }
+            res.status(200).json({message:"Great, you deleted that action"});
+        })
+        .catch(error => {
+            res.status(500).json({error:"Error deleting that action"})
+        });
+})
+
+server.put('/action/:id', (req, res) => {
+    const project_id = req.body;
+    const description = req.body; 
+    const notes = req.body;
+    const completed = req.body;
+    const { id } = req.params
+    if(!project_id || !description || !notes || !completed)
+    res.status(400).json({errorMessage:"Provide an id, description, notes and whether or not you completed this action with a 0 or 1"});
+    db('action')
+        .where('id', (id))
+        .update(project_id, notes, description, completed)
+        .then(act => {
+            if(!act) {
+                res.status(404).json({message: "ID doesnt exist buddy"});
+            }
+            res.status(200).json(description);
+        })
+        .catch(error => {
+            res.status(500).json({error:"Try again dummy"})
+        });
+})
+
 
 
 
