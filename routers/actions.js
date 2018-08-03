@@ -14,6 +14,15 @@ actions.post('/', async (req, res, next) => {
   }
 })
 
+actions.get('/', async (req, res, next) => {
+  try {
+    const actions = await db('actions')
+    res.status(200).json(actions)
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
 actions.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
