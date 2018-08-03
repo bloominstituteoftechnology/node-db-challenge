@@ -1,5 +1,5 @@
 const express = require('express');
-// const api = require('./routes/apiRouter');
+const api = require('./routes/apiRoutes');
 
 const server = express();
 
@@ -10,7 +10,7 @@ server.get('/', (req, res) => {
     res.send('up and running...');
 });
 
-// server.use('/api', api)
+server.use('/api', api)
 
 const port = 8000;
 server.listen(port, function() {
