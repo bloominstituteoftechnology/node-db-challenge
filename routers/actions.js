@@ -27,7 +27,7 @@ actionsRouter.post("/", (req, res) => {
     .into("actions")
     .then(ids => {
       const id = ids[0];
-      res.status(201).json({ id, post });
+      res.status(201).json({ id, ...action });
     })
     .catch(err => res.status(500).json(err.message));
 });
