@@ -69,6 +69,45 @@ server.post('/api/projects', (req, res, next) => {
     }
 })
 
+//UPDATE project
+server.put('/api/projects/:id', (req, res, next) => {
+    let id = req.params.id;
+    let name = req.body.name;
+    let description = req.body.description;
+    let completed = req.body.completed;
+    if (req.body.completed === "true" || req.body.completed === true) {
+        completed = true;
+    } else {
+        completed = false;
+    }
+    let updatedProject = {
+        name,
+        description,
+        completed,
+    }
+    if (updatedProject.name.length > 128) {
+        return next({
+            code: 128,
+            message: "Name Field: Character limit exceeded (128 characters)."
+        })
+    }
+    if (!updatedProject.description || !updatedProject.name) {
+        return next({
+            code: 400
+        })
+    } else {
+        projects.update(id, updatedProject)
+            .then(projects => {
+                console.log(projects)
+                res.status(200).json(projects)
+            })
+            .catch(err => next({
+                err,
+                code: err.code
+            }))
+    }
+})
+
 //Get Actions
 server.get('/api/actions', (req, res, next) => {
     actions.find()

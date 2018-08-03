@@ -2,7 +2,8 @@ const db = require('../dbConfig');
 
 module.exports= {
 find,
-insert
+insert,
+update
 };
 
 function find(id) {
@@ -14,4 +15,8 @@ function find(id) {
 
 function insert(action) {
    return db('actions').insert(action);
+}
+
+function update(id, action) {
+    return db('actions').where({id}).update(action);
 }
