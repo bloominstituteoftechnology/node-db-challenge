@@ -69,6 +69,69 @@ server.delete('/projects/:id', (req, res) => {
         })
 });
 
+server.post('/actions', (req, res) => {
+    const action = req.body;
+    db.insert(action)
+        .into('actions')
+        .then(ids => {
+            res.status(201).json(ids);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.get('/actions', (req, res) => {
+    db.select()
+        .from('actions')
+        .then(actions => {
+            res.status(201).json(actions);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+
+server.get('/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db('actions')
+        .where({id})
+        .then(actions => {
+            res.status(201).json(actions);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.put('/actions/:id', (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+    db('actions')
+        .where({id})
+        .update(changes)
+        .then(count => {
+            res.status(201).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.delete('/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db('actions')
+        .where({id})
+        .del()
+        .then(count => {
+            res.status(201).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
 
 const port = 8000;
 server.listen(port, function() {
