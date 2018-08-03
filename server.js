@@ -51,30 +51,15 @@ server.get('/api/projects/:id', async (req, res) => {
 server.get('/api/projects/:id/actions', async (req, res) => {
   const ID = req.params.id;
 
-  // try {
-  //   const projects = projectsDB.getProjectsActions(ID);
-  //   console.log("PROJECTS", projects);
-  //   res.status(200).send(projects);
-  // } catch (err) {
-  //   res.status(500).send(`${err}`);
-  // }
-
   try {
     let project = await projectsDB.get(ID);
     if (typeof project === 'undefined') {
       res.status(400).json({ message: `There is no project with id:${ID}` });
     } else {
       try {
-        const actions = await actionsDB.getPK(ID);
-        if (typeof actions === 'undefined') {
-          res
-            .status(400)
-            .json({ message: `There are no actions with p_id:${ID}` });
-        } else {
-          project = { ...project, actions: actions };
-          console.log('PROJECT', project);
-          res.status(200).json(project);
-        }
+        const projects = await projectsDB.getProjectsActions(ID);
+        console.log('PROJECTS', projects);
+        res.status(200).send(projects);
       } catch (err) {
         res.status(500).send(`${err}`);
       }
