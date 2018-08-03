@@ -6,5 +6,8 @@ module.exports = {
   },
   insert: (body) =>{
     return db('action').insert(body)
-  }
+  },
+  update: (id, body) => {
+    return db('action').where({id}).update(body)
+  } 
 }
