@@ -21,7 +21,7 @@ server.get("/projects", (req, res) => {
 server.get("/projects/:id", (req, res) => {
   const { id } = req.params;
   let actions = {};
-  db.select().from('actions').where('id', id)
+  db.select().from('actions').where('project_id', id)
     .then(response => {
       actions = response;
     })
