@@ -7,7 +7,10 @@ module.exports = {
     connection: {
       filename: './data/projectActions.db'
     },
-    useNullAsDefault: true,	  
+    useNullAsDefault: true,
+    seeds:{
+        directory: './data/seeds'
+     }	  
   },
 
   staging: {
