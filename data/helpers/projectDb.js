@@ -12,11 +12,12 @@ module.exports = {
             return Promise.all(promises).then(results => {
                 let [project, actions] = results;
                 project.actions = actions;
-                return project;
+                return { ...project, completed: project.completed === 1 ? true : false };
             })
         }
-
-        return query;
+        return query.then(projects => {
+            return projects.map(project => ({ ...project, completed: project.completed === 1 ? true : false }))
+        });
     },
     insert: project => {
         return db('project').insert(project).then(ids => ({ id: ids[0] }));
