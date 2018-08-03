@@ -24,6 +24,15 @@ server.post("/projects", (req, res) => {
               "completed": toBool}).into('project')
     .then(response => (res.json(response)))
 });
+server.put("/projects/:id", (req, res) => {
+    const { id } = req.params;
+    const { name, description, completed } = req.body;
+    const toBool = completed == "true";
+    db.update({"name": name,
+                "description": description,
+                "completed": toBool}).into('project').where('id', id)
+      .then(response => (res.json(response)))
+});
 
 
 
