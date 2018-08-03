@@ -1,7 +1,7 @@
-const codes = require('./../status-codes/statusCodes');
+const codes = require('../data/statusCodes');
 
 const express = require('express');
-const db = require('../');
+const db = require('../data/dbConfig');
 
 const router = express.Router();
 
