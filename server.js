@@ -3,10 +3,10 @@ const server = express();
 server.use(express.json());
 const PORT = 3000;
 
-const errors = require('./middleware/errors');
-
 const projectsRoutes = require('./router/projectsRouter');
 const actionsRoutes = require('./router/actionsRouter');
+
+const errors = require('./middleware/errors');
 
 // base endpoints here
 server.get('/', (req, res) => {
