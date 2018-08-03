@@ -122,6 +122,19 @@ server.post("/actions", (req, res) => {
     });
 });
 
+server.put("/actions/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  actions
+    .update(id, changes)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => {
+      return error;
+    });
+});
+
 server.delete("/actions/:id", (req, res) => {
   const { id } = req.params;
   actions
