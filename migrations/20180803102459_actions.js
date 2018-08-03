@@ -12,14 +12,18 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo("Not Provided");
     // foreign key
+    // table
+    //   .integer("project_id")
+    //   .unsigned()
+    //   .notNullable()
+    //   .references("id")
+    //   .inTable("projects")
+    //   .onUpdate("CASCADE")
+    //   .onDelete("CASCADE");
     table
       .integer("project_id")
       .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("projects")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
+      .notNullable();
   });
 };
 
