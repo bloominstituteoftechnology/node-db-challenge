@@ -1,36 +1,35 @@
 const express = require('express');
-const dbConfig = require('../data/dbConfig.js');
-
 const router = express.Router();
+const dbConfig = require('../data/dbConfig');
 
 router.use(express.json());
 
+//BEGIN PROJECTS CRUD
 router.get('/', async (req, res, next) => {
   try {
-    const actions = await dbConfig('actions');
-    res.status(200).json(actions);
+    const contexts = await dbConfig('contexts');
+    res.status(200).json(contexts);
   } catch (err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
   }
+
 });
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const action = await dbConfig('actions').where('id', req.params.id).first();
-    const contexts = await dbConfig('contexts').where('id', req.params.id).first();
-    action.contexts = contexts;
-    res.status(200).json(action);
+    const context = await dbConfig('context').where('id', req.params.id).first();
+    res.status(200).json(context);
   } catch (err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
   }
 });
 
 router.post('/', async (req, res, next) => {
-  const {project_id, description, notes} = req.body;
+  const {action_id, name} = req.body;
   try {
-    const ids = await dbConfig.insert({project_id, description, notes}).into('actions');
+    const ids = await dbConfig.insert({action_id, name}).into('contexts');
     const id = ids[0];
-    res.status(201).json(await dbConfig('actions').where('id', id));
+    res.status(201).json(await dbConfig('contexts').where('id', id));
   } catch(err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
   }
@@ -38,7 +37,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    const result = await dbConfig('actions').where('id', req.params.id).del();
+    const result = await dbConfig('contexts').where('id', req.params.id).del();
     res.status(200).json(result);
   } catch(err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
@@ -46,15 +45,16 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 router.put('/:id', async (req, res, next) => {
-  const {project_id, description, notes} = req.body;
+  const {action_id, name} = req.body;
   try {
-    const index = await dbConfig('actions').where('id', req.params.id).first().update({project_id, description, notes});
-    if (index > 0) return res.status(200).json(await dbConfig('actions').where('id', req.params.id).first());
+    const index = await dbConfig('contexts').where('id', req.params.id).first().update({action_id, name});
+    if (index > 0) return res.status(200).json(await dbConfig('contexts').where('id', req.params.id).first());
     res.status(200).send("It didn't trigger");
   } catch(err) {
     next({code:500, success:false, statusCode:500, userMessage: err, compilerMessage:`${err}`})
   }
 });
+//END PROJECTS CRUD
 
 //ERROR HANDLING MIDDLEWARE
 router.use((err, req, res, next) => {
