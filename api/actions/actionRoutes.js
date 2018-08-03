@@ -32,4 +32,15 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    const { description, notes, completed } = req.body;
+    if (!description && !notes && !completed) return res.status(400).json({ error: 'Please provide something to edit!' });
+    try {
+        const response = await actionDb.update(req.params.id, { description, notes, completed });
+        return res.status(201).json(response);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+})
+
 module.exports = router;
