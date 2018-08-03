@@ -1,4 +1,6 @@
 const express = require('express');
+const projectModel = require('./data/helpers/projectModel.js');
+const actionModel = require('./data/helpers/actionModel.js');
 
 const db = require('./data/db')
 
@@ -116,6 +118,22 @@ server.delete('/actions/:id', (req, res) => {//delete action
       });
       
   });
+  server.get('/projectwactions/:id',(req, res) => {//get project acts
+    
+    const id = req.params.id;
+    projectModel.get(id)//req.params.id
+      .then(projects => {
+        if (projects.length === 0) {
+          res.status(404)
+            .json({ error: "missing projects." })
+        }
+        res.status(200).json(projects)
+      }).catch(error => {
+        res.status(500)
+          .json({ error: "The project with the specified id do not exist." })
+      });
+  
+  })
 const port = 6500;
 server.listen(port, function () {
     console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
