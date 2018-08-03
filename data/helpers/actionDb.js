@@ -5,7 +5,7 @@ module.exports = {
         let query = db('action');
 
         if (id) {
-            return query.where('id', id).first().then(action => ({ ...action, completed: action.completed === 1 ? true : false }));
+            return query.where('id', id).first().then(action => action ? ({ ...action, completed: action.completed === 1 ? true : false }) : query);
         }
 
         return query.then(actions => {

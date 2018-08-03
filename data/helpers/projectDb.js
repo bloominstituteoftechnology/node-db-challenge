@@ -17,7 +17,7 @@ module.exports = {
                     result.actions = result.actions.map(action => ({ ...action, completed: action.completed === 1 ? true : false }))
                     return result;
                 }
-                return { ...project, completed: project.completed === 1 ? true : false };
+                return project ? { ...project, completed: project.completed === 1 ? true : false } : query;
             })
         }
         return query.then(projects => {
