@@ -8,7 +8,7 @@ exports.up = knex => knex.schema.createTable('actions', (actions) => {
   actions.text('name');
   actions.text('description');
   actions.text('notes');
-  actions.boolean('completed');
+  actions.boolean('completed').defaultTo('false');
 });
 
 exports.down = knex => knex.schema.dropTableIfExists('actions');
