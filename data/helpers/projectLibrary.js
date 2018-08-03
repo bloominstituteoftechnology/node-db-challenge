@@ -8,7 +8,6 @@ module.exports = {
       projects.where('id', id).first();
       const actions = [projects, db('actions').where('project_id', id)];
       return Promise.all(actions).then(results => {
-        console.log(results);
         if (results[1].length > 0) {
           let [project, projectActions] = results;
           project.actions = projectActions;

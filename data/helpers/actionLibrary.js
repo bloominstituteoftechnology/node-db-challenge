@@ -5,9 +5,9 @@ module.exports = {
     let actions = db('actions');
 
     if (id) {
-      return actions.where('id', id).first();
+      return actions.where('id', id);
     }
-    
+
     return actions;
   },
   insert: (action) => {

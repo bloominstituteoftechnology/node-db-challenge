@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const project = await projects.get(req.params.id);
-    if (project.length === 0) {
+    if (!project) {
       return res.status(404).json({ message: "Project does not exist." });
     }
     return res.status(200).json(project);
