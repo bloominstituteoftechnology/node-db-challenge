@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 
 const projectRoutes = require('./server_routers/projectRoutes');
+const actionRoutes = require('./server_routers/actionRoutes')
 
 const server = express();
 
@@ -15,6 +16,7 @@ server.get('/', (req, res) => {
 
 //=== Endpoints for Projects ===
 server.use('/projects', projectRoutes);
+server.use('/actions', actionRoutes);
 
 //=== Error Handler
 server.use((err, req, res, next) => {
