@@ -30,10 +30,22 @@ server.get('/api/projects', (req, res) => {
 
 server.get('/api/projects/:id', (req,res) => {
     const {id} = req.params
-    db('projects')
-        .where({id})
+    db
+        .select('p.id', 'p.name', 'p.description', 'p.completed', )
+        .from('projects as p')
+        // .join('actions as a', 'p.id', 'a.project_id')
+        .where({['p.id'] : id})
         .then(project => {
-            res.status(200).json(project)
+            console.log("Hello, I'm here", project)
+            db('actions')
+                .where({project_id : id})
+                .then(actions => {
+                    console.log(actions)
+                    project[0]['actions'] = actions
+                    res.status(200).json(project[0])
+                })
+                .catch(err => res.status(500).json(err.message))
+            
         })
         .catch(err => res.status(500).json(err.message))
 })
