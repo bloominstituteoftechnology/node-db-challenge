@@ -3,6 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 
 const projectRouter = require('./projects/index');
+const actionRouter = require('./actions/index');
 
 const server = express();
 const port = 8000;
@@ -12,6 +13,7 @@ server.use(express.json());
 server.use(helmet());
 
 server.use('/projects', projectRouter);
+server.use('/actions', actionRouter);
 
 server.get('/', (req, res) => {
     res.status(200).send(`Server running @ localhost:${port}`);
