@@ -139,6 +139,36 @@ server.put('/api/projects/:id', projectConstraints, async (req, res) => {
   }
 });
 
+// delete a project
+server.delete('/api/projects/:id', projectConstraints, async (req, res) => {
+  const ID = req.params.id;
+
+  // make sure we have the project to delete
+  try {
+    const project = await projectsDB.get(ID);
+    if (typeof project === 'undefined') {
+      res.status(400).json({ message: `There is no project with id:${ID}` });
+    } else {
+      // we do! try to delete the project
+      try {
+        const project = await projectsDB.remove(ID);
+        console.log('PROJECT', project);
+        res.status(200).json({ message: `Project id:${ID} has been deleted.` });
+      } catch (err) {
+        if (err.errno === 19) {
+          res.status(500).json({
+            error: `Project id:${ID} can not be deleted because it has actions. Delete the actions first, if you really want to delete this project.`,
+          });
+          return;
+        }
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
 /* 
   ACTIONS API
 */
