@@ -3,9 +3,16 @@ const db = require('../data/db');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    db.select('projects').then(project => {
+    db('projects').then(project => {
         res.status(200).json(project)
     })
+})
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params
+    db('projects').where({id : id}).then(id => {
+        res.status(200).json(id)
+    }) 
 })
 
 module.exports = router;
