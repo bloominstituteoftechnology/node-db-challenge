@@ -162,7 +162,53 @@ server.delete('/api/contexts/:id', async (req, res) => {
   }
 });
 
+server.get('/api/contexts/:id/actions', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = await db('actions')
+      .innerJoin('actionContextMap', 'actions.id', '=', 'actionContextMap.actionId')
+      .select('actions.name', 'actions.id').where('actionContextMap.contextId', '=', id);
+    res.status(200).json(payload);
+  }
+  catch (err) {
+    throw err;
+  }
+});
 
+server.post('/api/contexts/actions/', async (req, res) => {
+  const { body } = req;
+  const [id] = await db('actionContextMap').insert(body);
+  res.status(201).json(id);
+});
+
+server.put('/api/contexts/actions/:id', async (req, res) => {
+  const {
+    params: { id },
+    body,
+  } = req;
+  const numberChanged = await db('contexts/actions')
+    .update(body)
+    .where('id', '=', Number(id));
+  if (numberChanged === 1) {
+    res.status(200).json(id);
+  } else {
+    res.status(501).json('An error occured in this transaction');
+  }
+});
+
+server.delete('/api/contexts/actions/:id', async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const deletedNum = await db('contexts/actions')
+    .delete()
+    .where('id', '=', id);
+  if (deletedNum === 0) {
+    res.status(501).json('Request was not implemented in database');
+  } else {
+    res.status(200).json(deletedNum);
+  }
+});
 
 server.use((err, req, res, next) => {
   console.log(err);
