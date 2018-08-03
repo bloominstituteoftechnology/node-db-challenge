@@ -3,10 +3,11 @@ const db = require('../db');
 module.exports = {
   get: (id) => {
     let actions = db('actions');
+
     if (id) {
-      console.log(id);
       return actions.where('id', id).first();
     }
+    
     return actions;
   },
   insert: (action) => {
