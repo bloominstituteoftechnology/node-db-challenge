@@ -1,5 +1,6 @@
 const express = require('express');
-const projectDB = require('./data/helpers/projectDB');
+const projectsDB = require('./data/helpers/projectsDB');
+const actionsDB = require('./data/helpers/actionsDB');
 
 const server = express();
 server.use(express.json());
@@ -17,14 +18,14 @@ server.get('/', (req, res) => {
 */
 server.get('/api/projects', async (req, res) => {
   try {
-    const projects = await projectDB.get();
+    const projects = await projectsDB.get();
     if (projects.length === 0) {
       res.status(200).json({ message: 'There are currently no projects' });
     } else {
       res.status(200).json(projects);
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send(`${err}`);
   }
 });
 
@@ -32,15 +33,45 @@ server.get('/api/projects/:id', async (req, res) => {
   const ID = req.params.id;
 
   try {
-    const project = await projectDB.get(ID);
-    console.log('PROJECT', project);
+    const project = await projectsDB.get(ID);
     if (typeof project === 'undefined') {
       res.status(200).json({ message: `There is no project with id:${ID}` });
     } else {
       res.status(200).json(project);
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send(`${err}`);
+  }
+});
+
+/* 
+  ACTIONS API
+*/
+server.get('/api/actions', async (req, res) => {
+  try {
+    const actions = await actionsDB.get();
+    if (actions.length === 0) {
+      res.status(200).json({ message: 'There are currently no actions' });
+    } else {
+      res.status(200).json(actions);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+server.get('/api/actions/:id', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(200).json({ message: `There is no action with id:${ID}` });
+    } else {
+      res.status(200).json(action);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
   }
 });
 
