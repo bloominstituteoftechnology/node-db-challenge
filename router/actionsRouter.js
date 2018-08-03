@@ -1,0 +1,90 @@
+const express = require('express');
+const actionsDB = require('../data/helpers/actionsDB');
+const { actionConstraints } = require('../middleware');
+const router = express.Router();
+
+/* 
+  ACTIONS API
+*/
+
+// get all actions
+router.get('/', async (req, res) => {
+  try {
+    const actions = await actionsDB.get();
+    if (actions.length === 0) {
+      res.status(200).json({ message: 'There are currently no actions' });
+    } else {
+      res.status(200).json(actions);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// get an action by id
+router.get('/:id', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(400).json({ message: `There is no action with id:${ID}` });
+    } else {
+      res.status(200).json(action);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// update an action
+router.put('/:id', actionConstraints, async (req, res) => {
+  const ID = req.params.id;
+  const NOTES = req.body.notes;
+  const DESCRIPTION = req.body.description;
+
+  const ACTION = { notes: NOTES, description: DESCRIPTION };
+
+  // make sure we have the project to update
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(400).json({ message: `There is no action with id:${ID}` });
+    } else {
+      // we do! try to update the action
+      try {
+        const action = await actionsDB.update(ID, ACTION);
+        res.status(200).json({ message: `action id:${ID} has been updated.` });
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// delete a action
+router.delete('/:id', async (req, res) => {
+  const ID = req.params.id;
+
+  // make sure we have the action to delete
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(400).json({ message: `There is no action with id:${ID}` });
+    } else {
+      // we do! try to delete the action
+      try {
+        const action = await actionsDB.remove(ID);
+        res.status(200).json({ message: `Action id:${ID} has been deleted.` });
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+module.exports = router;
