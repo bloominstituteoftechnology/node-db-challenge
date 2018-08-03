@@ -27,7 +27,14 @@ server.get('/api/projects', (req, res, next) => {
 server.get('/api/projects/:id', (req, res, next) => {
     let id = req.params.id;
     projects.find(id).then(response => {
-            res.status(200).json(response);
+            var fullProject = {response};
+            console.log('response', fullProject);
+            actions.findProjectActions(id).then(actionsReturned=> {
+                console.log('actionsReturned', actionsReturned)
+            var ProjectWithActions = Object.assign({}, fullProject, {actions: actionsReturned});
+             res.status(200).json(ProjectWithActions);
+            })
+           
         })
         .catch(err => next({
             err,
