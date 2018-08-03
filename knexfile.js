@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './data/SPRINT-RDBMS.db'
+      filename: './data/sprint.db'
     }
   },
 

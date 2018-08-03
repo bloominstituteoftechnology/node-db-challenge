@@ -15,7 +15,7 @@ server.get('/', (req, res) => {
 
 server.post('/projects', (req, res) => {
   const project = req.body;
-  console.log(project)
+  //console.log(project)
   db
     .insert(project)
     .into('projects')
@@ -42,6 +42,33 @@ server.get('/projects/:id', (req, res) => {
       res.status(200).json(projects);
     })
     .catch((err) => res.status(500).json(err));
+});
+
+server.delete('/projects/:id', (req, res) => {
+  const { id } = req.params;
+  db('projects')
+    .where({ id })
+    .del()
+    .then((id) => {
+        res.json(id);
+    })
+    .catch(err => {
+        res.json({ err });
+    })
+});
+
+server.put('/projects/:id', (req, res) => {
+  const { id } = req.params;
+  const project = req.body;
+  db('projects')
+    .where({ id })
+    .update(project)
+    .then((project) => {
+        res.json(project);
+    })
+    .catch(err => {
+        res.json({ err });
+    })
 });
 
 
