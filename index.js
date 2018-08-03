@@ -1,6 +1,7 @@
 const express = require('express');
 
 const db = require('./data/db.js');
+const helpDb = require('./helpers/helpDb.js');
 
 const server = express();
 
@@ -157,7 +158,18 @@ server.put('/action/:id', (req, res) => {
 })
 
 
-
+server.get("/project/:id/action", (req, res) => {
+    helpDb
+      .get(req.params.id)
+      .then(project => {
+        res.status(200).json(project);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: "The project information could not be retrieved." });
+      });
+  });
 
 
 
