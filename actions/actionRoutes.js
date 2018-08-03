@@ -45,7 +45,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-//error handling middleware
+//ERROR HANDLING MIDDLEWARE
 router.use((err, req, res, next) => {
   //You could put some user notes here
   switch(err.code) {
