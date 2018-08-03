@@ -19,33 +19,39 @@ server.get('/projects', (req, res) => {
     db('project').then(p => { res.status(200).json(p) })
  })
 server.get('/projects/:id', (req, res) => { 
-    db('projects').where(req.params.id).then(p => { res.status(200).json(p) })
+    const { id } = req.params;
+    db('project').where({ id }).then(p => { res.status(200).json(p) })
  })
 server.post('/projects/', (req, res) => { 
     const project = req.body;
-    if(projects.name && project.descritption) {
+    if(project.name && project.description) {
         db('project')
              .insert(project)
-             .then(p =>  res.status(200).json(p))
+             .then(p =>  {
+                 const id = p[0]
+                 res.status(200).json({ id, ...project })
+             })             
              .catch(error => res.json(error))
+             
     } else {
         res.status(400).json({ message: 'Please provide both a name and description for the project' })
     }
  })
-server.delete('/projects/:id', (req, res) => { 
+server.delete('/projects/:id', (req, res) => { // needs some fix (delete is working, needs proper error handling)
     const { id } = req.params;
     db('project')
      .where({ id })
-     .delete()
+     .del()
      .then(ids => {
-        if(!ids) {
-            res.status(404).json({ error: 'The user with specified ID does not exist'})
+        const id = ids[0]
+        if(!id) {
+            res.status(404).json({ error: 'The project with specified ID does not exist'})
         }
-        res.status(200).json(ids, { message: 'The user has been deleted' });
+        res.status(200).json(id, { message: 'The project has been deleted' });
     })
      .catch(error => res.status(500).json(error))
  })
- server.put('/projects/:id', (req, res) => {
+ server.put('/projects/:id', (req, res) => { // needs some fix (put is working, needs proper error handling)
     const { id } = req.params;
     const p = req.body;
     if(!p){
@@ -55,9 +61,70 @@ server.delete('/projects/:id', (req, res) => {
     .where({ id })
      .update(p)
      .then(p => {
-        const id = ids[0]
+        const id = p[0]
         if (!ids) {
-                res.status(404).json({ error: 'The user with specified ID does not exist' })
+                res.status(404).json({ error: 'The project with specified ID does not exist' })
+            } else {
+                res.status(200).json(id)
+            }
+     })
+     .catch(err => {
+        res.status(500).json(err);
+      });
+})
+
+// ****** action ******
+server.get('/actions', (req, res) => { 
+    db('action').then(p => { res.status(200).json(p) })
+    .catch(err => res.status(500).json({errorMessage: err }));
+ })
+server.get('/actions/:id', (req, res) => { 
+    const { id } = req.params;
+    db('action').where({ id }).then(p => { res.status(200).json(p) })
+ })
+server.post('/actions/', (req, res) => { 
+    const { project_id, description, notes } = req.body;
+    const action = { project_id, description, notes } ;
+    if(action) {
+        db('action')
+             .insert(action)
+             .then(p =>  {
+                 const id = p[0]
+                 res.status(200).json({ id, ...action })
+             })             
+             .catch(error => res.json(error))
+             
+    } else {
+        res.status(400).json({ message: 'Please provide notes, description, and project_id for the action' })
+    }
+ })
+server.delete('/actions/:id', (req, res) => { // needs some fix (delete is working, needs proper error handling)
+    const { id } = req.params;
+    db('action')
+     .where({ id })
+     .del()
+     .then(ids => {
+        const id = ids[0]
+        if(!id) {
+            res.status(404).json({ error: 'The action with specified ID does not exist'})
+        }
+        res.status(200).json(id, { message: 'The action has been deleted' });
+    })
+     .catch(error => res.status(500).json(error))
+ })
+ server.put('/actions/:id', (req, res) => { // needs some fix (put is working, needs proper error handling)
+    const { id } = req.params;
+    const p = req.body;
+    if(!p){
+        res.status(400).json({ error: 'Please provide action notes, project_id and description' })
+    } 
+    db('action')
+    .where({ id })
+     .update(p)
+     .then(p => {
+        const id = p[0]
+        if (!ids) {
+                res.status(404).json({ error: 'The action with specified ID does not exist' })
             } else {
                 res.status(200).json(id)
             }
