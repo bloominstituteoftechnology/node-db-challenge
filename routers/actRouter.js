@@ -17,7 +17,7 @@ act.get('/:id', async (req,res) => {
   const {id} = req.params
 
   try{
-    const data = await baseTbl.get(id, 'action')
+    const data = await baseTbl.get('action', id)
     res.status(200).json(data)
   }
   catch(err) {res.status(500).json({err})}
@@ -27,7 +27,7 @@ act.post('/', async (req,res) => {
   const {body} = req
 
   try{
-    const id = await baseTbl.insert(body, 'action')
+    const id = await baseTbl.insert('action', body)
     const data = await baseTbl.get(id[0])
     res.status(200).json(data)
   }
@@ -44,7 +44,7 @@ act.put('/:id', async (req,res) => {
   if (Object.keys(body).length === 0) res.status(500).json({msg:'request body is required for a PUT'})
   else {
     try{
-      const isUpdated = await baseTbl.update(id,body, 'action')
+      const isUpdated = await baseTbl.update('action',id,body)
       if (isUpdated) {
         const data = await baseTbl.get(id)
         res.status(200).json({msg:'record updated', payload: data})
@@ -61,7 +61,7 @@ act.delete('/:id', async (req,res) => {
   const {id} = req.params
 
     try{
-      const numRowsDel = await baseTbl.delete(id, 'action')
+      const numRowsDel = await baseTbl.delete('action',id)
 
       numRowsDel === 0 ? res.status(500).json({err: 'Make sure the id is correct'}) :
         res.status(200).json({msg:`record with id = ${id} has been deleted`})
