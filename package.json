@@ -1,0 +1,21 @@
+{
+    "name": "rdbms-sprint",
+    "version": "0.0.1",
+    "description": "Libby Hart RDBMS Sprint Challenge",
+    "private": true,
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.4",
+        "express": "^4.16.3",
+        "knex": "^0.15.2",
+        "node": "^10.8.0",
+        "sqlite3": "^4.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^1.17.3"
+    }
+}
