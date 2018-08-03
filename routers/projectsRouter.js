@@ -31,7 +31,7 @@ router.get('/:id/actions', (req, res) => {
 router.post('/', (req, res) => {
     const { project, description, completed} = req.body
     db('projects').insert({project, description, completed}).then(project => {
-        res.status(200).json(err)
+        res.status(200).json(project)
     }).catch(err => {
         res.status(500).json(err)
     })
@@ -40,8 +40,8 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const { id } = req.params
     const { project, description, completed} = req.body
-    db('projects').where({id: id}.insert({ project, description, completed}).then(updatePost => {
-        res.status(200).json(updatePost)
+    db('projects').where({id: id}).update({project, description, completed}).then(post => {
+        res.status(200).json(post)
     }).catch(err => {
         res.status(500).json(err)
     })
