@@ -7,7 +7,12 @@ exports.up = function(knex, Promise) {
       .string('name', 256)
       .notNullable()
       .unique()
-      .defaultTo('Not Provided');
+    tbl
+      .string('description')
+      .notNullable()
+    tbl
+      .boolean('completed')
+      .defaultTo(false)
   });
 };
 

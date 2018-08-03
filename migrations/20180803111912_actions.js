@@ -13,6 +13,14 @@ exports.up = function(knex, Promise) {
       .inTable('projects')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    tbl
+      .string('description')
+      .notNullable()
+    tbl
+      .string('notes')
+    tbl
+      .boolean('completed')
+      .defaultTo(false)
   });
 };
 
