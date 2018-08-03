@@ -1,0 +1,14 @@
+{
+  "name": "y",
+  "version": "y",
+  "description": "y",
+  "main": "y",
+  "repository": "y",
+  "author": "y",
+  "license": "y",
+  "private": true,
+  "dependencies": {
+    "knex": "^0.15.2",
+    "sqlite3": "^4.0.2"
+  }
+}
