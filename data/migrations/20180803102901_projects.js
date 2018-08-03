@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
       .string("name")
       .notNullable()
       .unique();
-    table.string("description");
-    table.boolean("completed");
+    table.text("description");
+    table.boolean("completed").defaultTo(false);
   });
 };
 
