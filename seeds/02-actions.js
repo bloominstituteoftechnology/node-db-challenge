@@ -1,4 +1,3 @@
-
 exports.seed = function(knex, Promise) {
   return knex('actions').del()
     .then(function () {
@@ -27,7 +26,8 @@ exports.seed = function(knex, Promise) {
           project_id: 2,
           completed: false
         },
-        { description: 'Construct Rocket',
+        { 
+          description: 'Construct Rocket',
           notes: `Let's just get a big cylinder with a cone on top and put a bunch of TNT under it`,
           project_id: 3,
           completed: true
