@@ -15,6 +15,74 @@ server.get('/', (req, res) => {
 });
 
 
+server.get('/api/projects/:id/actions', (req, res) => {
+        const id = req.params.id;
+
+        if(isNaN(id)){
+        res.status(404).json({ error: "Entered Id should be a number"});
+        }
+
+
+
+        else{
+	
+	db('projects')
+	.where('id', id)	
+
+	.then(response => {
+        if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
+         else {  
+
+                const project = response;
+		 
+		db('actions')
+        	.where('project_id', id)
+
+		.then(responseA => {
+        	if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
+         else {
+
+                const actions = responseA;
+
+                res.status(200).json({project, actions});
+
+         }
+
+         })
+
+        .catch(err => {
+        res.status(404).json({error: "The project with the specified ID does not exist."});
+        })
+
+        }
+});
+}		
+
+	//db('actions')
+      	//.where('project_id', id)
+
+        //db.select('projects.id', 'projects.name', 'projects.description', 'projects.completed', 'actions.id', 'actions.description','actions.notes', 'actions.completed').from('projects')
+        //.join('actions', 'projects.id', '=', 'actions.project_id')
+
+        //.then(response => {
+        //if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
+        // else {
+                 
+	//	const actions = response;
+                 
+          //      res.status(200).json({actions});
+		 
+         //}
+
+       // })
+
+       // .catch(err => {
+       // res.status(404).json({error: "The project with the specified ID does not exist."});
+       // })
+
+       // }
+});
+
 
 server.get('/api/projects', (req, res)=>{
 
@@ -66,6 +134,40 @@ server.get('/api/projects/:id', (req, res) => {
 
         }
 });
+
+
+/*server.get('/api/projects/:id/actions', (req, res) => {
+        const id = req.params.id;
+
+        if(isNaN(id)){
+        res.status(404).json({ error: "Entered Id should be a number"});
+        }
+
+        else{
+
+        db.from('projects')
+	.innerJoin('actions', 'projects.id', 'actions.project_id')
+
+        .then(response => {
+        //if(response.length==0) res.status(404).json({ error: "The project with the specified ID does not exist." });
+        // else {
+                 res.status(200).json(response);
+        // }
+
+        })
+
+        .catch(err => {
+        res.status(404).json({error: "The project with the specified ID does not exist."});
+        })
+
+        }
+});*/
+
+
+
+
+
+
 
 
 server.get('/api/actions/:id', (req, res) => {
