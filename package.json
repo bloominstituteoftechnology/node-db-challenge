@@ -1,0 +1,18 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": "https://github.com/DirupT/Sprint-Challenge-RDBMS.git",
+  "author": "Lambda School",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "knex": "^0.15.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
