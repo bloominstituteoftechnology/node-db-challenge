@@ -9,8 +9,9 @@ module.exports = {
                 .where({ 'projects.id': id })
                 .from('projects')
                 .leftJoin('actions', 'projects.id', '=', 'actions.project_id')
-                .then(actions => actions)
-
+                .where('actions.project_id', id)
+                .options({nestTables: true, rowMode: 'array'})
+                .then(actions => {return actions})
         }
 
         return projDb.then(projects => { return projects })

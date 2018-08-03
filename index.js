@@ -60,6 +60,7 @@ server.delete('/projects/:id', (req, res) => {
         })
 })
 
+
 //BEGIN ACTIONS
 server.get('/actions', (req, res) => {
     actionDb
