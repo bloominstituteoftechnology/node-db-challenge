@@ -94,7 +94,6 @@ server.post('/api/projects/:id/actions', actionConstraints, async (req, res) => 
       // have our project!  try and add the action
       try {
         const response = await actionsDB.insert(ACTION);
-        console.log("RESPONSE", response);
         if (response) {
           res.status(200).json({ message: `Action with id:${response.id} has been added.` });
         } else {
@@ -128,7 +127,6 @@ server.put('/api/projects/:id', projectConstraints, async (req, res) => {
       // we do! try to update the project
       try {
         const project = await projectsDB.update(ID, PROJECT);
-        console.log('PROJECT', project);
         res.status(200).json({ message: `Project id:${ID} has been updated.` });
       } catch (err) {
         res.status(500).send(`${err}`);
@@ -140,7 +138,7 @@ server.put('/api/projects/:id', projectConstraints, async (req, res) => {
 });
 
 // delete a project
-server.delete('/api/projects/:id', projectConstraints, async (req, res) => {
+server.delete('/api/projects/:id', async (req, res) => {
   const ID = req.params.id;
 
   // make sure we have the project to delete
@@ -152,7 +150,6 @@ server.delete('/api/projects/:id', projectConstraints, async (req, res) => {
       // we do! try to delete the project
       try {
         const project = await projectsDB.remove(ID);
-        console.log('PROJECT', project);
         res.status(200).json({ message: `Project id:${ID} has been deleted.` });
       } catch (err) {
         if (err.errno === 19) {
@@ -197,6 +194,56 @@ server.get('/api/actions/:id', async (req, res) => {
       res.status(400).json({ message: `There is no action with id:${ID}` });
     } else {
       res.status(200).json(action);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// update an action
+server.put('/api/actions/:id', actionConstraints, async (req, res) => {
+  const ID = req.params.id;
+  const NOTES = req.body.notes;
+  const DESCRIPTION = req.body.description;
+
+  const ACTION = { notes: NOTES, description: DESCRIPTION };
+
+  // make sure we have the project to update
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(400).json({ message: `There is no action with id:${ID}` });
+    } else {
+      // we do! try to update the action
+      try {
+        const action = await actionsDB.update(ID, ACTION);
+        res.status(200).json({ message: `action id:${ID} has been updated.` });
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// delete a action
+server.delete('/api/actions/:id', async (req, res) => {
+  const ID = req.params.id;
+
+  // make sure we have the action to delete
+  try {
+    const action = await actionsDB.get(ID);
+    if (typeof action === 'undefined') {
+      res.status(400).json({ message: `There is no action with id:${ID}` });
+    } else {
+      // we do! try to delete the action
+      try {
+        const action = await actionsDB.remove(ID);
+        res.status(200).json({ message: `Action id:${ID} has been deleted.` });
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
     }
   } catch (err) {
     res.status(500).send(`${err}`);
