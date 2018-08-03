@@ -7,8 +7,6 @@ module.exports = {
 function find(id) {
     if (id) {
         return db('projects')
-            .where(id)
-    }
-
-    return db('projects');
+        .where({id});
+    }else return db('projects');
 }

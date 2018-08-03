@@ -7,9 +7,7 @@ find
 function find(id) {
  if(id) {
      return db('actions')
-     .where(id)
- }
-
-    return db('actions');
-}
+     .where({id})
+ }else return db('actions');
+};
 
