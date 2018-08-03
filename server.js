@@ -70,6 +70,27 @@ server.delete('/api/projects/:id', (req, res) => {
         res.end();
     });
 });
+
+//PUT EDIT PROJECT
+server.put('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const {name, description, completed} = req.body;
+    if(!name && !description && !completed) {
+        res.status(400).json({error: 'bad request from user'});
+        return;
+    };
+    db('projects').where({id: id}).update({name, description, completed}).then(response => {
+        if (response === 0) {
+            res.status(404).json({error: 'ID not found'});
+            return;
+        } else if (response === 1) {
+            res.status(200).json(['success']);
+        };
+    }).catch(err => {
+        res.status(500).json(err);
+    });
+});
+
 //POST CREATE NEW ACTION
 server.post('/api/actions', (req, res) => {
     const { project_id, description, notes, completed } = req.body;
@@ -118,8 +139,25 @@ server.delete('/api/actions/:id', (req, res) => {
     });
 });
 
-
-
+//PUT EDIT ACTIONS
+server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const {project_id, description, notes, completed} = req.body;
+    if(!project_id && !description && !notes && !completed) {
+        res.status(400).json({error: 'bad request from user'});
+        return;
+    }
+    db('actions').where({id: id}).update({project_id, description, notes, completed}).then(response => {
+        if (response === 0) {
+            res.status(404).json({error: 'ID not found'});
+            return;
+        } else if (response === 1) {
+            res.status(200).json(['success']);
+        };
+    }).catch(err => {
+        res.status(500).json(err);
+    });
+});
 
 
 server.listen(port, () => 
