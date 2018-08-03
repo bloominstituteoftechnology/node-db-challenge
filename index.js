@@ -92,7 +92,7 @@ server.delete('/projects/:id', (req, res) => {
     });
 })
 
-//Get Project by ID
+//Get Specific Project by ID
 server.get('/projects/:id', (req, res) => {
     projectModel
     .get(req.params.id)
