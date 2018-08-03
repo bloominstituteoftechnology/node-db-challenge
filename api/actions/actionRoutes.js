@@ -12,4 +12,13 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const response = await actionDb.get(req.params.id);
+        return res.status(200).json(response);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+})
+
 module.exports = router;
