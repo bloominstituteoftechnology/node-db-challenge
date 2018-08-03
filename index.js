@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const Project = require('./projectHelpers');
 const Action = require('./actionHelpers');
+const db = require('./db');
 
 app.use(express.json());
 
@@ -47,10 +48,20 @@ app.delete('/projects/:id', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
-app.get('/projects/:id/actions', (req, res) => {
+app.get('/projects/:id/actions', async (req, res) => {
   const { id } = req.params;
-  const project = Project.getProjectActions(id);
-  res.status(200).json(project);
+  console.log(id);
+  let project = {};
+  try {
+    found = await db('projects').where({ id });
+    console.log(found);
+    project = found[0];
+    actions = await db('actions').where({ project_id: id });
+    project.actions = actions;
+    res.status(200).json(project);
+  } catch (e) {
+    res.status(400).json(e);
+  }
 });
 
 // Action routes

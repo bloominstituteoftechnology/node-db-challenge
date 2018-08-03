@@ -7,8 +7,7 @@ module.exports = {
   findById,
   insert,
   update,
-  remove,
-  getProjectActions
+  remove
 };
 
 function find() {
@@ -33,27 +32,4 @@ function remove(id) {
   return db('projects')
     .where({ id })
     .del();
-}
-
-function getProjectActions(id) {
-  let project = {};
-  db('projects')
-    .where({ id })
-    .then(found => {
-      project = { ...found[0] };
-    })
-    .catch(err => {
-      throw err;
-    });
-
-  db('actions')
-    .where({ project_id: id })
-    .then(found => {
-      project.actions = found;
-    })
-    .catch(err => {
-      throw err;
-    });
-
-  return project;
 }
