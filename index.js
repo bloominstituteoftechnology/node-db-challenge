@@ -22,8 +22,10 @@ server.get('/project', (req, res) => {
 server.get('/project/:id', (req, res) => {
     const projectId = req.body;
 
-    db.select('action')
-    .join('project', 'project.id', 'user.projectId')
+    db('action as a')
+    .join('project as p', 'p.id', 'a.project_id')
+    .select('p', 'a as actions:')
+    .where('a.project_id', projectId);
 })
 
 // PROJECT.POST
