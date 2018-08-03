@@ -5,7 +5,15 @@ module.exports = {
         let query = db('project');
 
         if (id) {
-            return query.where('id', id).first();
+            query.where('id', id).first();
+
+            const promises = [query, db('action as a').select('a.id', 'a.description', 'a.notes', 'a.completed').where('a.project_id', id)]
+
+            return Promise.all(promises).then(results => {
+                let [project, actions] = results;
+                project.actions = actions;
+                return project;
+            })
         }
 
         return query;
