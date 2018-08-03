@@ -26,7 +26,7 @@ projectsRouter.post("/", (req, res) => {
     .into("projects")
     .then(ids => {
       const id = ids[0];
-      res.status(201).json({ id, ...post });
+      res.status(201).json({ id, ...project });
     })
     .catch(err => res.status(500).json(err.message));
 });
@@ -46,7 +46,7 @@ projectsRouter.put("/:id", (req, res) => {
 
 projectsRouter.delete("/:id", (req, res) => {
   const id = req.params.id;
-  db("posts")
+  db("projects")
     .where("id", id)
     .del()
     .then(ids => {
