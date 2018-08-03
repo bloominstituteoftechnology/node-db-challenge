@@ -14,10 +14,8 @@ const errorHandler = (status, message, res) => {
 //Project Endpoints
 
 //List of projects
-
 router.get('/', (req, res) => {
-    projects
-    .get()
+    projects.getProjects()
     .then(response => {
         res.status(200).json(response);
     })
@@ -25,6 +23,17 @@ router.get('/', (req, res) => {
         errorHandler(500, "The project information could not be retrieved.", res);
     });
 });
+
+// router.get('/', (req, res) => {
+//     projects
+//     .get()
+//     .then(response => {
+//         res.status(200).json(response);
+//     })
+//     .catch(error => {
+//         errorHandler(500, "The project information could not be retrieved.", res);
+//     });
+// });
 
 //Get by ID
 
@@ -35,7 +44,7 @@ router.get('/:id', (req, res) => {
         res.json({ error: "That project ID does not exist" })
         } else {
     projects
-    .get(id)
+    .getById(id)
     .then(project => {
         res.json({ project })
     })

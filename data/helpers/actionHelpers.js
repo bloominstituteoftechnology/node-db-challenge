@@ -2,7 +2,10 @@ const db = require('../db');
 const helpers = require('./helpers');
 
 module.exports = {
-    get: function(id) {
+    getActions: function() {
+        return db('actions')
+    },
+    getById: function(id) {
         let query = db('actions');
         if(id) {
             return query
@@ -17,7 +20,7 @@ module.exports = {
     insert: function(action) {
         return db('actions')
         .insert(action)
-        .then(([id]) => this.get(id));
+        .then(action => this.get(action.id));
     },
     update: function(id, changes) {
         return db('actions')

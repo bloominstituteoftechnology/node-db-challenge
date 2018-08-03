@@ -2,7 +2,10 @@ const db = require('../db');
 const helpers = ('./helpers');
 
 module.exports = {
-    get: function(id) {
+    getProjects: function() {
+        return db('projects')
+    },
+    getById: function(id) {
         let query = db('projects');
         if(id) {
             query.where('projects.id', id).first();
@@ -20,18 +23,7 @@ module.exports = {
             return projects.map(project => helpers.projectToBody(project));
         });
     },
-    get: function(id) {
-        let query = db('actions');
-        if(id) {
-            return query
-            .where('id', id)
-            .first()
-            .then(action => helpers.actionToBody(action));
-        }
-        return query.then(actions => {
-            return actions.map(action => helpers.actionToBody(action));
-        });
-    },
+   
     getProjectActions: function(projectId) {
         return db('actions')
         .where('project_id', projectId)
@@ -40,13 +32,13 @@ module.exports = {
     insert: function(project) {
         return db('projects')
         .insert(project)
-        .then(([id]) => this.get(id));
+        .then(project => this.get(project.id));
     },
     update: function(id, changes) {
         return db('projects')
         .where('id', id)
         .update(changes)
-        .then(count => (count > 0 ? this.get(id) : null));
+        .then(count => count > 0 ? this.get(id) : null)
     },
     remove: function(id) {
         return db('projects')

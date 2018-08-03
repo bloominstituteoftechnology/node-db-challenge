@@ -17,7 +17,7 @@ const errorHandler = (status, message, res) => {
 
 router.get('/', (req, res) => {
     actions
-    .get()
+    .getActions()
     .then(response => {
         res.status(200).json(response);
     })
@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
         res.json({ error: "That action ID does not exist" })
         } else {
     actions
-    .get(id)
+    .getById(id)
     .then(response => {
         res.status(200).json(response);
     })
