@@ -7,6 +7,7 @@ const actions = require('./data/helpers/actionHelpers.js');
 
 const port = 5555;
 const server = express();
+
 server.use(express.json());
 server.use(cors());
 
