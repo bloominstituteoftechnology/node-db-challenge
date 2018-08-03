@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
     table.string("description").notNullable();
-    table.text("notes");
+    table.text("notes").notNullable();
     table.boolean("completed").defaultTo(false);
   });
 };
