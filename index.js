@@ -2,12 +2,16 @@ const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
 
+const projectRouter = require('./projects/index');
+
 const server = express();
 const port = 8000;
 
 server.use(cors());
 server.use(express.json());
 server.use(helmet());
+
+server.use('/projects', projectRouter);
 
 server.get('/', (req, res) => {
     res.status(200).send(`Server running @ localhost:${port}`);
