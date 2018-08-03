@@ -7,7 +7,7 @@ module.exports = {
     return query;
   },
   // Add
-  create: function (project) {
+  create: function(project) {
     return db('projects')
       .insert(project)
       .then(ids => ({ id: ids[0] }));

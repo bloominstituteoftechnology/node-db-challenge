@@ -4,16 +4,12 @@ exports.up = function(knex, Promise) {
     tbl.increments(); 
 
     tbl
-      .string('name', 100)
+      .string('name')
       .notNullable()
-      .unique()
-      .defaultTo('Not Provided');
 
     tbl
-    .string('description', 256)
-    .notNullable()
-    .unique()
-    .defaultTo('Not Provided');
+      .string('description')
+      .notNullable()
 
     tbl
       .boolean('completed')
