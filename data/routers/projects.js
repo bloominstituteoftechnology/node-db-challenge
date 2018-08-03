@@ -1,7 +1,6 @@
 const express = require('express');
 const server = express();
 
-
 const projects = require('../helpers/projectHelpers');
 
 const router = express.Router();
