@@ -1,7 +1,10 @@
 const db = require('../db')
 
 module.exports = {
-  get: function(id) {
+  get: id => {
     return id ? db('action').where({id}) : db('action')
+  },
+  insert: (body) =>{
+    return db('action').insert(body)
   }
 }

@@ -27,7 +27,8 @@ act.post('/', async (req,res) => {
   const {body} = req
 
   try{
-    const data = await db('action').insert(body)
+    const id = await actionTbl.insert(body)
+    const data = await actionTbl.get(id[0])
     res.status(200).json(data)
   }
   catch(err) {
