@@ -64,4 +64,16 @@ server.put("/:id", (req, res) => {
     }
 });
 
+// Get context by action id
+
+server.get('/:id/contexts', (req, res) => {
+    db('contexts')
+        .where('actionId', req.params.id)
+        .then(context => {
+            if (context.length > 0) res.status(200).json(context);
+            else res.status(200).json({ err });
+        })
+        .catch(err => res.status(500).json(err));
+});
+
  module.exports = server;
