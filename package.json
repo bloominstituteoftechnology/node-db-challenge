@@ -5,7 +5,7 @@
   "repository": "https://github.com/blkfltchr/Sprint-Challenge-RDBMS.git",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
