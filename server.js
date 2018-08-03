@@ -9,6 +9,10 @@ server.use(express.json());
 server.get('/', (req, res, next) => {
     res.send('Server Running');
 })
+
+server.get('/api/docs', (req, res, next) => {
+ res.redirect('https://documenter.getpostman.com/view/4722371/RWThSLCg');
+})
 //Get Projects
 server.get('/api/projects', (req, res, next) => {
     projects.find().then(response => {
@@ -143,6 +147,16 @@ server.get('/api/actions', (req, res, next) => {
 server.get('/api/actions/:id', (req, res, next) => {
     let id = req.params.id;
     actions.find(id).then(response => {
+        res.status(200).json(response);
+    }).catch(err => next({
+        err,
+        code: err.code
+    }))
+})
+
+server.get('/api/projects/:project_id/actions', (req, res, next) => {
+    let project_id = req.params.project_id;
+    actions.findProjectActions(project_id).then(response => {
         res.status(200).json(response);
     }).catch(err => next({
         err,
