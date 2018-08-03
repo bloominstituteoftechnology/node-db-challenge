@@ -16,6 +16,8 @@ server.get('/', (req, res) => {
 /* 
   PROJECTS API
 */
+
+//get all projects
 server.get('/api/projects', async (req, res) => {
   try {
     const projects = await projectsDB.get();
@@ -29,6 +31,7 @@ server.get('/api/projects', async (req, res) => {
   }
 });
 
+// get a project by id
 server.get('/api/projects/:id', async (req, res) => {
   const ID = req.params.id;
 
@@ -44,9 +47,34 @@ server.get('/api/projects/:id', async (req, res) => {
   }
 });
 
+// add a project
+server.post('/api/projects', projectConstraints, async (req, res) => {
+  const NAME = req.body.name;
+  const DESCRIPTION = req.body.description;
+
+  const PROJECT = { name: NAME, description: DESCRIPTION, done: false };
+
+  try {
+    const response = await projectsDB.insert(PROJECT);
+    if (response) {
+      res
+        .status(200)
+        .json({ message: `Project with id:${ID} has been added.` });
+    } else {
+      res
+        .status(400)
+        .json({ error: `Undetermined error adding project id:${ID}.` });
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
 /* 
   ACTIONS API
 */
+
+// get all actions
 server.get('/api/actions', async (req, res) => {
   try {
     const actions = await actionsDB.get();
@@ -60,6 +88,7 @@ server.get('/api/actions', async (req, res) => {
   }
 });
 
+// get an action by id
 server.get('/api/actions/:id', async (req, res) => {
   const ID = req.params.id;
 
@@ -69,6 +98,28 @@ server.get('/api/actions/:id', async (req, res) => {
       res.status(200).json({ message: `There is no action with id:${ID}` });
     } else {
       res.status(200).json(action);
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+});
+
+// add an action
+// add a project
+server.post('/api/actions', actionConstraints, async (req, res) => {
+  const NOTES = req.body.notes;
+  const DESCRIPTION = req.body.description;
+
+  const ACTION = { notes: NOTES, description: DESCRIPTION, done: false };
+
+  try {
+    const response = await actionsDB.insert(ACTION);
+    if (response) {
+      res.status(200).json({ message: `Action with id:${ID} has been added.` });
+    } else {
+      res
+        .status(400)
+        .json({ error: `Undetermined error adding action id:${ID}.` });
     }
   } catch (err) {
     res.status(500).send(`${err}`);

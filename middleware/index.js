@@ -24,7 +24,7 @@ function projectConstraints(req, res, next) {
     });
   }
 
-  if (NAME.length < 1) {
+  if (NAME.length < 2) {
     return next({
       code: 400,
       error: `The 'name' of the project must be more than 1 character.`,
@@ -38,7 +38,7 @@ function projectConstraints(req, res, next) {
     });
   }
 
-  if (DESCRIPTION.length < 1) {
+  if (DESCRIPTION.length < 2) {
     return next({
       code: 400,
       error: `The 'description' of the project must be more than 1 character.`,
@@ -74,7 +74,7 @@ function actionConstraints(req, res, next) {
     });
   }
 
-  if (NOTES.length < 1) {
+  if (NOTES.length < 2) {
     return next({
       code: 400,
       error: `The 'notes' for the action must be more than 1 character.`,
@@ -88,7 +88,7 @@ function actionConstraints(req, res, next) {
     });
   }
 
-  if (DESCRIPTION.length < 1) {
+  if (DESCRIPTION.length < 2) {
     return next({
       code: 400,
       error: `The 'description' of the action must be more than 1 character.`,
