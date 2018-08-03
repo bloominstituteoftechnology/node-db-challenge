@@ -5,8 +5,9 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: '.data/sprint.sqlite3'
-    }
+      filename: './data/sprint.sqlite3'
+    },
+    useNullAsDefault: true
   },
 
   // staging: {
