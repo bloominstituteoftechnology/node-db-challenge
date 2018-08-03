@@ -38,7 +38,7 @@ server.get('/api/projects/:id', async (req, res) => {
   try {
     const project = await projectsDB.get(ID);
     if (typeof project === 'undefined') {
-      res.status(200).json({ message: `There is no project with id:${ID}` });
+      res.status(400).json({ message: `There is no project with id:${ID}` });
     } else {
       res.status(200).json(project);
     }
@@ -89,7 +89,7 @@ server.post('/api/projects/:id/actions', actionConstraints, async (req, res) => 
   try {
     const project = await projectsDB.get(ID);
     if (typeof project === 'undefined') {
-      res.status(200).json({ message: `There is no project with id:${ID}` });
+      res.status(400).json({ message: `There is no project with id:${ID}` });
     } else {
       // have our project!  try and add the action
       try {
@@ -109,8 +109,34 @@ server.post('/api/projects/:id/actions', actionConstraints, async (req, res) => 
   } catch (err) {
     res.status(500).send(`${err}`);
   }
+});
 
-  
+// update a project
+server.put('/api/projects/:id', projectConstraints, async (req, res) => {
+  const ID = req.params.id;
+  const NAME = req.body.name;
+  const DESCRIPTION = req.body.description;
+
+  const PROJECT = { name: NAME, description: DESCRIPTION };
+
+  // make sure we have the project to update
+  try {
+    const project = await projectsDB.get(ID);
+    if (typeof project === 'undefined') {
+      res.status(400).json({ message: `There is no project with id:${ID}` });
+    } else {
+      // we do! try to update the project
+      try {
+        const project = await projectsDB.update(ID, PROJECT);
+        console.log('PROJECT', project);
+        res.status(200).json({ message: `Project id:${ID} has been updated.` });
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
 });
 
 /* 
@@ -138,7 +164,7 @@ server.get('/api/actions/:id', async (req, res) => {
   try {
     const action = await actionsDB.get(ID);
     if (typeof action === 'undefined') {
-      res.status(200).json({ message: `There is no action with id:${ID}` });
+      res.status(400).json({ message: `There is no action with id:${ID}` });
     } else {
       res.status(200).json(action);
     }
