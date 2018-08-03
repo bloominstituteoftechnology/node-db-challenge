@@ -4,7 +4,9 @@ exports.up = function(knex, Promise) {
     t.string('name')
       .unique()
       .notNullable();
-    t.string('description').notNullable();
+    t.string('description')
+      .unique()
+      .notNullable();
     t.boolean('done').notNullable();
     t.integer('created_at')
       .notNullable()

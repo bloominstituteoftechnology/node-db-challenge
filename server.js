@@ -59,15 +59,58 @@ server.post('/api/projects', projectConstraints, async (req, res) => {
     if (response) {
       res
         .status(200)
-        .json({ message: `Project with id:${ID} has been added.` });
+        .json({ message: `Project with id:${response.id} has been added.` });
     } else {
-      res
-        .status(400)
-        .json({ error: `Undetermined error adding project id:${ID}.` });
+      res.status(400).json({
+        error: `Undetermined error adding project.`,
+      });
     }
   } catch (err) {
     res.status(500).send(`${err}`);
   }
+});
+
+// add an action
+/* prettier-ignore */
+server.post('/api/projects/:id/actions', actionConstraints, async (req, res) => {
+  const ID = req.params.id;
+  const NOTES = req.body.notes;
+  const DESCRIPTION = req.body.description;
+
+  // actions belong to a project, p_id is FK to project
+  const ACTION = {
+    notes: NOTES,
+    description: DESCRIPTION,
+    done: false,
+    p_id: ID,
+  };
+
+  // make sure we have the project to add the action to
+  try {
+    const project = await projectsDB.get(ID);
+    if (typeof project === 'undefined') {
+      res.status(200).json({ message: `There is no project with id:${ID}` });
+    } else {
+      // have our project!  try and add the action
+      try {
+        const response = await actionsDB.insert(ACTION);
+        console.log("RESPONSE", response);
+        if (response) {
+          res.status(200).json({ message: `Action with id:${response.id} has been added.` });
+        } else {
+          res
+            .status(400)
+            .json({ error: `Undetermined error adding the action.` });
+        }
+      } catch (err) {
+        res.status(500).send(`${err}`);
+      }
+    }
+  } catch (err) {
+    res.status(500).send(`${err}`);
+  }
+
+  
 });
 
 /* 
@@ -98,28 +141,6 @@ server.get('/api/actions/:id', async (req, res) => {
       res.status(200).json({ message: `There is no action with id:${ID}` });
     } else {
       res.status(200).json(action);
-    }
-  } catch (err) {
-    res.status(500).send(`${err}`);
-  }
-});
-
-// add an action
-// add a project
-server.post('/api/actions', actionConstraints, async (req, res) => {
-  const NOTES = req.body.notes;
-  const DESCRIPTION = req.body.description;
-
-  const ACTION = { notes: NOTES, description: DESCRIPTION, done: false };
-
-  try {
-    const response = await actionsDB.insert(ACTION);
-    if (response) {
-      res.status(200).json({ message: `Action with id:${ID} has been added.` });
-    } else {
-      res
-        .status(400)
-        .json({ error: `Undetermined error adding action id:${ID}.` });
     }
   } catch (err) {
     res.status(500).send(`${err}`);
