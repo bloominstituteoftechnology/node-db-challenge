@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     tbl.increments();
     tbl.string('name', 128).notNullable();
     tbl.text('description');
-    tbl.boolean('complete').defaultTo(false);
+    tbl.boolean('completed').defaultTo(false);
     tbl.timestamp('created_at').defaultTo(knex.fn.now());
   });
 };

@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
-        {name: 'Sprint-Challenge-RDBMS'}
+        {name: 'Sprint-Challenge-RDBMS', description: '', completed: 1}
       ]);
     });
 };
