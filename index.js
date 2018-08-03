@@ -23,6 +23,7 @@ server.get('/projects', (req, res) =>{
       });
 })
 
+
 //Post New Project
 server.post('/projects', (req, res) => {
     const { name, description } = req.body;
@@ -46,9 +47,48 @@ server.post('/projects', (req, res) => {
       });
 })
 
+// Update project
+server.put("/projects/:id", (req, res) => {
+    const { id } = req.params;
+    const { name, description } = req.body;
+    if (!name || !description) {
+      res.status(400).json({
+        errorMessage: "Please provide name and description for the project."
+      });
+      return;
+    }
+    db('projects')
+    .where('id', Number(id))
+      .update({ name, description })
+      .into('projects')
+      .then(response => {
+        res.status(200).json({ name, description });
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({ error: "The project information could not be modified." });
+        return;
+      });
+  });
 
 
-
+//Delete Project
+server.delete('/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects')
+    .where("id", Number(id))
+    .delete()
+    .then(projects => {
+        if(projects.length === 0) {
+            res.status(404).json({ message: "That ID doesn't exists"});
+        }
+        res.status(200).json({message: "Success in deleting Project"});
+    })
+    .catch(error => {
+        res.status(500).json({ error: "Error Deleting Project"})
+    });
+})
 
 
 
@@ -88,6 +128,48 @@ server.post('/actions', (req, res) => {
       });
 })
 
+
+// Update Action
+server.put("/actions/:id", (req, res) => {
+    const { id } = req.params;
+    const {  project_id, description, notes} = req.body;
+    if (!project_id || !description) {
+      res.status(400).json({
+        errorMessage: "Please provide project ID and description for the action."
+      });
+      return;
+    }
+    db('actions')
+    .where('id', Number(id))
+      .update({ project_id, description, notes })
+      .into('actions')
+      .then(response => {
+        res.status(200).json({ project_id, description, notes });
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({ error: "The action information could not be modified." });
+        return;
+      });
+  });
+
+//Delete Action
+server.delete('/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions')
+    .where("id", Number(id))
+    .delete()
+    .then(actions => {
+        if(actions.length === 0) {
+            res.status(404).json({ message: "That ID doesn't exists"});
+        }
+        res.status(200).json({message: "Success in deleting action"});
+    })
+    .catch(error => {
+        res.status(500).json({ error: "Error Deleting action"})
+    });
+})
 
 
 const port = 3300;
