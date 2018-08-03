@@ -56,6 +56,20 @@ projects.put('/:id', async (req, res, next) => {
   }
 })
 
+projects.delete('/:id', async (req, res, next) => {
+  const id = +req.params.id
+
+  try {
+    const deleted = await db('projects')
+      .where('id', '=', id)
+      .del()
+
+    res.status(200).send(`[Project: ${id}] successfully deleted!`)
+  } catch(e) {
+    sendError(500, e.message, next)
+  }
+})
+
 projects.use((err, req, res, next) => {
   res.status(err.code).json({
     error: err.code,
