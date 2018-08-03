@@ -35,9 +35,9 @@ server.post("/projects", (req, res) => {
 server.get("/projects/:id", (req, res) => {
   const { id } = req.params;
   db("projects")
-    .where("id", Number(id))
-    .then(user => {
-      res.status(200).json(user);
+    .where("id", id)
+    .then(project => {
+      res.status(200).json(project);
     });
 });
 
@@ -113,6 +113,16 @@ server.post("/actions", (req, res) => {
       res.status(201).json({ id, ...action });
     });
 });
+
+server.get("/actions/:id", (req, res) => {
+  const { id } = req.params;
+  db("actions")
+    .where("id", id)
+    .then(action => {
+      res.status(200).json(action);
+    });
+});
+
 //delete actions
 server.delete("/actions/:id", (req, res) => {
   const { id } = req.params;
