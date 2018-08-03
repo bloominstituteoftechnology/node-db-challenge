@@ -7,7 +7,8 @@ module.exports = {
     },
 
     getProjectById: function(id) {
-        const query = db('projects as p');
+        const query = db('projects as p').where('id', id)
+
         const promises = [query, this.joinAct(id), this.joinCont(id)]
         return Promise.all(promises).then(function(results) {
             let [projects, actions, contexts] = results;
@@ -31,6 +32,7 @@ module.exports = {
         return query.join('contexts as c', 'c.id', 'pc.contextId')
         .join('projects as p', 'p.id', 'pc.projectId')
         .select('c.id', 'c.context')
+        .where('pc.projectId', pId)
         
     },
 
