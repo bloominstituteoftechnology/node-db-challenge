@@ -2,9 +2,9 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('project', function(tbl) {
       tbl.increments();
-      tbl.string('name', 50).notNullable().unique();
+      tbl.string('name', 50).notNullable();
       tbl.text('description').notNullable();
-      tbl.boolean('completed').notNullable();
+      tbl.boolean('completed').defaultTo(false);
   })
 };
 
