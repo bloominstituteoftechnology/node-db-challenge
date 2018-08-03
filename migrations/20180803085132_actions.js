@@ -6,7 +6,9 @@ exports.up = function(knex, Promise) {
             .integer('project_id')
             .notNullable()
             .references('id')
-            .inTable('projects');
+            .inTable('projects')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
         tbl.text('description').notNullable();
         tbl.text('notes');
         tbl.boolean('completed').defaultTo(false);

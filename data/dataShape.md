@@ -1,3 +1,4 @@
+```javascript
 //PROJECTS
 {
     id: 1, // AUTO-SET
@@ -13,3 +14,4 @@
     notes: 'text',
     completed: false // DEFAULT SET TO FALSE
 }
+```
