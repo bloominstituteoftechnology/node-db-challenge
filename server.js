@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
-
+const db = require('./data/db');
 
 const server= express();
 
@@ -16,8 +16,28 @@ server.get('/', (req, res) => {
 
 
 
+server.get('/api/projects', (req, res)=>{
+
+        db('projects')
+        .then(response => {
+                res.status(200).json(response);
+        })
+
+        .catch(err => res.status(500).json({errorMessage: "There was an error while retrieving projects from the database"}));
+
+});
 
 
+server.get('/api/actions', (req, res)=>{
+
+        db('actions')
+        .then(response => {
+                res.status(200).json(response);
+        })
+
+        .catch(err => res.status(500).json({errorMessage: "There was an error while retrieving actions from the database"}));
+
+});
 
 
 
