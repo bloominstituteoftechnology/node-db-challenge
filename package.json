@@ -1,0 +1,36 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vcao2279/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [
+    "rdbms",
+    "sql",
+    "knex",
+    "node",
+    "express"
+  ],
+  "author": "Vu Cao <cdhvu@yahoo.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vcao2279/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/vcao2279/Sprint-Challenge-RDBMS#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "knex": "^0.15.2",
+    "sqlite3": "^4.0.2"
+  }
+}
