@@ -23,6 +23,9 @@ server.post("/projects", (req, res) => {
               "description" : description,
               "completed": toBool}).into('project')
     .then(response => (res.json(response)))
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
 });
 server.put("/projects/:id", (req, res) => {
     const { id } = req.params;
@@ -32,7 +35,18 @@ server.put("/projects/:id", (req, res) => {
                 "description": description,
                 "completed": toBool}).into('project').where('id', id)
       .then(response => (res.json(response)))
+      .catch(error => {
+       res.status(500).send({ error: "Server Error" })
+     })
 });
+server.delete("/projects/:id", (req, res) => {
+  const { id } = req.params
+  db('project').where("id", id).delete()
+    .then(response => (res.json(response)))
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
+})
 
 
 
