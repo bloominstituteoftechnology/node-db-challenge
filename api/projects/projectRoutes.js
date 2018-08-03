@@ -3,6 +3,16 @@ const projectDb = require('../../data/helpers/projectDb');
 
 const router = express.Router();
 
+router.post('/', async (req, res) => {
+    const { name, description, completed } = req.body;
+    if (!name || !description) return res.status(404).json({ error: 'Please provide name and description' });
+    try {
+        const response = await projectDb.insert({ name, description, completed });
+        return res.status(201).json(response);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+})
 
 router.get('/', async (req, res) => {
     try {
