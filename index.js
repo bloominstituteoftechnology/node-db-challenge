@@ -123,7 +123,6 @@ server.put('/actions/:id', (req, res) => {
 //retrieve 1 project and format return object with it's actions
 server.get('/projects/:id', (req, res) => {
   const { id } = req.params;
-  console.log(id);
   getProject(id)
     .then(project => {
       if (project) {
@@ -155,14 +154,9 @@ server.get('/projects', (req, res) => {
 server.post('/projects', (req, res) => {
   const project = req.body;
   //if actions are included, they should be an array of ids or names.
-  if (project.actions) project.actions = JSON.stringify(project.actions);
-  db.insert(project)
-    .into('projects')
-    .then(ids => {
-      const id = ids[0];
-
-      res.status(201).json(ids);
-      // res.status(201).json({ id, ...project });
+  addProject(project)
+    .then(project => {
+      res.status(201).json({ id, ...project });
     })
     .catch(err => res.status(500).json(err));
 });
