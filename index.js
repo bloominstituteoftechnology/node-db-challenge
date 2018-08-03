@@ -42,24 +42,39 @@ server.get("/projects/:id", (req, res) => {
 });
 
 //post project by id
+// server.get("/projects/:id/actions", (req, res) => {
+//   db("projects")
+//     .join("actions", "actions.project_id", "=", "projects.id")
+//     .select(
+//       "projects.id",
+//       "projects.name",
+//       "projects.description",
+//       "projects.completed",
+//       "actions.id",
+//       "actions.description",
+//       "actions.notes",
+//       "actions.completed"
+//     )
+//     .where("projects.id", req.params.id)
+//     .then(project => {
+//       res.status(200).json(project);
+//     });
+// });
 server.get("/projects/:id/actions", (req, res) => {
+  const id = req.params.id;
   db("projects")
-    .join("actions", "actions.project_id", "=", "projects.id")
-    .select(
-      "projects.id",
-      "projects.name",
-      "projects.description",
-      "projects.completed",
-      "actions.id",
-      "actions.description",
-      "actions.notes",
-      "actions.completed"
-    )
-    .where("projects.id", req.params.id)
-    .then(project => {
-      res.status(200).json(project);
+    .where("id", id)
+    .then(response => {
+      const project = response;
+      db("actions")
+        .where("project_id", id)
+        .then(responseA => {
+          const actions = responseA;
+          res.status(200).json({ project, actions });
+        });
     });
 });
+
 // put projects
 server.put("/projects/:id", (req, res) => {
   const { id } = req.params;
