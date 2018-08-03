@@ -18,6 +18,16 @@ server.get("/projects", (req, res) => {
    res.status(500).send({ error: "Server Error" })
  })
 });
+server.get("/projects/:id", (req, res) => {
+  const { id } = req.params;
+  db.select().from('project').innerJoin('actions', 'actions.project_id', 'project.id')
+    .then(response => {
+      res.json(response)
+    })
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
+})
 server.post("/projects", (req, res) => {
   const { name, description, completed } = req.body;
   const toBool = completed == "true";
