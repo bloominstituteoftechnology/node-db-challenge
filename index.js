@@ -72,6 +72,19 @@ server.post("/actions", (req, res) => {
      res.status(500).send({ error: "Server Error" })
    })
 });
+server.put("/actions/:id", (req, res) => {
+  const { id } = req.params;
+  const { description, notes, completed, project_id } = req.body;
+  const toBool = completed == "true";
+  db.update({"notes": notes,
+              "description" : description,
+              "completed": toBool,
+              "project_id": project_id}).into('actions').where('id', id)
+    .then(response => (res.json(response)))
+    .catch(error => {
+     res.status(500).send({ error: "Server Error" })
+   })
+});
 
 
 
