@@ -46,11 +46,15 @@ server.get('/api/projects/:id', async (req, res) => {
     //let response ;
     const projectPromise = db('projects').where('id', '=', id);
     const actionsPromise = db('actions').where('project_id', '=', id);
-    const dataBundle = await Promise.all([projectPromise, actionsPromise])
-    const [project, actions] = dataBundle;
-    const response = {project, actions}
-    res.status(200).json(response)    
+    // const dataBundle = await Promise.all([projectPromise, actionsPromise])
+    // const [project, actions] = dataBundle;
+    // const response = {project, actions}
+    // res.status(200).json(response);  
+    const [[project], actions] = await Promise.all([projectPromise, actionsPromise]);
+    const response = {...project, actions};    
+    res.status(200).json(response);
 });
+
 //DELETE PROJECT
 server.delete('/api/projects/:id', (req, res) => {
     const { id } = req.params;
