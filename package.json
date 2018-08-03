@@ -1,0 +1,33 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "sql time",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coetry/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [
+    "sql",
+    "knex",
+    "express"
+  ],
+  "author": "Allen Hai <allenhai03@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coetry/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/coetry/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.0",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
