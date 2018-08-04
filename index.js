@@ -127,7 +127,7 @@ server.get('/projects/:id', (req, res) => {
     .then(project => {
       if (project) {
         //project found
-        console.log(project);
+        console.log({ project: project });
         res.status(201).json(project);
       } else {
         //project not found

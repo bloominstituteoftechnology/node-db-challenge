@@ -6,11 +6,11 @@ exports.up = function(knex, Promise) {
     tbl
       .string('description', 500)
       .notNullable()
-      .defaultTo('Not Provided');
+      .defaultTo('');
 
-    tbl.string('notes', 500).defaultTo('Not Provided');
+    tbl.string('notes', 500).defaultTo('');
 
-    tbl.boolean('is_completed').defaultTo(false);
+    tbl.boolean('completed').defaultTo(false);
   });
 };
 

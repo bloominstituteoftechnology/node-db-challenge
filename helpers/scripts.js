@@ -3,7 +3,7 @@ const db = require('../data/db');
 module.exports = {
   getOne: (dbName, id) => {
     return new Promise((resolve, reject) => {
-      db('projects')
+      db(dbName)
         .where({ id })
         .then(count => {
           if (count[0]) {
@@ -97,13 +97,15 @@ module.exports = {
           .then(expandedActions => {
             console.log({ expandedActions: expandedActions });
             project.actions = JSON.stringify(expandedActions);
+            console.log({ project: project });
+            return project;
           })
-          .then(
+          .then(project => {
             module.exports.dbInsert('projects', project).then(newProject => {
               console.log(newProject.id);
               resolve(newProject.id);
-            })
-          );
+            });
+          });
       } else {
         //now create project
         return module.exports.dbInsert('projects', project).then(newProject => {
@@ -114,17 +116,25 @@ module.exports = {
   },
 
   getProject: idObj => {
-    return module.exports.getOne('projects', idObj).then(project => {
-      if (project) {
-        if (project.actions) {
-          const actions = JSON.parse(project.actions);
-          console.log(actions);
-          const expandedActions = module.exports.getActions(actions);
-          console.log(expandedActions);
-          project.actions = expandedActions;
-          return project;
-        } else return project;
-      }
+    return new Promise((resolve, reject) => {
+      console.log(idObj);
+      module.exports
+        .getOne('projects', idObj)
+        .then(project => {
+          if (project) {
+            if (project.actions) {
+              module.exports.expandActions(project.actions).then(actionsArr => {
+                console.log('expandedActions:');
+                console.log(actionsArr);
+                let newProject = Object.assign({}, project);
+                newProject.actions = actionsArr;
+                console.log(newProject);
+                return resolve(newProject);
+              });
+            } else resolve(project);
+          }
+        })
+        .catch(err => reject(err));
     });
   },
 
@@ -132,8 +142,8 @@ module.exports = {
     // return an array of all the expanded actions
     return new Promise((resolve, reject) => {
       const expandedActions = [];
-      for (let i = 0; i < actionsArr.length; i++) {
-        const action = actionsArr[i];
+      for (let i = 0; i < idArray.length; i++) {
+        const action = idArray[i];
         module.exports
           .checkExists('actions', action)
           .then(newAction => {
@@ -141,15 +151,16 @@ module.exports = {
               //action exists, return just its id
               console.log(newAction.id);
               expandedActions.push(newAction.id);
-              if (i === actionsArr.length - 1) resolve(expandedActions);
+              if (i === idArray.length - 1) resolve(expandedActions);
             } else if (!module.exports.isNumber(action)) {
               //action doesn't exist but it is a name, create it
               console.log({ creatingAction: action });
-              return module.exports
+              module.exports
                 .dbInsert('actions', { description: action })
                 .then(insertedAction => {
+                  console.log(insertedAction);
                   expandedActions.push(insertedAction.id);
-                  if (i === actionsArr.length - 1) resolve(expandedActions);
+                  if (i === idArray.length - 1) resolve(expandedActions);
                 });
             } else {
               //action doesn't exist and is an id, dont add to project
@@ -161,6 +172,34 @@ module.exports = {
             console.log(err);
           });
       } // end for loop
-    }).catch(err => reject(err));
+    });
+  },
+  expandActions: idStrings => {
+    return new Promise((resolve, reject) => {
+      const expandedActions = [];
+      const idArr = JSON.parse(idStrings);
+      for (let i = 0; i < idArr.length; i++) {
+        const action = idArr[i];
+        console.log({ actionI: action });
+        module.exports
+          .getOne('actions', action)
+          .then(newAction => {
+            if (newAction) {
+              //action exists, return just its id
+              console.log({ newAction: newAction });
+              expandedActions.push(newAction);
+              if (i === idArr.length - 1) resolve(expandedActions);
+            } else {
+              //action doesn't exist and is an id, dont add to project
+              console.log({ actionNotFound: action });
+              if (i === actionsArr.length - 1) resolve(expandedActions);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          });
+      } // end for loop
+    });
   }
 };
