@@ -64,7 +64,6 @@ router.get('/:id/actions', async (req, res) => {
             .json({ message: `There are no actions with p_id:${ID}` });
         } else {
           project = { ...project, actions };
-          console.log('PROJECT', project);
           res.status(200).json(project);
         }
       } catch (err) {
