@@ -18,10 +18,29 @@ server.get('/', (req, res) => {
 server.get('/projects', (req, res) => { 
     db('project').then(p => { res.status(200).json(p) })
  })
+
 server.get('/projects/:id', (req, res) => { 
     const { id } = req.params;
-    db('project').where({ id }).then(p => { res.status(200).json(p) })
- })
+
+    db('project')
+    .where({ id }) // returns an array with one id(primary key), so we need to call first()
+    .first()
+    .then(p => { 
+        if(p) {
+            db('action')
+            .where({ project_id: id })
+            .then(actions => {
+                p.actions = actions;
+                res.status(200).json(p) 
+            })
+            .catch(err => res.json(err));
+        }else{
+            res.status(404).json({ message: 'project not found'});
+        }
+    })
+    .catch(err => res.json(err));
+})
+
 server.post('/projects/', (req, res) => { 
     const project = req.body;
     if(project.name && project.description) {
