@@ -59,7 +59,55 @@ server.delete('/projects/:id', (req, res) => {
     })
 });
 
+//*********ACTIONS ENDPOINTS***************
 
+server.get('/actions', (req, res) => {
+	db('Actions').then(actions=> {
+		res.status(200).json(actions);
+	}).catch(err => res.status(500).json(err));
+});
+
+
+server.get('/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('Actions').where({id: Number(id)})
+    .then(response => {
+        res.status(200).json(response);
+    }).catch(err => {
+        res.status(500).json({error: 'Unable to retrieve user information.'})
+    })
+});
+
+server.post('/actions', (req, res) => {
+	const action = req.body;
+	db.insert(action).into('Actions')
+	.then(ids => {
+		const id = ids[0];
+		res.status(201).json({ id, ...action })
+	}).catch(err => res.status(500).json(err));
+});
+
+server.put('/actions/:id', (req, res) => {
+    const { id } = req.params;
+    const action = req.body;
+    db('Actions').where({id: Number(id)})
+    .update(action)
+    .then(response => {
+        res.status(201).json({response})
+    }).catch(err => {res.status(500).json(err)
+    })
+});
+
+server.delete('/actions/:id', (req, res) => {
+    const { id } = req.params;
+    const action = req.body;
+    db('Actions').where({id: Number(id)})
+    .delete(action)
+    .then(response => {
+        res.status(201).json({response})
+    }).catch(err => {res.status(500).json(err)
+    })
+});
 
 
 
