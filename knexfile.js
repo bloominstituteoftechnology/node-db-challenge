@@ -23,7 +23,8 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
-    }
+    },
+     seeds: { directory: './seeds' },
   },
 
   production: {
@@ -39,7 +40,8 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
-    }
+    },
+    seeds: { directory: './seeds' },
   }
 
 };
