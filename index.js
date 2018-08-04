@@ -118,6 +118,19 @@ server.put('/actions/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+//delete
+server.delete('/actions/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('actions')
+    .where({ id })
+    .del()
+    .then(test => {
+      res.status(200).json({ message: 'action deleted' });
+    })
+    .catch(err => res.status(500).json(err));
+});
+
 //////// projects ////////
 
 //retrieve 1 project and format return object with it's actions
@@ -183,6 +196,19 @@ server.put('/projects/:id', (req, res) => {
       } else {
         res.status(404).json({ message: 'The project was not found' });
       }
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+//delete
+server.delete('/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('projects')
+    .where({ id })
+    .del()
+    .then(test => {
+      res.status(200).json({ message: 'project deleted' });
     })
     .catch(err => res.status(500).json(err));
 });
