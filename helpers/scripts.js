@@ -37,7 +37,10 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const item = {};
       if (module.exports.isNumber(nameOrId)) item.id = nameOrId;
-      else item.name = nameOrId;
+      else {
+        if (dbName === 'actions') item.description = nameOrId;
+        else item.name = nameOrId;
+      }
 
       //look for item
       db(dbName)
@@ -72,6 +75,7 @@ module.exports = {
         })
         .catch(err => {
           console.log(err);
+          console.log(item);
           reject(err);
         });
     });
@@ -84,33 +88,31 @@ module.exports = {
   addProject: project => {
     //check to make sure actions exist or can be created.
     // if an action is just an id and doesn't exist, error out
-    if (project.actions) {
-      project.actions = project.actions.map(action => {
-        const newAction = module.exports.checkExists('actions', action);
-        if (newAction) {
-          //action exists, return just its id
-          return newAction.id;
-        } else if (!module.exports.isNumber(action)) {
-          //action doesn't exist but it is a name, create it
-          console.log({ creatingAction: action });
-          return module.exports
-            .dbInsert('actions', action)
-            .then(insertedAction => {
-              return insertedAction.id;
-            });
-        } else {
-          //action doesn't exist and is an id, dont add to project
-          console.log({ actionNotFound: action });
-        }
-      });
-    } //end checkActions
-
-    //now create project
-    if (project.actions) project.actions = JSON.stringify(project.actions);
-    return module.exports.dbInsert('projects', project).then(newProject => {
-      return newProject.id;
-    });
+    return new Promise((resolve, reject) => {
+      if (project.actions) {
+        console.log(project);
+        actionsArr = project.actions.split(' ');
+        return module.exports
+          .getActions(actionsArr)
+          .then(expandedActions => {
+            console.log({ expandedActions: expandedActions });
+            project.actions = JSON.stringify(expandedActions);
+          })
+          .then(
+            module.exports.dbInsert('projects', project).then(newProject => {
+              console.log(newProject.id);
+              resolve(newProject.id);
+            })
+          );
+      } else {
+        //now create project
+        return module.exports.dbInsert('projects', project).then(newProject => {
+          resolve(newProject.id);
+        });
+      }
+    }).catch(err => reject(err));
   },
+
   getProject: idObj => {
     return module.exports.getOne('projects', idObj).then(project => {
       if (project) {
@@ -128,12 +130,37 @@ module.exports = {
 
   getActions: idArray => {
     // return an array of all the expanded actions
-    const expandedActions = [];
-    for (let i = 0; i < idArray.length; i++) {
-      module.exports.checkExists('actions', id).then(action => {
-        if (action) expandedActions.push(action);
-      });
-      if (i == idArray.length - 1) return expandedActions;
-    }
+    return new Promise((resolve, reject) => {
+      const expandedActions = [];
+      for (let i = 0; i < actionsArr.length; i++) {
+        const action = actionsArr[i];
+        module.exports
+          .checkExists('actions', action)
+          .then(newAction => {
+            if (newAction) {
+              //action exists, return just its id
+              console.log(newAction.id);
+              expandedActions.push(newAction.id);
+              if (i === actionsArr.length - 1) resolve(expandedActions);
+            } else if (!module.exports.isNumber(action)) {
+              //action doesn't exist but it is a name, create it
+              console.log({ creatingAction: action });
+              return module.exports
+                .dbInsert('actions', { description: action })
+                .then(insertedAction => {
+                  expandedActions.push(insertedAction.id);
+                  if (i === actionsArr.length - 1) resolve(expandedActions);
+                });
+            } else {
+              //action doesn't exist and is an id, dont add to project
+              console.log({ actionNotFound: action });
+              if (i === actionsArr.length - 1) resolve(expandedActions);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } // end for loop
+    }).catch(err => reject(err));
   }
 };

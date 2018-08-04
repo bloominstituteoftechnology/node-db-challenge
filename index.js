@@ -155,8 +155,9 @@ server.post('/projects', (req, res) => {
   const project = req.body;
   //if actions are included, they should be an array of ids or names.
   addProject(project)
-    .then(project => {
-      res.status(201).json({ id, ...project });
+    .then(id => {
+      console.log(id);
+      res.status(201).json({ id: id });
     })
     .catch(err => res.status(500).json(err));
 });
