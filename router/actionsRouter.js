@@ -57,8 +57,7 @@ router.get('/:id', async (req, res) => {
 // update an action
 router.put('/:id', actionConstraints, async (req, res) => {
   const ID = req.params.id;
-  const NOTES = req.body.notes;
-  const DESCRIPTION = req.body.description;
+  const { NOTES, DESCRIPTION } = req;
 
   const ACTION = { notes: NOTES, description: DESCRIPTION };
 

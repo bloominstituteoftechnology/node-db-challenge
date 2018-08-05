@@ -45,6 +45,10 @@ function projectConstraints(req, res, next) {
     });
   }
 
+  // set the req object
+  req.NAME = NAME;
+  req.DESCRIPTION = DESCRIPTION;
+
   next();
 }
 
@@ -94,6 +98,10 @@ function actionConstraints(req, res, next) {
       error: `The 'description' of the action must be more than 1 character.`,
     });
   }
+
+  // set the req object
+  req.NOTES = NOTES;
+  req.DESCRIPTION = DESCRIPTION;
 
   next();
 }

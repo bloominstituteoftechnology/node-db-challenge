@@ -77,8 +77,7 @@ router.get('/:id/actions', async (req, res) => {
 
 // add a project
 router.post('', projectConstraints, async (req, res) => {
-  const NAME = req.body.name;
-  const DESCRIPTION = req.body.description;
+  const { NAME, DESCRIPTION } = req;
 
   const PROJECT = { name: NAME, description: DESCRIPTION, done: false };
 
@@ -102,8 +101,7 @@ router.post('', projectConstraints, async (req, res) => {
 /* prettier-ignore */
 router.post('/:id/actions', actionConstraints, async (req, res) => {
   const ID = req.params.id;
-  const NOTES = req.body.notes;
-  const DESCRIPTION = req.body.description;
+  const { NOTES, DESCRIPTION }  = req;
 
   // actions belong to a project, p_id is FK to project
   const ACTION = {
@@ -141,8 +139,7 @@ router.post('/:id/actions', actionConstraints, async (req, res) => {
 // update a project
 router.put('/:id', projectConstraints, async (req, res) => {
   const ID = req.params.id;
-  const NAME = req.body.name;
-  const DESCRIPTION = req.body.description;
+  const { NAME, DESCRIPTION } = req;
 
   const PROJECT = { name: NAME, description: DESCRIPTION };
 
