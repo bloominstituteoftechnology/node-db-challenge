@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const actions = require('../data/helpers/actionLibrary');
 
+const actionCheck = (req, res, next) => {
+  if (!req.body.description || !req.body.notes || !req.body.complete || !req.body.project_id) {
+    return res.status(400).json({ message: "All fields must be completed." });
+  }
+  next();
+};
+
 router.get('/', async (req, res) => {
   try {
     const allActions = await actions.get();
@@ -23,7 +30,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', actionCheck, async (req, res) => {
   try {
     const newAction = await actions.insert(req.body);
     return res.status(201).json(newAction);
@@ -32,7 +39,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', actionCheck, async (req, res) => {
   try {
     const editedAction = await actions.update(req.params.id, req.body);
     if (editedAction === 0) {

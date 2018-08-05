@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const projects = require('../data/helpers/projectLibrary');
 
+const projectCheck = (req, res, next) => {
+  if (!req.body.name || !req.body.description || !req.body.complete) {
+    return res.status(400).json({ message: "All fields must be completed." });
+  }
+  next();
+};
+
 router.get('/', async (req, res) => {
   try {
     const allProjects = await projects.get();
@@ -14,25 +21,25 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const project = await projects.get(req.params.id);
-    if (!project) {
+    if (project.length === 0) {
       return res.status(404).json({ message: "Project does not exist." });
     }
-    return res.status(200).json(project);
+    return res.status(200).json(project[0]);
   } catch (error) {
     return res.status(500).json({ message: "Project could not be retrieved." });
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', projectCheck, async (req, res) => {
   try {
     const newProject = await projects.insert(req.body);
     return res.status(201).json(newProject);
   } catch (error) {
-    return res.status(500).json({ message: "Project could not be added." });
+    return res.status(500).json({ message: "Project could not be added.", error: error.message });
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', projectCheck, async (req, res) => {
   try {
     const editedProject = await projects.update(req.params.id, req.body);
     if (editedProject === 0) {
