@@ -14,17 +14,17 @@ router.get('/', async (req, res) => {
     const allProjects = await projects.get();
     return res.status(200).json(allProjects);
   } catch (error) {
-    return res.status(500).json({ message: "Projects could not be retrieved." });
+    return res.status(500).json({ message: "Projects could not be retrieved.", error: error.message });
   }
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const project = await projects.get(req.params.id);
-    if (project.length === 0) {
+    if (project === null) {
       return res.status(404).json({ message: "Project does not exist." });
     }
-    return res.status(200).json(project[0]);
+    return res.status(200).json(project);
   } catch (error) {
     return res.status(500).json({ message: "Project could not be retrieved." });
   }
@@ -35,7 +35,7 @@ router.post('/', projectCheck, async (req, res) => {
     const newProject = await projects.insert(req.body);
     return res.status(201).json(newProject);
   } catch (error) {
-    return res.status(500).json({ message: "Project could not be added.", error: error.message });
+    return res.status(500).json({ message: "Project could not be added." });
   }
 });
 

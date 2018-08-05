@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     const allActions = await actions.get();
     return res.status(200).json(allActions);
   } catch (error) {
-    return res.status(500).json({ message: "Actions could not be retrieved." });
+    return res.status(500).json({ message: "Actions could not be retrieved.", error: error.message });
   }
 });
 
