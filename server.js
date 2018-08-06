@@ -109,12 +109,14 @@ server.delete('/actions/:id', (req, res) => {
     })
 });
 
+//*********PROJECT_ACTION ENDPOINT******************
+
 server.get('/project/:id', (req, res) => {
     const { id } = req.params;
     db('Actions as a')
-    .join('Projects as p', 'a.projectId', 'p.id')
-    .select('a.desciption', 'p.name as actionBy')
-    .where('a.id', id)
+    .join('Projects as p', 'a.p', 'p.id')
+    .select('a.*', 'p.name as actionBy')
+    .where('a.actionId', id)
     .then(response => {
         res.status(200).json(response);
     })
@@ -122,31 +124,6 @@ server.get('/project/:id', (req, res) => {
         res.status(500).json({error: 'This Project information could not be retrieved.'})
     })
 })
-
-// server.get('/project/:id', (req, res) => {
-// 	const { id } = req.parmas;
-
-// 	db('Projects')
-// 	.where({ projectId: Number(id) })
-// 	.first()
-// 	.then(projects => {
-// 		if(Projects) {
-// 			db('Actions')
-// 			.where({ actionId: Number(id)})
-// 			.then(actions => {
-// 				Projects_Actions = actions;
-// 				res.status(200).json(Projects);
-
-// 			})
-// 			.catch(err => res.json(err));
-// 		} else {
-// 			res.status(404).json({ message: 'project not found'});
-// 			}
-// 		})
-// 			.catch(err => res.json(err));
-// 	});
-
-
 
 
 
