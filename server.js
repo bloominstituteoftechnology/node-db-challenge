@@ -123,8 +123,57 @@ server.get('/project/:id', (req, res) => {
     .catch(err => {
         res.status(500).json({error: 'This Project information could not be retrieved.'})
     })
-})
+});
 
+//*********CONTEXTS ENDPOINTS***************
+
+server.get('/contexts', (req, res) => {
+	db('Contexts').then(contexts=> {
+		res.status(200).json(contexts);
+	}).catch(err => res.status(500).json(err));
+});
+
+
+server.get('/contexts/:id', (req, res) => {
+    const { id } = req.params;
+    db('Contexts').where({id: Number(id)})
+    .then(response => {
+        res.status(200).json(response);
+    }).catch(err => {
+        res.status(500).json({error: 'Unable to retrieve context information.'})
+    })
+});
+
+server.post('/contexts', (req, res) => {
+	const context = req.body;
+	db.insert(context).into('Contexts')
+	.then(ids => {
+		const id = ids[0];
+		res.status(201).json({ id, ...context })
+	}).catch(err => res.status(500).json(err));
+});
+
+server.put('/contexts/:id', (req, res) => {
+    const { id } = req.params;
+    const context = req.body;
+    db('Contexts').where({id: Number(id)})
+    .update(context)
+    .then(response => {
+        res.status(201).json({response})
+    }).catch(err => {res.status(500).json(err)
+    })
+});
+
+server.delete('/contexts/:id', (req, res) => {
+    const { id } = req.params;
+    const context = req.body;
+    db('Contexts').where({id: Number(id)})
+    .delete(context)
+    .then(response => {
+        res.status(201).json({response})
+    }).catch(err => {res.status(500).json(err)
+    })
+});
 
 
 const port = 3300;
