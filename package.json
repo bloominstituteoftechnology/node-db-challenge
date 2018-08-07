@@ -1,0 +1,17 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "Lambda School for Sprint-Chalange-RDBMS",
+  "main": "index.js",
+  "repository": "https://github.com/ssanusi/Sprint-Challenge-RDBMS",
+  "author": "Sulaiman Sanusi <sulaiman.sanusi@icloud.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
