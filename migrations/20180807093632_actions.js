@@ -10,8 +10,8 @@ exports.up = function(knex, Promise) {
             .integer('project_id')
             .notNullable()
             .references('id')
-            inTable('projects')
-            .unUpdate('CASCADE')
+            .inTable('projects')
+            .onUpdate('CASCADE')
             .onDelete('RESTRICT')
     })
 
@@ -20,5 +20,5 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   //Drop Action Table 
-  return Knex.schema.dropTable('actions')
+  return knex.schema.dropTable('actions')
 };
