@@ -85,6 +85,18 @@ server.get('/actions/:id', (req, res) => {
     });
 });
 
+server.get('/projects/:id/actions', (req, res) => {
+  const { id } = req.params;
+  db('projects as p')
+    .join('actions as a', 'p.id', 'a.projectId')
+    .select('p.name', 'a.description', 'a.notes', 'a.completed')
+    .where('a.projectId', id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
 server.put('/actions/:id', (req, res) => {
   const { id } = req.params;
   const action = req.body;
