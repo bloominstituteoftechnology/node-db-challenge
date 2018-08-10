@@ -63,6 +63,28 @@ server.delete('/projects/:id', (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
+server.get('/actions', (req, res) => {
+  db('actions')
+    .then((actions) => {
+      res.status(200).json(actions);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+server.get('/actions/:id', (req, res) => {
+  const { id } = req.params;
+  db('actions')
+    .where({ id })
+    .then((action) => {
+      res.status(200).json(action);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
 const port = 5000;
 server.listen(port, () => {
   console.log(`server on http://localhost:${port}`);
