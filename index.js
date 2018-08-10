@@ -12,16 +12,25 @@ server.get('/', (req, res) => {
 
 server.get('/projects/:id', (req, res) => {
     const { id } = req.params;
-})
 
-server.get('/projects', (req, res) => {
     db('projects')
+    .where({ id })
+    .first()
     .then(project => {
-        res.status(200).json(project)
-    })
-    .catch(() => {
-        res.status(500).json({message: "error"})
-    })
+        if(project) {
+            db('actions')
+            .where({ project_id: id })
+            .then(actions => {
+                project.actions = actions;
+
+             res.status(200).json(project)
+            })
+            .catch(err => res.json(err));
+    } else {
+        res.status(404).json({ message: 'nope, did not locate project' })
+    }
+})
+    .catch(err => res.json(err));
 });
 
 server.get('/actions', (req, res) => {
