@@ -16,3 +16,16 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
     Select.
 1.  What SQL clause is used to filter the results of a query?
     .where
+
+1.  create package.json file
+    yarn init -y
+    yarn install
+1.  add in dependencies
+    yarn add express
+    yarn add knex sqlite3
+    yarn add nodemon --dev
+
+1.  create the migration tables
+    knex init
+    knex migrate:make projects
+    knex migrate:latest
