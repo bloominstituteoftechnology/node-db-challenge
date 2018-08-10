@@ -14,7 +14,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
-    foreign keys and a table that relates them together??
+    ?? foreign keys and a table that relates them together ??
 
 1.  What SQL statement is used to retrieve data from a table?
     select
