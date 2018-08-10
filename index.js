@@ -1,11 +1,13 @@
 const express = require("express");
 const actionsRoutes = require("./routes/actionsRoutes");
+const projectsRoutes = require("./routes/projectsRoutes");
 const morgan = require("morgan");
 
 const server = express();
 
 //* ROUTES
 server.use("/actions", actionsRoutes);
+server.use("/projects", projectsRoutes);
 
 server.use(express.json());
 server.use(morgan("dev"));
