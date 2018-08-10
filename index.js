@@ -52,7 +52,7 @@ server.get('/projects/:id/actions', (req, res) => {
     });
 });
 
-server.put('projects/:id', (req, res) => {
+server.put('/projects/:id', (req, res) => {
   const id = req.params.id;
   const project = req.body
   db('projects').where('id', id).update(project)
@@ -64,7 +64,7 @@ server.put('projects/:id', (req, res) => {
     });
 });
 
-server.delete('projects/:id', (req, res) => {
+server.delete('/projects/:id', (req, res) => {
   const id = req.params.id;
   db('projects').where('id', id).del()
     .then(response => {
@@ -77,7 +77,7 @@ server.delete('projects/:id', (req, res) => {
 
 //=========Actions==========
 
-server.post('actions', (req, res) => {
+server.post('/actions', (req, res) => {
   const action = req.body;
   db.insert(action).into('actions')
     .then(response => {
@@ -88,8 +88,30 @@ server.post('actions', (req, res) => {
     });
 });
 
-server.get('actions', (req, res) => {
+server.get('/actions', (req, res) => {
   db('actions')
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+server.get('/actions/:id', (req, res) => {
+  const id = req.params.id;
+  db('actions').where('id', id)
+  .then(response => {
+    res.status(200).json(response);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+server.delete('/actions/:id', (req, res) => {
+  const id = req.params.id;
+  db('actions').where('id', id).del()
     .then(response => {
       res.status(200).json(response);
     })
