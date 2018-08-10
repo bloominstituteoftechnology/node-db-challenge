@@ -1,12 +1,12 @@
 const express = require("express");
-
-const db = require("./data/db");
+const actionsRoutes = require("./routes/actionsRoutes");
 
 const server = express();
 
-server.use(express.json());
+//* ROUTES
+server.use("/actions", actionsRoutes);
 
-// endpoints here
+server.use(express.json());
 
 server.get("/", (req, res) => {
   res.send("up and running...");
