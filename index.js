@@ -10,6 +10,10 @@ server.get('/', (req, res) => {
     res.send('up and running...');
 });
 
+server.get('/projects/:id', (req, res) => {
+    const { id } = req.params;
+})
+
 server.get('/projects', (req, res) => {
     db('projects')
     .then(project => {
@@ -17,6 +21,16 @@ server.get('/projects', (req, res) => {
     })
     .catch(() => {
         res.status(500).json({message: "error"})
+    })
+});
+
+server.get('/actions', (req, res) => {
+    db('actions')
+    .then(actions => {
+        res.status(200).json(action)
+    })
+    .catch(() => {
+        res.status(500).json({ message: "action not found" })
     })
 });
 
