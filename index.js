@@ -28,7 +28,7 @@ server.get('/projects', (req, res) => {
     .catch(err => {
       res.status(500).json(err);
     });
-})
+});
 
 server.get('/projects/:id', (req, res) => {
   const id = req.params.id;
@@ -39,13 +39,36 @@ server.get('/projects/:id', (req, res) => {
     .catch(err => {
       res.status(500).json(err);
     });
-})
+});
 
 server.get('/projects/:id/actions', (req, res) => {
   const id = req.params.id;
   db('actions').where('userId', id)
     .then(response => {
-      res.status(201).json(response);
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+server.put('projects/:id', (req, res) => {
+  const id = req.params.id;
+  const project = req.body
+  db('projects').where('id', id).update(project)
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+server.delete('projects/:id', (req, res) => {
+  const id = req.params.id;
+  db('projects').where('id', id).del()
+    .then(response => {
+      res.status(200).json(response);
     })
     .catch(err => {
       res.status(500).json(err);
