@@ -36,4 +36,26 @@ router.post("/", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+// DELETE  action by id
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  db("actions")
+    .where("id", id)
+    .del()
+    .then(response => {
+      if (!response) {
+        res
+          .status(404)
+          .json({ response, message: `Action ${id} doesn't exist.` });
+        return;
+      }
+      res
+        .status(200)
+        .json({ response, message: `Action ${id} has been deleted.` });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;
