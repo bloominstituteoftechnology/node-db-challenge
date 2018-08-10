@@ -8,6 +8,9 @@ exports.up = function(knex, Promise) {
             .unique();
         action
             .string('notes')
+        action
+            .boolean('completed')
+            .defaultTo('false')
 
         action 
             .integer('projectId')
