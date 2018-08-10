@@ -4,7 +4,7 @@ const db = require('./data/db');
 const server = express();
 server.use(express.json());
 
-const PORT = 3300;
+const PORT = 5000;
 
 server.get('/', (req, res) => {
     res.send('up and running...');
