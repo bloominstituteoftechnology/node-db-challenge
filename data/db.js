@@ -6,7 +6,12 @@ module.exports = {
     getProjects,
     getActions,
     getActionByProject,
-    addProjects
+    addProjects,
+    editProject,
+    deleteProject,
+    addAction,
+    editAction,
+    deleteAction
 }
 
 function getProjects(id){
@@ -17,13 +22,20 @@ function getProjects(id){
      return db('projects')
 }
 
-function addProjects(projects){
-    return db('projects').insert({project_name : project.project_name, description : project.description})
+function addProjects(newProjects){
+    return db('projects').insert(newProjects)
 }
 
-function editProject(id, project){
-    return db('project').
+function editProject(id, projectUpdate){
+    return db('projects').where({ id }).update(projectUpdate)
 }
+
+function deleteProject(id){
+    if(id){
+        return db('projects').where({ id }).del()
+    }
+}
+
 function getActions(id){
     if(id){
         return db('actions').where({ id })
@@ -33,4 +45,16 @@ function getActions(id){
 
 function getActionByProject(id){
     return db('actions').where({project_id : id})
+}
+
+function addAction(action){
+    return db('actions').insert(action)
+}
+
+function editAction(id, actionUpdate){
+    return db('actions').where({ id }).update(actionUpdate)
+}
+
+function deleteAction(id){
+    return db('actions').where({ id }).delete
 }

@@ -4,7 +4,7 @@ const db = require('./data/db.js')
 const logger = require('morgan')
 
 app.use(express.json());
-app.use(logger());
+app.use(logger('dev'));
 
 
 app.get('/', (req, res) => {
@@ -42,7 +42,7 @@ app.get('/projects/:id', (req, res) => {
 });
 
 
-app.post('/project', (req, res) => {
+app.post('/projects', (req, res) => {
     const { project_name , description } = req.body
     const newProject = { project_name , description }
     db.addProjects(newProject)
@@ -54,14 +54,28 @@ app.post('/project', (req, res) => {
         })
 });
 
-app.put('/project/:id', (req, res) => {
+app.put('/projects/:id', (req, res) => {
     const { id } = req.params
-    
-    
+    const { project_name, description } = req.body
+    const updatedProject = { project_name, description }
+    db.editProject(id, updatedProject)
+        .then( response => {
+            res.status(200).json(response)
+        })
+        .catch( err => {
+            res.status(500).json({error : err})
+        })  
 });
 
-app.delete('path', (req, res) => {
-    
+app.delete('/projects/:id', (req, res) => {
+    const { id } = req.params
+    db.deleteProject(id)
+        .then( response => {
+            res.status(200).json(response)
+        })
+        .catch( err => {
+            res.status(500).json({ error : err })
+        })   
 });
 
 app.get('/actions', (req, res) => {
@@ -74,17 +88,40 @@ app.get('/actions', (req, res) => {
         })
 });
 
-app.post('/actions/:id', (req, res) => {
-
-    
+app.post('/actions', (req, res) => {
+    const { name , description } = req.body
+    const newAction = { name , description }
+    db.addAction(newAction)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch( err => {
+            res.status(500).json({error : err })
+        })
 });
 
 app.put('/actions/:id', (req, res) => {
-    
+    const { id } = req.params
+    const { project_name, description } = req.body
+    const updatedAction = { project_name, description }
+    db.editAction(id, updatedAction)
+        .then( response => {
+            res.status(200).json(response)
+        })
+        .catch( err => {
+            res.status(500).json({error : err})
+        })  
 });
 
 app.delete('/actions/:id', (req, res) => {
-    
+    const { id } = req.params
+    db.deleteAction(id)
+        .then( response => {
+            res.status(200).json(response)
+        })
+        .catch( err => {
+            res.status(500).json({ error : err })
+        })   
 });
 
 app.listen(6000, () => {
