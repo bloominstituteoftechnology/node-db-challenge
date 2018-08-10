@@ -81,7 +81,7 @@ server.post('/actions', (req, res) => {
   const action = req.body;
   db.insert(action).into('actions')
     .then(response => {
-      res.status(200).json(response);
+      res.status(201).json(response);
     })
     .catch(err => {
       res.status(500).json(err);
@@ -107,6 +107,18 @@ server.get('/actions/:id', (req, res) => {
   .catch(err => {
     res.status(500).json(err);
   });
+});
+
+server.put('/actions/:id', (req, res) => {
+  const action = req.body;
+  const id = req.params.id;
+  db('actions').where('id', id).update(action)
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 server.delete('/actions/:id', (req, res) => {
