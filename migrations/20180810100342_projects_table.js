@@ -7,6 +7,8 @@ exports.up = function(knex, Promise) {
      .string('name')
      .notNullable()
      .unique()
+
+     project
      .boolean('completed').defaultTo(false);
 
  }); 
