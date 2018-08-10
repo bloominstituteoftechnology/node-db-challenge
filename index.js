@@ -73,7 +73,30 @@ server.delete('projects/:id', (req, res) => {
     .catch(err => {
       res.status(500).json(err);
     });
-})
+});
+
+//=========Actions==========
+
+server.post('actions', (req, res) => {
+  const action = req.body;
+  db.insert(action).into('actions')
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+server.get('actions', (req, res) => {
+  db('actions')
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
 
 server.listen(PORT, () => {
   console.log(`Up and running on ${PORT}`)
