@@ -53,6 +53,22 @@ server.delete('/projects/:id', (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
+server.put('/project', (req, res) => {
+    const { id } = req.params;
+    const proj = req.body;
+    db('actions')
+        .where({ id })
+        .update({ project: proj })
+        .then(response => {
+            if (response) {
+                res.status(200).json(response)
+            } else {
+                res.status(404).json({ message: 'The project with the specified ID could not be found' })
+            }
+        })
+        .catch(err => res.status(500).json(err))
+})
+
 
 // ==== ACTION REQUESTS ====
 
@@ -101,6 +117,7 @@ server.delete('/actions/:id', (req, res) => {
         })
         .catch(err => res.status(500).json(err))
 })
+
 
 
 server.listen(8000, () => console.log('\n==== API is running... ====\n'));
