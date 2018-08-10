@@ -25,10 +25,10 @@ server.get('/project/:id', (req, res) => {
       .first()
       .then(project => {
         if (project) {
-          db('actions')
+          db('action')
             .where({ id: id })
-            .then(actions => {
-              project.actions = actions;
+            .then(action => {
+              project.action = action;
               res.status(200).json(project);
     })
             .catch(err => {
@@ -91,19 +91,19 @@ server.delete("/project/:id", (req, res) => {
       });
   });
 
-server.get('/actions', (req, res) => {
-    db('actions')
-      .then(actions => {
-          res.status(200).json(actions);
+server.get('/action', (req, res) => {
+    db('action')
+      .then(action => {
+          res.status(200).json(action);
       })
       .catch(err => {
-          res.status(500).json({ err: "Failed to retrieve actions"});
+          res.status(500).json({ err: "Failed to retrieve action"});
       })
 });
 
-server.get("/actions/:id", (req, res) => {
+server.get("/action/:id", (req, res) => {
     const { id } = req.params;
-    db("actions")
+    db("action")
       .where("id", Number(id))
       .then(action => {
         if (action.length === 0) {
@@ -116,22 +116,22 @@ server.get("/actions/:id", (req, res) => {
       });
   });
 
-  server.post("/actions", (req, res) => {
-    const action = req.body;
-    db.insert(action)
-      .into("actions")
+  server.post("/action", (req, res) => {
+    const actions = req.body;
+    db.insert(actions)
+      .into("action")
       .then(ids => {
         const id = ids[0];
-        res.status(201).json({ id, ...action });
+        res.status(201).json({ id, ...actions });
       })
       .catch(err => {
         res.status(500).json({ err: "Failure saving to database" });
       });
   });
 
-server.delete("/actions/:id", (req, res) => {
+server.delete("/action/:id", (req, res) => {
     const { id } = req.params;
-      db("actions")
+      db("action")
       .where("id", Number(id))
       .delete()
       .then(actions => {
@@ -145,13 +145,13 @@ server.delete("/actions/:id", (req, res) => {
       });
   });
 
-server.put("/actions/:id", (req, res) => {
+server.put("/action/:id", (req, res) => {
     const { id } = req.params;
     const action = req.body;
     if (!action) {
       res.status(400).json({ msg: "Action needs body" });
     }
-    db("actions")
+    db("action")
       .where("id", Number(id))
       .update(action)
       .then(action => {
