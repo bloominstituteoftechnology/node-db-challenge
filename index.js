@@ -32,13 +32,23 @@ server.get('/projects/:id', (req, res) => {
 
 server.post('/projects', (req, res) => {
     const proj = req.body;
-
     db
         .insert(proj)
         .into('projects')
         .then(ids => {
             const id = ids[0];
             res.status(201).json({ id, ...proj });
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.delete('/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects')
+        .where({ id })
+        .del()
+        .then(proj => {
+            res.status(200).json(proj)
         })
         .catch(err => res.status(500).json(err))
 })
@@ -56,7 +66,6 @@ server.get('/actions', (req, res) => {
 
 server.get('/actions/:id', (req, res) => {
     const { id } = req.params;
-
     db('actions')
         .where({ id })
         .then(response => {
@@ -71,13 +80,24 @@ server.get('/actions/:id', (req, res) => {
 
 server.post('/actions', (req, res) => {
     const action = req.body
-    
     db
         .insert(action)
         .into('actions')
         .then(ids => {
             const id = ids[0];
             res.status(200).json({ id, ...zoo })
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.delete('/actions/:id', (req, res) => {
+    const { id } = req.params;
+
+    db('actions')
+        .where({ id })
+        .del()
+        .then(action => {
+            res.status(200).json(action)
         })
         .catch(err => res.status(500).json(err))
 })
