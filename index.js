@@ -85,6 +85,29 @@ server.get('/actions/:id', (req, res) => {
     });
 });
 
+server.put('/actions/:id', (req, res) => {
+  const { id } = req.params;
+  const action = req.body;
+  db('actions')
+    .where({ id })
+    .update(action)
+    .then((action) => {
+      res.status(201).json(action);
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
+server.delete('/actions/:id', (req, res) => {
+  const { id } = req.params;
+  db('actions')
+    .where({ id })
+    .del()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
 const port = 5000;
 server.listen(port, () => {
   console.log(`server on http://localhost:${port}`);
