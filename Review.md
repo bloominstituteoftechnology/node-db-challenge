@@ -32,3 +32,8 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
     knex init
     knex migrate:make projects
     knex migrate:latest
+    knex migrate:make actions
+    knex migrate:latest
+
+    knex seed:make 001_projects
+    knex seed:run
