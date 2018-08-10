@@ -6,8 +6,8 @@ exports.seed = function(knex, Promise) {
   .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
+        
         {name: 'Paint the House'},
-        {description: 'exterior walls, trim, and window frames'},
       ]);
     });
 };
