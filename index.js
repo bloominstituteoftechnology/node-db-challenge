@@ -30,6 +30,19 @@ server.get('/projects/:id', (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
+server.post('/projects', (req, res) => {
+    const proj = req.body;
+
+    db
+        .insert(proj)
+        .into('projects')
+        .then(ids => {
+            const id = ids[0];
+            res.status(201).json({ id, ...proj });
+        })
+        .catch(err => res.status(500).json(err))
+})
+
 
 // ==== ACTION REQUESTS ====
 
@@ -52,6 +65,19 @@ server.get('/actions/:id', (req, res) => {
             } else {
                 res.status(404).json({ message: 'The action with the specified ID could not be found' })
             }
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.post('/actions', (req, res) => {
+    const action = req.body
+    
+    db
+        .insert(action)
+        .into('actions')
+        .then(ids => {
+            const id = ids[0];
+            res.status(200).json({ id, ...zoo })
         })
         .catch(err => res.status(500).json(err))
 })
