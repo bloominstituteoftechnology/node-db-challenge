@@ -1,5 +1,6 @@
 const express = require("express");
 const actionsRoutes = require("./routes/actionsRoutes");
+const morgan = require("morgan");
 
 const server = express();
 
@@ -7,6 +8,7 @@ const server = express();
 server.use("/actions", actionsRoutes);
 
 server.use(express.json());
+server.use(morgan("dev"));
 
 server.get("/", (req, res) => {
   res.send("up and running...");
