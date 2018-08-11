@@ -89,8 +89,9 @@ app.get('/actions', (req, res) => {
 });
 
 app.post('/actions', (req, res) => {
-    const { name , description } = req.body
-    const newAction = { name , description }
+    const { name , description, project_id } = req.body
+    const newAction = { name , description, project_id }
+    console.log(newAction)
     db.addAction(newAction)
         .then(response => {
             res.status(200).json(response)
