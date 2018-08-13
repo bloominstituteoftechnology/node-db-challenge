@@ -53,12 +53,14 @@ server.delete('/projects/:id', (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-server.put('/project', (req, res) => {
+server.put('/projects/:id', (req, res) => {
+    console.log(req.params.id);
     const { id } = req.params;
-    const proj = req.body;
-    db('actions')
+    const { name } = req.body;
+    db('projects')
         .where({ id })
-        .update({ project: proj })
+        .update({ name })
+        .into('projects')
         .then(response => {
             if (response) {
                 res.status(200).json(response)
@@ -101,7 +103,7 @@ server.post('/actions', (req, res) => {
         .into('actions')
         .then(ids => {
             const id = ids[0];
-            res.status(200).json({ id, ...zoo })
+            res.status(200).json({ id, ...action })
         })
         .catch(err => res.status(500).json(err))
 })
