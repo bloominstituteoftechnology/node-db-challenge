@@ -103,6 +103,71 @@ server.delete('/projects/:id', (req, res) => {
 // [PUT]
 // [DELETE]
 
+server.get('/actions', (req, res) => {
+    db('actions')
+        .select()
+        .then(actions => {
+            res.status(200).json(actions);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.get('/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db('actions')
+        .where({id:id})
+        .select()
+        .then(action => {
+            res.status(200).json(action);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.post('/actions', (req, res) => {
+    const action = req.body;
+
+    db.insert(action)
+        .into('actions')
+        .then(ids => {
+            res.status(201).json(ids[0]);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.put('/actions/:id', (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+
+    db('actions')
+        .where('id', '=', id)
+        .update(changes)
+        .then(count => {
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+server.delete('/actions/:id', (req, res) => {
+    const {id} = req.params;
+
+    db('actions')
+        .where({id:id})
+        .delete()
+        .then(count => {
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
 
 
 server.listen(8800, () => console.log('Server is running on port 8800'))
