@@ -7,7 +7,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 `RDBMS- Relational Database Management System`
 `SQL - Structure query language`
 
-`The difference between RDBMS and SQL is that RDBMS is a framework for storing data relationally and that SQL is an ANSI and ISO standard for the SQL programming paradigm used to create, read, change, or delete data in databases.`
+`The difference between RDBMS and SQL is that RDBMS is a framework for storing data relationally and that SQL is an ANSI and ISO standard for the SQL programming paradigm used to create, read, change, or delete data in relational databases.`
 
 1.  Why do tables need a `primary key`?
 
