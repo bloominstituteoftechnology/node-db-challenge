@@ -14,11 +14,8 @@ module.exports = {
     let project = db('projects as p')
       .where('p.id', id)
       .first();
-    let actions = db('actions as a')
-      .select('a.id', 'a.description', 'a.notes', 'a.completed')
-      .where('a.project_id', id);
 
-    const promises = [project, actions];
+    const promises = [project, this.getActionsByProject(id)];
 
     return Promise.all(promises).then(results => {
       let [project, actions] = results;
@@ -27,5 +24,25 @@ module.exports = {
 
       return mappers.projectMapper(project);
     });
+  },
+
+  deleteProject: function(id) {
+    let project = db('projects as p')
+      .where('p.id', id)
+      .del();
+
+    const promises = [project, this.getActionsByProject(id).del()];
+
+    return Promise.all(promises).then(results => {
+      [projects, actions] = results;
+      return projects;
+    });
+  },
+
+  getActionsByProject: function(projectId) {
+    return db('actions')
+      .select('id', 'description', 'notes', 'completed')
+      .where('project_id', projectId);
+    // .then(actions => actions);
   },
 };
