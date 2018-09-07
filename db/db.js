@@ -11,7 +11,8 @@ module.exports = {
     editProject,
     deleteProject,
     deleteAction,
-    getProjectActions
+    getProjectActions,
+    embedActions
 }
 
 function getProjects(id){
@@ -40,6 +41,26 @@ function getProjectActions(id){
     .join('actions', function (){
         this
         .on('actions.project_id', '=', 'projects.id')
+    })
+}
+
+function embedActions(id){
+    return  db('projects')
+    .where(id)
+    .first()// 'Similar to select, but only retrieves & resolves with the first record from the query.' // https://knexjs.org/#Builder-first
+    .then( project => {
+        if(project){//checks to make sure there is a project, else 
+            db('actions')
+                .where( project_id === id)
+                .then(
+                    actions => {
+                        project.actions = actions;//creates a new variable on project called actions?? passes it the actions that match line 60
+                        return project;//then returns the project
+                })
+                
+        } else {
+           console.log('no')
+        }
     })
 }
 

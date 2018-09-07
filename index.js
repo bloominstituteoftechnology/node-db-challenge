@@ -3,6 +3,10 @@ const helmet = require('helmet');
 
 const db = require('./db/db.js')
 
+const knex = require('knex');
+const knexConfig = require('./knexfile.js');
+const db2 = knex(knexConfig.development);
+
 const server = express();
 
 server.use(helmet());
@@ -39,7 +43,7 @@ server.get('/api/projects/:id', (req, res) => {
             res.status(200).json(project)
         })
 })
-
+//how I did it 
 server.get('/api/projects/:id/actions', (req, res) => {
     db.getProjectActions(req.params.id).then(actions => {
         console.log(actions)
@@ -48,6 +52,39 @@ server.get('/api/projects/:id/actions', (req, res) => {
         })
     })
 })
+
+//solution code way with array embedded 
+server.get('/api/projects/:id/actions/embedded', (req, res) => {   
+//    db.embedActions(req.params.id)
+    const {id} = req.params//ONLY WORKS DESTRUCTURED
+
+  db2('projects')
+    .where({id})//ONLY WORKS DESTRUCTUREED
+    .first()// 'Similar to select, but only retrieves & resolves with the first record from the query.' // https://knexjs.org/#Builder-first
+    .then( project => {
+        if(project){//checks to make sure there is a project, else 
+            console.log('isProject')
+            console.log(project, "project 0")
+            db2('actions')
+                .where({ project_id: id })
+                .then(
+                    actions => {
+                        console.log(actions, "actions")
+                        console.log(project, "project 1")
+                        project.actions = actions;//creates a new variable on project called actions?? passes it the actions that match line 60
+                        console.log(project, "project 2")
+                        res.status(200).json(project);//then returns the project
+                })
+                .catch(err => res.json(err));
+        } else {
+            console.log('no project')
+            res.status(404).json({message:'project not found'})
+        }
+    })
+    .catch(err => res.json(err));
+}
+)
+
 
 server.post('/api/projects', (req, res) => {
     db.addProject(req.body)
