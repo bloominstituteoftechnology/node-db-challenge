@@ -70,8 +70,20 @@ deleteProject: (id) => {
 getActions: () => {
     return db('action')
             .select('description as Action description')
-}
+},
+
+// Getting action by id
+getAction: (id) => {
+    return db('action')
+            .where('id', id)
+            .select('description as Action description', 'notes as Notes', 'completed as Completed')
+},
+
 //Posting actions
+addAction: (action) => {
+    db('action')
+        .insert(action)
+},
 
 // Updating actions
 

@@ -83,5 +83,34 @@ server.get('/actions', (req, res) => {
         })
 });
 
+server.get('/actions/:id', (req, res) => {
+    const {id} = req.params;
+
+    db.getAction(id)
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+});
+
+server.post('/actions', (req, res) => {
+    const { project_id, description, notes } = req.body;
+    const action = req.body;
+    if (!project_id || !description || !notes) {
+        res.status(400).json('Message: project_id, description and notes are required fields!')
+    }
+
+    db.addProject(action)
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(error => {
+      res.status(500).json(error)
+    })
+});
+
+
 
 server.listen(5000);
