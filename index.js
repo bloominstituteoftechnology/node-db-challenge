@@ -5,12 +5,9 @@ const lo = require("lodash");
 
 const app = express();
 
-function boolMapper(prop) {
+function boolMapper(...props) {
   return function(obj) {
-    return {
-      ...obj,
-      [prop]: !!obj[prop]
-    };
+    return props.reduce((acc, next) => ({ ...acc, [next]: !!acc[next] }), obj);
   };
 }
 
@@ -98,6 +95,96 @@ app
 
         res.status(200).json(result);
       })
+      .catch(next);
+  });
+
+app
+  .route("/api/actions")
+  .get(function(req, res, next) {
+    db("actions")
+      .then(data => res.status(200).json(data.map(boolMapper("complete"))))
+      .catch(next);
+  })
+  .post(function(req, res, next) {
+    const { notes, description, project_id } = req.body;
+
+    if (!notes || !description || !project_id)
+      return res
+        .status(400)
+        .json({ message: "notes, description or project_id missing" });
+
+    db("actions")
+      .insert({ notes, description, project_id })
+      .then(([id]) =>
+        res.status(201).json({ message: "Action created successfully", id })
+      )
+      .catch(next);
+  });
+
+app
+  .route("/api/actions/:id")
+  .put(function(req, res, next) {
+    let { name, description, complete, project_id } = req.body;
+
+    if (!name && !description && !project_id && complete === undefined) {
+      return res
+        .status(400)
+        .json({ message: "At least one field must be provided for an update" });
+    }
+    if (!lo.isUndefined(complete)) complete *= 1;
+
+    let updateObj = { name, description, complete, project_id };
+
+    updateObj = lo.omitBy(updateObj, lo.isUndefined);
+
+    db("actions")
+      .update(updateObj)
+      .where("id", req.params.id)
+      .then(data => {
+        if (!data) return res.status(404).json({ message: "action not found" });
+
+        res
+          .status(200)
+          .json({ message: "action updated successfully", count: data });
+      })
+      .catch(next);
+  })
+  .delete(function(req, res, next) {
+    db("actions")
+      .delete()
+      .where("id", req.params.id)
+      .then(
+        data =>
+          data
+            ? res
+                .status(200)
+                .json({ message: "action deleted successfully", count: data })
+            : res.status(404).json({ message: "action cannot be found" })
+      )
+      .catch(next);
+  })
+  .get(function(req, res, next) {
+    db("actions as a")
+      .select({
+        id: "a.id",
+        description: "a.description",
+        notes: "a.notes",
+        complete: "a.complete",
+        project_name: "p.name",
+        project_description: "p.description",
+        project_complete: "p.complete"
+      })
+      .where("a.id", req.params.id)
+      .join("projects as p", "a.project_id", "p.id")
+      .first()
+      .then(
+        data =>
+          data
+            ? res
+                .status(200)
+                .json(boolMapper("complete", "project_complete")(data))
+            : res.status(404).json({ message: "action not found " })
+      )
       .catch(next);
   });
 

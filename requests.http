@@ -22,3 +22,29 @@ DELETE http://localhost:5000/api/projects/4 HTTP/1.1
 
 GET http://localhost:5000/api/projects/1 HTTP/1.1
 ###
+
+GET http://localhost:5000/api/actions HTTP/1.1
+###
+POST http://localhost:5000/api/actions HTTP/1.1
+content-type: application/json
+
+{
+  "notes": "action name 4",
+  "description": "action description 4",
+  "project_id": 2
+}
+###
+
+PUT http://localhost:5000/api/actions/1 HTTP/1.1
+content-type: application/json
+
+{
+  "complete": true
+}
+###
+
+DELETE http://localhost:5000/api/actions/4 HTTP/1.1
+###
+
+GET http://localhost:5000/api/actions/1 HTTP/1.1
+###
