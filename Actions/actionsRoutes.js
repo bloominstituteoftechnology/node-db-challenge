@@ -13,8 +13,24 @@ router.get('/', (req, res) => {
         });
 });
 
+
+router.get('/:id', (req, res) => {
+    actionsModel.get(req.params.id)
+        .then(data => {
+            res.status(200).json({ data });
+        })
+        .catch(err => {
+            console.log(`Error: ${err}`);
+            res.status(500).json({ message: `Unable to grab projects.` })
+        });
+});
+
 router.post('/', (req, res) => {
-    if (req.body.name != null) {
+    let action = req.body.action, 
+        project_id = req.body.project_id;
+        console.log('action', action);
+        
+    if (req.body.action != null) {
         actionsModel.insert(req.body)
             .then(data => {
                 res.status(201).json(data);

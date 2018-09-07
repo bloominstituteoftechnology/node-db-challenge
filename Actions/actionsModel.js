@@ -3,6 +3,11 @@ const db = require('../db/dbConfig');
 module.exports = {
     get: function (id) {
         let query = db('actions');
+        if(id){
+            return query
+                .where('id', id)
+                .first();
+        }
         return query;
     },
     insert: function (action) {
