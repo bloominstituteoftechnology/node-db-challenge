@@ -10,7 +10,8 @@ module.exports = {
     editAction, 
     editProject,
     deleteProject,
-    deleteAction
+    deleteAction,
+    getProjectActions
 }
 
 function getProjects(id){
@@ -27,6 +28,11 @@ function getActions(id){
     } else {
         return db('actions')
     }
+}
+
+ function getProjectActions(id){
+    return db('projects')
+    .join('actions', {'projects.id': 'actions.project_id'})
 }
 
 function addProject(newProject){

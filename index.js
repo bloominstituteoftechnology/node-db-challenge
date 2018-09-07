@@ -40,6 +40,13 @@ server.get('/api/projects/:id', (req, res) => {
         })
 })
 
+server.get('/api/projects/:id/actions', (req, res) => {
+    db.getProjectActions(req.params.id)
+        .then(project => {
+            res.status(200).json(project)
+        })
+})
+
 server.post('/api/projects', (req, res) => {
     db.addProject(req.body)
         .then(count => {
