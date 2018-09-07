@@ -29,74 +29,74 @@ server.get("/", (req, res) => {
   res.send("API running....");
 });
 
-//COHORTS ENDPOINTS
+//PROJECTS ENDPOINTS
 
-server.get("/api/cohorts", (req, res) => {
-  db("cohorts")
-    .then(cohorts => {
-      checkForResource(req, res, cohorts);
+server.get("/api/projects", (req, res) => {
+  db("projects")
+    .then(projects => {
+      checkForResource(req, res, projects);
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The cohorts information could not be retrieved." });
+        .json({ error: "The projects information could not be retrieved." });
     });
 });
 
-server.get("/api/cohorts/:id", (req, res) => {
+server.get("/api/projects/:id", (req, res) => {
   const { id } = req.params;
-  db("cohorts")
+  db("projects")
     .where({ id })
-    .then(cohort => {
-      checkForResource(req, res, cohort);
+    .then(project => {
+      checkForResource(req, res, project);
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The cohort information could not be retrieved" });
+        .json({ error: "The project information could not be retrieved" });
     });
 });
 
-server.get("/api/cohorts/:id/students", (req, res) => {
+server.get("/api/projects/:id/actions", (req, res) => {
   const { id } = req.params;
-  db("students")
-    .join("cohorts", "cohorts.id", "students.cohort_id")
-    .select("students.id", "students.name", "cohorts.name as cohort")
-    .where("students.cohort_id", id)
-    .then(students => {
-      checkForResource(req, res, students);
+  db("actions")
+    .join("projects", "projects.id", "actions.project_id")
+    .select("actions.id", "actions.name", "projects.name as project")
+    .where("actions.project_id", id)
+    .then(actions => {
+      checkForResource(req, res, actions);
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The students information could not be retrieved." });
+        .json({ error: "The actions information could not be retrieved." });
     });
 });
 
-server.post("/api/cohorts", (req, res) => {
-  const cohort = req.body;
+server.post("/api/projects", (req, res) => {
+  const project = req.body;
 
-  db.insert(cohort)
-    .into("cohorts")
+  db.insert(project)
+    .into("projects")
     .then(id => {
       res.status(201).json(id);
     })
     .catch(err => {
       console.log("error", err);
       res.status(500).json({
-        error: "There was an error saving the cohort to the database."
+        error: "There was an error saving the project to the database."
       });
     });
 });
 
-server.put("/api/cohorts/:id", (req, res) => {
+server.put("/api/projects/:id", (req, res) => {
   const changes = req.body;
   const { id } = req.params;
 
-  db("students")
+  db("actions")
     .where({ id })
     .update(changes)
     .then(count => {
@@ -106,14 +106,14 @@ server.put("/api/cohorts/:id", (req, res) => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The cohort information could not be updated" });
+        .json({ error: "The project information could not be updated" });
     });
 });
 
-server.delete("/api/cohorts/:id", (req, res) => {
+server.delete("/api/projects/:id", (req, res) => {
   const { id } = req.params;
 
-  db("cohorts")
+  db("projects")
     .where({ id })
     .del()
     .then(count => {
@@ -121,63 +121,63 @@ server.delete("/api/cohorts/:id", (req, res) => {
     })
     .catch(err => {
       console.log("error", err);
-      res.status(500).json({ error: "The cohort could not be deleted" });
+      res.status(500).json({ error: "The project could not be deleted" });
     });
 });
 
-//STUDENTS ENDPOINTS
+//ACTIONS ENDPOINTS
 
-server.get("/api/students", (req, res) => {
-  db("students")
-    .then(students => {
-      res.status(200).json(students);
+server.get("/api/actions", (req, res) => {
+  db("actions")
+    .then(actions => {
+      res.status(200).json(actions);
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The students information could not be retrieved" });
+        .json({ error: "The actions information could not be retrieved" });
     });
 });
 
-server.get("/api/students/:id", (req, res) => {
+server.get("/api/actions/:id", (req, res) => {
   const { id } = req.params;
-  db("students")
-    .join("cohorts", "cohorts.id", "students.cohort_id")
-    .select("students.id", "students.name", "cohorts.name as cohort")
-    .where("students.id", id)
-    .then(student => {
-      checkForResource(req, res, student);
+  db("actions")
+    .join("projects", "projects.id", "actions.project_id")
+    .select("actions.id", "actions.name", "projects.name as project")
+    .where("actions.id", id)
+    .then(action => {
+      checkForResource(req, res, action);
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The student information could not be retrieved" });
+        .json({ error: "The action information could not be retrieved" });
     });
 });
 
-server.post("/api/students", (req, res) => {
-  const student = req.body;
+server.post("/api/actions", (req, res) => {
+  const action = req.body;
 
-  db.insert(student)
-    .into("students")
+  db.insert(action)
+    .into("actions")
     .then(id => {
       res.status(201).json(id);
     })
     .catch(err => {
       console.log("error", err);
       res.status(500).json({
-        error: "There was an error saving the student to the database."
+        error: "There was an error saving the action to the database."
       });
     });
 });
 
-server.put("/api/students/:id", (req, res) => {
+server.put("/api/actions/:id", (req, res) => {
   const changes = req.body;
   const { id } = req.params;
 
-  db("students")
+  db("actions")
     .where({ id })
     .update(changes)
     .then(count => {
@@ -187,14 +187,14 @@ server.put("/api/students/:id", (req, res) => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The student information could not be updated" });
+        .json({ error: "The action information could not be updated" });
     });
 });
 
-server.delete("/api/students/:id", (req, res) => {
+server.delete("/api/actions/:id", (req, res) => {
   const { id } = req.params;
 
-  db("students")
+  db("actions")
     .where({ id })
     .del()
     .then(count => {
@@ -202,7 +202,7 @@ server.delete("/api/students/:id", (req, res) => {
     })
     .catch(err => {
       console.log("error", err);
-      res.status(500).json({ error: "The student could not be deleted" });
+      res.status(500).json({ error: "The action could not be deleted" });
     });
 });
 
