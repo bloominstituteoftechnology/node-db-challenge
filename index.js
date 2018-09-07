@@ -16,4 +16,17 @@ server.get('/', (req, res) => {
 res.send('API Running...');
 });
 
+//POST REQUEST
+server.post('/api/projects', (req, res) => {
+    const project = req.body;
+    // console.log(project);
+    db.insert(project)
+    .into('projects')
+    .then(id => {
+    res.status(201).json(id);
+    })
+    .catch(err => res.status(500).json(err));
+    });
+
+
 server.listen(9000);
