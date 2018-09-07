@@ -1,0 +1,29 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "The application lets users track Projects and Actions in the spirit of David Allen's Getting Things Done (GTD) methodology and uses Node.js, Express.js and Knex to build a RESTful API for a Project Tracker application that persists data to a SQLite database.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "new": "knex migrate:latest && knex seed:run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnoro/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [],
+  "author": "John O'Rourke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnoro/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/johnoro/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
