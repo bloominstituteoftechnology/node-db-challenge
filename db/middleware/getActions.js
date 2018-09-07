@@ -6,9 +6,11 @@ function getActions(req, res, next) {
   const actions = []
   db("actions")
     .where({ project_id: id })
-    .then(actions => {
-      console.log(actions)
-      actions.push(actions);
+    .then(data => {
+      //console.log(data)
+      actions.push(data);
+      req.actions = data; 
+      next()
     })
     .catch(error => {
       res
@@ -19,7 +21,9 @@ function getActions(req, res, next) {
           devMessage: "unable to obtain actions from project id"
         });
     });
-  next();
+  console.log(actions,"actions actions actions")
+  
+  //next();
 }
 
 module.exports = getActions;

@@ -18,9 +18,8 @@ projectRouter.get("/", (req, res) => {
       res.status(500).json({ error, message: error.message });
     });
 });
-projectRouter.get("/:id", getActions, (req, res) => {
+projectRouter.get("/:id", (req, res) => {
   const { id } = req.params;
-  console.log(req.actions)
   db("projects")
     .where({ id })
     .then(project => {
@@ -34,6 +33,25 @@ projectRouter.get("/:id", getActions, (req, res) => {
       });
     });
 });
+
+projectRouter.get("/:id/actions", getActions,  (req, res) => {
+  const { id } = req.params;
+  console.log(req.actions, "req.actions")
+  db("projects")
+    .where({ id })
+    .then(project => {
+      project[0].actions = req.actions 
+      res.status(200).json(project[0]);
+    })
+    .catch(error => {
+      res.status(404).json({
+        error,
+        message: error.message,
+        devMessage: "Likely the id does not exist in the projects table"
+      });
+    });
+});
+
 
 projectRouter.post("/", bodyChecker, (req, res) => {
   db("projects")
