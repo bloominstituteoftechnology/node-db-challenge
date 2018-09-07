@@ -17,6 +17,6 @@ server.use("/api/actions", actionsRoutes);
 const port = 7000;
 server.listen(port, function() {
 	console.log(
-		`\n===Yarrrrr, yer server be sailin' on port 7000, yarrrrr ===\n`,
+		`\n===Yarrrrrn, yer server be sailin' on port 7000, yarrrrrn ===\n`,
 	);
 });
