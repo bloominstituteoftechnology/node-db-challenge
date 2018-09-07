@@ -66,17 +66,18 @@ deleteProject: (id) => {
             .delete()
 },
 
-// Getting actions
+// Getting actions wit relevant projects they belong to
 getActions: () => {
     return db('action')
-            .select('description as Action description')
+            .select('action.id', 'project.name as project', 'action.description as action description')
+            .join('project', 'project.id', 'action.project_id')
 },
 
 // Getting action by id
 getAction: (id) => {
     return db('action')
             .where('id', id)
-            .select('description as Action description', 'notes as Notes', 'completed as Completed')
+            .select('id as id', 'notes as notes', 'completed as completed')
 },
 
 //Posting actions

@@ -12,12 +12,14 @@ server.get('/', (req, res) => {
     res.send('API running....')
 });
 
+// ########## GET ALL PROJECTS ################
 server.get('/projects', (req, res) => {
     db.getProjects()
       .then(projects => res.status(200).json(projects))
       .catch(err => res.status(500).json(err))
   });
 
+// ########### GET PROJECT BY ID ################
 server.get('/projects/:id', (req, res) => {
     const { id } = req.params
     db.getProject(id)
@@ -29,6 +31,7 @@ server.get('/projects/:id', (req, res) => {
     })
 });
 
+// ########## POSTING NEW PROJECT ###########
 server.post('/projects', (req, res) => {
     const { name, description } = req.body;
     const project = req.body;
@@ -45,6 +48,7 @@ server.post('/projects', (req, res) => {
     })
 });
 
+// ########### UPDATING PROJECT ###########
 server.put('/projects/:id', (req, res) => {
     const {name, description} = req.body;
     const {id} = req.params;
@@ -61,7 +65,7 @@ server.put('/projects/:id', (req, res) => {
         })
 });
 
-
+// ########### DELETE PROJECT ###############
 server.delete('/projects/:id', (req, res) => {
     const {id} = req.params;
     db.deleteProject(id)
@@ -73,6 +77,7 @@ server.delete('/projects/:id', (req, res) => {
         })
 });
 
+// ########### GETTING ALL ACTIONS ##################
 server.get('/actions', (req, res) => {
     db.getActions()
         .then(actions => {
@@ -83,6 +88,7 @@ server.get('/actions', (req, res) => {
         })
 });
 
+// ########### GETTING ACTION BY ID ##############
 server.get('/actions/:id', (req, res) => {
     const {id} = req.params;
 
@@ -95,6 +101,7 @@ server.get('/actions/:id', (req, res) => {
         })
 });
 
+// ########### POSTING NEW ACTION #################
 server.post('/actions', (req, res) => {
     const { project_id, description, notes } = req.body;
     const action = req.body;
@@ -111,6 +118,7 @@ server.post('/actions', (req, res) => {
     })
 });
 
+// ############# UPDATING ACTION ##################
 server.put('/actions/:id', (req, res) => {
     const {description, notes} = req.body;
     const {id} = req.params;
@@ -127,6 +135,7 @@ server.put('/actions/:id', (req, res) => {
         })
 });
 
+// ############### DELETING ACTION #####################
 server.delete('/actions/:id', (req, res) => {
     const {id} = req.params;
     db.deleteAction(id)
