@@ -118,7 +118,6 @@ server.put("/api/projects/:id", (req, res) => {
 
 // start actions
 //gets
-
 server.get("/api/actions", (req, res) => {
   db("actions")
     .then(actions => {
@@ -148,5 +147,75 @@ server.get("/api/actions/:id", (req, res) => {
     });
 });
 // end gets
+
+// start POST
+server.post("/api/actions", (req, res) => {
+  const action = req.body;
+  if (!action) {
+    return res.status(406).json({
+      errorMessage: "Please provide a name for the action.",
+    });
+  } else {
+    db("actions")
+      .insert(action)
+      .into("actions")
+      .then(actions => {
+        res.status(201).json({ message: "Action successfully added." });
+      })
+      .catch(err => {
+        res.status(500).json({ error: "The action could not be added." });
+      });
+  }
+});
+// end POST
+
+// start DELETE
+server.delete("/api/actions/:id", (req, res) => {
+  const { id } = req.params;
+  db("actions")
+    .where("action_id", id)
+    .del()
+    .then(actions => {
+      if (actions === 0) {
+        res.status(404).json({
+          message: "The action with the specified ID does not exist.",
+        });
+      } else {
+        res.status(200).json({ message: "Action removed successfully." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The action could not be removed." });
+    });
+});
+// end DELETE
+
+// start PUT
+server.put("/api/actions/:id", (req, res) => {
+  const { id } = req.params;
+  const modifiedAction = req.body;
+  if (!modifiedAction) {
+    return res.status(406).json({
+      errorMessage: "Please provide a name for the action.",
+    });
+  } else {
+    db("actions")
+      .where("action_id", id)
+      .update({
+        action_description: modifiedAction.action_description,
+        action_notes: modifiedAction.action_notes,
+        action_completed: modifiedAction.action_completed,
+      })
+      .then(actions => {
+        res.status(200).json({ message: "Action successfully modified." });
+      })
+      .catch(err => {
+        console.log("PUT ERROR", err);
+        res.status(500).json({ error: "The action could not be updated." });
+      });
+  }
+});
+// end PUT
+// end actions
 
 server.listen(7250, () => console.log("\n== API on port 7250 ==\n"));
