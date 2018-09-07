@@ -59,10 +59,23 @@ updateProject: (id, updatedProject) => {
             .update(updatedProject)
 },
 
+// Deleting project
 deleteProject: (id) => {
     return db('project')
             .where('id', id)
             .delete()
 },
+
+// Getting actions
+getActions: () => {
+    return db('action')
+            .select('description as Action description')
+}
+//Posting actions
+
+// Updating actions
+
+// Deleting actions
+
 
 }

@@ -73,5 +73,15 @@ server.delete('/projects/:id', (req, res) => {
         })
 });
 
+server.get('/actions', (req, res) => {
+    db.getActions()
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+});
+
 
 server.listen(5000);
