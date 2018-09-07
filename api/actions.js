@@ -9,11 +9,18 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  db('actions')
-    .where({ id })
+  db('actions as a')
+    .where({ 'a.id': id })
     .then(action => {
-      if (action) res.status(200).json(action);
-      else res.status(404).json({ error: 'The action with the specified ID wasn\'t found.' });
+      console.log(action);
+      db('contexts-to-actions as ca')
+        .where({ 'action_id': id })
+        .select('c.id', 'c.description')
+        .join('contexts as c', { 'c.id': 'ca.context_id' })
+        .then(contexts => {
+          res.status(200).json(Object.assign(action[0], { contexts }))
+        })
+        .catch(err => res.status(500).json(err));
     })
     .catch(err => res.status(500).json(err));
 });
