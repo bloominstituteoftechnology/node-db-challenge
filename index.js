@@ -63,7 +63,7 @@ server.get("/api/projects/:id/actions", (req, res) => {
   const { id } = req.params;
   db("actions")
     .join("projects", "projects.id", "actions.project_id")
-    .select("actions.id", "actions.name", "projects.name as project")
+    .select("actions.id", "actions.description", "projects.name as project")
     .where("actions.project_id", id)
     .then(actions => {
       checkForResource(req, res, actions);
@@ -144,7 +144,7 @@ server.get("/api/actions/:id", (req, res) => {
   const { id } = req.params;
   db("actions")
     .join("projects", "projects.id", "actions.project_id")
-    .select("actions.id", "actions.name", "projects.name as project")
+    .select("actions.id", "actions.description", "projects.name as project")
     .where("actions.id", id)
     .then(action => {
       checkForResource(req, res, action);
