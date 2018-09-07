@@ -68,4 +68,18 @@ server.put('/api/projects/:id', (req, res) => {
         })
 })
 
+server.delete('/api/projects/:id', (req, res) => {
+    db.deleteProject(req.params.id)
+        .then(count => {
+            res.status(200).json(count)
+        })
+})
+
+server.delete('/api/actions/:id', (req, res) => {
+    db.deleteAction(req.params.id)
+        .then(count => {
+            res.status(200).json(count)
+        })
+})
+
 server.listen(9000, () => console.log('\n == server running on 9000 ==\n'))

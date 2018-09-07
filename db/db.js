@@ -8,7 +8,9 @@ module.exports = {
     getActions, 
     addAction, 
     editAction, 
-    editProject
+    editProject,
+    deleteProject,
+    deleteAction
 }
 
 function getProjects(id){
@@ -45,4 +47,16 @@ function editProject(projectChange, id){
     return db('projects')
         .where('id', id)
         .update(projectChange)
+}
+
+function deleteProject(id){
+    return db('projects')
+        .where('id', id)
+        .del()
+}
+
+function deleteAction(id){
+    return db('actions')
+        .where('id', id)
+        .del()
 }
