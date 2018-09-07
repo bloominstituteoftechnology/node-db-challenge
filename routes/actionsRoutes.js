@@ -4,7 +4,7 @@ const actionRouter = express.Router();
 const db = require("../db/dbConfig");
 
 //middleware
-const bodyChecker = require('../db/middleware/actionsBodyCheck.js')
+const bodyChecker = require("../db/middleware/actionsBodyCheck.js");
 //middleware^^^
 
 actionRouter.get("/", (req, res) => {
@@ -29,7 +29,7 @@ actionRouter.get("/:id", (req, res) => {
     });
 });
 
-actionRouter.post("/", (req, res) => {
+actionRouter.post("/", bodyChecker, (req, res) => {
   db("actions")
     .insert(req.body)
     .then(actionId => {
@@ -40,7 +40,7 @@ actionRouter.post("/", (req, res) => {
     });
 });
 
-actionRouter.put("/:id", (req, res) => {
+actionRouter.put("/:id", bodyChecker, (req, res) => {
   const { id } = req.params;
   db("actions")
     .update(req.body)
