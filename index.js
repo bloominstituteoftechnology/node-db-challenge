@@ -18,8 +18,16 @@ server.get('/projects', (req, res) => {
       .catch(err => res.status(500).json(err))
   });
 
-
-
+server.get('/projects/:id', (req, res) => {
+    const { id } = req.params
+    db.getProject(id)
+    .then(projects => {
+      res.status(200).json(projects);
+    })
+    .catch(error => {
+      res.status(500).json(error)
+    })
+});
 
 
 
