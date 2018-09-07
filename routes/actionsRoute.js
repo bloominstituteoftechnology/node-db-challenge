@@ -7,6 +7,7 @@ router.route('/')
     .post(actionControler.post)
 
 router.route('/:id')
+    .get(actionControler.getActionID)
     .put(actionControler.update)
     .delete(actionControler.del)
 

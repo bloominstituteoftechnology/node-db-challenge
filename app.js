@@ -19,9 +19,9 @@ const dbModel = require('./db/dbHelper/model')
 //     console.log(data)
 // })
 
-dbModel.getProject(1)
+dbModel.getAction(1)
     .then(data => {
-        console.log(`project data`)
+        console.log(`Action data`)
         console.log(data)
     })
 

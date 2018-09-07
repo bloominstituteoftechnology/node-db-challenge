@@ -18,9 +18,11 @@ module.exports = {
     //             `actions.flag as actions_flag`)
     //     .innerJoin(`projects`, `projects.id`, `actions.id`)
     //     .where(`projects.id`, id)
-    const project = await db(`projects`).where({
+    const project = await db(`projects`)
+      .where({
         id: id
-    }).select('id', 'name', 'description', 'flag as completed')
+      })
+      .select("id", "name", "description", "flag as completed");
     const actions = await db(`actions`)
       .where({
         project_id: id
@@ -28,11 +30,34 @@ module.exports = {
       .select();
 
     return {
-        id: project[0].id,
-        name: project[0].name,
-        description: project[0].description,
-        completed: project[0].completed,
-        actions: actions
+      id: project[0].id,
+      name: project[0].name,
+      description: project[0].description,
+      completed: project[0].completed,
+      actions: actions
+    };
+  },
+
+  async getAction(id) {
+    const contexts =  await db
+      .select(`contexts.name as context_name`)
+      .from(`contexts`)
+      .innerJoin(`actions`)
+      .innerJoin(`ActionToContext as AtoC`, function() {
+        this.on(function() {
+          this.on(`AtoC.action_id`, "=", "actions.id");
+          this.andOn(`AtoC.context_id`, "=", "contexts.id");
+        });
+      })
+      .where(`actions.id`, id);
+    const actions = await db(`actions`).where({id: id}).select()
+    return {
+      id: actions[0].id,
+      name: actions[0].name,
+      description: actions[0].description,
+      notes: actions[0].notes,
+      completed: actions[0].flag,
+      contexts
     }
   },
 

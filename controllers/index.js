@@ -23,6 +23,15 @@ exports.getProjectID = async (req, res, next) => {
 
 }
 
+exports.getActionID = async (req, res, next) => {
+    try {
+        const data = await dbModel.getAction(Number(req.params.id))
+        res.status(200).json(data)
+    } catch (err){
+        next(err)
+    }
+}
+
 exports.post = async (req, res, next) => {
     try {
         let data;
