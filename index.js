@@ -61,4 +61,11 @@ server.put('/api/actions/:id', (req, res) => {
         })
 })
 
+server.put('/api/projects/:id', (req, res) => {
+    db.editProject(req.body, req.params.id)
+        .then(count => {
+            res.status(200).json(count)
+        })
+})
+
 server.listen(9000, () => console.log('\n == server running on 9000 ==\n'))
