@@ -9,13 +9,15 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  db('contexts')
-    .where({ id })
+  db('contexts as c')
+    .where({ 'c.id': id })
+    .select('c.id', 'description', 'action_id')
+    .join('contexts-to-actions', { 'context_id': 'c.id' })
     .then(context => {
       if (!(context.length === 0)) res.status(200).json(context[0]);
       else res.status(404).json({ error: 'The context with the specified ID wasn\'t found.' })
     })
-    .catch(err => res.status(500).json(err));
+    // .catch(err => res.status(500).json(err));
 });
 
 router.post('/', (req, res) => {
