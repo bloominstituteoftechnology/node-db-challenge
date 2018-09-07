@@ -25,6 +25,17 @@ projectRouter.get('/:id', (req, res) => {
     })
 })
 
+projectRouter.post('/', (req,res) => {
+  db('projects')
+    .insert(req.body)
+    .then(projectId => {
+      res.status(201).json(projectId)
+    })
+    .catch(error => {
+      res.status(500).json({error, errorMessage: error.message, devMessage: "Something may be wrong with the route"})
+    })
+})
+
 
 
 module.exports = projectRouter; 
