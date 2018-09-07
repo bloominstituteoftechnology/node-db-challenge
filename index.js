@@ -44,18 +44,6 @@ server.post('/api/projects', (req, res) => {
         res.status(500).json({error: "Project by that ID could not be retrieved."}));
   })
 
-  server.get('/api/projects/:id/actions', (req, res) => {
-    const id = req.params.id;  
-    db('projects')
-    .join('actions', 'actions.project_id', '=', 'projects.id')
-    .where('id', id)
-    .then(projectActions => {
-        res.status(201).json(projectActions);
-    })
-    .catch(err => 
-        res.status(500).json({error: "Actions by that project ID could not be retrieved."}));
-  })
-
   server.put('/api/projects/:id', (req, res) => {
     const [id, body] = [req.params.id, req.body]; 
     db('projects')
