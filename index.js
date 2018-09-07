@@ -35,9 +35,9 @@ app.get('/projects/:id', async (req, res) => {
 	const { id } = req.params
 	try {
 		const project = await helper.getProject(id);
-		project.length > 0
-		? res.status(200).json(project)
-		: res.status(404).json({ error: 'The specified project could not be found.' })
+		// project.length > 0
+		res.status(200).json(project)
+		// : res.status(404).json({ error: 'The specified project could not be found.' })
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });

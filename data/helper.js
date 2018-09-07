@@ -4,8 +4,18 @@ function getProjects(){
 	return db('projects')
 }
 
-function getProject(id){
-	return db('projects').where({id: id})
+async function getProject(id){
+	const projectArray = await db('projects').where({id: id})
+	const actions = await db('actions').where({'project_id': id}).select('id', 'description', 'notes', 'complete')
+	const { name, description, complete } = projectArray[0];
+	const result = {
+		id,
+		name,
+		description,
+		complete,
+		actions
+	}
+	return result;
 }
 
 function addProject(project){
