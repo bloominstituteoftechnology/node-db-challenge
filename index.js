@@ -218,4 +218,98 @@ server.put("/api/actions/:id", (req, res) => {
 // end PUT
 // end actions
 
+// nested end point
+server.get("/api/projects/:id/actions", (req, res) => {
+  const { id } = req.params;
+  // db("projects")
+  // db actions for attempt 3 & 4
+  // db("actions", "projects");
+  // attempt 1
+  // .select("*")
+  // .from("projects as p", "actions as a")
+  // .join("actions as a", "a.project_id", "=", "p.project_id")
+  // .where("a.project_id", id)
+  // .options({ nestedTables: true })
+
+  // attempt 2
+  // .select("*")
+  // .from("projects")
+  // .join("actions", function() {
+  //   this.on(function() {
+  //     this.on("actions.project_id", "=", "projects.project_id");
+  //   });
+  // })
+  // .where("actions.project_id", id)
+
+  // attempt 3
+  // .join("projects", "projects.project_id", "actions.project_id")
+  // .select(
+  //   "actions.action_id",
+  //   "actions.action_description",
+  //   "projects.project_name as postedBy",
+  // )
+  // .where("actions.project_id", id)
+
+  // attempt 4
+  // .join("projects", function() {
+  //   this.on(function() {
+  //     this.on("actions.project_id", "=", "projects.project_id");
+  //   });
+  // })
+  // works same as join above
+  // .join("projects", { "projects.project_id": "actions.project_id" })
+  // .select("*")
+  // .where("actions.project_id", id)
+  // attempt 5
+  db("projects")
+    .where({ project_id: id })
+    .then(project => {
+      if (project.length === 0) {
+        res.status(404).json({
+          message: "The project with the specified ID does not exist.",
+        });
+      } else {
+        db("actions")
+          .where({ project_id: id })
+          .then(action => {
+            if (action.length === 0) {
+              res.status(404).json({
+                message: "The action with the specified ID does not exist.",
+              });
+            } else {
+              // return res.status(200).json({ project, actions: { action } });
+              return res
+                .status(200)
+                .json(Object.assign(project[0], { actions: action }));
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            res
+              .status(500)
+              .json({ error: "The action could not be retrieved." });
+          });
+      }
+    });
+
+  // working then and catch below
+  // .then(project => {
+  //   console.log("INDEX", project);
+  //   if (project.length === 0) {
+  //     res.status(404).json({
+  //       message: "The project with the specified ID does not exist.",
+  //     });
+  //   } else {
+  //     return res.status(200).json(project);
+  //   }
+  // })
+  // .catch(err => {
+  //   console.log("GET ALL PROJECTS ERR", err);
+  //   res
+  //     .status(500)
+  //     .json({ error: "The project information could not be retrieved." });
+  // });
+});
+// end last end point
+
 server.listen(7250, () => console.log("\n== API on port 7250 ==\n"));
