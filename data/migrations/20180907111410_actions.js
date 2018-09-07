@@ -3,7 +3,8 @@ exports.up = (knex, Promise) => {
     t.increments();
     t.string('description').notNullable();
     t.string('notes');
-    t.boolean('completed').defaultTo(0);
+    t.boolean('completed');
+    t.integer('project_id').references('projects.id').onDelete('cascade');
   });
 };
 

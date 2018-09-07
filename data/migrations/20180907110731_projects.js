@@ -3,7 +3,7 @@ exports.up = (knex, Promise) => {
     t.increments();
     t.string('name').notNullable();
     t.string('description');
-    t.boolean('completed').defaultTo(0);
+    t.boolean('completed');
   });
 };
 
