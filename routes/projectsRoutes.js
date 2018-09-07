@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../dbConfig");
 
+const helpers = require("../db/helpers");
+
 router.post("/", (req, res) => {
 	const project = req.body;
 	if (!project.name || !project.description) {
@@ -68,6 +70,22 @@ router.delete("/:id", (req, res) => {
 		.delete()
 		.then(ver => {
 			res.status(201).json(ver);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
+router.get("/actions/:id", (req, res) => {
+	helpers
+		.getProject(req.params.id)
+		.then(data => {
+			if (!data)
+				return res
+					.status(404)
+					.json({ message: "No project with that id" });
+
+			res.status(200).json(data);
 		})
 		.catch(err => {
 			res.status(500).json(err);
