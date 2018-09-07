@@ -12,7 +12,13 @@ module.exports = {
       return Promise.all(promises).then(function(results) {
         let [projects, actions] = results;
         let project = projects[0];
-        project.actions = actions;
+        project.actions = actions.map(a => Object.assign(
+                                              {},
+                                              { id: a.id,
+                                                description: a.description,
+                                                notes: a.notes,
+                                                completed: a.completed })
+                                            );
 
         return project;
       });

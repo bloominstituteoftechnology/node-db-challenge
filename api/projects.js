@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   db.get()
     .then(projects => res.status(200).json(projects))
-    .catch(err => res.status(500).json(err))
+    .catch(err => res.status(500).json(err));
 });
 
 //get a project by id
