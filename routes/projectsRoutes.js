@@ -47,4 +47,34 @@ projectRouter.post("/", bodyChecker, (req, res) => {
     });
 });
 
+projectRouter.put("/:id", bodyChecker, (req, res) => {
+  const { id } = req.params; 
+  db("projects")
+    .update(req.body)
+    .where({ id })
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error,
+        errorMessage: error.message,
+        devMessage: "Something may be wrong with the route"
+      });
+    });
+});
+
+projectRouter.delete("/:id", (req, res) => {
+  const { id } = req.params; 
+  db("projects")
+   .where({ id })
+   .del()
+   .then(count => {
+     res.status(200).json(count)
+   })
+   .catch(error => {
+     res.status(500).json({error, errorMessage: [error.code, error.message], devMessage: "Make sure id exists in projects table also check route"})
+   })
+})
+
 module.exports = projectRouter;

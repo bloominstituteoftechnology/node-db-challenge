@@ -1,5 +1,6 @@
 function projectBodyChecker(req, res, next) {
-  if (!req.body.completed) {
+  console.log(req.body.completed)
+  if (req.body.completed === undefined) {
     res.status(406).json({
       error:
         "The completed column is required, yet missing therefore your request is not acceptable"
