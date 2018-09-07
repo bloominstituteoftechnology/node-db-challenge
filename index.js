@@ -34,6 +34,28 @@ server.post("/api/:whichtable", async (req, res) => {
   }
 });
 
+server.delete("/api/:whichtable/:ID", async (req, res) => {
+  let table = "projects";
+  if(req.params.whichtable ==="actions"){
+    table = "actions";
+  }
+  if (!Number(req.params.ID)) {
+    res.status(400).json({ errorMessage: "ID not a number" });
+  }
+  
+  try {
+    const results = await dbhelpers.delete(req.params.ID, table);
+    if (results) {
+      res.status(200).json({ message: "Success" });
+    } else {
+      res.status(500).json({ errorMessage: "Invalid ID for removal" });
+    }
+  } catch (err) {
+    
+    res.status(500).json(err);
+  }
+});
+
 server.use("/", (req, res) =>
   res
     .status(404)
