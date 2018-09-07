@@ -39,7 +39,10 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const project = await db('project').where({ id });
-        res.status(200).json( project )
+        const projectActions = await db('action').where({ project_id: id}).select('id', 'description', 'notes', 'completed')
+        const { name, description, completed } = project;
+        const projectWithActions = {id, name, description, completed, projectActions};
+        res.status(200).json( projectWithActions );
     }
     catch ( err ) {
         res.status(500).json( err.message );
