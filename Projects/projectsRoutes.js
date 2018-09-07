@@ -33,7 +33,7 @@ router.put('/:id',(req,res)=>{
         .then(data => {
             console.log(data[id-1]);
             
-            res.status(200).json(`Updated project name to: ${data[id-1].name}`);
+            res.status(200).json({message:`Updated project name to: ${data[id-1].name}`});
         })
         .catch(err => {
             console.log(`Error: ${err}`);
@@ -42,4 +42,15 @@ router.put('/:id',(req,res)=>{
         });
 });
 
+router.delete('/:id', (req,res)=>{
+    let id = req.params.id;
+    projectsModel.delete(id)
+        .then(data=>{
+            res.status(204).json({message: `Project ${id} removed.`})
+        })
+        .catch(err => {
+            console.log(`Delete error: ${err}`);
+            res.status(504).json({message: `Unable to delete this project.`})
+        })
+});
 module.exports = router;

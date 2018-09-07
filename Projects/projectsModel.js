@@ -15,5 +15,11 @@ module.exports = {
             .where('id', id)
             .update(changes)
             .then(projs => (projs > 0 ? this.get(id) : null));
+    },
+    delete: function(id){
+        return db('projects')
+            .where('id',id)
+            .del()
+            .then(() => { this.get()});
     }
 };
