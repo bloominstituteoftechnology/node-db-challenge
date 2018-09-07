@@ -12,7 +12,11 @@ server.get('/', (req, res) => {
     res.send('API running....')
 });
 
-
+server.get('/projects', (req, res) => {
+    db.getProjects()
+      .then(projects => res.status(200).json(projects))
+      .catch(err => res.status(500).json(err))
+  });
 
 
 
