@@ -34,7 +34,6 @@ server.post('/api/projects', (req, res) => {
   
 server.get('/api/projects', (req, res) => {
     db('projects')
-      // .select('name')
       .then(projects => {
         res.status(200).json(projects);
       })
@@ -59,6 +58,36 @@ server.get('/api/projects/:id', (req, res) => {
     })
 });
 
+
+server.delete('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+  
+    db('projects')
+      .where({ id }) 
+      .del()
+      .then(count => {
+        res.status(200).json(count);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+});
+  
+
+server.put('/api/projects/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+
+    db('projects')
+        .where('id', '=', id) 
+        .update(changes)
+        .then(count => {
+        res.status(200).json(count);
+        })
+        .catch(err => {
+        res.status(500).json(err);
+        });
+});
 
 
 const port = 2000;
