@@ -18,4 +18,11 @@ module.exports = {
 
     return result;
   },
+
+  actionMapper: function(action) {
+    return {
+      ...action,
+      completed: this.intToBool(action.completed),
+    };
+  },
 };

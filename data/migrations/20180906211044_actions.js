@@ -7,7 +7,8 @@ exports.up = function(knex, Promise) {
       .integer('project_id')
       .notNullable()
       .references('id')
-      .inTable('projects');
+      .inTable('projects')
+      .onDelete('CASCADE');
     table.boolean('completed').defaultTo(false);
   });
 };

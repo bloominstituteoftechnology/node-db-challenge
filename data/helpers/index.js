@@ -27,22 +27,23 @@ module.exports = {
   },
 
   deleteProject: function(id) {
-    let project = db('projects as p')
+    return db('projects as p')
       .where('p.id', id)
       .del();
 
-    const promises = [project, this.getActionsByProject(id).del()];
+    // const promises = [project, this.getActionsByProject(id).del()];
 
-    return Promise.all(promises).then(results => {
-      [projects, actions] = results;
-      return projects;
-    });
+    // return Promise.all(promises).then(results => {
+    //   [projects, actions] = results;
+    //   console.log(actions);
+    //   return projects;
+    // });
   },
 
   getActionsByProject: function(projectId) {
     return db('actions')
       .select('id', 'description', 'notes', 'completed')
-      .where('project_id', projectId);
-    // .then(actions => actions);
+      .where('project_id', projectId)
+      .then(actions => actions.map(action => mappers.actionMapper(action)));
   },
 };
