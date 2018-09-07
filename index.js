@@ -49,18 +49,19 @@ server.get('/api/projects', (req, res) => {
 
 server.get('/api/projects/:id', (req, res) => {
     const {id} = req.params;
-    db('projects as p')
-    .where('p.id', id)
-    .join('actions as a', 'p.id', 'a.project_id')
-    .then(project => {
+    db('projects').where('id', id)
+    .then(async project => {
         if (project.length === 0) {
-        res.status(404).json({ message: "The project with the specified ID does not exist." });
-        } else 
-        res.status(200).json(project);
+            res.status(404).json({ message: "The project with the specified ID does not exist." });
+        } else {
+            const query = await db('actions').where({ project_id: id }).select('id', 'description', 'notes', 'completed');
+            project[0].actions = query;
+            res.status(200).json(project);
+        }
     })
     .catch(err => res.status(500).json(err));
 })
-
+ 
 server.delete('/api/projects/:id', (req, res) => {
     const {id} = req.params;
     db('projects').where({ id: id }).del()
