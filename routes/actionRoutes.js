@@ -4,7 +4,8 @@ const db = require('../data/dbConfig');
 const helpers = require('../data/helpers');
 
 router.get('/', (req, res, next) => {
-  db('actions')
+  helpers
+    .getActions()
     .then(actions => {
       res.status(200).json(actions);
     })

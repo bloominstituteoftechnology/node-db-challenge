@@ -40,6 +40,14 @@ module.exports = {
     // });
   },
 
+  getActions: function() {
+    let query = db('actions');
+
+    return query.then(actions => {
+      return actions.map(action => mappers.actionMapper(action));
+    });
+  },
+
   getActionsByProject: function(projectId) {
     return db('actions')
       .select('id', 'description', 'notes', 'completed')

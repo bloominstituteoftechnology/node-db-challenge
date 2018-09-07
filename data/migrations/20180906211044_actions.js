@@ -6,10 +6,12 @@ exports.up = function(knex, Promise) {
     table
       .integer('project_id')
       .notNullable()
-      .references('id')
-      .inTable('projects')
-      .onDelete('CASCADE');
+      .unsigned();
     table.boolean('completed').defaultTo(false);
+    table
+      .foreign('project_id')
+      .references('projects.id')
+      .onDelete('CASCADE');
   });
 };
 
