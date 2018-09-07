@@ -6,7 +6,7 @@ const db = require("../db/dbConfig");
 //middleware
 const bodyChecker = require("../db/middleware/projectBodyChecker.js");
 
-const getActions = require("../db/middleware/getActions.js")
+const getActions = require("../db/middleware/getActions.js");
 //middleware^^^
 
 projectRouter.get("/", (req, res) => {
@@ -34,13 +34,12 @@ projectRouter.get("/:id", (req, res) => {
     });
 });
 
-projectRouter.get("/:id/actions", getActions,  (req, res) => {
+projectRouter.get("/:id/actions", getActions, (req, res) => {
   const { id } = req.params;
-  console.log(req.actions, "req.actions")
   db("projects")
     .where({ id })
     .then(project => {
-      project[0].actions = req.actions 
+      project[0].actions = req.actions;
       res.status(200).json(project[0]);
     })
     .catch(error => {
@@ -51,7 +50,6 @@ projectRouter.get("/:id/actions", getActions,  (req, res) => {
       });
     });
 });
-
 
 projectRouter.post("/", bodyChecker, (req, res) => {
   db("projects")
@@ -69,7 +67,7 @@ projectRouter.post("/", bodyChecker, (req, res) => {
 });
 
 projectRouter.put("/:id", bodyChecker, (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   db("projects")
     .update(req.body)
     .where({ id })
@@ -86,16 +84,22 @@ projectRouter.put("/:id", bodyChecker, (req, res) => {
 });
 
 projectRouter.delete("/:id", (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   db("projects")
-   .where({ id })
-   .del()
-   .then(count => {
-     res.status(200).json(count)
-   })
-   .catch(error => {
-     res.status(500).json({error, errorMessage: [error.code, error.message], devMessage: "Make sure id exists in projects table also check route"})
-   })
-})
+    .where({ id })
+    .del()
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({
+          error,
+          errorMessage: [error.code, error.message],
+          devMessage: "Make sure id exists in projects table also check route"
+        });
+    });
+});
 
 module.exports = projectRouter;
