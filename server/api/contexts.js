@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
       if (!(context.length === 0)) res.status(200).json(context[0]);
       else res.status(404).json({ error: 'The context with the specified ID wasn\'t found.' })
     })
-    // .catch(err => res.status(500).json(err));
+    .catch(err => res.status(500).json(err));
 });
 
 router.post('/', (req, res) => {

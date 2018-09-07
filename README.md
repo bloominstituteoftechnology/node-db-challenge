@@ -16,7 +16,7 @@ The application lets users track `Projects` and `Actions` in the spirit of David
 
 You'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
 
-## General Requirements
+## General requirements
 
 - A `project` can contain multiple actions and has:
   - a unique Id.
@@ -31,11 +31,11 @@ You'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Proj
 
 Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
 
-## tasks
+## M.V.P. tasks
 
-- Build the database and tables using knex migrations. **Seeding is not needed**.
-- Build the API to perform CRUD operations on projects and actions.
-- Build an endpoint to retrieve a `project` by its `id` that returns an object
+- [x] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [x] Build the API to perform CRUD operations on projects and actions.
+- [x] Build an endpoint to retrieve a `project` by its `id` that returns an object
   with the following structure:
 
 ```js
@@ -61,17 +61,19 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 }
 ```
 
-## Stretch Problem
+## Stretch goals
 
 This section is **optional** and not counted towards MVP. Start working on it after you're done with the main assignment.
 
-Use `knex` to add _data seeding_ scripts for projects and actions.
+- [x] Use `knex` to add _data seeding_ scripts for projects and actions.
 
-Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some actions require one or more `contexts` in order to be worked on. For example, the action of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, filing your taxes will not be one of them.
+- [x] Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some actions require one or more `contexts` in order to be worked on. For example, the action of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, filing your taxes will not be one of them.
 
-A `context` can be applied to more than one `action`. An action can be tied to more than one context, like in the example above.
+- A `context` can be applied to more than one `action`. An action can be tied to more than one context, like in the example above.
 
-When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
+- When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
+
+---
 
 Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.
 
