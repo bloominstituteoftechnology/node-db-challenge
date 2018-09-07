@@ -42,6 +42,7 @@ server.get('/api/projects/:id', (req, res) => {
 
 server.get('/api/projects/:id/actions', (req, res) => {
     db.getProjectActions(req.params.id).then(actions => {
+        console.log(actions)
         db.getProjects(req.params.id).then(project => {
             res.status(200).json({project, actions})
         })
