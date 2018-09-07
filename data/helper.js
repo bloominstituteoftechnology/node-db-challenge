@@ -16,6 +16,10 @@ function updateProject(id, project){
 	return db('projects').where({id: id}).update(project)
 }
 
+function deleteProject(id){
+	return db('projects').where({id: id}).del()
+}
+
 function getActions(){
 	return db('actions')
 }
@@ -32,13 +36,19 @@ function updateAction(id, action){
 	return db('actions').where({id: id}).update(action)
 }
 
+function deleteAction(id){
+	return db('actions').where({id: id}).del()
+}
+
 module.exports = {
 	getProjects,
 	getProject,
 	addProject,
 	updateProject,
+	deleteProject,
 	getActions,
 	getAction,
 	addAction,
 	updateAction,
+	deleteAction,
 }

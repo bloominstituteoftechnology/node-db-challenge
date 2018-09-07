@@ -22,7 +22,6 @@ app.get('/projects', async (req, res) => {
 
 app.post('/projects', async (req, res) => {
 	const project = req.body;
-	console.log(project)
 	try {
 		const id = await helper.addProject(project);
 		res.status(200).json(id)
@@ -36,7 +35,9 @@ app.get('/projects/:id', async (req, res) => {
 	const { id } = req.params
 	try {
 		const project = await helper.getProject(id);
-		res.status(200).json(project)
+		project.length > 0
+		? res.status(200).json(project)
+		: res.status(404).json({ error: 'The specified project could not be found.' })
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
@@ -48,6 +49,19 @@ app.put('/projects/:id', async (req, res) => {
 	const project = req.body;
 	try {
 		const count = await helper.updateProject(id, project);
+		count > 0
+		? res.status(200).json(count)
+		: res.status(404).json({ error: 'Could not find the specified project.' });
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
+app.delete('/projects/:id', async (req, res) => {
+	const { id } = req.params;
+	try {
+		const count = await helper.deleteProject(id);
 		count > 0
 		? res.status(200).json(count)
 		: res.status(404).json({ error: 'Could not find the specified project.' });
@@ -84,7 +98,9 @@ app.get('/actions/:id', async (req, res) => {
 	const { id } = req.params
 	try {
 		const action = await helper.getAction(id);
-		res.status(200).json(action)
+		action.length > 0
+		? res.status(200).json(action)
+		: res.status(404).json({ error: 'The specified action could not be found.' })
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
@@ -99,6 +115,19 @@ app.put('/actions/:id', async (req, res) => {
 		count > 0
 		? res.status(200).json(count)
 		: res.status(404).json({ error: 'Could not find the specified action.' });
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
+app.delete('/actions/:id', async (req, res) => {
+	const { id } = req.params;
+	try {
+		const count = await helper.deleteAction(id);
+		count > 0
+		? res.status(200).json(count)
+		: res.status(404).json({ error: 'Could not find the specified project.' });
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
