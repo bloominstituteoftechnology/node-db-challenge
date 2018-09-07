@@ -8,10 +8,11 @@ exports.up = function(knex, Promise) {
                     .notNullable()
                     .references('id')
                     .inTable('projects');
+
                 tbl.string('description', 128).notNullable();
-                tbl.string('notes')
+                tbl.text('notes')// text types cannot have default // https://dev.mysql.com/doc/refman/8.0/en/blob.html
                 // tbl.integer('project_id')//this is the way not to make a refrence 
-                tbl.bool('completed').notNullable().defaultTo(false);
+                tbl.bool('completed').notNullable().defaultTo(false);// in sqlite3 false=0 true=1
             })
   };
   
