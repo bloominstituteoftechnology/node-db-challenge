@@ -86,8 +86,17 @@ addAction: (action) => {
 },
 
 // Updating actions
+updateAction: (id, updatedAction) => {
+    return db('action')
+            .where('id', id)
+            .update(updatedAction)
+},
 
 // Deleting actions
-
+deleteAction: (id) => {
+    return db('action')
+            .where('id', id)
+            .delete()
+},
 
 }

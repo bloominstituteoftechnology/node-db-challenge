@@ -111,6 +111,31 @@ server.post('/actions', (req, res) => {
     })
 });
 
+server.put('/actions/:id', (req, res) => {
+    const {description, notes} = req.body;
+    const {id} = req.params;
+    const updatedAction = req.body;
+    if (!description || !notes) {
+        res.status(400).json('Message: In order to update project name and description are required fields!')
+    }
+    db.updateAction(id, updatedAction)
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+});
 
+server.delete('/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db.deleteAction(id)
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+});
 
 server.listen(5000);
