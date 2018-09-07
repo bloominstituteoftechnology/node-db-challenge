@@ -29,4 +29,49 @@ router.get("/", (req, res) => {
 		});
 });
 
+router.get("/:id", (req, res) => {
+	db("projects")
+		.where({ id: req.params.id })
+		.then(project => {
+			res.status(201).json(project);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
+router.put("/:id", (req, res) => {
+	const project = req.body;
+	if (!project.name) {
+		return res
+			.status(400)
+			.json({ message: "Please include name and/or description" });
+	}
+	db("projects")
+		.where({ id: req.params.id })
+		.update({
+			name: project.name,
+			description: project.description,
+			completed: project.completed,
+		})
+		.then(ver => {
+			res.status(201).json(ver);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
+router.delete("/:id", (req, res) => {
+	db("projects")
+		.where({ id: req.params.id })
+		.delete()
+		.then(ver => {
+			res.status(201).json(ver);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
 module.exports = router;
