@@ -1,0 +1,24 @@
+GET http://localhost:5000/api/projects HTTP/1.1
+###
+POST http://localhost:5000/api/projects HTTP/1.1
+content-type: application/json
+
+{
+  "name": "project name 4",
+  "description": "project description 4"
+}
+###
+
+PUT http://localhost:5000/api/projects/1 HTTP/1.1
+content-type: application/json
+
+{
+  "complete": true
+}
+###
+
+DELETE http://localhost:5000/api/projects/4 HTTP/1.1
+###
+
+GET http://localhost:5000/api/projects/1 HTTP/1.1
+###
