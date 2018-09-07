@@ -4,9 +4,9 @@ exports.up = function(knex, Promise) {
         tbl.increments();
     
         tbl 
-            .string('name', 128)
+            .string('action_name', 128)
             .notNullable()
-            .unique('unique_project');    
+            .unique('unique_action');    
         
         tbl
             .integer('project_id')

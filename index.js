@@ -35,9 +35,9 @@ server.post('/api/projects', (req, res) => {
     const id = req.params.id;  
     db('projects')
     .join('actions', {'actions.project_id': 'projects.id'})
+    .select('projects.id', 'projects.name', 'actions.action_name')
     .where('projects.id', id)
     .then(projects => {
-        console.log(projects)
         res.status(201).json(projects);
     })
     .catch(err => 
