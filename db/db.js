@@ -30,9 +30,17 @@ function getActions(id){
     }
 }
 
- function getProjectActions(id){
+function getProjectActions(id){
+    return db('actions')
+    .where('project_id', id)   
+}
+
+ function combineProjectActions(id){
     return db('projects')
-    .join('actions', {'projects.id': 'actions.project_id'})
+    .join('actions', function (){
+        this
+        .on('actions.project_id', '=', 'projects.id')
+    })
 }
 
 function addProject(newProject){
