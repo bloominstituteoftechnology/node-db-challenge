@@ -20,8 +20,9 @@ module.exports = {
         let query = db('projects');
 
             return query
-                .where('id', id)
-                .first()
+                .join('actions', 'projects.id', 'actions.project_id')
+                .select('projects.id as proj_id', 'projects.name as proj_name', 'projects.description as proj_desc', 'projects.completed as proj_completed', 'actions.id as action_id', 'actions.description as action_desc', 'actions.notes as action_notes', 'actions.completed as action_completed')
+                .where('projects.id', id)
                 .then(project => project);
     },
 
