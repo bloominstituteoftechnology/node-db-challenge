@@ -10,6 +10,12 @@ server.get('/project/:id', async (req, res) => {
   res.status(200).json(getProjectAndItsActions)
 })
 
+server.get('/testing/:id', async (req, res) => {
+  const id = req.params.id
+  await API.toggleAction(id)
+  res.status(200).json({ message: `Action ${id} is updated` })
+})
+
 server.listen('3300', () => {
   console.log(`\n=== Web API Listening on http://localhost:3300 ===\n`)
 })

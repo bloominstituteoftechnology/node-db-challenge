@@ -30,12 +30,16 @@ const addAction = async (action) => {
 }
 
 const toggleAction = async (id) => {
-  await db.select('flag').table('action').where('id', id).update({ flag: !flag })
+  const flag = await db.select('flag').table('action').where('id', id)
+  const isCompleted = !!flag[0].flag
+  await db.select('flag').table('action').where('id', id).update({ flag: !isCompleted })
   return id
 }
 
 const toggleProject = async (id) => {
-  await db.select('flag').table('project').where('id', id).update({ flag: !flag })
+  const flag = await db.select('flag').table('project').where('id', id)
+  const isCompleted = !!flag[0].flag
+  await db.select('flag').table('action').where('id', id).update({ flag: !isCompleted })
   return id
 }
 
