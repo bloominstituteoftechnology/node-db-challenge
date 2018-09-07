@@ -11,6 +11,20 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
+
+//middleware
+function verifyProject (req, res, next) {
+    const id = req.body.project_id;
+    db('projects').where({ id: id })
+    .then(project => {
+        if (project.length === 0) {
+        res.status(404).json({ message: "Please enter a valid project ID." });
+        } else next();
+    })
+    .catch(err => res.status(500).json(err));
+}
+
+
 //project endpoints
 server.post('/api/projects', (req, res) => {
     const project = req.body;
@@ -75,6 +89,71 @@ server.put('/api/projects/:id', (req, res) => {
         }
         })
         .catch(err => res.status(500).json({ error: "There was an error updating the project." }));
+})
+
+
+//action endpoints
+server.post('/api/actions', verifyProject, (req, res) => {
+    const action = req.body;
+    if (!action.description || !action.notes) {
+        res.status(400).json({ error: "Please provide a description and notes for the action." })
+    } else
+        db.insert(action)
+        .into('actions')
+        .then(ids => {
+        res.status(201).json(ids);
+        })
+        .catch(err => res.status(500).json({ error: "There was an error saving the action." }))
+})
+
+server.get('/api/actions', (req, res) => {
+    db('actions')
+    .then(actions => {
+        res.status(200).json(actions)
+    })
+    .catch(err => res.status(500).json({ error: "There was an error retrieving the actions." }));
+});
+
+server.get('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db('actions').where({ id: id })
+    .then(action => {
+        if (action.length === 0) {
+        res.status(404).json({ message: "The action with the specified ID does not exist." });
+        } else 
+        res.status(200).json(action);
+    })
+    .catch(err => res.status(500).json(err));
+})
+
+server.delete('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    db('actions').where({ id: id }).del()
+    .then(count => {
+        if (count) {
+        res.status(200).json({ message: "The action was successfully deleted." });
+        } else {
+        res.status(404).json({ message: "The action with the specified ID does not exist." });
+        }
+    })
+    .catch(err => res.status(500).json({ error: "There was an error deleting the action." }));
+})
+
+server.put('/api/actions/:id', verifyProject, (req, res) => {
+    const {id} = req.params;
+    const action = req.body;
+    if (!action.description || !action.notes) {
+        res.status(400).json({ error: "Please provide a description and notes for the action." })
+    } else
+        db('actions').where({ id: id }).update(action)
+        .then(count => {
+        if (count) {
+            res.status(200).json({ message: "The action was successfully updated." });
+        } else {
+            res.status(404).json({ message: "The action with the specified ID does not exist." });
+        }
+        })
+        .catch(err => res.status(500).json({ error: "There was an error updating the action." }));
 })
 
 
