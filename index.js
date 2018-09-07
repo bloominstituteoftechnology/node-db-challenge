@@ -51,6 +51,38 @@ server.post('/api/actions',(req, res) => {
     });
 });
 
+server.put("/api/projects/:id", (req, res) => {
+    const { id } = req.params; 
+    const data = req.body; 
+    db('projects')
+        .where({id})
+        .update(data)
+        .then(count => {
+            if(count < 1){
+                res.status(400).json({message: "ID not found"})
+            }
+            res.status(200).json({message:"Project Updated"})
+        }).catch(err => {
+            res.status(500).json(err); 
+        })
+});
+
+server.put("/api/actions/:id", (req, res) => {
+    const { id } = req.params; 
+    const data = req.body; 
+    db('actions')
+        .where({id})
+        .update(data)
+        .then(count => {
+            if(count < 1){
+                res.status(400).json({message: "ID not found"})
+            }
+            res.status(200).json({message:"Action Updated"})
+        }).catch(err => {
+            res.status(500).json(err); 
+        })
+}); 
+
 server.delete("/api/projects/:id", (req, res) => {
     const { id } = req.params; 
     db('projects')
