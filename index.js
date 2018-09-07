@@ -41,13 +41,11 @@ server.get('/api/projects/:id', (req, res) => {
 })
 
 server.get('/api/projects/:id/actions', (req, res) => {
-    db.getProjectActions(req.params.id)
-        .then(actions => {
-            db.getProjects(req.params.id).then(project => {
-                res.status(200).json({project, actions})
-            })
-
+    db.getProjectActions(req.params.id).then(actions => {
+        db.getProjects(req.params.id).then(project => {
+            res.status(200).json({project, actions})
         })
+    })
 })
 
 server.post('/api/projects', (req, res) => {
