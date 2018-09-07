@@ -51,12 +51,23 @@ server.get('/api/projects/:id', (req, res) => {
     db('projects')
       .where('id', '=', id)
       .then(project => {
-          // console.log(project);
-          if (!project) {
-              res.status(404).json({ message: 'The project with the specified ID does not exist.' });
+        //   console.log(project.length);
+          if (project.length === 0) {
+              res.status(401).json({ message: 'The project with the specified ID does not exist.' });
               return;
           }
-          res.status(200).json(project);
+
+          db('actions')
+            .where('project_id', '=', id)
+            .then(actions => {
+                project[0].actions = actions;
+                res.status(200).json(project);
+            })
+        //   res.status(200).json(project);
+            .catch(err => {
+                console.error('error', err);
+                res.status(500).json({ error: 'The project information could not be retrieved.'});
+            })
       })
       .catch(err => {
           console.error('error', err);
