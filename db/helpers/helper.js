@@ -59,6 +59,10 @@ updateProject: (id, updatedProject) => {
             .update(updatedProject)
 },
 
-
+deleteProject: (id) => {
+    return db('project')
+            .where('id', id)
+            .delete()
+},
 
 }

@@ -62,5 +62,16 @@ server.put('/projects/:id', (req, res) => {
 });
 
 
+server.delete('/projects/:id', (req, res) => {
+    const {id} = req.params;
+    db.deleteProject(id)
+        .then(projects => {
+            res.status(200).json(projects)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+});
+
 
 server.listen(5000);
