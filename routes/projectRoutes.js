@@ -11,4 +11,10 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/:id', (req, res, next) => {
+  helpers
+    .getProject(req.params.id)
+    .then(project => res.status(200).json(project))
+    .catch(next);
+});
 module.exports = router;
