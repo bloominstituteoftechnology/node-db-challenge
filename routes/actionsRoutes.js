@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../dbConfig");
 
+const helpers = require("../db/helpers");
+
 router.post("/", (req, res) => {
 	const action = req.body;
 	if (!action.description) {
@@ -68,6 +70,21 @@ router.delete("/:id", (req, res) => {
 		.delete()
 		.then(ver => {
 			res.status(201).json(ver);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
+router.get("/context/:id", (req, res) => {
+	helpers
+		.getActionsContext(req.params.id)
+		.then(data => {
+			if (!data)
+				return res
+					.status(404)
+					.json({ message: "No Action with that id" });
+			res.status(200).json(data);
 		})
 		.catch(err => {
 			res.status(500).json(err);

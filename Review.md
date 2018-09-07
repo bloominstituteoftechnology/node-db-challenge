@@ -18,7 +18,7 @@ Foreign key.
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
 
-Join?
+Join? Ah okay, a third table. Misunderstood this question.
 
 1.  What SQL statement is used to retrieve data from a table?
 

@@ -14,4 +14,22 @@ module.exports = {
 			return result;
 		});
 	},
+
+	getActionsContext(id) {
+		const actionContext = db
+			.select("*")
+			.from("actions_context")
+			.join("context", "context_id", "context.id")
+			.where("action_id", id);
+
+		const action = db("actions")
+			.where("id", id)
+			.first();
+
+		return Promise.all([action, actionContext]).then(results => {
+			let [action, actionContext] = results;
+			let result = { ...action, actionContext };
+			return result;
+		});
+	},
 };

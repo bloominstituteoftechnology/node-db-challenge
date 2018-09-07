@@ -1,0 +1,2 @@
+GET http://localhost:7000/api/actions/context/1 HTTP/1.1
+###
