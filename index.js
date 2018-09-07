@@ -26,6 +26,20 @@ server.get('/api/actions', (req, res) => {
         })
 })
 
+server.get('/api/actions/:id', (req, res) => {
+    db.getActions(req.params.id)
+        .then(action => {
+            res.status(200).json(action)
+        })
+})
+
+server.get('/api/projects/:id', (req, res) => {
+    db.getProjects(req.params.id)
+        .then(project => {
+            res.status(200).json(project)
+        })
+})
+
 server.post('/api/projects', (req, res) => {
     db.addProject(req.body)
         .then(count => {
@@ -35,6 +49,13 @@ server.post('/api/projects', (req, res) => {
 
 server.post('/api/actions', (req, res) => {
     db.addAction(req.body)
+        .then(actionId => {
+            res.status(200).json(actionId)
+        })
+})
+
+server.put('/api/actions/:id', (req, res) => {
+    db.editAction(req.body, req.params.id)
         .then(actionId => {
             res.status(200).json(actionId)
         })
