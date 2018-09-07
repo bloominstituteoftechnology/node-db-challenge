@@ -4,7 +4,7 @@ const actionRouter = express.Router();
 const db = require("../db/dbConfig");
 
 //middleware
-
+const bodyChecker = require('../db/middleware/actionsBodyCheck.js')
 //middleware^^^
 
 actionRouter.get("/", (req, res) => {

@@ -17,6 +17,12 @@ function actionsBodyChecker(req, res, next) {
           "The project_id column is required, yet missing therefore your request is not acceptable"
       });
     }
+    if (!req.body.description) {
+      res.status(406).json({
+        error:
+          "The description column is required, yet missing therefore your request is not acceptable"
+      });
+    }
   }
   next();
 }
