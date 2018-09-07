@@ -52,4 +52,13 @@ addProject: (project) => {
         .insert(project)
 },
 
+// Updating project
+updateProject: (id, updatedProject) => {
+    return db('project')
+            .where('id', id)
+            .update(updatedProject)
+},
+
+
+
 }
