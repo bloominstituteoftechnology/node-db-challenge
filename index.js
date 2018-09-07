@@ -4,6 +4,9 @@ const dbhelpers = require("./dbhelpers/helpers");
 
 const server = express();
 
+server.use(express.json());
+
+
 server.get("/api/:whichtable", async (req, res) => {
   let table = "projects";
   if(req.params.whichtable ==="actions"){
@@ -17,6 +20,19 @@ server.get("/api/:whichtable", async (req, res) => {
   }
 });
 
+server.post("/api/:whichtable", async (req, res) => {
+  let table = "projects";
+  if(req.params.whichtable ==="actions"){
+    table = "actions";
+  }
+  try {
+    const results = await dbhelpers.insert(req.body,table);
+    res.status(200).json({ results });
+  } catch (err) {
+    
+    res.status(500).json(err);
+  }
+});
 
 server.use("/", (req, res) =>
   res
