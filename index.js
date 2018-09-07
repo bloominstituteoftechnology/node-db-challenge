@@ -164,7 +164,13 @@ app
       .catch(next);
   })
   .get(function(req, res, next) {
-    db("actions as a")
+    const contexts = db("actions as a")
+      .select("c.id as id", "context")
+      .join("action_contexts as ac", "ac.action_id", "a.id")
+      .join("contexts as c", "ac.context_id", "c.id")
+      .where("a.id", req.params.id);
+
+    const action = db("actions as a")
       .select({
         id: "a.id",
         description: "a.description",
@@ -176,15 +182,20 @@ app
       })
       .where("a.id", req.params.id)
       .join("projects as p", "a.project_id", "p.id")
-      .first()
-      .then(
-        data =>
-          data
-            ? res
-                .status(200)
-                .json(boolMapper("complete", "project_complete")(data))
-            : res.status(404).json({ message: "action not found " })
-      )
+      .first();
+
+    Promise.all([action, contexts])
+      .then(([action, contexts]) => {
+        if (!action)
+          return res.status(404).json({ message: "action not found " });
+
+        const result = {
+          ...boolMapper("complete", "project_complete")(action),
+          contexts
+        };
+
+        return res.status(200).json(result);
+      })
       .catch(next);
   });
 
