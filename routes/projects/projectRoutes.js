@@ -17,24 +17,35 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/:id", (req, res) => {
-  db("projects")
-    .where({ id: req.params.id })
-    .then(projects => {
-      res.status(200).json(projects);
-    })
-    .catch(err => res.status(500).json(err));
-});
+// router.get("/:id", (req, res) => {
+//   db("projects")
+//     .where({ id: req.params.id })
+//     .then(projects => {
+//       res.status(200).json(projects);
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
-router.get("/:id/actions", (req, res) => {
-  db("actions")
-    .join('projects as p', 'p.id', 'actions.project_id')
-    .select('actions.id', 'actions.descrption', 'actions.notes', 'actions.completed')
-    .where('p.id', req.params.id)
-    .then(projects => {
-      res.status(200).json(projects);
-    })
-    .catch(err => res.status(500).json(err));
+router.get("/:id", (req, res) => {
+    const {id} = req.params;  
+    db("projects")
+        .where({ id })
+        .first()
+        .then(project => {
+            if(project) {
+                db("actions")
+                .where({ project_id: id })
+                .then(actions => {
+                    project.actions = actions;
+
+                    res.status(200).json(project);
+                })
+                .catch(err => res.json(err))
+            } else {
+                res.status(404).json({ message: 'Project not found'})
+            }
+            })
+            .catch(err => res.status(500).json(err));
 });
 
 router.post("/", (req, res) => {

@@ -4,7 +4,11 @@ exports.up = function(knex, Promise) {
     tbl.string("description");
     tbl.string("notes");
     tbl.boolean("completed").defaultTo(false);
-    tbl.int("project_id").notNullable();
+    tbl
+      .integer("project_id")
+      .notNullable()
+      .references("id")
+      .inTable("projects");
   });
 };
 
