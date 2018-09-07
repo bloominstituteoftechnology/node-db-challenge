@@ -33,8 +33,8 @@ server.post('/api/projects', (req, res) => {
   
   server.get('/api/projects/:id', (req, res) => {
     const id = req.params.id;  
-    db('projects', 'actions')
-    .join('actions', 'actions.project_id', '=', 'projects.id')
+    db('projects')
+    .join('actions', {'actions.project_id': 'projects.id'})
     .where('projects.id', id)
     .then(projects => {
         console.log(projects)
