@@ -3,13 +3,19 @@ const helmet = require('helmet');
 const knex = require('knex');
 
 const dbConfig = require('./knexfile');
-
 const db = knex(dbConfig.development);
 
 const server = express();
 
 server.use(helmet());
 server.use(express.json()); // don't forget this
+
+function getProjectActions(projectId) {
+    return db('actions as a')
+    .join('projects as p', 'p.id', 'a.projectId')
+    .select('a.id', 'a.text', 'p.name as projectName')
+    .where('a.projectId', projectId);
+    } 
 
 //start server
 server.get('/', (req, res) => {
@@ -86,10 +92,11 @@ server.delete('/api/projects/:id', (req, res) => {
 
 // - - - - - - - - Get Actions by Project - - - - -
 
-server.get('/api/projects/actions/:projectId', (req,res)=> {
+server.get('/api/projects/actions/:projectId', (req,res) => {
     const projectId = req.params.projectId;
+    
     db
-    .getUserPosts(projectId) //function defined in 'userDb.js'
+    .getProjectActions(projectId) 
     .then(projectActions => {
         if (projectActions === 0){
             res.status(404).json({message: 'Unable to find specified record'});
