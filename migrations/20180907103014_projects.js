@@ -5,9 +5,8 @@ exports.up = function(knex, Promise) {
         table
           .string("name", 128)
           .notNullable()
-          .string("description", 360)
+          .string("description")
           .boolean('completed').defaultTo(false)
-          .unique("name")
     })
   };
   
