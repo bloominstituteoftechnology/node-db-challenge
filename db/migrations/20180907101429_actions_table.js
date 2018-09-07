@@ -3,6 +3,9 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('actions', function(tbl){
     tbl.increments()
     tbl
+      .string("name")
+      .notNullable()
+    tbl
       .string('description')
       .notNullable()
     tbl
@@ -11,11 +14,11 @@ exports.up = function(knex, Promise) {
       .boolean('completed')
       .notNullable()
     tbl
-      .integer('projects_id')
+      .integer('project_id')
       .unsigned()
       .notNullable()
       .references('id')
-      .InTable('projects')
+      .inTable('projects')
   })
 };
 
