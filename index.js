@@ -51,4 +51,35 @@ server.post('/api/actions',(req, res) => {
     });
 });
 
+server.delete("/api/projects/:id", (req, res) => {
+    const { id } = req.params; 
+    db('projects')
+        .where({id})
+        .del()
+        .then(count => {
+            if(count < 1){
+                res.status(400).json({message: "ID not found"})
+            }
+            res.status(200).json({message: "Project deleted"})
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+}); 
+
+server.delete("/api/actions/:id", (req, res) => {
+    const { id } = req.params; 
+    db('projects')
+        .where({id})
+        .del()
+        .then(count => {
+            if(count < 1){
+                res.status(400).json({message: "ID not found"})
+            }
+            res.status(200).json({message: "Action deleted"})
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+}); 
+
+
 server.listen(8000);
