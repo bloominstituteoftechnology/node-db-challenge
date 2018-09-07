@@ -26,15 +26,6 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/:id/actions", (req, res) => {
-    db("actions")
-      .where({ id: req.params.id })
-      .then(actions => {
-        res.status(200).json(actions);
-      })
-      .catch(err => res.status(500).json(err));
-  });
-
 router.post("/", (req, res) => {
   const action = req.body;
   if (!action) {

@@ -27,13 +27,21 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/:id/actions", (req, res) => {
-    db("actions")
-      .where({ id: req.params.id })
-      .then(projects => {
-        res.status(200).json(projects);
-      })
-      .catch(err => res.status(500).json(err));
-  });
+  db("projects")
+    .where({id: req.params.id})
+    .innerJoin("actions", "projects.id", "=", "actions.project_id")
+    .select([
+        'projects.id as projectID',
+        'project.name as pName',
+        'project.description as pDes',
+        'project.completed as pCom',
+        knex.raw('ARRAY_AGG(actions) as actions')
+    ])
+    .then(projects => {
+      res.status(200).json(projects);
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 router.post("/", (req, res) => {
   const project = req.body;
