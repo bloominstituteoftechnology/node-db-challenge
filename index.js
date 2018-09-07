@@ -43,6 +43,20 @@ app.get('/projects/:id', async (req, res) => {
 	}
 })
 
+app.put('/projects/:id', async (req, res) => {
+	const { id } = req.params;
+	const project = req.body;
+	try {
+		const count = await helper.updateProject(id, project);
+		count > 0
+		? res.status(200).json(count)
+		: res.status(404).json({ error: 'Could not find the specified project.' });
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
 // Actions CRUD
 
 app.get('/actions', async (req, res) => {
@@ -71,6 +85,20 @@ app.get('/actions/:id', async (req, res) => {
 	try {
 		const action = await helper.getAction(id);
 		res.status(200).json(action)
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
+app.put('/actions/:id', async (req, res) => {
+	const { id } = req.params;
+	const action = req.body;
+	try {
+		const count = await helper.updateAction(id, action);
+		count > 0
+		? res.status(200).json(count)
+		: res.status(404).json({ error: 'Could not find the specified action.' });
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
