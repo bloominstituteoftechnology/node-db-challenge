@@ -13,6 +13,17 @@ projectRouter.get('/', (req, res) => {
       res.status(500).json({error, message: error.message})
     })
 })
+projectRouter.get('/:id', (req, res) => {
+  const { id } = req.params
+  db('projects')
+    .where({ id })
+    .then(project => {
+      res.status(200).json(project)
+    })
+    .catch(error => {
+      res.status(404).json({error, message: error.message, devMessage: "Likely the id does not exist in the projects table"})
+    })
+})
 
 
 
