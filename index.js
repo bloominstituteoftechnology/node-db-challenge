@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const projectRouter = require("./routes/projectsRoutes.js");
+const actionRouter = require("./routes/actionsRoutes.js");
 const server = express();
 
 server.use(helmet());
@@ -15,6 +16,7 @@ const projects = "/api/projects";
 const actions = "/api/actions";
 
 server.use(projects, projectRouter);
+server.use(actions, actionRouter);
 
 server.get("/", (req, res) => {
   res.send(

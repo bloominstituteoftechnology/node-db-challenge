@@ -5,6 +5,8 @@ const db = require("../db/dbConfig");
 
 //middleware
 const bodyChecker = require("../db/middleware/projectBodyChecker.js");
+
+const getActions = require("../db/middleware/getActions.js")
 //middleware^^^
 
 projectRouter.get("/", (req, res) => {
@@ -16,8 +18,9 @@ projectRouter.get("/", (req, res) => {
       res.status(500).json({ error, message: error.message });
     });
 });
-projectRouter.get("/:id", (req, res) => {
+projectRouter.get("/:id", getActions, (req, res) => {
   const { id } = req.params;
+  console.log(req.actions)
   db("projects")
     .where({ id })
     .then(project => {
