@@ -34,8 +34,21 @@ function getActions(){
 	return db('actions')
 }
 
-function getAction(id){
-	return db('actions').where({id: id})
+async function getAction(id){
+	const actionArray = await db('actions').where({id: id})
+	const contexts = await db('context_for_action')
+						.where({'action_id': id})
+						.join('contexts', 'context_for_action.context_id', 'contexts.id')
+						.select('contexts.name as context')
+	const { notes, description, complete } = actionArray[0];
+	const result = {
+		id,
+		description,
+		notes,
+		complete,
+		contexts,
+	}
+	return result;
 }
 
 function addAction(action){

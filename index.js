@@ -98,9 +98,9 @@ app.get('/actions/:id', async (req, res) => {
 	const { id } = req.params
 	try {
 		const action = await helper.getAction(id);
-		action.length > 0
-		? res.status(200).json(action)
-		: res.status(404).json({ error: 'The specified action could not be found.' })
+		// action.length > 0
+		res.status(200).json(action)
+		// : res.status(404).json({ error: 'The specified action could not be found.' })
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
