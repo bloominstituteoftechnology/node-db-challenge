@@ -11,10 +11,14 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const PORT = process.env.port || 3000;
 
+const projectsRoutes = require('./Projects/projectsRoutes');
+
 app.use(express.json());
 app.use(cors());
 app.use(morgan());
 app.use(helmet());
+
+app.use('/projects', projectsRoutes);
 
 
 app.get('/',(req,res)=>{
