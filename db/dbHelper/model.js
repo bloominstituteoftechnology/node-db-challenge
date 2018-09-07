@@ -18,7 +18,7 @@ module.exports = {
     //             `actions.flag as actions_flag`)
     //     .innerJoin(`projects`, `projects.id`, `actions.id`)
     //     .where(`projects.id`, id)
-    const project = await db(`actions`).where({
+    const project = await db(`projects`).where({
         id: id
     }).select('id', 'name', 'description', 'flag as completed')
     const actions = await db(`actions`)
@@ -28,10 +28,10 @@ module.exports = {
       .select();
 
     return {
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        completed: project.completed,
+        id: project[0].id,
+        name: project[0].name,
+        description: project[0].description,
+        completed: project[0].completed,
         actions: actions
     }
   },
