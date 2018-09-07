@@ -1,13 +1,10 @@
 const express = require("express");
-// knex
 const knex = require("knex");
 const dbConfig = require("../knexfile");
 const db = knex(dbConfig.development);
-
 const router = express.Router();
 
-// start actions
-//gets
+// GETS
 router.get("/", (req, res) => {
   db("actions")
     .then(actions => {
@@ -35,9 +32,9 @@ router.get("/:id", (req, res) => {
       res.status(500).json({ error: "The action could not be retrieved." });
     });
 });
-// end gets
+// end GETS
 
-// start POST
+// POST
 router.post("/", (req, res) => {
   const action = req.body;
   if (!action) {
@@ -58,7 +55,7 @@ router.post("/", (req, res) => {
 });
 // end POST
 
-// start DELETE
+// DELETE
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   db("actions")
@@ -79,7 +76,7 @@ router.delete("/:id", (req, res) => {
 });
 // end DELETE
 
-// start PUT
+// PUT
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const modifiedAction = req.body;
@@ -104,6 +101,5 @@ router.put("/:id", (req, res) => {
   }
 });
 // end PUT
-// end actions
 
 module.exports = router;

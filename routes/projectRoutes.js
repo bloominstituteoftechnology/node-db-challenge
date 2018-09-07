@@ -5,8 +5,8 @@ const dbConfig = require("../knexfile");
 const db = knex(dbConfig.development);
 
 const router = express.Router();
-// start projects
-// start get
+
+// GETS
 router.get("/", (req, res) => {
   db("projects")
     .then(projects => {
@@ -34,9 +34,9 @@ router.get("/:id", (req, res) => {
       res.status(500).json({ error: "The project could not be retrieved." });
     });
 });
-// end gets
+// end GETS
 
-// start POST
+// POST
 router.post("/", (req, res) => {
   const project = req.body;
   if (!project) {
@@ -57,7 +57,7 @@ router.post("/", (req, res) => {
 });
 // end POST
 
-// start DELETE
+// DELETE
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   db("projects")
@@ -78,7 +78,7 @@ router.delete("/:id", (req, res) => {
 });
 // end DELETE
 
-// start PUT
+// PUT
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const modifiedProject = req.body;
@@ -104,7 +104,7 @@ router.put("/:id", (req, res) => {
 });
 // end PUT
 
-// nested end point
+// NESTED GET
 router.get("/:id/actions", (req, res) => {
   const { id } = req.params;
   db("projects")
@@ -136,7 +136,6 @@ router.get("/:id/actions", (req, res) => {
       }
     });
 });
-// end last end point
-// end projects
+// end NESTED GET
 
 module.exports = router;
