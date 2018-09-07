@@ -80,7 +80,7 @@ router.get('/:id/actions', (req, res) => {
          res.status(404).json({ error: 'Project do not exist.' })
       }
       else {
-         res.status(200).json({project});
+         res.status(200).json({ project });
       }  
    })
    .catch(err => {

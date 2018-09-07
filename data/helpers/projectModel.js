@@ -3,7 +3,7 @@ const mappers = require('./mappers');
 
 function getProjectActions (projectId) {
    return db('actions')
-      .where('projects_id', projectId)
+      .where('project_id', projectId)
       .then(actions => actions.map(action => mappers.actionToBody(action)));
 }
 
