@@ -76,8 +76,9 @@ getActions: () => {
 // Getting action by id
 getAction: (id) => {
     return db('action')
-            .where('id', id)
-            .select('id as id', 'notes as notes', 'completed as completed')
+            .where('action.id', id)
+            .select('action.id', 'project.name as project', 'action.notes as notes', 'action.completed as completed')
+            .join('project', 'project.id', 'action.project_id')
 },
 
 //Posting actions
