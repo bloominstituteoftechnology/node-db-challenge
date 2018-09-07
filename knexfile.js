@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./db/practica.sqlite3",
+      filename: "./db/lambda.sqlite3",
     },
     useNullAsDefault: true,
     migrations: {
