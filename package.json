@@ -12,7 +12,9 @@
   "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
     "start": "nodemon"
