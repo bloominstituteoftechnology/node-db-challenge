@@ -17,10 +17,32 @@ app.get('/projects', async (req, res) => {
 	}
 })
 
+app.get('/projects/:id', async (req, res) => {
+	const { id } = req.params
+	try {
+		const project = await helper.getProject(id);
+		res.status(200).json(project)
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
 app.get('/actions', async (req, res) => {
 	try {
 		const actions = await helper.getActions();
 		res.status(200).json(actions)
+	} catch(err) {
+		console.log(err);
+		res.status(500).json({ error: 'The request could not be fulfilled.' });
+	}
+})
+
+app.get('/actions/:id', async (req, res) => {
+	const { id } = req.params
+	try {
+		const action = await helper.getAction(id);
+		res.status(200).json(action)
 	} catch(err) {
 		console.log(err);
 		res.status(500).json({ error: 'The request could not be fulfilled.' });
