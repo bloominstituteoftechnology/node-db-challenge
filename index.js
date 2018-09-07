@@ -61,18 +61,24 @@ server.get("/api/projects/:id", (req, res) => {
 
 server.get("/api/projects/:id/actions", (req, res) => {
   const { id } = req.params;
-  db("actions")
-    .join("projects", "projects.id", "actions.project_id")
-    .select("actions.id", "actions.description", "projects.name as project")
-    .where("actions.project_id", id)
-    .then(actions => {
-      checkForResource(req, res, actions);
+  db("projects")
+    .where({ id })
+    .then(async project => {
+      if (project.length > 0) {
+        const actionsDetails = await db("actions").where({project_id: id}).select("id","description","notes", "completed");
+        project[0].actions = actionsDetails;
+        res.status(200).json(project);
+      } else {
+        res.status(404).json({
+          message: "The resource does not exist."
+        });
+      }
     })
     .catch(err => {
       console.log("error", err);
       res
         .status(500)
-        .json({ error: "The actions information could not be retrieved." });
+        .json({ error: "The project information could not be retrieved" });
     });
 });
 
@@ -96,7 +102,7 @@ server.put("/api/projects/:id", (req, res) => {
   const changes = req.body;
   const { id } = req.params;
 
-  db("actions")
+  db("projects")
     .where({ id })
     .update(changes)
     .then(count => {
