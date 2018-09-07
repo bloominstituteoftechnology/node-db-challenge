@@ -48,9 +48,8 @@ server.post('/actions', (req, res) => {
 });
 
 server.get('/projects/:id', (req, res) => {
-  const projActionView = db('projects').join('actions', {'projects.id': 'actions.project_id'});
 
-  projActionView.select().where('project.id', parseInt(req.params.id)).then(project => {
+  db('projects').join('actions', {'projects.id': 'actions.project_id'}).where('actions.project_id', req.params.id).select('projects.name as Project Name', 'actions.description as Action', 'actions.completed').groupBy('projects.name').then(project => {
     res.status(200).json(project);
   }).catch(err => {
     res.status(500).json(err);
