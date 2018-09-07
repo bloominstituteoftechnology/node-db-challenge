@@ -1,20 +1,42 @@
-body {
+html {
+  min-height: 100%;
+}
+
+body, #root {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  min-height: 100vh;
 }
 
 .App {
+  min-height: 100vh;
   text-align: center;
+  background: gray;
 }
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 90px;
   padding: 20px;
   color: white;
 }
 
 .App-title {
   font-size: 1.5em;
+}
+
+.projects {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  margin: 0 auto 20px;
+  padding: 5px;
+  width: 30%;
+}
+
+.card .card-subtitle {
+  font-size: 90%;
 }
