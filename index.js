@@ -109,7 +109,7 @@ server.post('/actions', (req, res) => {
         res.status(400).json('Message: project_id, description and notes are required fields!')
     }
 
-    db.addProject(action)
+    db.addAction(action)
     .then(actions => {
       res.status(200).json(actions);
     })

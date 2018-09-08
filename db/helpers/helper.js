@@ -1,7 +1,7 @@
 const db = require('../dbConfig');
 
 module.exports = {
-// Getting all the projects
+    // Getting all the projects
 getProjects: () => {
     const query = db('project');
     return query.then(projects => {
@@ -83,7 +83,7 @@ getAction: (id) => {
 
 //Posting actions
 addAction: (action) => {
-    db('action')
+    return db('action')
         .insert(action)
 },
 
