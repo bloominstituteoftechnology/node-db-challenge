@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const projectsModel = require('../Projects/projectsModel.js');
+const actionsModel = require('../Actions/actionsModel.js');
 
 router.get('/', (req,res)=>{
     projectsModel.get()
@@ -10,6 +11,27 @@ router.get('/', (req,res)=>{
         .catch(err => {
             console.log(`Error: ${err}`);
             res.status(500).json({message: `Unable to grab projects.`})
+        });
+});
+
+router.get('/:id', (req, res) => {
+    projectsModel.get(req.params.id)
+        .then(project => {
+            if(project){
+                actionsModel.getByProjectId(req.params.id)
+                    .then(actions => {
+                        console.log("getting some action", actions);
+                        
+                        project.actions = actions;
+                        res.status(200).json(project);
+                    })
+                    .catch(err => console.log(err)
+                    );
+            }
+        })
+        .catch(err => {
+            console.log(`Error: ${err}`);
+            res.status(500).json({ message: `Unable to grab projects.` })
         });
 });
 

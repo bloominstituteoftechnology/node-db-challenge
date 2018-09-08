@@ -5,8 +5,15 @@ module.exports = {
         let query = db('actions');
         if(id){
             return query
-                .where('id', id)
-                .first();
+                .where('id', id);
+        }
+        return query;
+    },
+    getByProjectId: function(id){
+        let query = db('actions');
+        if (id) {
+            return query
+                .where('project_id', id);
         }
         return query;
     },
