@@ -7,5 +7,8 @@ module.exports = {
       filename: "./dev.sqlite3"
     }
   },
+  seeds: {
+    directory: "./db/seeds"
+  },
   UseNullAsDefault: true
 };
