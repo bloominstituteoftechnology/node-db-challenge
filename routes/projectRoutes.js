@@ -68,4 +68,28 @@ router.delete("/:id", (req, res) => {
     });
 });
 
+router.get("/:id/actions", (req, res) => {
+  db("projects", "actions")
+    .innerJoin("actions", "projects.id", "actions.project_id")
+    .where("projects.id", req.params.id)
+    .select("actions", "projects")
+    .then(ids => {
+        console.log("ids", ids);
+      if (ids.length === 0) {
+        res.status(400).json({ message: "no id" });
+      } else {
+        db("actions")
+          .where("project_id", id)
+          .then(actions => {
+              console.log("actions", actions);
+            res.status(200).json(actions);
+          });
+        res.status(200).json(ids);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;
