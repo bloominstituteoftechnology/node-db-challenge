@@ -1,32 +1,19 @@
 const express = require("express");
-const helmet = require("helmet");
-const knex = require("knex");
+// const helmet = require("helmet");
 
-const dbConfig = require("./knexfile");
-
-const db = knex(dbConfig.development);
+const projectRoutes = require('./routes/projectRoutes');
+const actionRoutes = require('./routes/actionRoutes');
 
 const server = express();
 
-server.use(helmet());
+// server.use(helmet());
 server.use(express.json());
+server.use('/projects', projectRoutes);
+server.use('/actions', actionRoutes);
 
 server.get("/", (req, res) => {
     res.send("api running");
   });
-
-server.post("/api/projects", (req, res) => {
-  if (!req.body.name || !req.body.description) {
-    res.status(400).json({ error: "need fields" });
-  } else {
-    db.insert(req.body)
-      .into("projects")
-      .then(ids => {
-        res.status(201).json(ids);
-      })
-      .catch(err => res.status(500).json({ error: "error saving" }));
-  }
-});
 
 const port = 8000;
 server.listen(port, function() {{

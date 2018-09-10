@@ -19,6 +19,7 @@
   "homepage": "https://github.com/david-pok/Sprint-Challenge-RDBMS#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "express-router": "^0.0.1",
     "helmet": "^3.13.0",
     "knex": "^0.15.2",
     "nodemon": "^1.18.4",
