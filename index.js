@@ -76,6 +76,7 @@ server.delete("/projects/:id", (req, res) => {
   
 
 
+
 //post for Actions
 server.post("/projects/:id/actions", (req, res) => {
   const actions = req.body;
@@ -94,7 +95,7 @@ server.post("/projects/:id/actions", (req, res) => {
 server.get("/projects/:id/actions", (req, res) => {
   db("actions")
     .select()
-    .join("projects", "projects.actions_id", "=", "actions.id")
+    .join("actions", "projects.id", "=", "actions.project_id")
     .then(actions => {
       res.status(200).json(actions);
     })
@@ -102,21 +103,39 @@ server.get("/projects/:id/actions", (req, res) => {
 });
 
 
-
-
-
-
+//put for Actions
+server.put("/projects/:id/actions", (req, res) => {
+    const changes = req.body;
+    const id = req.params.id;
+  
+    db("actions")
+      .where("id", "=", id)
+      .update(changes)
+      .then(count => {
+        res.status(200).json(count);
+      })
+      .catch(err => {
+        res.status(500).json({
+          err
+        });
+      });
+})
 
 
 //Delete for actions
 server.delete("/projects/:id/actions", (req, res) => {
-  const id = req.params.id;
-  db("actions")
-    .remove(id)
+    const id = req.params.id;
+    db("actions")
+    .where("id", "=", id)
+    .del(id)
     .then(actions => {
       res.status(200).json(`Deleted Action with id ${id}`);
     })
     .catch(err => res.status(500).json(err));
 });
+
+
+
+
 
 server.listen(8000, () => console.log("======API running on 8000======"));
