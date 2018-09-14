@@ -8,19 +8,22 @@ exports.seed = function(knex, Promise) {
         {
           name: "Migrate",
           description: "Make some migrations",
-          completed: false
+          completed: false,
+          action_id: 1
         },
 
         {
           name: "Seed",
           description: "Plant the seed",
-          completed: false
+          completed: false,
+          action_id: 2
         },
 
         {
           name: "Endpoint",
           description: "Game Over",
-          completed: false
+          completed: false,
+          action_id: 1
         }
       ]);
     });

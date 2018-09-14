@@ -35,10 +35,23 @@ server.get("/actions", (req, res) => {
 
 server.get("/projects/:id", (req, res) => {
   const { id } = req.params;
-  db("actions")
-    .where({ project_id: id })
-    .then(actions => {
-      res.status(200).json({ actions: actions });
+
+  db("projects")
+    .where({ id })
+    .then(project => {
+      if (project) {
+        db("actions")
+          .where({ project_id: id })
+          .then(actions => {
+           project.actions = actions;
+            res.status(200).json( {project, actions} );
+          })
+          .catch(err => {
+            res.status(500).json(err);
+          });
+      } else {
+        res.status(404).json({ msg: "not found" });
+      }
     })
     .catch(err => {
       res.status(500).json(err);
@@ -111,7 +124,7 @@ server.put("/actions/:id", (req, res) => {
 
   db("actions")
     .where({ id })
-    .update({ description, notes, completed, project_id})
+    .update({ description, notes, completed, project_id })
     .then(id => res.status(200).json(id))
     .catch(err => res.status(500).json(err));
 });

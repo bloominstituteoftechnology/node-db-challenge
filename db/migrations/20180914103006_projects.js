@@ -9,6 +9,12 @@ exports.up = function(knex, Promise) {
 
     tbl.string("description", 1200);
 
+    tbl
+      .integer("action_id")
+      .notNullable()
+      .unsigned()
+      .references("actions.id");
+
     tbl.bool("completed").notNullable();
   });
 };
