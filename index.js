@@ -13,22 +13,35 @@ server.use(helmet());
 
 // endpoints here
 
+
+
 //---------GET REQUESTS-------//
 
 //-----obligatory welcome----///
 server.get('/', (req, res) => {
-  db('cohorts')
-  .then( cohorts => {
+  db('projects')
+  .then( projects => {
     res.status(200).send("welcome pilgrim");
   })
 })
 
 //All:
 
-server.get('/api/cohorts', (req, res) => {
-  db('cohorts')
-  .then( cohorts => {
-    res.status(200).json(cohorts);
+server.get('/api/projects', (req, res) => {
+  db('projects')
+  .then( projects => {
+    res.status(200).json(projects);
+  })
+  .catch(err =>{
+    console.log(err)
+    res.status(500).json(err)
+  })
+})
+
+server.get('/api/actions', (req, res) => {
+  db('actions')
+  .then( projects => {
+    res.status(200).json(projects);
   })
   .catch(err =>{
     console.log(err)
@@ -37,13 +50,49 @@ server.get('/api/cohorts', (req, res) => {
 })
 //BY ID:
 
-server.get('/api/cohorts/:id', (req, res) => {
+server.get('/api/projects/:id', (req,res) => {
+  const {id} = req.params;
+  db('projects')
+      .where({id})
+      .first()
+      .then(project => {
+        if(project){
+          db('actions')
+          .where({project_id: id})
+              .then(action => {
+                  project.action =action;
+                  res.status(200).json(project);
+      })
+      .catch(err =>{
+        console.log(err)
+        res.status(500).json(err)
+      })
+    }
+  })
+})
+
+//Get actions and project
+server.get('api/project/actions/:id', (req,res) => {
+  const  id  = req.params.id;
+
+  db
+  .getActionsOfProject(id)
+  .then(project => {
+    res.status(200).json(project)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  })
+})
+
+server.get('/api/actions/:id', (req, res) => {
   const  {id} = req.params;
-  db('cohorts')
+  db('actions')
   .select()
   .where('id', id)
-  .then( cohorts => {
-    res.status(200).json(cohorts);
+  .then( projects => {
+    res.status(200).json(projects);
   })
   .catch(err =>{
     console.log(err)
@@ -53,13 +102,13 @@ server.get('/api/cohorts/:id', (req, res) => {
 
 //----POST ------//
 
-server.post( '/api/cohorts', (req, res) => {
+server.post( '/api/projects', (req, res) => {
   const zoo = req.body;
 
   db.insert(zoo)
-  .into('cohorts')
-  .then(cohorts => {
-    res.status(201).json(cohorts);
+  .into('projects')
+  .then(projects => {
+    res.status(201).json(projects);
   })
   .catch(err => {
     res.status(500).json(err);
@@ -68,13 +117,13 @@ server.post( '/api/cohorts', (req, res) => {
 
 //-------DELETE------------//
 
-server.delete('/api/cohorts/:id', (req, res) => {
+server.delete('/api/projects/:id', (req, res) => {
   const { id } = req.params;
-   db('cohorts')
+   db('projects')
    .where({ id })
    .del()
-   .then( cohorts => {
-     res.status(200).json(cohorts);
+   .then( projects => {
+     res.status(200).json(projects);
    })
    .catch(err => {
      console.log(err)
@@ -83,15 +132,15 @@ server.delete('/api/cohorts/:id', (req, res) => {
 })
 
 //-------------PUT-----------//
-server.put('/api/cohorts/:id', (req, res) => {
+server.put('/api/projects/:id', (req, res) => {
   const { id } = req.params;
   const name = req.body;
 
-  db('cohorts')
+  db('projects')
   .where( { id })
   .update(name)
-  .then( cohorts => {
-    res.status(200).json(cohorts)
+  .then( projects => {
+    res.status(200).json(projects)
   })
   .catch(err => {
     console.log(err)
