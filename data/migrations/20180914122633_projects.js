@@ -4,7 +4,17 @@ exports.up = function(knex, Promise) {
       tbl.increments();
 
       tbl 
-      .string('name', 300).notNullable();
+      .string('name', 300)
+      .notNullable()
+      .unique();
+
+      tbl
+      .text('project description')
+      .notNullable();
+
+      tbl
+      .boolean('project complete').defaultTo(false);
+
  });
 };
 exports.down = function(knex, Promise) {
