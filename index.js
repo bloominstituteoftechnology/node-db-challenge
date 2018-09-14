@@ -9,13 +9,8 @@ server.use(express.json());
 
 
 
-server.get('/', (req, res) => {
-    res.send('Hello World');
-});
-
-
 //post for Projects
-server.post("/api/projects", (req, res) => {
+server.post("/projects", (req, res) => {
     const projects = req.body
     db("projects")
         .insert(projects)
@@ -26,7 +21,7 @@ server.post("/api/projects", (req, res) => {
 });
 
 //post for Actions
-server.post("/api/projects/:id/actions", (req, res) => {
+server.post("/projects/:id/actions", (req, res) => {
     const actions = req.body
     db("actions")
         .insert(actions)
@@ -37,8 +32,8 @@ server.post("/api/projects/:id/actions", (req, res) => {
 });
 
 
-
-server.get('/api/projects/', (req, res) => {
+//get all projects
+server.get('/projects', (req, res) => {
     db("projects")
         .then(projects => {
             res.status(200).json(projects);
@@ -46,13 +41,13 @@ server.get('/api/projects/', (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
-
-server.get('/api/projects/:id', (req, res) => {
+//get projects by id
+server.get('/projects/:id', (req, res) => {
     const id = req.params.id;
 
     db("projects")
         .select()
-        .where("id", id)
+        .where("id", "=", id)
         .then(projects => {
             if(projects){
                 res.status(200).json(projects);
@@ -66,7 +61,7 @@ server.get('/api/projects/:id', (req, res) => {
 
 
 //get actions for each project
-server.get('/api/projects/:id/actions', (req, res) => {
+server.get('/projects/:id/actions', (req, res) => {
     db("actions")
         .select()
         .join("projects", "projects.actions_id", "=", "actions.id")
@@ -77,7 +72,48 @@ server.get('/api/projects/:id/actions', (req, res) => {
 });
 
 
+//put for projects
+server.put("/projects/:id", (req, res) => {
+    const changes = req.body;
+    const id = req.params.id;
+    
+    db("projects")
+        .where("id", "=", id) 
+      .update(changes)
+      .then(count => {
+        res.status(200).json(count);
+      })
+      .catch(err => {
+        res.status(500).json({
+          err});
+      });
+  });
 
+
+
+//Delete for Projects
+server.delete('/projects/:id', (req, res) => {
+    const id = req.params.id;
+        db("projects")
+            .remove(id)
+            .then(projects => {
+                res.status(200).json(`Deleted Project with id: ${id}`);
+            })
+            .catch(err => res.status(500).json(err));
+})
+
+
+
+//Delete for actions
+server.delete("/projects/:id/actions", (req, res) => {
+    const id = req.params.id;
+        db("actions")
+            .remove(id)
+            .then(actions => {
+                res.status(200).json(`Deleted Action with id ${id}`)
+            })
+            .catch(err => res.status(500).json(err));
+})
 
 
 
