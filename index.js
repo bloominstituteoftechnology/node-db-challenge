@@ -55,44 +55,22 @@ server.get("/api/projects", (req, res) => {
     );
 });
 
-// server.get("/api/projects/:id", (req, res) => {
-//   const { id } = req.params;
-//   db("projects")
-//     .where("id","=",  id)
-//     .then(async project => {
-//       if (project.length === 0) {
-//         res
-//           .status(404)
-//           .json({ message: "Uh oh! There is no project with this ID!" })
-//           .end();
-//       } else {
-//         const query = await db("actions")
-//           .where({ project_id: id })
-//           .select("id", "comments", "notes", "complete");
-//           console.log("query", query)
-//         project[0].actions = query;
-//         res.status(200).json(project);
-//       }
-//     })
-//     .catch(err => res.status(500).json(err));
-// });
 
 server.get('/api/projects/:id', (req, res) => {
   const id = req.params.id;
-  db("projects")
-    .select()
-    .where("id", id)
-    .then(projects => {
-      if (projects) {
-        res.status(200).json(projects);
-      } else {
-        res.status(404).json({
-          message: "Uh oh! There is no project with this ID!})
-        }
+   db("projects")
+      .select()
+      .where("id", id)
+      .then(projects => {
+          if(projects){
+              res.status(200).json(projects);
+          }else{
+              res.status(404).json({message: "Uh oh! There is no project with this ID!"});
+          }
 
-        )
-          .catch(err => res.status(500).json(err));
-
+      })
+      .catch(err => res.status(500).json(err));
+});
 
 server.delete("/api/projects/:id", (req, res) => {
   const { id } = req.params;
