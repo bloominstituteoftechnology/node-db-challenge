@@ -21,9 +21,20 @@ server.get('/api/projects', (req, res) => {
 .catch(err => res.status(500).json(err));
 });
 
+server.put('/api/projects', (req, res) => {
+   db.update(req.params.id, req.body) 
+    .then(projects => res.status(200).json(posts))
+    .catch(err => res.status(500).json(err));
+});
 
-
-
+server.delete('/api/posts/:id', (req, res) => {
+    const id = req.params.id;
+    db.where("id","id").del()
+        .then(count => res.status(204).end())
+        .finally(() => db.destroy())
+        .catch(err => res.status(500).json(err));
+        
+});
 
 
 
