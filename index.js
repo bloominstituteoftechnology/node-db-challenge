@@ -11,6 +11,9 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
+server.get('/', (req, res) => {
+  res.send('API Started');
+});
 
 //action operations: 
 server.get('/api/actions', (req, res) => {
@@ -74,10 +77,7 @@ server.delete('/api/actions/:id', (req, res) => {
 
 
 
-const port = 6600;
-server.listen(port, function() {
-  console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
-});
+
 
 //project operations
 
@@ -138,4 +138,9 @@ server.delete('/api/projects/:id', (req, res) => {
       }
     })
     .catch(err => res.status(500).json({ error: 'Project could not be deleted' }));
+});
+
+const port = 6600;
+server.listen(port, function() {
+  console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
 });
