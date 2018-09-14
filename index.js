@@ -1,16 +1,9 @@
 const express = require("express");
-const helmet = require("helmet");
-const knex = require("knex");
-
-// or we could name knexConfig
-const dbConfig = require("./knexfile.js");
-
-const db = knex(dbConfig.development);
 
 const server = express();
 
-server.use(express.json());
-server.use(helmet());
+const configMiddleware = require('./middleware/middleware.js');
+configMiddleware(server);
 
 // server sanity check
 server.get("/", (req, res) => {
