@@ -10,7 +10,7 @@ Please work on this challenge alone, but feel free to use outside resources. You
 
 Open the _Review.md_ file and answer the questions inside, then move on to working on the following project.
 
-## Project description
+## Project comments
 
 The application lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
 
@@ -27,7 +27,7 @@ You'll use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Proj
   - a unique id.
   - a description of what needs to be done.
   - a notes column to add additional information.
-  - a flag that indicates if the action has been completed.
+  - a flag that indicates if the action has been complete.
 
 Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
 
@@ -42,20 +42,20 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 {
   id: 1,
   name: 'project name here',
-  description: 'the project description',
-  completed: false, // or true
+  comments: 'the project comments',
+  complete: false, // or true
   actions: [
     {
       id: 1,
-      description: 'action description',
+      comments: 'action comments',
       notes: 'the action notes',
-      completed: false // or true
+      complete: false // or true
     },
     {
       id: 7,
-      description: 'another action description',
+      comments: 'another action comments',
       notes: 'the action notes',
-      completed: false // or true
+      complete: false // or true
     }
   ]
 }

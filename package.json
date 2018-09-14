@@ -1,7 +1,7 @@
 {
   "name": "Sprint-Challenge-RDBMS",
   "version": "1.0.0",
-  "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
+  "comments": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
   "main": "index.js",
   "dependencies": {
     "express": "^4.16.3",

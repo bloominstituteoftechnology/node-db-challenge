@@ -6,18 +6,18 @@ exports.seed = function(knex, Promise) {
         {
           project_id: 1,
           description: 'strip bed',
-          comments:
+          notes:
             'wash sheets on hot, comforter on cold',
         },
         {
           project_id: 1,
           description: 'vacuum',
-          comments: 'check corners for dog hair',
+          notes: 'check corners for dog hair',
         },
         {
           project_id: 1,
           description: 'burn a candle',
-          comments: 'find a fall scent!!',
+          notes: 'find a fall scent!!',
         },
       ]);
     });

@@ -26,10 +26,10 @@ function verifyProject(req, res, next) {
 
 server.post("/api/projects", (req, res) => {
   const project = req.body;
-  if (!project.name || !project.description) {
+  if (!project.name || !project.comments) {
     res
       .status(400)
-      .json({ error: "This project needs a name and description!" });
+      .json({ error: "This project needs a name and comments!" });
   } else
     db.insert(project)
       .into("projects")
@@ -54,25 +54,45 @@ server.get("/api/projects", (req, res) => {
         .json({ error: "Uh oh! The project could not be retrieved." })
     );
 });
-server.get("/api/projects/:id", (req, res) => {
-  const { id } = req.params;
+
+// server.get("/api/projects/:id", (req, res) => {
+//   const { id } = req.params;
+//   db("projects")
+//     .where("id","=",  id)
+//     .then(async project => {
+//       if (project.length === 0) {
+//         res
+//           .status(404)
+//           .json({ message: "Uh oh! There is no project with this ID!" })
+//           .end();
+//       } else {
+//         const query = await db("actions")
+//           .where({ project_id: id })
+//           .select("id", "comments", "notes", "complete");
+//           console.log("query", query)
+//         project[0].actions = query;
+//         res.status(200).json(project);
+//       }
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
+
+server.get('/api/projects/:id', (req, res) => {
+  const id = req.params.id;
   db("projects")
+    .select()
     .where("id", id)
-    .then(async project => {
-      if (project.length === 0) {
-        res
-          .status(404)
-          .json({ message: "Uh oh! There is no project with this ID!" });
+    .then(projects => {
+      if (projects) {
+        res.status(200).json(projects);
       } else {
-        const query = await db("actions")
-          .where({ project_id: id })
-          .select("id", "description", "notes", "completed");
-        project[0].actions = query;
-        res.status(200).json(project);
-      }
-    })
-    .catch(err => res.status(500).json(err));
-});
+        res.status(404).json({
+          message: "Uh oh! There is no project with this ID!})
+        }
+
+        )
+          .catch(err => res.status(500).json(err));
+
 
 server.delete("/api/projects/:id", (req, res) => {
   const { id } = req.params;
@@ -97,10 +117,10 @@ server.delete("/api/projects/:id", (req, res) => {
 server.put("/api/projects/:id", (req, res) => {
   const { id } = req.params;
   const project = req.body;
-  if (!project.name || !project.description) {
+  if (!project.name || !project.comments) {
     res
       .status(400)
-      .json({ error: "This project needs a name and description!" });
+      .json({ error: "This project needs a name and comments!" });
   } else
     db("projects")
       .where({ id: id })
@@ -127,11 +147,11 @@ server.put("/api/projects/:id", (req, res) => {
 
 server.post("/api/actions", verifyProject, (req, res) => {
   const action = req.body;
-  if (!action.description || !action.notes) {
+  if (!action.comments || !action.notes) {
     res
       .status(400)
       .json({
-        error: "Please provide a description and comments for this action."
+        error: "Please provide a comments and comments for this action."
       });
   } else
     db.insert(action)
@@ -194,11 +214,11 @@ server.delete("/api/actions/:id", (req, res) => {
 server.put("/api/actions/:id", verifyProject, (req, res) => {
   const { id } = req.params;
   const action = req.body;
-  if (!action.description || !action.notes) {
+  if (!action.comments || !action.notes) {
     res
       .status(400)
       .json({
-        error: "Please provide comments and a description for this action."
+        error: "Please provide comments and a comments for this action."
       });
   } else
     db("actions")
