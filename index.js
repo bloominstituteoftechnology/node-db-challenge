@@ -13,6 +13,8 @@ server.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+
+//post for Projects
 server.post("/api/projects", (req, res) => {
     const projects = req.body
     db("projects")
@@ -23,10 +25,48 @@ server.post("/api/projects", (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
+//post for Actions
+server.post("/api/projects", (req, res) => {
+    const actions = req.body
+    db("actions")
+        .insert(actions)
+        .then(ids => {
+            res.status(201).json(ids);
+        })
+        .catch(err => res.status(500).json(err));
+});
 
 
 
-server.get('/api/projects', (req, res) => {
+server.get('/api/projects/', (req, res) => {
+    db("projects")
+        .then(projects => {
+            res.status(200).json(projects);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
+server.get('/api/projects/:id', (req, res) => {
+    const id = req.params.id;
+    
+    db("projects")
+        .select()
+        .where("id", id)
+        .then(projects => {
+            if(projects){
+                res.status(200).json(projects);
+            }else{
+                res.status(404).json({message: "No project found"});
+            }
+            
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
+
+server.get('/api/projects/:id/actions', (req, res) => {
     db("projects")
         .then(projects => {
             res.status(200).json(projects);
