@@ -13,6 +13,19 @@ server.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+server.post("/api/projects", (req, res) => {
+    const projects = req.body
+    db("projects")
+        .insert(projects)
+        .then(ids => {
+            res.status(201).json(ids);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
+
+
 server.get('/api/projects', (req, res) => {
     db("projects")
         .then(projects => {
