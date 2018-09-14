@@ -27,7 +27,7 @@ server.get("/api/project", (req, res) => {
 server.get("/api/project/:id", (req, res) => {
   const { id } = req.params;
   db("projects")
-    .select("name")
+    .select("project_name")
     .where({ id })
     .then(project => {
       res.status(200).json(project);
