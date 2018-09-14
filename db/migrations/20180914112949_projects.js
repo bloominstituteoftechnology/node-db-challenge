@@ -6,7 +6,8 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique("name");
     tbl.string("description", 128).notNullable();
-    tbl.string("completed").boolean(true);
+    tbl.string("completed");
+    tbl.boolean(true);
     tbl
       .integer("projects_id")
       .unsigned()
