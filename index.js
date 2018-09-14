@@ -54,6 +54,7 @@ server.get('/api/projects/:id', (req,res) => {
   const {id} = req.params;
   db('projects')
       .where({id})
+      //resolve the first entry in the column to get the project id and later to chain to actions
       .first()
       .then(project => {
         if(project){
