@@ -9,10 +9,12 @@ exports.up = function(knex, Promise) {
     tbl.string("completed");
     tbl.boolean(true);
     tbl
-      .integer("projects_id")
+      .integer("projects_id");
+    tbl
       .unsigned()
       .notNullable()
-      .reference("id")
+      .reference("id");
+    tbl
       .inTable("projects");
   });
 };
