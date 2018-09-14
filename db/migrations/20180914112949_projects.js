@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
       .notNullable();
     tbl
       .string("completed")
-      .boolean();
+      .boolean(true);
     tbl
       .integer("projects_id")
       .unsigned()
