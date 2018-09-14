@@ -45,9 +45,52 @@ server.put('/api/project/:id', (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-server.delete('/api/project/id', (req, res) => {
+server.delete('/api/project/:id', (req, res) => {
     const { id } = req.params;
     db("project")
+        .where({ id })
+        .del()
+        .then(count => {
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+})
+
+// action 
+
+server.get('/api/action', (req, res) => {
+    db('action')
+        .then(action => {
+            res.status(200).json(action)
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.post('/api/action', (req, res) => {
+    db.insert(action)
+        .into('action')
+        .then(id => {
+            res.status(201).json(id)
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.put('/api/action/:id', (req, res) => {
+    const { id } = req.params
+
+    db('action')
+        .where({ id }).update(req.body)
+        .then(count => {
+            res.status(200).json(count)
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+server.delete('/api/action/:id', (req, res) => {
+    const { id } = req.params;
+    db("action")
         .where({ id })
         .del()
         .then(count => {
