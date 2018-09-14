@@ -72,20 +72,6 @@ server.get('/api/projects/:id', (req,res) => {
   })
 })
 
-//Get actions and project
-server.get('api/project/actions/:id', (req,res) => {
-  const  id  = req.params.id;
-
-  db
-  .getActionsOfProject(id)
-  .then(project => {
-    res.status(200).json(project)
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json(err)
-  })
-})
 
 server.get('/api/actions/:id', (req, res) => {
   const  {id} = req.params;
@@ -116,6 +102,19 @@ server.post( '/api/projects', (req, res) => {
   })
 })
 
+server.post( '/api/actions', (req, res) => {
+  const zoo = req.body;
+
+  db.insert(zoo)
+  .into('actions')
+  .then(projects => {
+    res.status(201).json(projects);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  })
+})
+
 //-------DELETE------------//
 
 server.delete('/api/projects/:id', (req, res) => {
@@ -132,12 +131,42 @@ server.delete('/api/projects/:id', (req, res) => {
    })
 })
 
+server.delete('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
+   db('actions')
+   .where({ id })
+   .del()
+   .then( actions => {
+     res.status(200).json(actions);
+   })
+   .catch(err => {
+     console.log(err)
+     res.status(500).json(err)
+   })
+})
+
 //-------------PUT-----------//
 server.put('/api/projects/:id', (req, res) => {
   const { id } = req.params;
   const name = req.body;
 
   db('projects')
+  .where( { id })
+  .update(name)
+  .then( projects => {
+    res.status(200).json(projects)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json(err);
+  })
+});
+
+server.put('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
+  const name = req.body;
+
+  db('actions')
   .where( { id })
   .update(name)
   .then( projects => {
