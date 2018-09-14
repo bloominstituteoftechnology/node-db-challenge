@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
 
     tbl.bool('completed').notNullable();
 
-    tbl.integer('action_id')
+    tbl.integer('project_id')
     .unsigned()
     .notNullable()
     .references('id')
@@ -16,4 +16,6 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {};
+exports.down = function(knex, Promise) {
+  return knex.schema.dropTable('actions');
+};

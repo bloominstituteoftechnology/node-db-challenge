@@ -24,13 +24,27 @@ server.get('/projects', (req, res) => {
     );
 });
 
+// Endpoint Retrieving Project by ID that also includes its actions
 server.get('/projects/:id', (req, res) => {
   const { id } = req.params;
 
   db('projects')
     .where('id', '=', id)
     .then(project => {
-      res.status(200).json(project);
+      if (project) {
+        db('actions')
+          .where({ project_id: id })
+          .then(actions => {
+            res.status(200).json({ project, actions });
+          })
+          .catch( err =>
+            res
+              .status(500)
+              .json({ errorMsg: 'Unable to get the project with that id.' }));
+      }
+      else{
+        res.status(404).json({errorMsg: 'Project not found.'})
+      }
     })
     .catch(err =>
       res
@@ -43,11 +57,9 @@ server.post('/projects', (req, res) => {
   const project = req.body;
 
   if (!project) {
-    res
-      .status(400)
-      .json({
-        errorMsg: 'Please fill in the required information for your project.'
-      });
+    res.status(400).json({
+      errorMsg: 'Please fill in the required information for your project.'
+    });
   }
   db.insert(project)
     .into('projects')
@@ -64,109 +76,103 @@ server.put('/projects/:id', (req, res) => {
   const project = req.body;
 
   db('projects')
-  .where('id', '=', id)
-  .update(project)
-  .then(count => {
+    .where('id', '=', id)
+    .update(project)
+    .then(count => {
       res.status(200).json(count);
-  })
-  .catch(err => res.status(500).json({ errorMsg: 'Unable to edit project with that id.' }))
+    })
+    .catch(err =>
+      res.status(500).json({ errorMsg: 'Unable to edit project with that id.' })
+    );
 });
 
 server.delete('/projects/:id', (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    db('projects')
+  db('projects')
     .where('id', '=', id)
     .del()
     .then(count => {
-        res.status(200).json(count)
+      res.status(200).json(count);
     })
-    .catch(err => res.status(500).json({ errorMsg: 'Unable to delete project with that id.'}))
-})
+    .catch(err =>
+      res
+        .status(500)
+        .json({ errorMsg: 'Unable to delete project with that id.' })
+    );
+});
 
 // Actions Routes
 server.get('/actions', (req, res) => {
-    db('actions')
-      .then(actions => res.status(200).json(actions))
-      .catch(err =>
-        res.status(500).json({ errorMsg: 'Could not get actions.' })
-      );
-  });
-  
-  server.get('/actions/:id', (req, res) => {
-    const { id } = req.params;
-  
-    db('actions')
-      .where('id', '=', id)
-      .then(action => {
-        res.status(200).json(action);
-      })
-      .catch(err =>
-        res
-          .status(500)
-          .json({ errorMsg: 'Unable to get the action with that id.' })
-      );
-  });
-  
-  server.post('/actions', (req, res) => {
-    const action = req.body;
-  
-    if (!action) {
+  db('actions')
+    .then(actions => res.status(200).json(actions))
+    .catch(err => res.status(500).json({ errorMsg: 'Could not get actions.' }));
+});
+
+server.get('/actions/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('actions')
+    .where('id', '=', id)
+    .then(action => {
+      res.status(200).json(action);
+    })
+    .catch(err =>
       res
-        .status(400)
-        .json({
-          errorMsg: 'Please fill in the required information for your action.'
-        });
-    }
-    db.insert(action)
-      .into('actions')
-      .then(ids => {
-        res.status(201).json(ids);
-      })
-      .catch(err =>
-        res.status(500).json({ errorMsg: 'Could not add action to actions.' })
-      );
-  });
-  
-  server.put('/actions/:id', (req, res) => {
-    const { id } = req.params;
-    const action = req.body;
-  
-    db('actions')
+        .status(500)
+        .json({ errorMsg: 'Unable to get the action with that id.' })
+    );
+});
+
+server.post('/actions', (req, res) => {
+  const action = req.body;
+
+  if (!action) {
+    res.status(400).json({
+      errorMsg: 'Please fill in the required information for your action.'
+    });
+  }
+  db.insert(action)
+    .into('actions')
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+    .catch(err =>
+      res.status(500).json({ errorMsg: 'Could not add action to actions.' })
+    );
+});
+
+server.put('/actions/:id', (req, res) => {
+  const { id } = req.params;
+  const action = req.body;
+
+  db('actions')
     .where('id', '=', id)
     .update(action)
     .then(count => {
-        res.status(200).json(count);
+      res.status(200).json(count);
     })
-    .catch(err => res.status(500).json({ errorMsg: 'Unable to edit action with that id.' }))
-  });
-  
-  server.delete('/actions/:id', (req, res) => {
-      const { id } = req.params;
-  
-      db('actions')
-      .where('id', '=', id)
-      .del()
-      .then(count => {
-          res.status(200).json(count)
-      })
-      .catch(err => res.status(500).json({ errorMsg: 'Unable to delete action with that id.'}))
-  })
+    .catch(err =>
+      res.status(500).json({ errorMsg: 'Unable to edit action with that id.' })
+    );
+});
 
-  // Endpoint Retrieving Project by ID that also includes its actions
+server.delete('/actions/:id', (req, res) => {
+  const { id } = req.params;
 
-  server.get('/projects/:id/actions', (req, res) => {
-      const { id } = req.params;
+  db('actions')
+    .where('id', '=', id)
+    .del()
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(err =>
+      res
+        .status(500)
+        .json({ errorMsg: 'Unable to delete action with that id.' })
+    );
+});
 
-      db('actions')
-      .where('action_id', '=', id)
-      .then(id => {
-          res.status(200).json(id);
-      })
-      .catch(err => {
-          res.status(500).json({ errorMsg: 'Unable to find project and actions.' })
-      })
-  })
 const port = 3300;
 server.listen(port, function() {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);

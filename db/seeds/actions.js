@@ -5,9 +5,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('actions').insert([
-        {description: 'second', notes: 'second', completed: true, action_id: 2},
-        {description: 'third', notes: 'third', completed: false, action_id: 3},
-        {description: 'first', notes: 'first', completed: true, action_id: 1}
+        {description: 'second action', notes: 'second action', completed: true, project_id: 2},
+        {description: 'third action', notes: 'third action', completed: false, project_id: 3},
+        {description: 'first action', notes: 'first action', completed: true, project_id: 1}
       ]);
     });
 };
