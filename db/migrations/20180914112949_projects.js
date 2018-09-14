@@ -4,11 +4,11 @@ exports.up = function(knex, Promise) {
     tbl
       .string("project_name", 128)
       .notNullable()
-      .unique("uq_name");
+      .unique("uq_project_name");
     tbl
       .string("project_description", 128)
       .notNullable()
-      .unique("uq_description");
+      .unique("uq_project_description");
     tbl
       .boolean("project_completed")
       .notNullable();
