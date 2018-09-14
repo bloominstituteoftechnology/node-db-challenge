@@ -1,13 +1,13 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('projects').del()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('projects').insert([
+        {id: 3, name: 'Node Express Lab', description:'CRUD Endpoints'},
+        {id: 4, name: 'RDBMS',description:'CRUD endpoints , migrations and seeds'}
+       
       ]);
     });
 };
