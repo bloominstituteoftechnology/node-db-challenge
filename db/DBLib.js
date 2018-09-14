@@ -1,6 +1,6 @@
 
 
-const db = require('../knexConfig');
+const db = require('./knexConfig');
 
 module.exports = {
     // Getting all the projects
