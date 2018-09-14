@@ -12,12 +12,12 @@ exports.up = function(knex, Promise) {
     tbl
       .string("action_completed")
       .notNullable();
-    tbl
-      .integer("project_id")
-      .unsigned()
-      .notNullable()
-      .reference("id")
-      .inTable("projects");
+    // tbl
+    //   .integer("project_id")
+    //   .unsigned()
+    //   .notNullable()
+    //   .reference("id")
+    //   .inTable("projects");
   });
 };
 
