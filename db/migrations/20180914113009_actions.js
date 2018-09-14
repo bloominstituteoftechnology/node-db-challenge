@@ -6,13 +6,13 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique("description");
     tbl.string("notes", 128).notNullable();
-    tbl.string("completed").boolean();
-    tbl
-      .integer("projects_id")
-      .unsigned()
-      .notNullable()
-      .reference("id")
-      .inTable("projects");
+    tbl.string("completed");
+    // tbl
+    //   .integer("projects_id")
+    //   .unsigned()
+    //   .notNullable()
+    //   .reference("id")
+    //   .inTable("projects");
   });
 };
 
