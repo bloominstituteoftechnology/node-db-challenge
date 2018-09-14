@@ -7,6 +7,11 @@ const dbConfig = require("./knexfile");
 const db = knex(dbConfig.development);
 //==================Data Table=========================//
 
+const server = express();
+
+server.use(express.json());
+server.use(helmet());
+
 //===================End Points=======================//
 server.get("/api/project", (req, res) => {
   db("projects")
