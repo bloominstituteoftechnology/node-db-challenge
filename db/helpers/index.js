@@ -5,7 +5,7 @@ const db = knex(dbConfig.development);
 module.exports = {
     getProjects: function (id) {
         let query = db('projects');
-
+        console.log('here');
         if (id) {
             return query
                 .where('id', id)

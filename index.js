@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const server = express();
 const db = require('./db/helpers');
 
-server.use(express.json);
+server.use(express.json());
 server.use(helmet());
 
 server.get('/', (req, res) => {
@@ -25,13 +25,25 @@ server.get('/projects', async (req, res) => {
 
 server.get('/projects/:id', async (req, res) => {
     const { id } = req.params
-    try {
-        const projects = await db.getProjects(id);
-        res.status(200).json(project);
-    }
-    catch (err) {
-        res.status(500).json(err);
-    }
+    db('projects')
+        .where({ id })
+        .then(project => {
+            if (project.length) {
+                db('actions')
+                    .where({ project_id: id })
+                    .then(actions => {
+                        res.status(200).json({ project, actions });
+                    })
+                    .catch(err => {
+                        res.status(500).json(err);
+                    });
+            } else {
+                res.status(404).json({ message: 'not found' });
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
 });
 
 server.post('/projects', async (req, res) => {
