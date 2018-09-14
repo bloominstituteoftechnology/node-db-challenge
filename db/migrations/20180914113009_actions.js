@@ -5,14 +5,14 @@ exports.up = function(knex, Promise) {
       .string("description", 128)
       .notNullable()
       .unique("description");
-    // tbl.string("notes", 128).notNullable();
-    // tbl.string("completed").boolean(false);
-    // tbl
-    //   .integer("projects_id")
-    //   .unsigned()
-    //   .notNullable()
-    //   .reference("id")
-    //   .inTable("projects");
+    tbl.string("notes", 128).notNullable();
+    tbl.string("completed").boolean();
+    tbl
+      .integer("projects_id")
+      .unsigned()
+      .notNullable()
+      .reference("id")
+      .inTable("projects");
   });
 };
 
