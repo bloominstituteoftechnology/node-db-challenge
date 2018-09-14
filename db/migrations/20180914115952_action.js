@@ -15,7 +15,7 @@ exports.up = function (knex, Promise) {
 
         tbl
             .boolean('completed')
-            .defaults(false)
+            .defaultsTo(false)
     })
 };
 
