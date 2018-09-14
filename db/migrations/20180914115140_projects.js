@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     tbl.string("description", 128).notNullable();
     tbl
       .string("completed", 128)
-      .notNullable()
       .defaultTo(false);
     tbl
       .integer("actions_id")

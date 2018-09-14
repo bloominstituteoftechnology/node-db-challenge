@@ -5,11 +5,10 @@ exports.up = function(knex, Promise) {
     tbl.string("notes", 1000).notNullable();
     tbl
       .string("completed", 128)
-      .notNullable()
       .defaultTo(false);
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable("projects");
+  return knex.schema.dropTable("actions");
 };
