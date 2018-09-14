@@ -14,8 +14,8 @@ exports.up = function(knex, Promise) {
     .notNullable()
 
     tbl
-    .string('flag', 128)
-    .notNullable()
+    .boolean('completed')
+
 
 
     

@@ -13,12 +13,13 @@ exports.up = function(knex, Promise) {
     .string('description')
 
     tbl
-    .string('flag', 128)
+    .boolean('completed')
     .notNullable()
 
     tbl
-    .join('projects', 'projects.id', '=', 'actions.id')
-    .select('actions.name');
+    .string('actions')
+    .join('projects', 'projects', '=', 'actions.relationship')
+    .select('actions.id','actions.description', 'actions.notes', 'actions.completed');
 
 
 

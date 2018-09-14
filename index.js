@@ -1,5 +1,9 @@
 const express = require('express');
 const knex = require('knex');
+
+
+
+
 const server = express();
 server.use(express.json());
 
@@ -12,6 +16,33 @@ const db = knex(dbConfig.development);
 server.get('/', (req, res) => {
 res.send('Sprint API Running :D');
 });
+
+
+
+//Retrieve EndPoint
+
+// server.get(`/projects/:id/actions`, (req,res) => {
+//     knex.select('*')
+//     .from('projects')
+
+
+
+
+//     // db('actions').where({ relationship:req.params.id })
+//     //     .then((id) => {
+//     //         res.json(id);
+//     //     })
+//     //     .catch((fail) => {
+//     //         console.log(fail);
+//     //         res.status(404).json({message: "The actions with the specified ID do not exist."});
+//     //     })
+
+//     // .catch((fail) => {
+//     //     console.log(fail)
+//     //     res.status(500).json({error: "The project/action information could not be retrieved."});
+//     // })
+// })
+
 
 
 
@@ -40,6 +71,32 @@ server.get('/projects', (req, res) => {
     })
 })
 
+server.get(`/projects/:id`, (req,res) => {
+    db('actions')
+        .innerJoin('projects', 'actions.relationship', 'projects.id')
+        .where('actions.relationship', req.params.id)
+        .then(function(joined) {
+            res.send(joined)
+        })
+
+
+
+
+    // db('projects').where({ id:req.params.id })
+    //     .then((id) => {
+    //         res.json(id);
+    //     })
+    //     .catch((fail) => {
+    //         console.log(fail);
+    //         res.status(404).json({message: "The project with the specified ID does not exist."});
+    //     })
+
+    // .catch((fail) => {
+    //     console.log(fail)
+    //     res.status(500).json({error: "The projects's information could not be retrieved."});
+    // })
+})
+
 
 server.delete('/projects/:id', (req, res) => {
     db('projects').where({ id:req.params.id }).delete()
@@ -52,7 +109,17 @@ server.delete('/projects/:id', (req, res) => {
             });
 });
 
+server.put(`/projects/:id`, (req, res) => {
 
+    db('projects').where({ id:req.params.id } ).update(req.body)
+    .then((item) => {
+        res.status(201).json(item);
+    })
+    .catch((fail) => {
+        console.log(fail);
+        res.status(404).json({ message: "The project with the specified ID does not exist."});
+    });
+})
 
 
 //Actions CRUD
