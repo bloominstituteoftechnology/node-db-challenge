@@ -15,7 +15,10 @@ exports.up = function(knex, Promise) {
     tbl
     .string('flag', 128)
     .notNullable()
-    
+
+    tbl
+    .join('projects', 'projects.id', '=', 'actions.id')
+    .select('actions.name');
 
 
 

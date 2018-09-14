@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
 
 
     
-    
+    // I want to create a foreign key relationship to my primary in projects but it's not working
     tbl
     .integer('relationship')
     // .unsigned()
