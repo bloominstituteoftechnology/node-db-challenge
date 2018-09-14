@@ -4,7 +4,7 @@ exports.up = function (knex, Promise) {
         tbl.increments();
 
         tbl
-            .integer('projects_id')
+            .integer('project_id')
             .unsigned()
             .notNullable()
             .references('id')
@@ -12,6 +12,10 @@ exports.up = function (knex, Promise) {
 
         tbl
             .string('description', 1024)
+            .notNullable();
+
+        tbl
+            .string('notes', 2000)
 
         tbl
             .boolean('completed')
