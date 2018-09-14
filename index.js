@@ -29,7 +29,7 @@ server.get("/api/project/:id", (req, res) => {
   const { id } = req.params;
   db("projects")
     .select("project_name")
-    .where({ id })
+    .where({ project_id: id })
     .then(project => {
       res.status(200).json(project);
     })
@@ -58,7 +58,7 @@ server.put("/api/project/:id", (req, res) => {
   const { id } = req.params;
 
   db("projects")
-    .where({ id })
+    .where({ project_id: id })
     .update(changes)
     .then(count => {
       res.status(200).json(count);
@@ -73,7 +73,7 @@ server.delete("/api/project/:id", (req, res) => {
   const { id } = req.params;
 
   db("projects")
-    .where({ id })
+    .where({ project_id: id })
     .del()
     .then(count => {
       res.status(200).json(count);
@@ -99,8 +99,8 @@ server.get("/api/action", (req, res) => {
 server.get("/api/action/:id", (req, res) => {
   const { id } = req.params;
   db("actions")
-    .select("action_id")
-    .where({ id })
+    // .select()
+    .where({ action_id: id })
     .then(project => {
       res.status(200).json(project);
     })
@@ -129,7 +129,7 @@ server.put("/api/action/:id", (req, res) => {
   const { id } = req.params;
 
   db("actions")
-    .where({ id })
+    .where({ action_id: id })
     .update(changes)
     .then(count => {
       res.status(200).json(count);
@@ -144,7 +144,7 @@ server.delete("/api/action/:id", (req, res) => {
   const { id } = req.params;
 
   db("actions")
-    .where({ id })
+    .where({ action_id: id })
     .del()
     .then(count => {
       res.status(200).json(count);
