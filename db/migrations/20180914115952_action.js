@@ -12,6 +12,10 @@ exports.up = function (knex, Promise) {
 
         tbl
             .string('description', 1024)
+
+        tbl
+            .boolean('completed')
+            .defaults(false)
     })
 };
 

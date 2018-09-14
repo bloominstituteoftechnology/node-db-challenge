@@ -7,6 +7,9 @@ exports.up = function (knex, Promise) {
             .string('name', 128)
             .notNullable();
 
+        tbl
+            .boolean('completed')
+            .defaultsTo(false)
     })
 };
 
