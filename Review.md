@@ -18,7 +18,7 @@ To ensure uniquness for at least one colummn in a database table, and is a requi
 4.  What do we need in order to have a _many to many_ relationship between two
     tables.
 
-    a book can have more than one author and an author can write more than one book. we need an additional table with foreign keys
+    a book can have more than one author and an author can write more than one book and then we would need an additional table with foreign keys, into one of the standard forms (1NF, 2NF, 3NF)
 
 5.  What SQL statement is used to retrieve data from a table?
 
@@ -26,4 +26,4 @@ To ensure uniquness for at least one colummn in a database table, and is a requi
 
 6.  What SQL clause is used to filter the results of a query?
 
-select * from "tablename" where "criteria (column) = "?"
+     select * from "tablename" where "criteria (column) = "?", other operators can be used such as 'like', or wildcards (*, . , %)
