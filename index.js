@@ -26,7 +26,7 @@ server.post("/api/projects", (req, res) => {
 });
 
 //post for Actions
-server.post("/api/projects", (req, res) => {
+server.post("/api/projects/:id/actions", (req, res) => {
     const actions = req.body
     db("actions")
         .insert(actions)
@@ -49,7 +49,7 @@ server.get('/api/projects/', (req, res) => {
 
 server.get('/api/projects/:id', (req, res) => {
     const id = req.params.id;
-    
+
     db("projects")
         .select()
         .where("id", id)
@@ -65,11 +65,13 @@ server.get('/api/projects/:id', (req, res) => {
 });
 
 
-
+//get actions for each project
 server.get('/api/projects/:id/actions', (req, res) => {
-    db("projects")
-        .then(projects => {
-            res.status(200).json(projects);
+    db("actions")
+        .select()
+        .join("projects", "projects.actions_id", "=", "actions.id")
+        .then(actions => {
+            res.status(200).json(actions);
         })
         .catch(err => res.status(500).json(err));
 });
