@@ -9,6 +9,14 @@ exports.up = function(knex, Promise) {
     .string('name', 128)
     .notNullable()
 
+    tbl
+    .string('description')
+
+    tbl
+    .string('flag', 128)
+    .notNullable()
+    
+
 
 
 });
