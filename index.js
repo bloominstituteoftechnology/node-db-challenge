@@ -39,12 +39,12 @@ server.get("/projects/:id", (req, res) => {
   db("projects")
     .where({ id })
     .then(project => {
-      if (project) {
+      if (project.length) {
         db("actions")
           .where({ project_id: id })
           .then(actions => {
-           project.actions = actions;
-            res.status(200).json( {project, actions} );
+            project.actions = actions;
+            res.status(200).json({ project, actions });
           })
           .catch(err => {
             res.status(500).json(err);
@@ -104,6 +104,30 @@ server.delete("/actions/:id", (req, res) => {
     })
     .catch(err => {
       res.status(500).json(err);
+    });
+});
+
+server.delete("/projects/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("projects")
+    .del()
+    .where({ id })
+    .then(project => {
+      if (project.length) {
+        db("actions")
+          .where({ project_id: id })
+          .del()
+          .then(actions => {
+            project.actions = actions;
+            res.status(200).json({ project, actions });
+          })
+          .catch(err => {
+            res.status(500).json(err);
+          });
+      } else {
+        res.status(404).json({ msg: "Nothing to delete" });
+      }
     });
 });
 
