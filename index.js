@@ -14,33 +14,6 @@ server.use(helmet());
 
 //===================End Points=======================//
 //===========================project end points==========================//
-server.get("/api/project/:id", async (req, res) => {
-  // const { id } = req.params;
-  // db("projects")
-  //   .select()
-  //   .where({ project_id: id })
-  //   .first()
-  //   .then(project => {
-  //     res.status(200).json(project);
-  //   })
-  //   .catch(err => {
-  //     console.log("Error: ", err);
-  //     res.status(500).json({ Error: "Cannot retrieve with id" });
-  //   });
-  try {
-    const projectObject = await db('projects').where({ id: req.params.id });
-    const actionArray = await db('actions').where({ project_id: req.params.id });
-    console.log('projectObject:', projectObject);
-    console.log('action array:', actionArray);
-    projectObject[0].actions = actionArray;
-
-    res.status(200).json(projectObject);
-}
-catch (err) {
-    console.log(err);
-    res.status(500).send('oops');
-}
-});
 
 server.get("/api/project", (req, res) => {
   db("projects")
@@ -53,19 +26,34 @@ server.get("/api/project", (req, res) => {
     });
 });
 
-// server.get("/api/project/:id", (req, res) => {
-//   const { id } = req.params;
-//   db("projects")
-//     .select()
-//     .where({ project_id: id })
-//     .then(project => {
-//       res.status(200).json(project);
-//     })
-//     .catch(err => {
-//       console.log("Error: ", err);
-//       res.status(500).json({ Error: "Cannot retrieve with id" });
-//     });
-// });
+server.get("/api/project/:id", (req, res) => {
+  const id = req.params.id;
+
+  db("projects")
+    .select()
+    .where({ id })
+    .first() // get result[0]
+    .then(projects => {
+      // a single object
+      // let returnedProject = projects;
+      console.log("ReturnProject ", projects);
+      db("actions")
+        .select()
+        .where({ project_id: id })
+        .then(actions => {
+          // let returnedActions = actions;
+          console.log("ReturnActions ", actions);
+          // returnedProject.actions = returnedActions
+          projects.actions = actions;
+          // console.log(returnedProject)
+          // res.send(200).json(returnedProject.actions = returnedActions);
+          res.status(200).json(projects);
+        });
+      // console.log(returnedProject)
+      // console.log("Final result ", returnedProject);
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 server.post("/api/project", (req, res) => {
   const projects = req.body;
