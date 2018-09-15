@@ -37,26 +37,29 @@ server.get("/projects/:id", (req, res) => {
   db("projects")
     .select()
     .where({ id })
-    .first()
-    .then(projects => {
-      returnedProject = projects;
-    //   console.log("ReturnProject ",returnedProject);
+    .first() // get result[0]
+    .then(projects => { // a single object
+      // let returnedProject = projects;
+      console.log("ReturnProject ", projects);
+      db("actions")
+          .select()
+          .where({project_id: id})
+          .then(actions => {
+            // let returnedActions = actions;
+              console.log("ReturnActions ", actions);
+              // returnedProject.actions = returnedActions
+              projects.actions = actions;
+              // console.log(returnedProject)
+              // res.send(200).json(returnedProject.actions = returnedActions);
+              res.status(200).json(projects)
+              
+          })
+          // console.log(returnedProject)
+          // console.log("Final result ", returnedProject);
     })
     .catch(err => res.status(500).json(err));
 
-    db("actions")
-        .select()
-        .where({project_id: id})
-        .then(actions => {
-            returnedActions = actions;
-            // console.log("ReturnActions ", returnedActions);
-            
-        })
-        .catch(err => res.status(500).json(err));
-    returnedProject.actions = returnedActions;
 
-    console.log("Final result ", returnedProject);
-    res.sendStatus(200).json(returnedProject);
 });
 
 
