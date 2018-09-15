@@ -71,15 +71,21 @@ server.get('/projects', (req, res) => {
     })
 })
 
-server.get(`/projects/:id`, (req,res) => {
-    db('actions')
-        .innerJoin('projects', 'actions.relationship', 'projects.id')
-        .where('actions.relationship', req.params.id)
-        .then(function(joined) {
-            res.send(joined)
-        })
+server.get(`/projects/:id`, async (req,res) => {
+    try {
+        const projectObject = await db('projects').where({ id: req.params.id });
+        const actionArray = await db('actions').where({ relationship: req.params.id });
+        projectObject[0].actions = actionArray;
+    
+        res.status(200).json(projectObject);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send('oops');
+    }
 
-
+   
+})
 
 
     // db('projects').where({ id:req.params.id })
@@ -95,7 +101,7 @@ server.get(`/projects/:id`, (req,res) => {
     //     console.log(fail)
     //     res.status(500).json({error: "The projects's information could not be retrieved."});
     // })
-})
+
 
 
 server.delete('/projects/:id', (req, res) => {
