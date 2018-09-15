@@ -14,6 +14,34 @@ server.use(helmet());
 
 //===================End Points=======================//
 //===========================project end points==========================//
+server.get("/api/project/:id", async (req, res) => {
+  // const { id } = req.params;
+  // db("projects")
+  //   .select()
+  //   .where({ project_id: id })
+  //   .first()
+  //   .then(project => {
+  //     res.status(200).json(project);
+  //   })
+  //   .catch(err => {
+  //     console.log("Error: ", err);
+  //     res.status(500).json({ Error: "Cannot retrieve with id" });
+  //   });
+  try {
+    const projectObject = await db('projects').where({ id: req.params.id });
+    const actionArray = await db('actions').where({ project_id: req.params.id });
+    console.log('projectObject:', projectObject);
+    console.log('action array:', actionArray);
+    projectObject[0].actions = actionArray;
+
+    res.status(200).json(projectObject);
+}
+catch (err) {
+    console.log(err);
+    res.status(500).send('oops');
+}
+});
+
 server.get("/api/project", (req, res) => {
   db("projects")
     .then(project => {
@@ -25,19 +53,19 @@ server.get("/api/project", (req, res) => {
     });
 });
 
-server.get("/api/project/:id", (req, res) => {
-  const { id } = req.params;
-  db("projects")
-    .select("project_name")
-    .where({ project_id: id })
-    .then(project => {
-      res.status(200).json(project);
-    })
-    .catch(err => {
-      console.log("Error: ", err);
-      res.status(500).json({ Error: "Cannot retrieve with id" });
-    });
-});
+// server.get("/api/project/:id", (req, res) => {
+//   const { id } = req.params;
+//   db("projects")
+//     .select()
+//     .where({ project_id: id })
+//     .then(project => {
+//       res.status(200).json(project);
+//     })
+//     .catch(err => {
+//       console.log("Error: ", err);
+//       res.status(500).json({ Error: "Cannot retrieve with id" });
+//     });
+// });
 
 server.post("/api/project", (req, res) => {
   const projects = req.body;
@@ -84,6 +112,7 @@ server.delete("/api/project/:id", (req, res) => {
     });
 });
 //===========================project end points==========================//
+
 //============================action end points=========================//
 server.get("/api/action", (req, res) => {
   db("actions")
@@ -99,7 +128,7 @@ server.get("/api/action", (req, res) => {
 server.get("/api/action/:id", (req, res) => {
   const { id } = req.params;
   db("actions")
-    // .select()
+    .select()
     .where({ action_id: id })
     .then(project => {
       res.status(200).json(project);
@@ -109,6 +138,20 @@ server.get("/api/action/:id", (req, res) => {
       res.status(500).json({ Error: "Cannot retrieve with id" });
     });
 });
+
+// server.get("/api/action/:id", (req, res) => {
+//   const { id } = req.params;
+//   db("actions")
+//     // .select()
+//     .where({ action_id: id })
+//     .then(project => {
+//       res.status(200).json(project);
+//     })
+//     .catch(err => {
+//       console.log("Error: ", err);
+//       res.status(500).json({ Error: "Cannot retrieve with id" });
+//     });
+// });
 
 server.post("/api/action", (req, res) => {
   const projects = req.body;

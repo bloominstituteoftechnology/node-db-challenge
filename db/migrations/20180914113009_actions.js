@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
       .integer("project_id")
       .unsigned()
       .notNullable()
-      .reference("project_id")
+      .references("project_id")
       .inTable("projects");
   });
 };
