@@ -12,6 +12,18 @@ const dbConfig = require('./knexfile.js');
 const db = knex(dbConfig.development);
 
 
+// db('projects')
+// .select()
+// .then((rows) => {
+// //Each row's boolean field is now true/false instead of 1/0
+// });
+
+// db('actions')
+// .select()
+// .then((rows) => {
+// //Each row's boolean field is now true/false instead of 1/0
+// });
+
 
 server.get('/', (req, res) => {
 res.send('Sprint API Running :D');

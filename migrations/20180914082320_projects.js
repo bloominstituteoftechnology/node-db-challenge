@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
     tbl
     .boolean('completed')
     .notNullable()
+    .defaultTo(false)
 
     tbl
     .string('actions')
