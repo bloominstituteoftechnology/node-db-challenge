@@ -4,6 +4,8 @@ exports.up = function(knex, Promise) {
       tbl.increments();
       tbl
         .string('name')
+        .notNullable()
+        .unique()
         .string('description')
         .boolean('completed');
   });

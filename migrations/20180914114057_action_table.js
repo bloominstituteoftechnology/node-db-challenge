@@ -5,6 +5,13 @@ exports.up = function(knex, Promise) {
     tbl.string('Task');
     tbl.string('Notes');
     tbl.boolean('Completed');
+
+    tbl
+        .integer("project_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("projects");
   })
 };
 
