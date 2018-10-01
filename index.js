@@ -65,14 +65,74 @@ server.get('/projects/:id', (req, res) => {
     db('projects')
       .where(id)
       .del()
-      .then(project => {
-        if (project) {
+      .then(count => {
+        if (count) {
           res.status(200).json({message: 'Project succesfully deleted'})
         } else {
           res.status(404).json({ errMsg: `Project not found` });
         }
       })
       .catch(err => res.status(500).json({ error: 'Project could not be deleted' }));
+  });
+
+
+
+
+
+
+//actions endpoints
+server.get('/actions', (req, res) => {
+    db('actions')
+     .then(actions => 
+      res.status(200).json(actions))
+     .catch(err => res.status(500).json({ error: 'Actions not retrieved'}));
+  });
+
+  server.get('/actions/:id', (req, res) => {
+    const { id } =  req.params.id;
+    db('actions') 
+    .where(id)
+     .then(actions => {
+             res.status(200).json(actions)
+     })
+     .catch(error => res.status(500).json({ error: 'Unable to retrieve action'}));
+  });
+
+  server.post('/actions',(req, res) => {
+    const { action} = req.body;
+  
+    if (!action) res.status(400).json({ error: 'Please provide an action' });
+      db.insert({ action })
+      .into('actions')
+      .then(ids => res.status(201).json( ids ))
+      .catch(err => res.status(500).json({ error: 'Action not saved' }));
+  });
+
+  server.put('/actions/:id', (req, res) => {
+    const { id } = req.params.id;
+    const { action } = req.body;
+  
+    db('actions')
+      .where(id)
+      .update(action)
+      .then(actions => res.status(200).json([actions]))
+      .catch(err => res.status(500).json({ error: 'Unable to update action' }));
+  });
+
+
+  server.delete('/actions/:id', (req, res) => {
+    const { id } = req.params.id;
+    db('actions')
+      .where('id')
+      .del()
+      .then(count => {
+        if (count) {
+          res.status(200).json({message: 'Action succesfully deleted'})
+        } else {
+          res.status(404).json({ message: `Action not found` });
+        }
+      })
+      .catch(err => res.status(500).json({ message: 'Action could not be deleted' }));
   });
 
 const port = 9000;
