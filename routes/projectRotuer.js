@@ -33,14 +33,13 @@ router.get("/:id", (req, res) => {
             name: project.name,
             description: project.description,
             completed: project.completed,
-            actions: [
+            actions:
               actions.map(a => ({
                 id: a.id,
                 description: a.description,
                 notes: a.notes,
                 completed: a.completed
               }))
-            ]
           });
         });
     });
