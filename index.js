@@ -214,16 +214,22 @@ server
       .then(
         data =>
           data
-            ? res
-                .status(200)
-                .json({
-                  message: "the action was deleted successfully",
-                  count: data
-                })
+            ? res.status(200).json({
+                message: "the action was deleted successfully",
+                count: data
+              })
             : res.status(404).json({ message: "the action cannot be found" })
       )
       .catch(next);
   });
+
+// use lodash as some middleware for error handling
+app.use(function(err, _, res, _) {
+  console.error(err);
+  res
+    .status(500)
+    .json({ message: "you borke something. try again later... Much Later!" });
+});
 
 server.listen(8800, () => {
   console.log(`\n === API listening on port 8800 ===\n`);
