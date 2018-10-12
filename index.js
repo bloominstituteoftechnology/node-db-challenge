@@ -15,3 +15,4 @@ server.listen(port, () => console.log(`API running on port ${port}`));
 server.get('/', (request, response) => {
     response.send('Server initialized.');
 });
+
