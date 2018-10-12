@@ -16,7 +16,7 @@ server.get('/', (req, res) => {
     res.send('Am I Alive?????'); //YES!
 });
 
-//Testing Project & Actions GET
+//Stretch - GET - Testing Projects & Actions
 server.get('/api/projects', (req, res) => {
     db('projects')
         .then(projects => {
@@ -37,9 +37,44 @@ server.get('/api/actions', (req, res) => {
         })
 });
 
+//POST - Projects and Actions
+server.post('/api/projects', (req, res) => {
+    const project = req.body;
 
-server.get
+    if(!project) {
+        res.status(404).json({error: 'Please Provide Project Name and/or Description'});
+    }else {
+        db('projects')
+            .insert(project)
+            .into('projects')
+            .then(id => {
+                res.status(200).json(id[0]); //why exactly is the [0] needed, it seems to work without it, only difference is that without it the client received an array ([7]) instead of a integer(7).
+            })
+            .catch(err => {
+                res.status(500).json(err);
+            })        
+    }
+});
+
+server.post('/api/actions', (req, res) => {
+    const action = req.body;
+
+    if(!action) {
+        res.status(404).json({error: 'Please Provide Action Project Id and/or Description'});
+    }else {
+        db('actions')
+            .insert(action)
+            // .into('actions') // Does not seem to be needed, is it because it is already determined it's going into the 'actions' database?
+            .then(id => {
+                res.status(200).json(id[0]);
+            })
+            .catch(err => {
+                res.status(500).json(err);
+            })        
+    }
+});
+
 
 server.listen(port, () => {
     console.log(`\n=== Listening on Port ${port} ===\n`)
-});
+}); 
