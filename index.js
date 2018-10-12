@@ -25,3 +25,7 @@ server.route("/api/projects").get((req, res, next) => {
     )
     .catch(next);
 });
+
+server.listen(8800, () => {
+  console.log(`\n === API listening on port 8800 ===\n`);
+});
