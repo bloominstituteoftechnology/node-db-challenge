@@ -1,8 +1,8 @@
-const projectDb = require('../dbConfig.js');
+const db = require('../dbConfig.js');
 
 module.exports = {
 	addProject: function(project) {
-		let query = projectDb('projects')
+		let query = db('projects')
 		return query
 			.insert(project)
 			.then(id => ({ id: id }));

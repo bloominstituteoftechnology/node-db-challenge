@@ -14,6 +14,13 @@ exports.up = function(knex, Promise) {
 			.boolean('completed');
 
 		table
+			.integer('project_id')
+			.notNullable()
+			.unsigned()
+			.references('id')
+			.inTable('projects');
+
+		table
 			.unique('description');
 	});
 };
