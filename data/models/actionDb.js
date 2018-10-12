@@ -33,4 +33,10 @@ module.exports = {
 					.then(id => ({ id: id }));
 			});
 	},
+	updateAction: function(id, action) {
+		let query = db('actions as a')
+		return query
+			.update(action)
+			.where('a.id', id);
+	},
 };
