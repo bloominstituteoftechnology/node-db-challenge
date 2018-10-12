@@ -6,6 +6,7 @@ const db = knex(knexConfig.development);
 module.exports = {
   findById,
   findProjectActions,
+  add,
 };
 
 function findById(id) {
@@ -18,4 +19,10 @@ function findProjectActions(id) {
   return db('actions')
     .select('id', 'description', 'notes', 'completed')
     .where({ project_id: id });
+}
+
+function add(project) {
+  return db('projects')
+    .insert(project)
+    .into('projects');
 }
