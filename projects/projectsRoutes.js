@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     projects
       .add(project)
       .then(response => {
-        res.status(201).json(response[0]);
+        res.status(201).json(response);
         // res.status(201).json(response[0]);
       })
       .catch(err => {

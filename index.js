@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 
 const projectsRoutes = require('./projects/projectsRoutes.js');
+const actionsRoutes = require('./actions/actionsRoutes.js');
 
 const server = express();
 
@@ -13,6 +14,7 @@ server.get('/', (req, res) => {
 });
 
 server.use('/api/projects', projectsRoutes);
+server.use('/api/actions', actionsRoutes);
 
 const port = 9000;
 
