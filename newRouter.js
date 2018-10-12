@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./models/project_models');
-const dbAction = require('./models/action_models');
 
 // post to projects
 
