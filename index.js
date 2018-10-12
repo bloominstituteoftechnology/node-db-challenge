@@ -74,14 +74,31 @@ server.post('/api/actions', (req, res) => {
     }
 });
 
+// //GET - Project ID's Actions
+// server.get('/api/projects/:id/actions', (req, res) => {
+//     const {id} = req.params;
+//      db('actions')
+//         .where({project_id: id})
+//         .then(projectIdActions => {
+//             res.status(200).json(projectIdActions);
+//         })
+//         .catch(err => {
+//             res.status(500).json(err);
+//         })   
+// });
+
 //GET - Project ID's Actions
-server.get('/api/projects/:id/actions', (req, res) => {
+server.get('/api/projects/:id', (req, res) => {
     const {id} = req.params;
 
-    db('actions')
-        .where({project_id: id})
-        .then(projectIdActions => {
-            res.status(200).json(projectIdActions);
+    db('projects')
+        .where({id})
+        .then(project => {
+            db('actions' )
+                .where({project_id: id})
+                .then(actions => {
+                    res.status(200).json({project, actions});
+                })
         })
         .catch(err => {
             res.status(500).json(err);
