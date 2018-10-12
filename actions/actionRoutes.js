@@ -44,7 +44,7 @@ router.route('/:id')
     const { id } = req.params;
     actions.remove(id)
       .then(removed => {
-        console.log('\n--- Action Removed', removed);
+        console.log('\n--- Action Removed ---', removed);
         res.json({ Success: 'Project removed' })
       })
       .catch(err => errHelper(500, 'Error removing action.', res))
