@@ -7,14 +7,14 @@ function projectId() {
 
 }
 
-// //Gets the projects and actions
-// router.get('/api/projects/:id', (req, res) => {
-//   const { id } = req.params;
+//Gets the projects and actions
+router.get('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
 
-//   db.getProject(id)
-//   	.then(response => console.log(response))
-//     .catch(err => console.log(err))
-// });
+  db.getProject(id)
+  	.then(response => console.log(response))
+    .catch(err => console.log(err))
+});
 
 //Adds a project
 router.post('/api/projects', (req, res) => {
