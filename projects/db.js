@@ -18,7 +18,7 @@ function getProject(id) {
 
   return Promise.all(promises).then(results => {
     let [ project, actions ] = results;
-    
+   
     project = projectClean(project);
     actions = actionClean(actions);
     project.actions = actions;
@@ -32,7 +32,7 @@ function getProject(id) {
 
 function getProjectActions(projectId) {
   return db('actions')
-    .where('projects_id', projectId)
+    .where('project_id', projectId)
 }
 
 function addProject(project) {
@@ -54,10 +54,11 @@ function toBoolean(int) {
 
 function actionClean(actions) {
   actions = actions.map(action => {
-    const index =Object.keys(action).indexOf('projects_id');
     return {
-      ...action,
-      completed: toBoolean(action.completed),
+      id: action.id,
+      description: action.description,
+      notes: action.notes,
+      completed: toBoolean(action.completed)
     }
   })
   return actions;
@@ -66,6 +67,6 @@ function actionClean(actions) {
 function projectClean(project) {
   return {
     ...project,
-    completed: toBoolean(project.completed),
+    completed: toBoolean(project.completed)
   }
 }

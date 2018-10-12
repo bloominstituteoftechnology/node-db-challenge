@@ -3,17 +3,16 @@ const db = require('./db.js');
 
 const router = express.Router();
 
-function projectId() {
-
-}
 
 //Gets the projects and actions
 router.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
 
   db.getProject(id)
-  	.then(response => console.log(response))
-    .catch(err => console.log(err))
+  	.then(response => {
+      res.status(200).json(response)
+    })
+    .catch(err => res.status(400).json({ error: "No project with that id."}))
 });
 
 //Adds a project
@@ -30,7 +29,7 @@ router.post('/api/projects', (req, res) => {
 //Adds an action
 router.post('/api/actions', (req, res) => {
   const newAction = req.body;
-  if(!newAction.projects_id) {
+  if(!newAction.project_id) {
     res.status(400).json({error: "Need a project id." })
   }
   

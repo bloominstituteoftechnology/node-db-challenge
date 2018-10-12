@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
     tbl.boolean("completed").defaultTo(false);
 
     tbl
-      .integer('projects_id')
+      .integer('project_id')
       .unsigned()
       .references('id')
       .inTable('projects')
