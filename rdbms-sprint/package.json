@@ -1,0 +1,22 @@
+{
+  "name": "rdbms-sprint",
+  "version": "1.0.0",
+  "descirption":"RDBMS Sprint",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "server":"nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.1",
+    "scripts": "^0.1.0",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
