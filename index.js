@@ -1,7 +1,9 @@
 const express = require('express');
 const helmet = require('helmet');
 
+// Routes for projects
 const projectRoutes = require('./routes/projectRoutes.js');
+// Routes for actions to the projects
 const actionRoutes = require('./routes/actionRoutes.js');
 
 const server = express();
@@ -14,6 +16,7 @@ server.get('/', (req, res) => {
     res.send('<h1>Live Server<h1>')
 });
 
+// Use the routes
 server.use('/api/projects', projectRoutes);
 server.use('/api/actions', actionRoutes);
 
