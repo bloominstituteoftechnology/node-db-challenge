@@ -6,6 +6,22 @@ function addAction(action) {
   return db.insert(action).into("actions");
 }
 
+function getAction(id) {
+  return db
+    .select("*")
+    .from("actions")
+    .where({ id })
+    .first();
+}
+
+function getActions() {
+  return db
+    .select('*')
+    .from('actions');
+}
+
 module.exports = {
-  addAction
+  addAction,
+  getAction,
+  getActions
 };

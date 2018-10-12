@@ -3,16 +3,11 @@ const knexConfig = require("../../knexfile");
 const db = knex(knexConfig.development);
 
 function getProject(id) {
-  return db
-    .select("*")
-    .from("projects")
-    .where({ id });
+  return db('projects').join('actions', 'actions.project_id', '=', 'actions.id').select('*', 'projects.actions as actions')
 }
 
 function getProjects() {
-  return db
-    .select("*")
-    .from("projects");
+  return db('projects');
 }
 
 function addProject(project) {
