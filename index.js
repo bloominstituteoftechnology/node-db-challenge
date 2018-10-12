@@ -53,28 +53,41 @@ server.post('/api/projects', (req, res) => {
     });
 });
 
+// ========================ACTIONS ENDPOINTS=========================
 
+// Add GET ROUTE HANDLER to access the actions
+server.get('/api/actions', (req, res) => {
+  db('actions')
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => res.status(500).json(err));
+});
 
+//Add POST ROUTE HANDLER to add a action
+server.post('/api/actions', (req, res) => {
+  if(!req.body.project_id || !req.body.description || !req.body.notes) {
+    return res.status(400).send({ errorMessage: "Please provide a project_id, description, and notes for this action." });
+   } 
+  
+  if(req.body.description.length > 128) {
+    return res.status(400).send({error: " Action description must be less than 128 characters"});
+  }
 
-// server.post('/api/projects', (req, res) => {
-//   // Check that name and description is present. If not return error message.
-//   if(!req.body.name || !req.body.description) {
-//     return res.status(400).send({ errorMessage: "Please provide name and a description for this project." });
-//     }
-//   else if(req.body.name.length > 128 && req.body.description ) {
-//     return res.status(400).send({error: " User name must be less than 128 characters"})
-//   }
-//   const { name, description } = req.body;
-//   const newProject = { name, description };
-//   db
-//     .insert(newProject)
-//     .then(newProject => {
-//         console.log(newProject);
-//         res.status(201).json(newProject);
-//       })
-//     .catch(err => res.status(500).send({ error: "There was an error while saving a project to the database" }));
+  // When both tests pass, submit request
+  const { project_id, description, notes } = req.body;
+  const newAction = { project_id, description, notes };
+  // const project = req.body;
 
-//   });
+  db.insert(newAction)
+    .into('actions')
+    .then(ids => {
+      res.status(201).json(ids[0]);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
 
 // Name port
 const port = 2000;
