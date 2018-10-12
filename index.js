@@ -2,6 +2,8 @@
 const express = require('express');
 const logger = require('morgan');
 const helmet = require('helmet');
+
+const projects = require('./helpers/modal.js');
 const knex = require('knex');
 
 const knexConfig = require('./knexfile.js');
@@ -32,6 +34,22 @@ server.get('/api/projects', (req, res) => {
     })
     .catch(err => res.status(500).json(err));
 });
+
+// Add GET ROUTE HANDLER to get a project by id
+
+server.get('/api/projects/actions/:id', (req, res) => {
+  const { id } = req.params;
+  projects
+    .getProjectActions(id)
+    .then(projActions => {
+      if (projActions === 0) {
+        return res.status(400).send({error: "No actions in that project"})
+      }
+      res.json(projActions);
+    })
+    .catch(err => res.status(500).json(err));
+});
+
 
 //Add POST ROUTE HANDLER to add a project
 server.post('/api/projects', (req, res) => {
