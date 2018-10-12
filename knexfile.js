@@ -7,6 +7,9 @@ module.exports = {
     connection: {
       filename: './data/projects.db3'
     }, 
+    pool: {
+    afterCreate: (conn, cb) => 
+       conn.run('PRAGMA foreign_keys = ON', cb) },
     migrations: {
       directory: './data/migrations'
     },

@@ -8,7 +8,8 @@ exports.up = function(knex, Promise) {
     tableObject.integer('project_id')
     .unsigned()
     .references('id')
-    .inTable('project');
+    .inTable('project')
+    .onDelete('CASCADE');
 
     // Name Column
     tableObject.string('description', 255).notNullable();

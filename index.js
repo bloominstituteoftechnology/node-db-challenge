@@ -100,6 +100,32 @@ server.get('/api/projects/:id', (request, response) => {
     .catch(error => response.status(500).json(error));
 });
 
+/// ---- DELETE Project ----
+
+server.delete('/api/projects/:id', (request, response) => {
+    // Extract URL Parameters
+    const { id } = request.params;
+
+    if ( !id || id < 1 ) {
+        return response.status(400).json({ errorMessage: "The provided project id is invalid." })
+    }
+    
+    db('project')
+    .where({ id })
+    .del()
+    .then( deleted => {
+        if (!deleted || deleted < 1) {
+            return response.json({errorMessage:"We were unable to delete a project with the specified id."})
+        }
+
+        response.json(deleted)
+    }
+
+    )
+    .catch(error => response.status(500).json(error))
+
+});
+
 /// ---- CREATE New Action ----
 server.post('/api/actions', (request, response) => {
     // Deconstruct Request Body
