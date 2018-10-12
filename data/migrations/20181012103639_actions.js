@@ -9,8 +9,8 @@ exports.up = function(knex, Promise) {
             .inTable('projects')
             .notNullable();
         tbl.string('description', 255).notNullable();
-        tbl.string('notes', 128)
-        tbl.boolean('completed')
+        tbl.string('notes', 128).notNullable();
+        tbl.boolean('completed').defaultTo(false);
     })
 };
 
