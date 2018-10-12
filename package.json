@@ -6,7 +6,7 @@
   "author": "Eva Li <evalee904@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
