@@ -13,12 +13,14 @@ function find() {
   return db('Projects')
 }
 
-function findById() {
+function findById(id) {
   return db('Projects')
+    // .where({ Projects.id: Number(id) })
+    .join('Actions', 'Projects.id', 'Actions.project_id')
+    .groupBy('Actions.id')
 }
 
 function insert(project) {
   return db('Projects')
     .insert(project)
-    .then(([id]) => this.get(id));
 }
