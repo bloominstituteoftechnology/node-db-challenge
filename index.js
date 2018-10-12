@@ -1,31 +1,70 @@
 const express = require('express');
+const helmet = require('helmet');
 const knex = require('knex');
 const knexConfig = require('./knexfile');
 const db = knex(knexConfig.development);
-const helmet = require('helmet');
 const server = express();
-// Server Config
-const port = 7100;
-const name = `Sprint-Challenge-RDBMS`;
+
+// server config
+const port = 7100; // port for server to run from
+const serverName = `Sprint-Challenge-RDBMS`; // Name of server to display at "/" endpoint 
 
 server.use(helmet());
 server.use(express.json());
 
-server.get('/', (req, res) => {
-  res.send(`${name} running on port ${port}`);
+// server endpoints
+
+server.get('/', (req, res) => { // sanity check
+  res.send(`${serverName} running on port ${port}`);
 });
 
-server.post('/projects', (req, res) => {
-  const project = req.body;
+server.get('/api/projects/:id', (req, res) => { // view all projects from db 'projects'
+  let pId = req.params.id;
+  // db('projects').where({ id: pId }).innerJoin()
+  db.from('projects').innerJoin('actions', 'projects.id', 'actions.project_id')
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => res.status(500).json(err))
+})
 
+server.get('/api/actions', (req, res) => { // view all actions from db 'actions'
+  db('actions')
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+server.post('/api/projects', (req, res) => { // add project to db 'projects'
+  const project = req.body;
+  if (!req.body.name) {
+    return res.status(400).json({ message: `ERROR: You must provide a name to submit a project.` });
+  }
   db.insert(project)
     .into('projects')
-    .then(ids => {
-      res.status(201).json(ids);
+    .then(newProject => {
+      res.status(201).json(newProject);
     })
     .catch(err => {
       res.status(500).json(err);
     });
 });
 
-server.listen({ port }, () => console.log(`## ${name} running on port ${port} ##`));
+server.post("/api/actions", (req, res) => {
+  const action = req.body;
+  if (!req.body.description) {
+    return res.status(400).json({ message: `ERROR: You must provide a name to submit an action.` });
+  }
+  if (!req.body.project_id) {
+    return res.status(400).json({ message: `ERROR: You must provide a project_id to submit an action.` });
+  }
+  db.insert(action)
+    .into("actions")
+    .then(newAction => {
+      res.status(201).json(newAction);
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+server.listen({ port }, () => console.log(`## ${serverName} running on port ${port} ##`));
