@@ -6,6 +6,11 @@ const db = knex(knexConfig.development)
 const router = express.Router()
 
 router.route('/projects')
+  .get((req, res) => {
+    db('projects')
+      .then(projects => res.status(201).json(projects))
+      .catch(err => res.status(500).json({ error: 'The projects could not be retrieved.' }))
+  })
   .post((req, res) => {
     const project = req.body
     db.insert(project)
@@ -15,6 +20,11 @@ router.route('/projects')
   })
 
 router.route('/actions')
+  .get((req, res) => {
+    db('actions')
+      .then(actions => res.status(201).json(actions))
+      .catch(err => res.status(500).json({ error: 'The actions could not be retrieved.' }))
+  })
   .post((req, res) => {
     const action = req.body
     db.insert(action)
