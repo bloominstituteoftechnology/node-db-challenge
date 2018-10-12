@@ -9,17 +9,6 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
-//joining
-function joinProjects(id) {
-    return db('projects')
-	.select({
-	    pname: 'projects.name',
-	    aname: 'actions.name'
-	})
-	.join('actions', 'actions.project_id', 'project_id')
-	.where('project_id', id);
-}
-
 // endpoints here
 
 //GET
