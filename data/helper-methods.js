@@ -46,14 +46,15 @@ const getActionsOfProject = (projectId) =>{
     return db('action')
         .join('project', 'action.project_id', '=', 'project.id')
         .where('project.id', projectId)
-        .select ( 
-            {   
-                id: 'project.id',
-                name: 'project.name',
-                description: 'project.description',
-                completed: 'project.completed',
-                actions: 'action.description'
-            });
+        .select ( 'action'
+            // {   
+            //     id: 'project.id',
+            //     name: 'project.name',
+            //     description: 'project.description',
+            //     completed: 'project.completed',
+            //     //actions: 'action.description'
+            // }
+            );
 
         //projectObject,
         // actions: actionsObject};
