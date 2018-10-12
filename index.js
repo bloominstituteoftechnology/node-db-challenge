@@ -38,8 +38,8 @@ server.get('/project/:id', (req, res) => {
             console.log(projectActions);
             res.status(200).json(projectActions);
         })
-        .catch(() => {
-            console.log();
+        .catch(foo => {
+            console.log(foo);
             res.status(500).json({error: 'Error getting project and actions'});
         })
 });

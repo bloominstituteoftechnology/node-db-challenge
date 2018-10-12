@@ -9,7 +9,7 @@ module.exports = {
     getProjectActions: function(projectId) {
         return db('actions as a')
             .join('projects as p', 'p.id', 'a.project_id')
-            .select('a.id', 'a.description', 'p.name')
+            .select('p.name as Project', 'a.id as Action ID', 'a.description as Action Description')
             .where('a.project_id', projectId);
     }
 }
