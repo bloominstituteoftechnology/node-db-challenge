@@ -28,14 +28,30 @@ router.route('/:id')
         if(!project || project < 1) {
           return errHelper(404, 'No records found.', res);
         } else {
-          res.status(200).json(project)
+          actions.get()
+          .where('project_id', id)
+          .then(actions => res.status(200).json({...project, actions:actions}))
         }
-        actions.where('project_id', id)
-        .then(actions => 
-          res.status(200).json(actions))
       })
       .catch(err => errHelper(500, 'Error adding projects.', res))
   })
 
 
 module.exports = router;
+
+// router.route('/:id')
+//   .get((req, res) => {
+//     const { id } = req.params;
+//     projects.get()
+//       .then(project => {
+//         if(!project || project < 1) {
+//           return errHelper(404, 'No records found.', res);
+//         } else {
+//           res.status(200).json(project)
+//         }
+//         actions.get()
+//         .where({project_id: id })
+//         .then(actions => res.status(200).json({...project, actions:actions}))
+//       })
+//       .catch(err => errHelper(500, 'Error getting project.', res))
+//   })
