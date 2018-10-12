@@ -3,7 +3,12 @@ const express = require('express');
 const logger = require('morgan');
 const helmet = require('helmet');
 
-const projects = require('./helpers/modal.js');
+const convertToBoolean = (...data) => {
+  return function(object) {
+    return data.reduce((container, item) => ({...container, [item]: !!container[item] }), object);
+    };
+}; // convert to a boolean by currying using reduce
+
 const knex = require('knex');
 
 const knexConfig = require('./knexfile.js');
@@ -37,19 +42,24 @@ server.get('/api/projects', (req, res) => {
 
 // Add GET ROUTE HANDLER to get a project by id
 
-server.get('/api/projects/actions/:id', (req, res) => {
-  const { id } = req.params;
-  projects
-    .getProjectActions(id)
-    .then(projActions => {
-      if (projActions === 0) {
-        return res.status(400).send({error: "No actions in that project"})
-      }
-      res.json(projActions);
+server.get('/api/projects/:id', (req, res) => {
+  const project = db('projects')
+    .where('id', req.params.id)
+    .first();
+  
+  const actions = db('actions').where('project_id', req.params.id);
+
+  Promise.all([project, actions])
+    .then(([project, actions]) => {
+      if (!project) 
+        return res.status(404).json({ message: "Project was not found"});
+      let result = convertToBoolean('completed')(project);
+      result.actions = actions.map(action => convertToBoolean('completed')(action), 'project_id');
+      
+      res.status(200).json(result);
     })
     .catch(err => res.status(500).json(err));
-});
-
+  });
 
 //Add POST ROUTE HANDLER to add a project
 server.post('/api/projects', (req, res) => {
