@@ -5,9 +5,9 @@ exports.seed = function(knex, Promise) {
         .then(function () {
             // Inserts seed entries
             return knex('action').insert([
-                {project_id: 1, description: 'Relational data base management system', completed: false},
-                {project_id: 2, description: 'A discord Bot', completed: true},
-                {project_id: 3, description: 'A slack bot', completed: false}
+                {project_id: 1, description: 'Relational data base management system', notes: 'Notes', completed: false},
+                {project_id: 2, description: 'A discord Bot', notes: 'Notes', completed: true},
+                {project_id: 3, description: 'A slack bot', notes: 'Notes', completed: false}
             ]);
         });
 };
