@@ -20,16 +20,32 @@ function findById(id) {
     //         .from('actions')
     //         .where('project_id', id);
     // }
+    id = id;
+    const project = (id) => {
+        return db('projects')
+            .select('*')
+            .where('id', id)
+    }
+    project();
+
+    const projectActions = (id) => {
+        return db('actions')
+            .select('*')
+            .where('project_id', id)
+    }
+    projectActions();
+
+    return project;
 
     // return db
     //     .select('*')
     //     .from('projects', 'actions')
-        // .where('project.id', '=', 'actions.project_id')
+    //     .where('project.id', '=', 'actions.project_id')
 
-        return db('projects')
-        .select('*')
-        .join('actions', 'actions.project_id', 'projects.id')
-        .where('projects.id', id);
+        // return db('projects')
+        // .select('*')
+        // .join('actions', 'actions.project_id', 'projects.id')
+        // .where('projects.id', id);
 
 }
 
