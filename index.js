@@ -52,6 +52,8 @@ server.get('/api/projects/:project_id/actions', (req, res)=> {
         .then(projectActions=> {
            if (projectActions === 0) {
                res.status(404).json({message: "The information you requested does not exist"});
+           } else if (!project_id) {
+               res.status(400).json({message: "BAD REQEST: please provide the appropriate information"});
            }
            res.status(200).json(projectActions);
         })
