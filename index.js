@@ -130,7 +130,114 @@ server.put("/api/projects/:id", (req, res) => {
         );
   });
 
+//========== ACTION ENDPOINTS ==========//
+// GET ACTIONS
+server.get("/api/actions", (req, res) => {
+    db("actions")
+      .then(actions => {
+        res.status(200).json(actions);
+      })
+      .catch(err =>
+        res
+          .status(500)
+          .json({ error: "Uh oh! The actions could not be retrieved." })
+      );
+  });
 
+// POST
+server.post("/api/actions", verifyProject, (req, res) => {
+    const action = req.body;
+    if (!action.comments || !action.notes) {
+      res
+        .status(400)
+        .json({
+          error: "Please provide a comments and comments for this action."
+        });
+    } else
+      db.insert(action)
+        .into("actions")
+        .then(ids => {
+          res.status(201).json(ids);
+        })
+        .catch(err =>
+          res
+            .status(500)
+            .json({ error: "Uh oh! There was an error saving the action." })
+        );
+  });
+
+  // GET ID
+  server.get("/api/actions/:id", (req, res) => {
+    const { id } = req.params;
+    db("actions")
+      .where({ id: id })
+      .then(action => {
+        if (action.length === 0) {
+          res
+            .status(404)
+            .json({ message: "Uh oh! There is no action with this ID!" });
+        } else res.status(200).json(action);
+      })
+      .catch(err => res.status(500).json(err));
+  });
+
+  // DELETE
+  server.delete("/api/actions/:id", (req, res) => {
+    const { id } = req.params;
+    db("actions")
+      .where({ id: id })
+      .del()
+      .then(count => {
+        if (count) {
+          res
+            .status(200)
+            .json({ message: "The action was successfully deleted." });
+        } else {
+          res
+            .status(404)
+            .json({
+              message: "Uh oh! The action with the specified ID does not exist."
+            });
+        }
+      })
+      .catch(err =>
+        res.status(500).json({ error: "Uh oh! The action could not be deleted." })
+      );
+  });
+
+  // PUT
+  server.put("/api/actions/:id", verifyProject, (req, res) => {
+    const { id } = req.params;
+    const action = req.body;
+    if (!action.comments || !action.notes) {
+      res
+        .status(400)
+        .json({
+          error: "Please provide comments and a comments for this action."
+        });
+    } else
+      db("actions")
+        .where({ id: id })
+        .update(action)
+        .then(count => {
+          if (count) {
+            res
+              .status(200)
+              .json({ message: "The action was successfully updated." });
+          } else {
+            res
+              .status(404)
+              .json({
+                message: "Uh oh! The action with the specified ID does not exist."
+              });
+          }
+        })
+        .catch(err =>
+          res
+            .status(500)
+            .json({ error: "Uh oh! The action could not be updated!" })
+        );
+  });
 
 
 server.listen(port, function() {
