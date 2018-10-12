@@ -46,7 +46,10 @@ server.get("/api/projects/:id", (req, res) => {
       db("actions")
         .where({ project_id: id })
         .then(actions => {
-          res.status(200).json({ project, actions });
+          project = project[0];
+          project.actions = actions;
+          // res.status(200).json({ project, actions });
+          res.status(200).json(project);
         })
         .catch(err => {
           res.status(500).json({ error: "Data could not be retrieved" });
