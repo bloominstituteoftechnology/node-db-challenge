@@ -7,6 +7,11 @@ module.exports = {
 			.insert(project)
 			.then(id => ({ id: id }));
 	},
+	getAllProjects: function() {
+		let query = db('projects')
+		return query
+			.select();
+	},
 	getProject: function(id) {
 		let projectQuery = db('projects as p')
 		projectQuery
