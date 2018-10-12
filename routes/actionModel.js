@@ -12,21 +12,20 @@ module.exports = {
 };
 
 function get() {
-    return db('project');
+    return db('action');
 }
-
 function getById(id) {
-    return db.select('*').from('project').where('project.id', id).first();
+    return db.select('*').from('action').where('project_id', id)
 }
 
-function add(proj) {
-    return db('project').insert(proj).into('project');
+function add(act) {
+    return db('action').insert(act).into('action');
 }
 
 function update(id, changes) {
-    return db('project').where({ id }).update(changes);
+    return db('action').where({ id }).update(changes);
 }
 
 function remove(id) {
-    return db('project').where({ id }).del();
+    return db('action').where({ id }).del();
 }
