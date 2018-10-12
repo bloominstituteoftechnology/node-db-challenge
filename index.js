@@ -182,11 +182,9 @@ server
 
     // consolidated if
     if (!name && !description && !project_id && complete === undefined) {
-      return res
-        .status(400)
-        .json({
-          message: "at least one field should be provided for an update"
-        });
+      return res.status(400).json({
+        message: "at least one field should be provided for an update"
+      });
     }
     // using lodash here
     if (!_.isUndefined(complete)) complete *= 1;
@@ -202,13 +200,28 @@ server
         if (!data)
           return res.status(404).json({ message: "the action was not found" });
 
-        res
-          .status(200)
-          .json({
-            message: "the action was updated successfully",
-            count: data
-          });
+        res.status(200).json({
+          message: "the action was updated successfully",
+          count: data
+        });
       })
+      .catch(next);
+  })
+  .delete(function(req, res, next) {
+    db("actions")
+      .delete()
+      .where("id", req.params.id)
+      .then(
+        data =>
+          data
+            ? res
+                .status(200)
+                .json({
+                  message: "the action was deleted successfully",
+                  count: data
+                })
+            : res.status(404).json({ message: "the action cannot be found" })
+      )
       .catch(next);
   });
 
