@@ -31,10 +31,8 @@ router.route('/:id')
           res.status(200).json(project)
         }
         actions.where('project_id', id)
-        .then(actions => {
-          projects[0].actions = actions;
-          res.status(200).json(actions)
-        }
+        .then(actions => 
+          res.status(200).json(actions))
       })
       .catch(err => errHelper(500, 'Error adding projects.', res))
   })
