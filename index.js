@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-
+const projectDb = require('./routes/projectModel.js');
 const projectRoutes = require('./routes/projectRoutes.js');
 
 const server = express();
@@ -14,6 +14,18 @@ server.get('/', (req, res) => {
 });
 
 server.use('/api/projects', projectRoutes);
+
+server.post('/api/actions', (req, res) => {
+    // grab data from body
+    const newAction = req.body;
+
+    //save to database
+    projectDb.addAction(newAction).then(ids => {
+        res.status(201).json(ids);
+    }).catch( err => {
+        res.status(500).json(err.message);
+    });
+});
 
 function runServer() {
     console.log('\x1b[34m', `\n[server] started server`);
