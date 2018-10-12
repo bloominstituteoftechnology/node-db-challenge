@@ -2,12 +2,14 @@
 
 module.exports = {
 
-  lambdaProject: {
+  development: {
     client: 'sqlite3',
     connection: {
       filename: './data/projects.db3'
     }, 
+    migrations: {
+      directory: './data/migrations'
+    },
     useNullAsDefault: true
   }
-
 };
