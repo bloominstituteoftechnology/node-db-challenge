@@ -3,12 +3,13 @@ exports.up = function(knex, Promise) {
 		tbl.increments();
 		tbl
 			.integer('project_id')
+			.unsigned()
 			.notNullable()
 			.references('id')
 			.inTable('projects');
 		tbl.string('description').notNullable();
 		tbl.string('notes');
-		tbl.boolean('completed');
+		tbl.boolean('completed').defaultTo(false);
 	});
 };
 

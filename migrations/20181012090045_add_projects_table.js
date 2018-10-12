@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
 		tbl.increments();
 		tbl.string('name').notNullable();
 		tbl.string('description');
-		tbl.boolean('completed');
+		tbl.boolean('completed').defaultTo(false);
 	});
 };
 
