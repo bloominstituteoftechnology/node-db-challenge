@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
       .notNullable()
 
     tbl // set key to string
-      .string("description", 256)
+      .string("notes", 256)
 
     tbl // set key to boolean which cannot be null 
       .boolean("completed")
