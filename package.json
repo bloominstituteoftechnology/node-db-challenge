@@ -4,6 +4,9 @@
   "main": "index.js",
   "repository": "https://github.com/ckirkwood94/Sprint-Challenge-RDBMS.git",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "helmet": "^3.14.0",
