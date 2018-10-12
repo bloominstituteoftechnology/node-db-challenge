@@ -140,41 +140,77 @@ server
       .catch(next);
   });
 
-server.route("/api/actions/:id").get(function(req, res, next) {
-  const contexts = db("actions as a")
-    .select("ctx.id as id", "context")
-    .join("action_contexts as ac", "ac.action_id", "a.id")
-    .join("contexts as ctx", "ac.context_id", "ctx.id")
-    .where("a.id", req.params.id);
+server
+  .route("/api/actions/:id")
+  .get(function(req, res, next) {
+    const contexts = db("actions as a")
+      .select("ctx.id as id", "context")
+      .join("action_contexts as ac", "ac.action_id", "a.id")
+      .join("contexts as ctx", "ac.context_id", "ctx.id")
+      .where("a.id", req.params.id);
 
-  const action = db("actions as a")
-    .select({
-      id: "a.id",
-      description: "a.description",
-      notes: "a.notes",
-      complete: "a.complete",
-      project_name: "p.name",
-      project_description: "p.description",
-      project_complete: "p.complete"
-    })
-    .where("a.id", req.params.id)
-    .join("projects as p", "a.project_id", "p.id")
-    .first();
+    const action = db("actions as a")
+      .select({
+        id: "a.id",
+        description: "a.description",
+        notes: "a.notes",
+        complete: "a.complete",
+        project_name: "p.name",
+        project_description: "p.description",
+        project_complete: "p.complete"
+      })
+      .where("a.id", req.params.id)
+      .join("projects as p", "a.project_id", "p.id")
+      .first();
 
-  Promise.all([action, contexts])
-    .then(([action, contexts]) => {
-      if (!action)
-        return res.status(404).json({ message: "the action was not found " });
+    Promise.all([action, contexts])
+      .then(([action, contexts]) => {
+        if (!action)
+          return res.status(404).json({ message: "the action was not found " });
 
-      const result = {
-        ...booleanMap("complete", "project_complete")(action),
-        contexts
-      };
+        const result = {
+          ...booleanMap("complete", "project_complete")(action),
+          contexts
+        };
 
-      return res.status(200).json(result);
-    })
-    .catch(next);
-});
+        return res.status(200).json(result);
+      })
+      .catch(next);
+  })
+  .put(function(req, res, next) {
+    let { name, description, complete, project_id } = req.body;
+
+    // consolidated if
+    if (!name && !description && !project_id && complete === undefined) {
+      return res
+        .status(400)
+        .json({
+          message: "at least one field should be provided for an update"
+        });
+    }
+    // using lodash here
+    if (!_.isUndefined(complete)) complete *= 1;
+
+    let updateObj = { name, description, complete, project_id };
+
+    updateObj = _.omitBy(updateObj, _.isUndefined);
+
+    db("actions")
+      .update(updateObj)
+      .where("id", req.params.id)
+      .then(data => {
+        if (!data)
+          return res.status(404).json({ message: "the action was not found" });
+
+        res
+          .status(200)
+          .json({
+            message: "the action was updated successfully",
+            count: data
+          });
+      })
+      .catch(next);
+  });
 
 server.listen(8800, () => {
   console.log(`\n === API listening on port 8800 ===\n`);
