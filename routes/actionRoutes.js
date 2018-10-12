@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
 		.addAction(newAction)
 		.then(id => {
 			if (id === 'noProjectId') {
-				return res.status(401).json({ error: `Project with ID ${ newAction.project_id } does not exist. You cannot create an action for a project that does not exist.`});
+				return res.status(404).json({ error: `Project with ID ${ newAction.project_id } does not exist. You cannot create an action for a project that does not exist.`});
 			}
 			return res.status(201).json(id.id[0]);
 		})
@@ -60,15 +60,36 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
 	const { id } = req.params;
 	const updatedAction = req.body;
+	for (key in updatedAction) {
+		if (updatedAction[key] === '') {
+			res.status(401).json({ error: `${ key } cannot be empty.` });
+		}
+	}
 	actionDb
 		.updateAction(id, updatedAction)
 		.then(updateBool => {
-			if (updateBool) {
+			if (updateBool === 'noProjectId') {
+				return res.status(404).json({ message: `Project with ID ${ updatedAction.project_id } does not exist. You cannot update an action to a project that does not exist.` });
+			} else if (updateBool) {
 				return res.status(200).json({ message: `Action with ID ${ id } updated successfully.` });
 			}
 			return res.status(404).json({ error: `Action with ID ${ id } does not exist.` });
 		})
 		.catch(err => res.status(500).json({ error: `Server failed to PUT updated action: ${ err }` }));
+});
+
+// delete an action
+router.delete('/:id', (req, res) => {
+	const { id } = req.params;
+	actionDb
+		.deleteAction(id)
+		.then(delBool => {
+			if (delBool) {
+				return res.status(200).json({ message: `Action with ID ${ id } deleted successfully.` });
+			}
+			return res.status(404).json({ error: `Action with ID ${ id } does not exist.` });
+		})
+		.catch(err => res.status(500).json({ error: `Server failed to DELETE action: ${ err }` }));
 });
 
 module.exports = router;
