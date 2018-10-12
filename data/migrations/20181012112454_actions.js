@@ -1,9 +1,10 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('actions', function(tbl) {
         tbl.increments();
-        tbl.string('name').notNullable().unique('action_name')
+        tbl.integer('project_id').notNullable().unsigned().references('id').inTable('projects')
+        tbl.string('notes').notNullable()
         tbl.string('description').notNullable()
-        tbl.boolean('completed').notNullable()
+        tbl.boolean('completed').defaultTo(false)
     })
 };
 

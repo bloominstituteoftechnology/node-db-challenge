@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
         tbl.increments();
         tbl.string('name').notNullable().unique('project_name')
         tbl.string('description').notNullable()
-        tbl.boolean('completed').notNullable()
+        tbl.boolean('completed').defaultTo(false)
     })
 };
 
