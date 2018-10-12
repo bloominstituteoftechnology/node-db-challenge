@@ -3,16 +3,15 @@ exports.up = function(knex, Promise) {
     tbl.increments();
 
     tbl.string("description", 100).notNullable();
-
     tbl.string("notes", 400);
-
     tbl.boolean("completed").defaultTo(false);
-
     tbl
       .integer('project_id')
       .unsigned()
       .references('id')
       .inTable('projects')
+    
+    tbl.unique('description');
   });
 };
 

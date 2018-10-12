@@ -9,6 +9,7 @@ router.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
 
   db.getProject(id)
+    // .then(response => console.log(response))
   	.then(response => {
       res.status(200).json(response)
     })

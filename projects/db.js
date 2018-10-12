@@ -24,11 +24,34 @@ function getProject(id) {
     project.actions = actions;
 
     return project;
-  })
-
-
-      
+  })      
 }
+
+// function getProject(id) {
+//   return db('projects')
+//     .where({id}).first()
+//     .then(project => {
+//       if(project) {
+//         db('actions')
+//           .where({ project_id: id })
+//             .then(actions => {
+//               console.log(actions)
+//               actions = actionClean(actions);
+              
+//             })
+//             .then(actions => {
+//               project.actions = actions;
+//               return project
+//             })
+//       } else {
+//         return;
+//       }     
+//     })
+//     console.log(result)
+//   return result;
+// }
+
+
 
 function getProjectActions(projectId) {
   return db('actions')
@@ -54,10 +77,9 @@ function toBoolean(int) {
 
 function actionClean(actions) {
   actions = actions.map(action => {
+    const { project_id, ...test } = action;
     return {
-      id: action.id,
-      description: action.description,
-      notes: action.notes,
+      ...test,
       completed: toBoolean(action.completed)
     }
   })
