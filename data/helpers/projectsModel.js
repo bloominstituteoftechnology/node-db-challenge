@@ -14,18 +14,9 @@ module.exports = {
       .into("projects");
   },
 
-  getProject(id) {
-    return db("projects")
-      .select({
-        id: "projects.id",
-        name: "projects.name",
-        description: "projects.description",
-        completed: "projects.completed",
-        actionStyff: "actions.description"
-      })
-      .join("actions", "actions.project_id", "projects.id")
-      .where("projects.id", id);
-  },
+  // getProject(id) {
+  //   return db("projects").where({ id });
+  // },
 
   getActions() {
     return db("actions");
