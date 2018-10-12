@@ -83,34 +83,34 @@ server.post('/api/projects/actions', (req, res) => {
 });
 
 // //DELETE
-// server.delete('/api/cohorts/:id', (req, res) => {
-//     const {id} = req.params;
-//     db('cohorts')
-// 	.where({id})
-// 	.del()
-// 	.then(count => {
-// 	    if (!count || count < 1) {
-// 		res.status(404).json({message: 'No records found to remove'});
-// 	    } else {
-// 		res.status(200).json(count);
-// 	    }
-// 	})
-// 	.catch(err => res.status(500).json(err));
-// });
+server.delete('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    db('projects')
+	.where({id})
+	.del()
+	.then(count => {
+	    if (!count || count < 1) {
+		res.status(404).json({message: 'No records found to remove'});
+	    } else {
+		res.status(200).json(count);
+	    }
+	})
+	.catch(err => res.status(500).json(err));
+});
 
 
-// //PUT
-// server.put('/api/cohorts/:id', (req, res) => {
-//     const {id} = req.params;
-//     const changes = req.body;
-//     db('cohorts')
-// 	.where({id})
-// 	.update(changes)
-// 	.then(count => {
-// 	    res.status(200).json(count);
-// 	})
-// 	.catch(err => res.status(500).json(err));
-// });
+//PUT
+server.put('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+    db('projects')
+	.where({id})
+	.update(changes)
+	.then(count => {
+	    res.status(200).json(count);
+	})
+	.catch(err => res.status(500).json(err));
+});
 
 const port = 3300;
 server.listen(port, function() {
