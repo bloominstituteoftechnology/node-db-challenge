@@ -16,6 +16,8 @@ function findById() {
   return db('Actions')
 }
 
-function insert() {
+function insert(action) {
   return db('Actions')
+    .insert(action)
+
 }

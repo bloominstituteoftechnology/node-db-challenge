@@ -7,6 +7,10 @@ const server = express();
 
 server.use(express.json());
 
+server.get('/', (req, res) => {
+  res.send("It's working!")
+})
+
 server.use('/api/projects', projectRoutes)
 server.use('/api/actions', actionRoutes)
 
