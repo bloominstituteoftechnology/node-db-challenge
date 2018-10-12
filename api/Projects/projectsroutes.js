@@ -30,7 +30,7 @@ router.get('/:id/withactions', (req, res, next) => {
             }
         })
         .catch((err) => {
-            next(["500", err]);
+            next(["h500", err]);
         });
 });
 
