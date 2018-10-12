@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
             res.status(200).json(response);
         })
         .catch(err => {
-            res.status(500).json(err.message)
+            res.status(500).json(err.message);
         })
 });
 
