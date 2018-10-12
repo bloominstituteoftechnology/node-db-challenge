@@ -9,7 +9,7 @@ server.use(helmet());
 
 //Testing Server
 server.get('/', (req, res) => {
-    res.send('Am I Alive?????');
+    res.send('Am I Alive?????'); //YES!
 });
 
 server.listen(port, () => {
