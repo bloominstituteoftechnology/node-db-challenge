@@ -12,20 +12,22 @@ server.use(helmet());
 server.get("/api/projects/:id", (req, res) => {
   const { id } = req.params;
   db("projects")
-    .where(id)
+    .where({ id })
+    .first()
     .then(project => {
-      if (project.length === 0) {
-        res.status(400).json({ error: "there is no project by that id." });
+      if (project) {
+        db("actions")
+          .where({ project_id: id })
+          .then(actions => {
+            project.actions = actions;
+            res.status(200).json(project);
+          })
+          .catch(err => {
+            res.status(500).json(err);
+          });
+      } else {
+        res.status(404).json({ error: "no project found" });
       }
-      db("actions")
-        .where(id)
-        .then(actions => {
-          project.actions = actions;
-          res.status(200).json(project);
-        })
-        .catch(err => {
-          res.status(500).json(err);
-        });
     })
     .catch(err => {
       res.status(500).json(err);
