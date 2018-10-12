@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     actions
-    .getaction()
+    .getAction()
     .then(actions => {
         res.status(200).json(actions);
     })
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const action = req.body;
-
+    console.log(action);
     actions
         .addAction(action)
         .then(ids => {
