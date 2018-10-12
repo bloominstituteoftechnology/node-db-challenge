@@ -28,17 +28,17 @@ server.get("/api/projects/:id", (req, res) => {
           .catch(err =>
             res
               .status(500)
-              .json({ error: "There was an error retrieving the project" })
+              .json({ error: "Error loading project" })
           );
       } else
         res
           .status(500)
-          .json({ error: "There was an error retrieving the project" });
+          .json({ error: "Error loading project" });
     })
     .catch(err =>
       res
         .status(500)
-        .json({ error: "There was an error retrieving the project" })
+        .json({ error: "Error loading project" })
     );
 });
 /////////
