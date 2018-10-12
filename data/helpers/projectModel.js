@@ -14,13 +14,31 @@ function find() {
 }
 
 function findById(id) {
+  console.log('ID:', id);
   return db('Projects')
-    // .where({ Projects.id: Number(id) })
-    .join('Actions', 'Projects.id', 'Actions.project_id')
-    .groupBy('Actions.id')
+    .where({ 'Projects.id': Number(id) })
+    .innerJoin('Actions', 'Projects.id', 'Actions.project_id')
+    .select({
+      projectId: 'Projects.id',
+      projectName: 'Projects.name',
+      projectDescription: 'Projects.description',
+      projectCompleted: 'Projects.completed',
+      actionId: 'Actions.id',
+      actionDescription: 'Actions.description',
+      actionNotes: 'Actions.notes',
+      actionCompleted: 'Actions.completed',
+      // actionNotes: 'Actions.notes'
+    })
+// .groupBy('Actions.id')
 }
 
 function insert(project) {
   return db('Projects')
     .insert(project)
 }
+
+// SELECT Customers.CustomerName, Orders.OrderID as TotalOrders
+// FROM Orders
+// INNER JOIN Customers
+// ON Orders.CustomerID = Customers.CustomerID
+// ORDER BY CustomerName DESC

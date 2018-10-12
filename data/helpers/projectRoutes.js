@@ -15,11 +15,32 @@ router.get('/', (req,res) => {
     })
 })
 
+// projects.find()
+//   .then(project => {
+//     console.log('HERE INSIDE!:', project)
+//   })
+//   .catch()
 router.get('/:id', (req,res) => {
   const { id } = req.params
   projects.findById(id)
     .then(project => {
-      res.status(201).json(project)
+      // console.log('Project:', project);
+      res.status(201).json({
+        id: project[0].projectId,
+        name: project[0].projectName,
+        description: project[0].projectDescription,
+        completed: project[0].projectCompleted ? true : false,
+         actions: project.map(item => 'item.actionDescription')
+         // project.map(action => {
+         //   // {
+         //   action
+             // id: action.actionId,
+           // description: action.actionDescription,
+           // notes: action.actionNotes,
+           // completed: action.actionCompleted,}
+
+         // })
+       })
     })
     .catch(err => {
       console.error(err)
