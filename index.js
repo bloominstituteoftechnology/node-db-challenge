@@ -1,8 +1,8 @@
 const express = require('express');
 const helmet = require('helmet');
 const knex = require('knex');
-// const actionRoutes  = require('./actions/actionRoutes')
-// const projectRoutes = require('./projects/projectRoutes')
+const actionRoutes  = require('./actions/actionRoutes')
+const projectRoutes = require('./projects/projectRoutes')
 
 
 const knexConfig = require('./knexfile');
@@ -14,8 +14,8 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
-// server.use('/actions' , actionRoutes);
-// server.use('/projects', projectRoutes);
+server.use('/actions' , actionRoutes);
+server.use('/projects', projectRoutes);
 
 server.get('/', (req,res) => {
   res.send('This thing working???')
