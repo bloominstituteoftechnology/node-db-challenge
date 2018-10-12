@@ -30,9 +30,9 @@ server.get('/api/projects/:id', (request, response) => {
         .where({ id })
         .then(project => {
             projectDb('actions')
-                .where({ id: id })
+                .where({ project_id: id })
                 .then(action => {
-                    console.log({ id });
+                    console.log(action);
                     return response
                         .status(200)
                         .json({ ...project, actions: action });
