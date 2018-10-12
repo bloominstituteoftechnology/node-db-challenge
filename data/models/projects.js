@@ -3,17 +3,10 @@ const knexConfig = require('../knexfile.js');
 const db = knex(knexConfig.development);
 
 const db = knex(knexConfig.development);
- module.exports = {
-    addAction,   
+ module.exports = {   
     addProject,
     getProjectActions
 };
-
-function addAction(action) {
-    return db('actions')
-    .insert(action)
-    .into('actions');
-}
 function addProject(project) {
     return db('projects')
     .insert(project)

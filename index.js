@@ -4,7 +4,7 @@ const knex = require("knex");
 const knexConfig = require("./knexfile");
 
 const server = express();
-const db = require("./data/dataModel.js");
+const db = knex(knexConfig.development);
 
 server.use(express.json());
 server.use(helmet());
