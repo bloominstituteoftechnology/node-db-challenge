@@ -3,7 +3,7 @@ exports.up = knex => {
     table.increments();
     table.string('name', 128).notNullable();
     table.string('description').notNullable();
-    table.Boolean('complete?').defaultTo(false);
+    table.Boolean('complete').defaultTo(false);
   });
 };
 

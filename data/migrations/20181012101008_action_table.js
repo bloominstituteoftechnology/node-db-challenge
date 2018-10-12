@@ -9,7 +9,7 @@ exports.up = knex => {
       .inTable('projects');
     table.string('description', 128).notNullable();
     table.string('comments').notNullable();
-    table.boolean('complete?').defaultTo(false);
+    table.boolean('complete').defaultTo(false);
   });
 };
 
