@@ -20,12 +20,6 @@ server.get('/', (request, response) => {
 server.get('/api/projects/:id', (request, response) => {
     const id = request.params.id;
 
-    if (!{ id }) {
-        return response
-            .status(404)
-            .json({ Error: "Could not find project." })
-    }
-
     projectDb('projects')
         .where({ id })
         .then(project => {
@@ -85,6 +79,23 @@ server.get('/api/actions', (request, response) => {
         });
 });
 
+server.get('/api/actions/:id', (request, response) => {
+    const id = request.params.id;
+
+    projectDb('actions')
+        .where({ id })
+        .then(action => {
+            return response
+                .status(200)
+                .json(action);
+        })
+        .catch(() => {
+            return response
+                .status(500)
+                .json({ Error: "Action info could not be retrieved." })
+        });
+});
+
 server.post('/api/actions', (request, response) => {
     const newAction = request.body;
 
@@ -108,26 +119,3 @@ server.post('/api/actions', (request, response) => {
                 .json({ Error: "There was an error while saving the action" })
         });
 });
-
-// server.get('/api/actions/:id', (request, response) => {
-//     const id = request.params.id;
-
-//     if (!{ id }) {
-//         return response
-//             .status(404)
-//             .json({ Error: "Could not find action." })
-//     }
-
-//     projectDb('actions')
-//         .where({ id })
-//         .then(action => {
-//             return response
-//                 .status(200)
-//                 .json(action);
-//         })
-//         .catch(() => {
-//             return response
-//                 .status(500)
-//                 .json({ Error: "Action info could not be retrieved." })
-//         });
-// });
