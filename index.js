@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 const projectDb = require('./data/helpers/projectDb');
-// const actionRoutes = require('./data/helpers/actionRoutes');
+const actionDb = require('./data/helpers/actionDb');
 
 const server = express();
 const port = 8500;
@@ -20,6 +20,15 @@ server.post('/projects', (req, res) => {
             res.status(201).json(projectId);
         })
         .catch(() => res.status(500).json({error: 'Error adding project'}));
+})
+
+server.post('/actions', (req, res) => {
+    const action = req.body;
+    actionDb.insert(action)
+        .then(actionId => {
+            res.status(201).json(actionId);
+        })
+        .catch(() => res.status(500).json({error: 'Error adding action'}));
 })
 
 server.listen(port, () => console.log(`\nAPI running on http://localhost:${port}\n`));
