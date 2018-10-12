@@ -83,7 +83,6 @@ server.post('/api/projects', (req, res) => {
     })
 })
 
-
 // edit project
 server.put('/api/projects/:id', (req, res) => {
     const {id} = req.params;
@@ -106,9 +105,37 @@ server.put('/api/projects/:id', (req, res) => {
     })
 })
 
-/*** TODO ***/
 // delete project and all of its associated Actions
-/*** ^ TODO ^ ***/
+server.delete('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const project_id = {
+        project_id: req.params.id
+    }
+
+    db('projects').where({id}).del()
+    .then(reply => {
+        if(!reply || reply.length < 1){
+            res.status(404).json({error: `Project ${id} not found.`})
+        }
+
+        db('actions').where(project_id).del()
+        .then(reply => {
+            if(!reply || reply.length < 1){
+                res.status(404).json({error: `Not found.`})
+            }
+            res.status(200).json({message: `Deleted project ${project_id.project_id} and all of its actions.`})
+        })
+        .catch(err => {
+            res.status(500).json({err})
+        })
+    })
+
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({err})
+    })
+
+})
 
 
 /**********************************************************************/
