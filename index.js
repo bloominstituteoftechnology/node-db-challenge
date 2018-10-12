@@ -60,6 +60,20 @@ server.get("/api/projects/:id", (req, res) => {
     );
 });
 
+server.post("/api/projects/:id/actions", (req, res) => {
+  const id = req.params.id;
+  let newAction = req.body;
+  newAction.project_id = id;
+  console.log(newAction);
+  db.insertAction(newAction)
+    .then(id => {
+      if (id) {
+        res.status(201).json({ message: "New action was added" });
+      }
+    })
+    .catch(err => console.log(err));
+});
+
 //Listen on port
 server.listen(9000, () => {
   console.log("API IS running");
