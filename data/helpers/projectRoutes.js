@@ -30,7 +30,12 @@ router.get('/:id', (req,res) => {
         name: project[0].projectName,
         description: project[0].projectDescription,
         completed: project[0].projectCompleted ? true : false,
-         actions: project.map(item => 'item.actionDescription')
+         actions: project.map(action => ({
+           'id': action.actionId,
+           'description': action.actionDescription,
+           'notes': action.actionNotes,
+           'completed': action.actionCompleted ? true : false,
+         }))
          // project.map(action => {
          //   // {
          //   action
