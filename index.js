@@ -114,3 +114,64 @@ server.get('/api/actions/:id', (req, res) => {
             res.status(500).json({ error: 'The action information could not be retrieved.' })
         })
 });
+server.delete('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+
+    db('projects')
+        .where({ id }) 
+        .del()
+        .then(count => {
+            
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+
+server.put('/api/projects/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+
+    db("projects")
+        .where({ id: id })
+        .update(changes)
+        .then(count => {
+           
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+server.put('/api/actions/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+
+    db("actions")
+      .where({ id: id }) 
+      .update(changes)
+      .then(count => {
+        res.status(200).json(count);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+});
+
+
+server.delete('/api/actions/:id', (req, res) => {
+    const { id } = req.params;
+
+    db('actions')
+        .where({ id }) 
+        .del()
+        .then(count => {
+           
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
