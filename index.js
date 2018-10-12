@@ -76,7 +76,7 @@ server.get('/api/projects/:id', (request, response) => {
 
         // Validation of Projects
         if ( Object.keys(project).length < 1 ) {
-            return response.status(404).json({errorMessage:"We were unable to find any projects "})
+            return response.status(404).json({errorMessage:"We were unable to find any projects with the provided id."})
         }
 
         // Deconstruct Action + Promise Join
@@ -89,7 +89,7 @@ server.get('/api/projects/:id', (request, response) => {
         if (project[0].id !== null) {
         actions = project.map(
              action => {
-                 return { id: action.id, description: action.description, notes: action.notes, complete: action.complete }
+                 return { id: action.id, description: action.description, notes: action.notes, completed: action.complete }
                 });
             }
 
