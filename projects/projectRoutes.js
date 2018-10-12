@@ -33,7 +33,7 @@ router.route('/:id')
           .then(actions => res.status(200).json({...project, actions:actions}))
         }
       })
-      .catch(err => errHelper(500, 'Error adding projects.', res))
+      .catch(err => errHelper(500, 'Error getting project with actions.', res))
   })
 
 
