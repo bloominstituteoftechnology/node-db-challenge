@@ -30,7 +30,7 @@ server.get('/projects', (req, res) => {
       console.log(`\n== CANNOT GET PROJECTS ==\n`, err)
       res
         .status(500)
-        .json({ error: "The projects could not be retrieved." })
+        .json({ error: "Error while retrieving projects." })
     });
 })
 
@@ -59,7 +59,7 @@ server.get('/projects/:id', (req, res) => {
             console.log(`\n== CANNOT GET PROJECT ==\n`, err)
             res
               .status(500)
-              .json({ error: "The project could not be retrieved."})
+              .json({ error: "Error while retrieving project."})
           })
     })
 })
@@ -86,7 +86,7 @@ server.post('/projects', (req, res) => {
       console.log(`\n== CANNOT ADD PROJECT ==\n`, err)
       res
         .status(500)
-        .json(err)
+        .json({error: "Error while saving project." })
     });
 });
 
@@ -107,7 +107,27 @@ server.put('/projects/:id', (req, res) => {
       console.log(`\n== CANNOT UPDATE PROJECT ==\n`, err)
       res
         .status(500)
-        .json(err);
+        .json({error: "Error while updating project." });
+    })
+})
+
+server.delete('/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('projects')
+    .where('id', id)
+    .del()
+    .then(deleted => {
+      console.log(`\n== PROJECT DELETED ==\n`, deleted)
+      res
+        .status(200)
+        .json(deleted);
+    })
+    .catch(err => {
+      console.log(`\n== CANNOT DELETE PROJECT ==\n`, err)
+      res
+        .status(500)
+        .json({ error: "Error while deleting project." })
     })
 })
 
@@ -116,8 +136,8 @@ server.put('/projects/:id', (req, res) => {
 server.get('/actions', (req, res) => {
   db('actions')
     .then(actions => {
-      res
       console.log(`\n== ACTIONS FOUND ==\n`)
+      res
         .status(200)
         .json(actions)
     })
@@ -125,7 +145,7 @@ server.get('/actions', (req, res) => {
       console.log(`\n== CANNOT FIND ACTIONS ==\n`, err)
       res
         .status(500)
-        .json(err)
+        .json({error: "Error while retrieving actions." })
     });
 })
 
@@ -136,21 +156,21 @@ server.get('/actions/:id', (req, res) => {
     .where('id', id)
     .then(action => {
       if (!action.length) {
+        console.log(`\n== ACTION ID NOT FOUND ==\n`)
         res
-        console.log(`\n== ACTION ID NOT FOUND ==\n`, err)
           .status(401)
           .json({ error: "There is no action with the specified ID." })
       }
+      console.log(`\n== ACTION FOUND ==\n`)
         res
-        console.log(`\n== ACTION FOUND ==\n`, err)
           .status(200)
           .json(action)
     })
     .catch(err => {
-      res
       console.log(`\n== CANNOT FIND ACTION ==\n`, err)
+      res
         .status(500)
-        .json({ error: "The action could not be retrieved." })
+        .json({ error: "Error while retrieving action." })
     })
 })
 
@@ -170,9 +190,50 @@ server.post('/actions', (req, res) => {
       console.log(`\n== CANNOT ADD ACTION ==\n`, err)
       res
         .status(500)
-        .json(err)
+        .json({ error: "Error while saving action." })
       })
 });
+
+server.put('/actions/:id', (req, res) => {
+  const action = req.body;
+  const { id } = req.params;
+
+  db('actions')
+    .where('id', id)
+    .update(action)
+    .then(update => {
+      console.log(`\n== ACTION UPDATED ==\n`, update)
+      res
+        .status(200)
+        .json(update);
+    })
+    .catch(err => {
+      console.log(`\n== CANNOT UPDATE ACTION ==\n`, err)
+      res
+        .status(500)
+        .json({ error: "Error while updating action." });
+    })
+})
+
+server.delete('/actions/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('actions')
+    .where('id', id)
+    .del()
+    .then(deleted => {
+      console.log(`\n== ACTION DELETED ==\n`, deleted)
+      res
+        .status(200)
+        .json(deleted);
+    })
+    .catch(err => {
+      console.log(`\n== CANNOT DELETE ACTION ==\n`, err)
+      res
+        .status(500)
+        .json({ error: "Error while deleting action." })
+    })
+})
 
 
 server.listen(port, () => console.log(`\n== API RUNNING ON ${port} ==\n`))
