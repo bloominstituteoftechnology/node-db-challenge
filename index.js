@@ -31,4 +31,17 @@ server.post('/actions', (req, res) => {
         .catch(() => res.status(500).json({error: 'Error adding action'}));
 })
 
+server.get('/project/:id', (req, res) => {
+    const id = req.params.id;
+    projectDb.getProjectActions(id)
+        .then(projectActions => {
+            console.log(projectActions);
+            res.status(200).json(projectActions);
+        })
+        .catch(() => {
+            console.log();
+            res.status(500).json({error: 'Error getting project and actions'});
+        })
+});
+
 server.listen(port, () => console.log(`\nAPI running on http://localhost:${port}\n`));
