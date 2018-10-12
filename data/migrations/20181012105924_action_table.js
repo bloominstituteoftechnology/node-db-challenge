@@ -7,6 +7,8 @@ exports.up = function(knex, Promise) {
 
     table.string('description', 255).notNullable();
 
+    table.string('notes', 255).notNullable();
+
     table
         .integer('project_id')
         .unsigned()

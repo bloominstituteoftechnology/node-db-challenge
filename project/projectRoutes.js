@@ -1,5 +1,5 @@
 const express = require('express');
-const projects = require('./projectsModels.js');
+const projects = require('./projectsModel.js');
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {

@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const projectRoutes = require('./projects/projectRoutes.js');
+const projectRoutes = require('./project/projectRoutes');
 const server = express();
 
 server.use(helmet());
