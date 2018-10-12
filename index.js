@@ -46,27 +46,60 @@ server
       .catch(next);
   });
 
-server.route("/api/projects/:id").get((req, res, next) => {
-  const project = db("projects")
-    .where("id", req.params.id)
-    .first();
-  const actions = db("actions").where("project_id", req.params.id);
+server
+  .route("/api/projects/:id")
+  .get((req, res, next) => {
+    const project = db("projects")
+      .where("id", req.params.id)
+      .first();
+    const actions = db("actions").where("project_id", req.params.id);
 
-  Promise.all([project, actions])
-    .then(([project, actions]) => {
-      if (!project)
-        return res
-          .status(404)
-          .json({ message: "the project has not been found" });
-      let result = boolMapper("complete")(project);
-      result.actions = actions.map(action =>
-        _.omit(boolMapper("complete")(action), "project_id")
-      );
+    Promise.all([project, actions])
+      .then(([project, actions]) => {
+        if (!project)
+          return res
+            .status(404)
+            .json({ message: "the project has not been found" });
+        let result = boolMapper("complete")(project);
+        result.actions = actions.map(action =>
+          _.omit(boolMapper("complete")(action), "project_id")
+        );
 
-      res.status(200).json(result);
-    })
-    .catch(next);
-});
+        res.status(200).json(result);
+      })
+      .catch(next);
+  })
+  .put(function(req, res, next) {
+    // consolidated
+    let { name, description, complete } = req.body;
+
+    if (!name && !description && complete === undefined) {
+      return res
+        .status(400)
+        .json({
+          message: "at least one of the fields must be provided for an update"
+        });
+    }
+    if (!_.isUndefined(complete)) complete *= 1; // flip the completed via multiplication
+
+    let updateObj = { name, description, complete };
+
+    // used lodash here
+    updateObj = _.omitBy(updateObj, _.isUndefined);
+
+    db("projects")
+      .update(updateObj)
+      .where("id", req.params.id)
+      .then(data => {
+        if (!data)
+          return res.status(404).json({ message: "project not found" });
+
+        res
+          .status(200)
+          .json({ message: "Project updated successfully", count: data });
+      })
+      .catch(next);
+  });
 
 server.route("/api/actions").post(function(req, res, next) {
   const { notes, description, project_id } = req.body;
