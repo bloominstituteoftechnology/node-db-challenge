@@ -3,7 +3,8 @@ const knexConfig = require('../knexfile.js');
 const db = knex(knexConfig.development);
  
 module.exports = {
-    addProject
+    addProject,
+    getProjectActions
 };
  
 function addProject(project) {
@@ -11,3 +12,10 @@ function addProject(project) {
     .insert(project)
     .into('projects');
 }
+
+function getProjectActions(id) {
+  return db
+    .where({ project_id: id })
+    .select("id", "description", "notes", "complete")
+    .from("actions");
+};
