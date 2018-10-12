@@ -30,9 +30,14 @@ server.get('/api/projects/:id', (req, res) => {
 	projectModel
 		.getProject(req.params.id)
 		.then(project => {
-			res.status(200).json(project);
+			if (project) {
+				console.log(project);
+				res.status(200).json(project);
+			} else {
+				res.status(404).json({ error: 'No project by that id' });
+			}
 		})
-		.catch(err => res.status(500).json(err));
+		.catch(err => res.status(500).json({ error: err }));
 });
 
 // add project
