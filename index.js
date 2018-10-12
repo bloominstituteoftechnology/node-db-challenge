@@ -27,4 +27,23 @@ server.post('/api/projects', (req, res)=> {
     })
 });
 
+server.post('/api/actions', (req, res)=> {
+    const action = req.body;
+    db.insert(action)
+    .into('actions')
+    .then(ids=> {
+        if (!action) {
+            res.status(400).json({message: "BAD REQUEST: Please include all required information"});
+        } else if (!ids) {
+            res.status(404).json({message: "There is nothing to display"});
+        } else {
+            res.status(201).json(ids); 
+        }
+    })
+    .catch(err=> {
+        res.status(500).json(err);
+    })
+});
+
+
 server.listen(port, ()=> console.log(`API running on port ${port}`));
