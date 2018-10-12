@@ -8,7 +8,7 @@ server.use(helmet());
 
 // ENPOINTS HERE
 
-server.get('/', (req, res => res.json('Server is up and running!')));
+server.get('/', (req, res) => res.json('Server is up and running!'));
 
 // SERVER PORT
 
