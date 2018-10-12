@@ -47,13 +47,13 @@ server.post('/api/actions', (req, res)=> {
 
 server.get('/api/projects/:project_id/actions', (req, res)=> {
     const {project_id} = req.params;
-    db('actions')
+    db.from('projects').innerJoin('actions', 'actions.project_id', 'projects.id')
         .where({project_id})
         .then(projectActions=> {
            if (projectActions === 0) {
                res.status(404).json({message: "The information you requested does not exist"});
            } else if (!project_id) {
-               res.status(400).json({message: "BAD REQEST: please provide the appropriate information"});
+               res.status(400).json({message: "BAD REQUEST: please provide the appropriate information"});
            }
            res.status(200).json(projectActions);
         })
