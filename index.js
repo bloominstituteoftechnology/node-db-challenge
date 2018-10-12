@@ -84,6 +84,33 @@ server.post('/api/projects', (req, res) => {
 })
 
 
+// edit project
+server.put('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+    if(!changes.name){
+        res.status(400).json({error: `Project must have a name.`})
+    }
+
+    db('projects').where({id}).update(changes)
+    .then(reply => {
+        if(!reply || reply.length < 1){
+            res.status(404).json({error: `No project found with that ID ${id}.`})
+        } else {
+            res.status(200).json(reply);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: `Something went wrong.`})
+    })
+})
+
+/*** TODO ***/
+// delete project and all of its associated Actions
+/*** ^ TODO ^ ***/
+
+
 /**********************************************************************/
 /*** ACTIONS ***/
 /**********************************************************************/
@@ -138,51 +165,4 @@ server.post('/api/actions', (req, res) => {
 const port = 9000;
 server.listen(port, function() {
     console.log(`\n *** Web API Listening on http://localhost:${port} *** \n`);
-})
-
-
-
-
-// POST to add project and actions
-// server.post('/api/projects', (req, res) => {
-//     const project = req.body;
-
-//     db.insert(project).into('projects')
-//     .then(ids => {
-//         res.status(201).json(ids[0]);
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json(err);
-//     })
-// })
-
-// server.post('/api/actions', (req, res) => {
-//     const project_id = req.body.projectID;
-//     if(!projectID || projectID.length < 1){
-//         res.status(404).json({error: "No project with that ID was found."})
-//     } 
-
-//     db.insert(action).into('actions')
-//     .then(ids => {
-//         res.status(201).json(ids[0]);
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json(err);
-//     })
-// })
-
-
-// // GET retrieves project and an array of actions
-// server.get('/api/projects', (req, res) => {
-
-//     db('projects')
-//     .then(projects => {
-//         res.status(200).json(projects)
-//     })
-//     .catch(err => {
-//         console.log(err);
-//         res.status(500).json({error: `Something went wrong retrieving the projects.`})
-//     })
-// })
+});
