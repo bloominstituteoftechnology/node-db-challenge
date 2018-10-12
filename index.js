@@ -22,7 +22,6 @@ function verifyProject(req, res, next) {
       .catch(err => res.status(500).json(err));
   }
 
-
 //========== PROJECT ENDPOINTS ==========//
 server.get('/', (req, res) => {
 	res.send('<h2>Server is running.</h2>');
@@ -239,7 +238,7 @@ server.post("/api/actions", verifyProject, (req, res) => {
         );
   });
 
-
+//=== SERVER PORT ===//
 server.listen(port, function() {
     console.log(`\n API RUNNING ON PORT ${port} \n`);
   });
