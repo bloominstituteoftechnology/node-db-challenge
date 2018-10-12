@@ -15,16 +15,10 @@ router.get('/', (req,res) => {
     })
 })
 
-// projects.find()
-//   .then(project => {
-//     console.log('HERE INSIDE!:', project)
-//   })
-//   .catch()
 router.get('/:id', (req,res) => {
   const { id } = req.params
   projects.findById(id)
     .then(project => {
-      // console.log('Project:', project);
       res.status(201).json({
         id: project[0].projectId,
         name: project[0].projectName,
@@ -36,15 +30,6 @@ router.get('/:id', (req,res) => {
            'notes': action.actionNotes,
            'completed': action.actionCompleted ? true : false,
          }))
-         // project.map(action => {
-         //   // {
-         //   action
-             // id: action.actionId,
-           // description: action.actionDescription,
-           // notes: action.actionNotes,
-           // completed: action.actionCompleted,}
-
-         // })
        })
     })
     .catch(err => {

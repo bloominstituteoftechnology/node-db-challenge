@@ -27,18 +27,10 @@ function findById(id) {
       actionDescription: 'Actions.description',
       actionNotes: 'Actions.notes',
       actionCompleted: 'Actions.completed',
-      // actionNotes: 'Actions.notes'
     })
-// .groupBy('Actions.id')
 }
 
 function insert(project) {
   return db('Projects')
     .insert(project)
 }
-
-// SELECT Customers.CustomerName, Orders.OrderID as TotalOrders
-// FROM Orders
-// INNER JOIN Customers
-// ON Orders.CustomerID = Customers.CustomerID
-// ORDER BY CustomerName DESC
