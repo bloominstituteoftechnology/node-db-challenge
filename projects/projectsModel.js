@@ -21,5 +21,10 @@ function getProject() {
 
 function getProjectById(id) {
     return db('projects')
+    .where('projects.id', id)
+    .leftJoin('actions', 'projects.id', '=', 'actions.project_id')
+    
+    //.columns('projects.id', 'projects.name', 'projects.description', 'actions.description as action');
+    
 
 }
