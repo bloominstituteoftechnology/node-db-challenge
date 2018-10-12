@@ -25,23 +25,9 @@ server.get('/', (req, res) => {
     res.send("Working");
 })
 
-
+/**********************************************************************/
 /*** PROJECTS ***/
-
-// get projects
-server.post('/api/projects', (req, res) => {
-    const project = req.body;
-
-    projectdb.addProject(project)
-    .then(ids => {
-        res.status(201).json(ids[0]);
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({error: "Something went wrong."})
-    })
-})
-
+/**********************************************************************/
 // get all projects
 server.get('/api/projects', (req, res) => {
     db('projects')
@@ -97,7 +83,10 @@ server.post('/api/projects', (req, res) => {
     })
 })
 
+
+/**********************************************************************/
 /*** ACTIONS ***/
+/**********************************************************************/
 
 server.get('/api/actions', (req, res) => {
     db('actions')
