@@ -51,4 +51,19 @@ router.post('/', (req, res) => {
 		.catch(err => res.status(500).json({ error: `Server failed to POST new project: ${ err }`}));
 });
 
+// update a project
+router.put('/:id', (req, res) => {
+	const { id } = req.params;
+	const updatedProject = req.body;
+	projectDb
+		.updateProject(id, updatedProject)
+		.then(updateBool => {
+			if (updateBool) {
+				return res.status(200).json({ message: `Project with ID ${ id } updated successfully.` });
+			}
+			return res.status(404).json({ error: `Project with ID ${ id } does not exist.` });
+		})
+		.catch(err => res.status(500).json({ error: `Server failed to PUT updated project: ${ err }` }));
+});
+
 module.exports = router;

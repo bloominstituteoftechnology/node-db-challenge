@@ -1,12 +1,6 @@
 const db = require('../dbConfig.js');
 
 module.exports = {
-	addProject: function(project) {
-		let query = db('projects')
-		return query
-			.insert(project)
-			.then(id => ({ id: id }));
-	},
 	getAllProjects: function() {
 		let query = db('projects')
 		return query
@@ -44,5 +38,17 @@ module.exports = {
 				result.completed = result.completed ? true : false;
 				return result;
 			});
+	},
+	addProject: function(project) {
+		let query = db('projects')
+		return query
+			.insert(project)
+			.then(id => ({ id: id }));
+	},
+	updateProject: function(id, project) {
+		let query = db('projects as p')
+		return query
+			.update(project)
+			.where('p.id', id);
 	},
 };

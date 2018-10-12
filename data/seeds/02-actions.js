@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
 				{
 					description: 'Action #1 for Project #1',
 					notes: 'Action notes go here.',
-					completed: false,
+					completed: true,
 					project_id: 1,
 				},
 				{
