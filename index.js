@@ -114,7 +114,7 @@ server.put('/api/projects/:id', (req, res) => {
 /**********************************************************************/
 /*** ACTIONS ***/
 /**********************************************************************/
-
+// get all actions
 server.get('/api/actions', (req, res) => {
     db('actions')
     .then(actions => {
@@ -125,7 +125,7 @@ server.get('/api/actions', (req, res) => {
         res.status(500).json({error: `Something went wrong.`})
     })
 })
-
+// get action by id
 server.get('/api/actions/:id', (req, res) => {
     const {id} = req.params;
 
@@ -135,14 +135,14 @@ server.get('/api/actions/:id', (req, res) => {
         if(!action.length){
             res.status(404).json({error: `No action found for ID ${id}.`})
         }
-        res.status(200).json(action)
+        res.status(200).json(action[0])
     })
     .catch(err => {
         console.log(err);
         res.status(500).json({error: `Something went wrong.`})
     })
 })
-
+// add new action
 server.post('/api/actions', (req, res) => {
     const action = req.body;
     if(!action.project_id){
@@ -159,6 +159,46 @@ server.post('/api/actions', (req, res) => {
         res.status(500).json({error: `Something went wrong.`})
     })
 })
+
+// edit action
+server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+    if(!changes.name){
+        res.status(400).json({error: `Actions must have a name.`})
+    }
+
+    db('actions').where({id}).update(changes)
+    .then(reply => {
+        if(!reply || reply.length < 1){
+            res.status(404).json({error: `No action found with that ID ${id}.`})
+        } else {
+            res.status(200).json(reply);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: `Something went wrong.`})
+    })
+})
+// delete actions
+server.delete('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+
+    db('actions').where({id}).del()
+    .then(reply => {
+        if(!reply || reply.length < 1){
+            res.status(404).json({error: `No action with ID ${id} found.`})
+        } else {
+            res.status(200).json(reply);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: `Something went wrong.`});
+    })
+})
+
 
 
 
