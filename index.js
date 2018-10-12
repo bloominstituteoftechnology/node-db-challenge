@@ -1,11 +1,19 @@
 const express = require('express');
 const knex = require('knex');
 const helmet = require('helmet');
+const projectRoutes = require('./projects/projectRoutes');
+const actionRoutes  = require('./actions/actionsRoutes');
+
+const dbConfig = require('./knexfile');
+ 
+ const db = knex(dbConfig.development);
 
 const server = express();
 
 server.use(express.json());
 server.use(helmet());
+server.use('/projects', projectRoutes);
+server.use('/actions' , actionRoutes);
 
 
 server.get('/', (req, res) =>{
