@@ -45,17 +45,17 @@ server.get("/api/projects/:id", (req, res) => {
           })
           .catch(err =>
             res
-              .status(200)
+              .status(500)
               .json({ error: "There was an error retrieving the project" })
           );
       } else
         res
-          .status(200)
+          .status(500)
           .json({ error: "There was an error retrieving the project" });
     })
     .catch(err =>
       res
-        .status(200)
+        .status(500)
         .json({ error: "There was an error retrieving the project" })
     );
 });
@@ -63,15 +63,20 @@ server.get("/api/projects/:id", (req, res) => {
 server.post("/api/projects/:id/actions", (req, res) => {
   const id = req.params.id;
   let newAction = req.body;
+
+  if (!id || !newAction) {
+    res.status(400).json({ error: "Bad request" });
+  }
   newAction.project_id = id;
-  console.log(newAction);
   db.insertAction(newAction)
     .then(id => {
       if (id) {
         res.status(201).json({ message: "New action was added" });
       }
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      res.status(500).json({ error: "There was an error adding new action" })
+    );
 });
 
 //Listen on port

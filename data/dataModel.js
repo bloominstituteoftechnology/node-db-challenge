@@ -26,7 +26,6 @@ const insert = newProject => {
 };
 
 const insertAction = action => {
-  console.log(action);
   return db("actions").insert(action);
 };
 module.exports = { find, insert, findById, getProjectActions, insertAction };
