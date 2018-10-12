@@ -12,6 +12,8 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 
+const db = require('./data/dbConfig.js');
+
 server.post('/projects', (req, res) => {
     const project = req.body;
     projectDb.insert(project)
@@ -33,15 +35,29 @@ server.post('/actions', (req, res) => {
 
 server.get('/project/:id', (req, res) => {
     const id = req.params.id;
-    projectDb.getProjectActions(id)
-        .then(projectActions => {
-            console.log(projectActions);
-            res.status(200).json(projectActions);
-        })
-        .catch(foo => {
-            console.log(foo);
-            res.status(500).json({error: 'Error getting project and actions'});
-        })
+    
+    db('projects')
+        .first()
+        .where({ id })
+        .then(project => {
+            return db('actions')
+                .select('actions.id', 'actions.description', 'actions.notes', 'actions.completed')
+                .where({ 'project_id': id })
+                .then(actions => {
+                    project.actions = actions;
+                    res.status(200).json(project)
+                }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
+
+    // projectDb.getProjectActions(id)
+    //     .then(projectActions => {
+    //         console.log(projectActions);
+    //         res.status(200).json(projectActions);
+    //     })
+    //     .catch(foo => {
+    //         console.log(foo);
+    //         res.status(500).json({error: 'Error getting project and actions'});
+    //     })
 });
 
 server.listen(port, () => console.log(`\nAPI running on http://localhost:${port}\n`));
