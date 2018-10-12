@@ -60,9 +60,9 @@ server
           return res
             .status(404)
             .json({ message: "the project has not been found" });
-        let result = boolMapper("complete")(project);
+        let result = booleanMap("complete")(project);
         result.actions = actions.map(action =>
-          _.omit(boolMapper("complete")(action), "project_id")
+          _.omit(booleanMap("complete")(action), "project_id")
         );
 
         res.status(200).json(result);
