@@ -46,7 +46,7 @@ server
       .catch(next);
   });
 
-app.route("/api/projects/:id").get((req, res, next) => {
+server.route("/api/projects/:id").get((req, res, next) => {
   const project = db("projects")
     .where("id", req.params.id)
     .first();
@@ -68,7 +68,7 @@ app.route("/api/projects/:id").get((req, res, next) => {
     .catch(next);
 });
 
-app.route("/api/actions").post(function(req, res, next) {
+server.route("/api/actions").post(function(req, res, next) {
   const { notes, description, project_id } = req.body;
 
   if (!notes) return res.status(400).json({ message: "notes is missing" });
