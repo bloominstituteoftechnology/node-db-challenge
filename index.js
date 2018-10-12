@@ -17,90 +17,117 @@ server.get('/', (request, response) => {
 });
 
 // project endpoints
-server.get('/api/projects', (request, response) => {
-    projectDb('projects')
-      .then(projects => {
-        return response
-          .status(200)
-          .json(projects);
-      })
-      .catch(() => {
-        return response
-          .status(500)
-          .json({ Error: "Could not find list of projects." })
-      });
-});
-
 server.get('/api/projects/:id', (request, response) => {
     const id = request.params.id;
-  
+
     if (!{ id }) {
-      return response
-        .status(404)
-        .json({ Error: "Could not find project." })
-    } 
-  
+        return response
+            .status(404)
+            .json({ Error: "Could not find project." })
+    }
+
     projectDb('projects')
-      .where({ id })
-      .then(project => {
+        .where({ id })
+        .then(project => {
+            projectDb('actions')
+                .where({ id: id })
+                .then(action => {
+                    console.log({ id });
+                    return response
+                        .status(200)
+                        .json({ ...project, actions: action });
+                });
+        })
+        .catch(() => {
+            return response
+                .status(500)
+                .json({ Error: "Project info could not be retrieved." })
+        });
+});
+
+server.post('/api/projects', (request, response) => {
+    const newProject = request.body;
+    console.log(newProject);
+
+    if (!newProject.name_project) {
         return response
-          .status(200)
-          .json(project);
-      })
-      .catch(() => {
-        return response
-          .status(500)
-          .json({ Error: "Project info could not be retrieved." })
-      });
-  });
+            .status(400)
+            .send({ Error: "Missing name for the project" });
+    }
 
-// server.post('/api/projects', (request, response) => {
-//     const newProject = request.body;
-//     console.log(newProject);
-
-//     if (!newProject.name) {
-//         return response
-//             .status(400)
-//             .send({ Error: "Missing name for the project" });
-//     }
-
-//     projectDb('projects')
-//         .insert(newProject)
-//         .into('projects')
-//         .then(ids => {
-//             console.log("Getting to then: ", project);
-//             return response
-//                 .status(201)
-//                 .json(ids[0]);
-//         })
-//         .catch(() => {
-//             return response
-//                 .status(500)
-//                 .json({ Error: "There was an error while saving the project" })
-//     });
-// });
+    projectDb
+        .insert(newProject)
+        .into('projects')
+        .then(id => {
+            return response
+                .status(201)
+                .json(id);
+        })
+        .catch(() => {
+            return response
+                .status(500)
+                .json({ Error: "There was an error while saving the project" })
+        });
+});
 
 // action endpoints
-// server.post('/api/actions', (request, response) => {
-//     const newAction = request.body;
+server.get('/api/actions', (request, response) => {
+    projectDb('actions')
+        .then(actions => {
+            return response
+                .status(200)
+                .json(actions);
+        })
+        .catch(() => {
+            return response
+                .status(500)
+                .json({ Error: "Could not find list of actions." })
+        });
+});
 
-//     if (!newAction.name) {
+server.post('/api/actions', (request, response) => {
+    const newAction = request.body;
+
+    if (!newAction.description_action) {
+        return response
+            .status(400)
+            .send({ Error: "Missing description for the action" });
+    }
+
+    projectDb
+        .insert(newAction)
+        .into('actions')
+        .then(id => {
+            return response
+                .status(201)
+                .json(id);
+        })
+        .catch(() => {
+            return response
+                .status(500)
+                .json({ Error: "There was an error while saving the action" })
+        });
+});
+
+// server.get('/api/actions/:id', (request, response) => {
+//     const id = request.params.id;
+
+//     if (!{ id }) {
 //         return response
-//             .status(400)
-//             .send({ Error: "Missing name for the action" });
+//             .status(404)
+//             .json({ Error: "Could not find action." })
 //     }
 
-//     projectDb
-//         .insert(newAction)
-//         .into('actions')
-//         .then(ids => {
+//     projectDb('actions')
+//         .where({ id })
+//         .then(action => {
 //             return response
-//                 .status(201)
-//                 .json(ids[0]);
+//                 .status(200)
+//                 .json(action);
 //         })
 //         .catch(() => {
 //             return response
 //                 .status(500)
-//                 .json({ Error: "There was an error while saving the action" })
+//                 .json({ Error: "Action info could not be retrieved." })
 //         });
 // });
