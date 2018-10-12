@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './proTracker.sqlite3'
+      filename: './data/proTracker.sqlite3'
     },
     useNullAsDefault: true,
 
