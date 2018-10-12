@@ -15,7 +15,7 @@ exports.seed = function(knex, Promise) {
           "name": "Week 11 Sprint Challenge",
           "description": "Challenge for the week",
           "completed": 0
-      }
+        }
       ]);
     });
 };
