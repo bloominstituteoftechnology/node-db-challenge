@@ -2,6 +2,9 @@
   "name": "Sprint-Challenge-RDBMS",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "repository": "https://github.com/Tbarnett20/Sprint-Challenge-RDBMS.git",
   "author": "Terrance Danckert <tbarnett2020@gmail.com>",
   "license": "MIT",

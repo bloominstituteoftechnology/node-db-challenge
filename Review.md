@@ -12,8 +12,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
     on another table.
 (Foreign Key)
 
-##  What do we need in order to have a _many to many_ relationship between two
-    tables.
+##  What do we need in order to have a _many to many_ relationship between two tables.
 (A many-to-many relationship occurs when multiple records in a table are associated with multiple records in another table.)
 
 ##  What SQL statement is used to retrieve data from a table?
