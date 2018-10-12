@@ -10,6 +10,12 @@ router.get('/', (req,res) => {
         res.json(table)
     })
 })
+router.get('/actions/:id', (req,res) => {
+    const {id} = req.params
+    db.findProjectsActions(id).then(table => {
+        res.json(table)
+    })
+})
 
 router.post('/', (req,res) => {
     const {name, description, completed} = req.body

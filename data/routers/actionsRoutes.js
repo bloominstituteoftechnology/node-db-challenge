@@ -7,8 +7,8 @@ const router = express.Router();
 //router.use(express.json())
 
 router.post('/', (req,res) => {
-    const {name, description, notes,completed} = req.body
-    db.add({name, description, notes, completed}).then(() => {
+    const {name, description, notes,completed, project_id} = req.body
+    db.add({name, description, notes, completed, project_id}).then(() => {
         db.find().then(table => {
             res.json(table)
         })
