@@ -5,6 +5,12 @@ module.exports = {
 		let query = db('actions')
 		return query;
 	},
+	getAction: function(id) {
+		let query = db('actions as a')
+		return query
+			.select()
+			.where('a.id', id);
+	},
 	addAction: function(action) {
 		const { project_id } = action;
 		let projectQuery = db('projects as p')

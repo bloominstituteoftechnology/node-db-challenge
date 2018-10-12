@@ -16,6 +16,20 @@ router.get('/', (req, res) => {
 		.catch(err => res.status(500).json({ error: `Server failed to GET all actions: ${ err }` }));
 });
 
+// get an action with a given ID
+router.get('/:id', (req, res) => {
+	const { id } = req.params;
+	actionDb
+		.getAction(id)
+		.then(action => {
+			if (!action.length) {
+				return res.status(404).json({ error: `Action with ID ${ id } does not exist.` });
+			}
+			return res.status(200).json(action);
+		})
+		.catch(err => res.status(500).json({ error: `Server failed to GET action with ID ${ id }: ${ err }`}));
+});
+
 // add a new action to the database
 router.post('/', (req, res) => {
 	const newAction = req.body;
