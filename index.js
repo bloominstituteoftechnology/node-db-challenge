@@ -224,7 +224,7 @@ server
   });
 
 // use lodash as some middleware for error handling
-app.use(function(err, _, res, _) {
+server.use((err, _, res, _) => {
   console.error(err);
   res
     .status(500)
