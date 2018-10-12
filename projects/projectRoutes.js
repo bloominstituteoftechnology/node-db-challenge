@@ -25,15 +25,32 @@ router.route('/:id')
     const { id } = req.params;
     projects.getById(id)
       .then(project => {
-        if(!project || project < 1) {
-          return errHelper(404, 'No records found.', res);
+        if (!project || project < 1) {
+          return errHelper(404, 'No record found.', res);
         } else {
           actions.get()
-          .where('project_id', id)
-          .then(actions => res.status(200).json({...project, actions:actions}))
+            .where('project_id', id)
+            .then(actions => res.status(200).json({ ...project, actions: actions }))
         }
       })
       .catch(err => errHelper(500, 'Error getting project with actions.', res))
+  })
+  .put((req, res) => {
+    const { id } = req.params;
+    const { name, description } = req.body;
+    const edits = { name, description }
+    projects.update(id, edits)
+      .then(edits => res.status(200).json(edits))
+      .catch(err => errHelper(500, 'Error editing project.', res))
+  })
+  .delete((req, res) => {
+    const { id } = req.params;
+    projects.remove(id)
+      .then(removed => {
+        console.log('\n--- Project Removed ---', removed);
+        res.json({ Success: 'Project removed' })
+      })
+      .catch(err => errHelper(500, 'Error deleting project.', res))
   })
 
 
