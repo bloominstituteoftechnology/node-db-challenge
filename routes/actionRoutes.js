@@ -3,6 +3,7 @@ const { actionDb } = require('../data/models/index.js');
 
 const router = express.Router();
 
+// add a new action to the database
 router.post('/', (req, res) => {
 	const newAction = req.body;
 	if (!newAction.description) {
@@ -11,7 +12,12 @@ router.post('/', (req, res) => {
 	if (!newAction.project_id) {
 		return res.status(401).json({ error: 'Project_id of new action cannot be empty.' });
 	}
-	if (newAction.completed === undefined) newAction.completed = 0; // default value
+	if (newAction.completed === undefined || newAction.completed === '') {
+		newAction.completed = false; // default value
+	}
+	if (newAction.completed !== true && newAction.completed !== false) {
+		return res.status(401).json({ error: `Completed flag of new action cannot be ${ newAction.completed }. It must be either true or false.` });
+	}
 	actionDb
 		.addAction(newAction)
 		.then(id => {

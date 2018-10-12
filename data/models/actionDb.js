@@ -12,8 +12,8 @@ module.exports = {
 
 		return Promise
 			.all(promises)
-			.then(results => {
-				let [ projectQueryResults ] = results;
+			.then(promiseResults => {
+				let [ projectQueryResults ] = promiseResults;
 				if (!projectQueryResults.length) {
 					return 'noProjectId'; // wil be error that is handled by API
 				}
