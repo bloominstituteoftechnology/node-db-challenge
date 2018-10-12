@@ -12,32 +12,33 @@ server.use(helmet());
 // GET //
 server.get("/api/projects/:id", (req, res) => {
   const id = req.params.id;
-  let project = {};
+  let projectResponse = {};
   if (!id) {
-    res.status(400).json({ error: "Bad request" });
+    res.status(400).json({ error: "Invalid request" });
   }
   db.findById(id)
     .then(result => {
       if (result) {
+        projectResponse = result;
         db.getProjectActions(id)
           .then(actions => {
-            result.actions = actions;
-            res.status(200).json(result);
+            projectResponse.actions = actions;
+            res.status(200).json(projectResponse);
           })
           .catch(err =>
             res
               .status(500)
-              .json({ error: "Unable to retrieve the respective project" })
+              .json({ error: "There was an error retrieving the project" })
           );
       } else
         res
           .status(500)
-          .json({ error: "Unable to retrieve the respective project" });
+          .json({ error: "There was an error retrieving the project" });
     })
     .catch(err =>
       res
         .status(500)
-        .json({ error: "Unable to retrieve the respective project" })
+        .json({ error: "There was an error retrieving the project" })
     );
 });
 /////////
