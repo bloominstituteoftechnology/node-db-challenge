@@ -8,7 +8,7 @@ exports.up = knex => {
       .references('id')
       .inTable('projects');
     table.string('description', 128).notNullable();
-    table.string('comments').notNullable();
+    table.string('notes').notNullable();
     table.boolean('complete').defaultTo(false);
   });
 };

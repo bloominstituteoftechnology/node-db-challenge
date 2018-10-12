@@ -1,7 +1,7 @@
 {
   "name": "sprint-challenge-rdbms",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon server.js"
   },

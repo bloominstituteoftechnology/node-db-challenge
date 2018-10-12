@@ -6,13 +6,13 @@ exports.seed = knex =>
         {
           id: 1,
           name: 'Create React App',
-          desciption: 'Install CRA, Build app, Deploy app',
+          notes: 'Install CRA, Build app, Deploy app',
           complete: false
         },
         {
           id: 2,
           name: 'Clean the apartment!',
-          description: 'Do laundry, Do the dishes, Vacuum',
+          notes: 'Do laundry, Do the dishes, Vacuum',
           complete: true
         }
       ]);
