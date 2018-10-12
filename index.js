@@ -23,7 +23,7 @@ function verifyProject(req, res, next) {
   }
 
 
-//========== ENDPOINTS ==========//
+//========== PROJECT ENDPOINTS ==========//
 server.get('/', (req, res) => {
 	res.send('<h2>Server is running.</h2>');
 })
@@ -77,6 +77,60 @@ server.get("/api/projects", (req, res) => {
         })
         .catch(err => res.status(500).json(err));
   });
+ 
+  // DELETE
+  server.delete("/api/projects/:id", (req, res) => {
+    const { id } = req.params;
+    db("projects")
+      .where({ id: id })
+      .del()
+      .then(count => {
+        if (count) {
+          res
+            .status(200)
+            .json({ message: "The project was successfully deleted!" });
+        } else {
+          res
+            .status(404)
+            .json({ message: "Uh oh! There is no project with this ID!" });
+        }
+      })
+      .catch(err =>
+        res.status(500).json({ error: "Uh oh! The project couldn't be deleted!" })
+      );
+});
+
+// PUT
+server.put("/api/projects/:id", (req, res) => {
+    const { id } = req.params;
+    const project = req.body;
+    if (!project.name || !project.comments) {
+      res
+        .status(400)
+        .json({ error: "This project needs a name and comments!" });
+    } else
+      db("projects")
+        .where({ id: id })
+        .update(project)
+        .then(count => {
+          if (count) {
+            res
+              .status(200)
+              .json({ message: "The project was successfully updated." });
+          } else {
+            res
+              .status(404)
+              .json({ message: "Uh oh! There is no project with this ID!" });
+          }
+        })
+        .catch(err =>
+          res
+            .status(500)
+            .json({ error: "Uh oh! The project couldn't be updated" })
+        );
+  });
+
+
 
 
 server.listen(port, function() {
