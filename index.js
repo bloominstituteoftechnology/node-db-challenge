@@ -47,7 +47,7 @@ server.post('/api/actions', (req, res)=> {
 
 server.get('/api/projects/:project_id/actions', (req, res)=> {
     const {project_id} = req.params;
-    db.from('projects').innerJoin('actions', 'actions.project_id', 'projects.id')
+    db.from('projects').leftJoin('actions', 'actions.project_id', 'projects.id')
         .where({project_id})
         .then(projectActions=> {
            if (projectActions === 0) {
