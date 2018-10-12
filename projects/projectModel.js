@@ -18,13 +18,16 @@ function getProject(id) {
 	return db('projects')
 		.where({ id })
 		.then(([project]) => {
-			db('actions')
-				.where({ project_id: id })
-				.select('id', 'description', 'notes', 'completed')
-				.then(actions => {
-					console.log({ ...project, actions }); // This looks fine in the terminal
-					return { ...project, actions }; // I don't know how to do this.
-				});
+			if (project) {
+				return db('actions')
+					.where({ project_id: id })
+					.select('id', 'description', 'notes', 'completed')
+					.then(actions => {
+						return { ...project, actions };
+					});
+			} else {
+				return undefined;
+			}
 		});
 }
 
