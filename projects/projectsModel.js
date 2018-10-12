@@ -15,8 +15,16 @@ function find() {
 
 function findById(id) {
     return db('projects')
-        .where({ id })
-        .first();
+        // .select('*')
+        // .from('projects')
+        // .where({id})
+        
+        .select({
+            project_name: 'projects.name',
+            action_description: 'actions.description'
+        })
+        .join('actions', 'actions.project_id', 'projects.id')
+        .where('projects.id', id);
 }
 
 function add(project) {
