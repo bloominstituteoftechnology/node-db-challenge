@@ -45,5 +45,20 @@ server.post('/api/actions', (req, res)=> {
     })
 });
 
+server.get('/api/projects/:project_id/actions', (req, res)=> {
+    const {project_id} = req.params;
+    db('actions')
+        .where({project_id})
+        .then(projectActions=> {
+           if (projectActions === 0) {
+               res.status(404).json({message: "The information you requested does not exist"});
+           }
+           res.status(200).json(projectActions);
+        })
+        .catch(err=> {
+            res.status(500).json({error: "This information could not be retrieved from the database"});
+        })
+});
+
 
 server.listen(port, ()=> console.log(`API running on port ${port}`));
