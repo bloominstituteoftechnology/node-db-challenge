@@ -4,15 +4,21 @@ const knexConfig = require("../knexfile.js");
 const db = knex(knexConfig.development);
 
 module.exports = {
-  find,
-  add
+  findAction,
+  addAction,
+  findActionById
 };
 
-function find() {
+function findAction() {
   return db("actions");
 }
+function findActionById(id) {
+  return db("projects")
+    .where({ id })
+    .first();
+}
 
-function add(action) {
+function addAction(action) {
   return db("actions")
     .insert(action)
     .into("actions");

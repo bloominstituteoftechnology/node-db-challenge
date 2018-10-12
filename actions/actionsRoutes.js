@@ -9,11 +9,28 @@ const router = express.Router();
 // get a list of actions
 router.get("/", (req, res) => {
   actions
-    .find()
+    .findAction()
     .then(actions => {
       res.status(200).json(actions);
     })
     .catch(err => res.status(500).json(err));
+});
+
+//get an action by its ID
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const action = await actions.findActionById(id);
+
+    if (action) {
+      res.status(200).json(action);
+    } else {
+      res.status(404).json({ message: "Action not found" });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 // Add an action
@@ -28,7 +45,7 @@ router.post("/", (req, res) => {
     });
   }
   actions
-    .add(action)
+    .addAction(action)
     .then(ids => {
       res.status(201).json(ids[0]);
     })
