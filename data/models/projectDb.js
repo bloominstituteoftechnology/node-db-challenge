@@ -51,4 +51,10 @@ module.exports = {
 			.update(project)
 			.where('p.id', id);
 	},
+	deleteProject: function(id) {
+		let query = db('projects as p')
+		return query
+			.del()
+			.where('p.id', id);
+	},
 };
