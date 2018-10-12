@@ -34,31 +34,33 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 ## tasks
 
 - Build the database and tables using knex migrations. **Seeding is not needed**.
-- Build the API to add projects and actions. **Only the POST** is needed, the rest is part of the stretch problem.
-- Build an endpoint to retrieve a `project` by its `id` that returns an object
+- Build the API with the following endpoints:
+  - POST for adding projects.
+  - POST for adding actions.
+  - GET for retrieving a `project` by its `id` that returns an object
   with the following structure:
 
-```js
-{
-  id: 1,
-  name: 'project name here',
-  description: 'the project description',
-  completed: false, // or true, the database will return 1 for true and 0 for false
-  actions: [
+    ```js
     {
       id: 1,
-      description: 'action description',
-      notes: 'the action notes',
-      completed: false // or true
-    },
-    {
-      id: 7,
-      description: 'another action description',
-      notes: 'the action notes',
-      completed: false // or true
+      name: 'project name here',
+      description: 'the project description',
+      completed: false, // or true, the database will return 1 for true and 0 for false
+      actions: [
+        {
+          id: 1,
+          description: 'action description',
+          notes: 'the action notes',
+          completed: false // or true
+        },
+        {
+          id: 7,
+          description: 'another action description',
+          notes: 'the action notes',
+          completed: false // or true
+        }
+      ]
     }
-  ]
-}
 ```
 
 ## Stretch Problem
