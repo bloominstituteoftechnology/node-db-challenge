@@ -1,4 +1,8 @@
 const express = require('express');
+const knex = require('knex');
+
+const knexConfig = require('../knexfile.js');
+const db = knex(knexConfig.development);
 
 const projects = require('./projectsModel.js');
 
@@ -20,6 +24,8 @@ router.get('/:id', async (req, res) => {
         const project = await projects.getProjectById(id);
 
         if (project) {
+            project.actions = await db('actions').where({ project_id: id });
+            
             res.status(200).json(project);
         } else {
             res.status(404).json({ message: 'Project not found' });
