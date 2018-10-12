@@ -5,7 +5,8 @@ const db = knex(knexConfig.development);
 
 module.exports = {
     getProject,
-    addProject
+    getProjectById,
+    addProject,
 };
 
 function addProject(project) {
@@ -16,4 +17,9 @@ function addProject(project) {
 
 function getProject() {
     return db('projects');
+}
+
+function getProjectById(id) {
+    return db('projects')
+
 }
