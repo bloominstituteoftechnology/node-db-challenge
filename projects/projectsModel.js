@@ -40,6 +40,6 @@ function remove(id) {
     .del();
 }
 
-function findActionByProject(project_id) {
-  return db("actions").where({ project_id });
+function findActionByProject(id) {
+  return db("actions").where({ id });
 }
