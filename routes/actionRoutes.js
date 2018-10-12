@@ -3,6 +3,19 @@ const { actionDb } = require('../data/models/index.js');
 
 const router = express.Router();
 
+// get all actions
+router.get('/', (req, res) => {
+	actionDb
+		.getAllActions()
+		.then(actions => {
+			if (!actions.length) {
+				return res.status(200).json({ message: 'There are no actions in the database. You should add a project first, then give it some actions.' });
+			}
+			return res.status(200).json(actions);
+		})
+		.catch(err => res.status(500).json({ error: `Server failed to GET all actions: ${ err }` }));
+});
+
 // add a new action to the database
 router.post('/', (req, res) => {
 	const newAction = req.body;

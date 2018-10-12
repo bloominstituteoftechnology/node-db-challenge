@@ -1,6 +1,10 @@
 const db = require('../dbConfig.js');
 
 module.exports = {
+	getAllActions: function() {
+		let query = db('actions')
+		return query;
+	},
 	addAction: function(action) {
 		const { project_id } = action;
 		let projectQuery = db('projects as p')

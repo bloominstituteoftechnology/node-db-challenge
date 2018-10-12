@@ -3,8 +3,7 @@ const db = require('../dbConfig.js');
 module.exports = {
 	getAllProjects: function() {
 		let query = db('projects')
-		return query
-			.select();
+		return query;
 	},
 	getProject: function(id) {
 		let projectQuery = db('projects as p')
