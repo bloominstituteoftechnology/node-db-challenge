@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("knex")(require("./knexfile").development);
 const cors = require("cors");
 const _ = require("lodash");
+const port = 8800;
 
 const server = express();
 
@@ -217,6 +218,6 @@ server.use(function(err, _, res, _) {
     .json({ message: "You have broken something. try it again later" });
 });
 
-server.listen(process.env.PORT || 8800, () =>
-  console.log("\n=== API listening on port 8800 === \n")
+server.listen(process.env.PORT || port, () =>
+  console.log(`\n=== API listening on port ${port} === \n`)
 );
