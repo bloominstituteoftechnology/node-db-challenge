@@ -19,7 +19,8 @@ server.get("/api/projects/:id", (req, res) => {
 			db("Actions")
 				.where({ project_id })
 				.then(action => {
-					res.status(200).json({ ...project, actions: action });
+					project[0].actions = action;
+					res.status(200).json(project[0]);
 				});
 		});
 });
