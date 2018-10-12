@@ -34,7 +34,7 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 ## tasks
 
 - Build the database and tables using knex migrations. **Seeding is not needed**.
-- Build the API to add projects and actions. **Only the POST** is needed, the rest is part of the stretch problem.
+- Build the API to add projects and actions.
 - Build an endpoint to retrieve a `project` by its `id` that returns an object
   with the following structure:
 
