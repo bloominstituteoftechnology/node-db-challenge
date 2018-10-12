@@ -82,8 +82,24 @@ server.post('/projects', (req, res) => {
     });
 });
 
-server.listen(port, () => console.log(`\n== API RUNNING ON ${port} ==\n`))
+server.put('/projects/:id', (req, res) => {
+  const project = req.body;
+  const { id } = req.params;
 
+  db('projects')
+    .where('id', id)
+    .update(project)
+    .then(update => {
+      res
+        .status(200)
+        .json(update);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json(err);
+    })
+})
 
 /* ===== Actions ===== */
 
@@ -101,6 +117,29 @@ server.get('/actions', (req, res) => {
     });
 })
 
+server.get('/actions/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('actions')
+    .where('id', id)
+    .then(action => {
+      if (!action.length) {
+        res
+          .status(401)
+          .json({ error: "There is no action with the specified ID." })
+      }
+        res
+          .status(200)
+          .json(action)
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: "The action could not be retrieved." })
+    })
+})
+
+
 server.post('/actions', (req, res) => {
   const action = req.body;
 
@@ -117,3 +156,6 @@ server.post('/actions', (req, res) => {
         .json(err)
       })
 });
+
+
+server.listen(port, () => console.log(`\n== API RUNNING ON ${port} ==\n`))
