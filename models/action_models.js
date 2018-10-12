@@ -2,6 +2,7 @@ const express = require('express');
 const knex = require('knex');
 const helmet = require('helmet');
 const knexConfig = require('../knexfile');
+
 const db = knex(knexConfig.development);
 
 module.exports = {
