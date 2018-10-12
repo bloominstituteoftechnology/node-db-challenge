@@ -28,38 +28,17 @@ server.get('/api/projects/:id', (req, res) => { // view all projects from db 'pr
       if (project) {
         db('actions')
           .where({ project_id: id })
-          .then(acitons => {
+          .then(actions => {
             project.actions = actions;
             res.status(200).json(project);
           })
           .catch(err => res.json(err));
       } else {
-        res.status(404).json({ message: 'pnf' });
+        res.status(404).json({ message: 'ERROR: Project not found.' });
       }
     })
     .catch(err => res.json(err));
 })
-
-// get = (id) => {
-//   let query = db('actions');
-
-//   if (id) {
-//     return query
-//       .where('id', id)
-//       .first()
-//       .then(action => action ? actionToBody(action) : undefined);
-//   }
-
-//   return query.then(actions => {
-//     return actions.map(action => actionToBody(action));
-//   });
-// }
-
-// function projectToBody(project) {
-//   const result = {
-//     ...project,
-//     completed: intToBoolean(project.completed),
-//   };
 
 server.get('/api/actions', (req, res) => { // view all actions from db 'actions'
   db('actions')
