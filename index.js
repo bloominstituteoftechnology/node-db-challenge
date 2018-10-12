@@ -74,11 +74,9 @@ server
     let { name, description, complete } = req.body;
 
     if (!name && !description && complete === undefined) {
-      return res
-        .status(400)
-        .json({
-          message: "at least one of the fields must be provided for an update"
-        });
+      return res.status(400).json({
+        message: "at least one of the fields must be provided for an update"
+      });
     }
     if (!_.isUndefined(complete)) complete *= 1; // flip the completed via multiplication
 
@@ -92,12 +90,27 @@ server
       .where("id", req.params.id)
       .then(data => {
         if (!data)
-          return res.status(404).json({ message: "project not found" });
+          return res.status(404).json({ message: "the project was not found" });
 
         res
           .status(200)
-          .json({ message: "Project updated successfully", count: data });
+          .json({ message: "the project updated successfully", count: data });
       })
+      .catch(next);
+  })
+  .delete(function(req, res, next) {
+    db("projects")
+      .delete()
+      .where("id", req.params.id)
+      .then(
+        data =>
+          data
+            ? res.status(200).json({
+                message: "the project was deleted successfully",
+                count: data
+              })
+            : res.status(404).json({ message: "the project cannot be found" })
+      )
       .catch(next);
   });
 
