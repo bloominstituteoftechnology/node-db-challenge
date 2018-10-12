@@ -7,6 +7,10 @@ exports.up = function(knex, Promise) {
     // description (text, required)
     tbl.string('description', 550).notNullable();
 
+    tbl.string('note', 1000).notNullable();
+
+    tbl.unique('note');
+
     // completed (boolean)
     tbl.boolean('completed').defaultTo(false);
 
