@@ -17,8 +17,5 @@ function postAction(action){
 };
 
 function getProject(id){
-    return db('projects')
-        .select()
-        .join('actions', 'actions.project_id', 'projects.id')
-        .where('projects.id', id);
+    return db('projects').where({id}).first();
 };

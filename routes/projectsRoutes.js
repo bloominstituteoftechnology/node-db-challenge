@@ -1,6 +1,9 @@
 const express = require('express');
 const projects = require('../models/dataModel.js');
 const router = express.Router();
+const knex = require('knex');
+const knexConfig = require('../knexfile.js');
+const db = knex(knexConfig.development);
 
 router.get('/', (req, res)=>{
     const {name, description, completed} = req.body;
@@ -17,7 +20,12 @@ router.get('/:id', (req, res)=>{
     projects.getProject(id)
         .then(project =>{
             if(project){
-                res.status(200).json(project);
+                db('actions').where({project_id: id})
+                    .then(actions=>{
+                        project.actions = actions;
+                        res.status(200).json(project);
+                    })
+                    .catch(err => res.status(500).json(err.message));
             }else{
                 res.status(404).json('No project with that ID found.');
             }
