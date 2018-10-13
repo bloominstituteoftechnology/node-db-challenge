@@ -6,18 +6,9 @@ function getProjects() {
   return db('projects')
 }
 
-function getActions() {
-  return db('actions')
-}
-
 function addProject(project) {
   return db.insert(project)
     .into('projects')
-}
-
-function addAction(action) {
-  return db.insert(action)
-    .into('actions')
 }
 
 function getProjectById(id) {
@@ -34,9 +25,7 @@ function addActionsToProject(id) {
 
 module.exports = {
   getProjects,
-  getActions,
   addProject,
-  addAction,
   getProjectById,
   addActionsToProject
 }

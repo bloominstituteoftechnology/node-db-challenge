@@ -1,8 +1,8 @@
 const express = require('express')
-const db = require('./access.js')
+const db = require('./projectsModels.js')
 const router = express.Router()
 
-router.route('/projects')
+router.route('/')
   .get((req, res) => {
     db.getProjects()
       .then(projects => res.status(201).json(projects))
@@ -15,20 +15,7 @@ router.route('/projects')
       .catch(err => res.status(500).json({ error: 'The project could not be added.' }))
 })
 
-router.route('/actions')
-  .get((req, res) => {
-    db.getActions()
-      .then(actions => res.status(201).json(actions))
-      .catch(err => res.status(500).json({ error: 'The actions could not be retrieved.' }))
-  })
-  .post((req, res) => {
-    const action = req.body
-    db.addAction(action)
-      .then(newAction => res.status(201).json(newAction))
-      .catch(err => res.status(500).json({ error: 'The action could not be added.' }))
-})
-
-router.route('/projects/:id')
+router.route('/:id')
   .get((req, res) => {
     const { id } = req.params
     db.getProjectById(id)
