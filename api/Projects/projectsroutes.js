@@ -34,6 +34,21 @@ router.get('/:id/withactions', (req, res, next) => {
         });
 });
 
+// nested query test
+router.get('/:id/nestedactions', (req, res, next) => {
+    projectsTable.findProjectNestedActions(req.params.id)
+        .then((project) => {
+            if(project) {
+                res.status(200).json(project);
+            } else {
+                next(["h404", "Project not found via route!"]);
+            }
+        })
+        .catch((err) => {
+            next(["h500", err]);
+        });
+});
+
 // ~~~ POST ~~~ //
 // add(newProject)
 router.post('/', (req, res, next) => {

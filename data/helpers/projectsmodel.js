@@ -18,6 +18,23 @@ const findProjectWithActions = (projId) => {
         .where('ProjectId', projId);
 };
 
+// Nested Test
+const findProjectNestedActions = (id) => {
+    return db('projects')
+        .where({id})
+        .first()
+        .then((project) => {
+            return db('actions')
+                .where('project_id', id)
+                .then((actions) => {
+                    project.actions = actions;
+                    return project;
+                })
+                .catch((err) => console.error('Model Error:\n', err));
+        })
+        .catch((err) => console.error('Model Error:\n', err));
+};
+
 const add = (newProject) => {
     return db('projects')
         .insert(newProject)
@@ -26,5 +43,6 @@ const add = (newProject) => {
 
 module.exports = { 
     findProjectWithActions, 
+    findProjectNestedActions, 
     add
 };
