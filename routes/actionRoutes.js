@@ -13,7 +13,7 @@ router.get('/', (req, res) => { // view all actions from 'actions' table
 router.post('/', (req, res) => { // add action to db 'actions'
   const action = req.body;
   if (!req.body.description) {
-    return res.status(400).json({ message: `ERROR: You must provide a description to submit a action.` });
+    return res.status(400).json({ message: `ERROR: You must provide a description to submit an action.` });
   }
   if (!req.body.project_id) {
     return res.status(400).json({ message: `ERROR: You must provide a project_id to submit a action.` });
