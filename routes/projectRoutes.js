@@ -2,10 +2,18 @@ const express = require('express');
 const router = express.Router();
 const projects = require('./projectModel');
 
+router.get('/', (req, res) => {
+  projects.find()
+    .then(project => {
+      res.status(200).json(project);
+    })
+    .catch(err => res.json(err));
+})
+
 router.get('/:id', (req, res) => { // view one project based off id and related actions
   const { id } = req.params;
 
-  projects.findById(id)
+  projects.find(id)
     .then(project => {
       if (project) {
         res.status(200).json(project);
