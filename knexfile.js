@@ -5,5 +5,8 @@ module.exports = {
       filename: './data/dev.sqlite3'
     },
     useNullAsDefault: true,
-  }
+    migrations: {
+      directory: './data/migrations'
+    }
+  },
 };
