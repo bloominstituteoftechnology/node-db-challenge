@@ -57,7 +57,22 @@ server.get('/actions', (req, res) => {
     });
 });
 
-
+server.get('/projects/:id', (req,res) => {
+    const id = req.params.id;
+    db('projects').where({id}).first()
+    .then(project => {
+        if(project) {
+            db('actions')
+            .where({ project_id: id })
+            .then(actions => {
+            project.actions = actions;
+            res.status(200).json(project);
+            })
+            .catch(err => res.status(500).json(err))
+        } 
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 const port = 5000;
 server.listen(port, function() {
