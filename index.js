@@ -112,5 +112,23 @@ server.post('/api/actions', (request, response) => {
     .catch( error => response.status(500).json(error) );
 });
 
+//DELETE proj
+server.delete('/api/projects/:id', (request, response) => {
+    const { id } = request.params;
+    if ( !id || id < 1 ) {
+        return response.status(400).json({ errorMessage: "The provided project id is invalid." })
+    }
+    db('project')
+    .where({ id })
+    .del()
+    .then( deleted => {
+        if (!deleted || deleted < 1) {
+            return response.json({errorMessage:"We were unable to delete a project with the specified id."})
+        }
+        response.json(deleted)
+    }
+    )
+    .catch(error => response.status(500).json(error))
+
 const port = "8000";
 server.listen(port, () => {console.log(`=*= Sprint Challenge Rolling on Port ${port}- =*=`)});
