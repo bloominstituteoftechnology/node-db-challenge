@@ -19,8 +19,8 @@ appServ.get('/', (req, res) => {
 });
 
 //Post for Adding Projects Endpoint
-server.post('/projects',(req, res) => {
-    const { project } = req.body;
+appServ.post('/projects',(req, res) => {
+    const {project} = req.body;
     if (!project) res.status(400).json({ error: 'Please provide a project' });
     db
       .insert({ project })
@@ -29,8 +29,16 @@ server.post('/projects',(req, res) => {
       .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
   });
 
-
-
+  //POST for Adding Actions Enpoint
+  appServ.post('/actions',(req, res) => {
+    const {action} = req.body;
+  
+    if (!action) res.status(400).json({ error: 'Please provide an action' });
+      db.insert({ action })
+      .into('actions')
+      .then(ids => res.status(201).json( ids ))
+      .catch(err => res.status(500).json({ error: 'Action not saved' }));
+  });
 
 
 
