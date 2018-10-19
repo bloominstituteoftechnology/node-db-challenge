@@ -47,6 +47,7 @@ router
 router.route("/projects/:id").get((req, res) => {
   const { id } = req.params;
   db("projects")
+    .first()
     .where({ id })
     .then(project => {
       if (!project || project < 1)
@@ -61,7 +62,10 @@ router.route("/projects/:id").get((req, res) => {
           "actions.completed"
         )
         .where({ project_id: id })
-        .then(actions => res.status(200).json([...project, { actions }]))
+        .then(actions => {
+          project.actions = actions;
+          res.status(200).json(project);
+        })
         .catch(err =>
           res.status(500).json({
             error:
