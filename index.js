@@ -107,7 +107,7 @@ server.post('/api/actions', (request, response) => {
         if ( !created || created.length < 1 ) {
             return response.status(400).json({ errorMessage: "Create failed" })
         }
-        response.status(201).json(created[0]);
+        response.status(201).json('action' created[0]);
     })
     .catch( error => response.status(500).json(error) );
 });
