@@ -27,7 +27,7 @@ server.get('/api/projects',(req,res)=>{
 server.get('/api/projects/:id',async(req,res)=>{
   try {
     const {id}= req.params;
-    const projects = await db('zoos').where({id}).first();
+    const projects = await db('projects').where({id}).first();
     if(projects){
       res.status(200).json(zoos);
     }
