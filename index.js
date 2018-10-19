@@ -27,6 +27,22 @@ server.get('/api/projects', (req, res) => {
     })
 });
 
+// read projects by id
+server.get('/api/projects/:id', (req, res) => {
+  const id = req.params.id;
+  db('projects').where({ id })
+    .then(project => {
+      if (project) {
+        res.status(200).json(project[0]);
+      } else {
+        res.status(404).json({ message: 'project not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
 // get all actions by project
 server.get('/api/projects/:id/actions', (req, res) => {
   const { id } = req.params;
@@ -52,6 +68,26 @@ server.post('/api/projects', (req, res) => {
       res.status(500).json(err);
     })
 });
+
+// update projects
+server.put('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+  const newProject = req.body;
+  db('projects')
+    .where({ id })
+    .update(newProject)
+    .then(project => {
+      if (!project || project < 1) {
+        res.status(404).json({ message: 'No records found to update' });
+      } else {
+        res.status(200).json(project);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
 
 
 // read all actions
