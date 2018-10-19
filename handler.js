@@ -16,8 +16,42 @@ router.get('/', (req, res) => {
                 res.status(200).json(projects)
             })
             .catch(err => res.status(500).json(err));
+})
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    modelHelpers
+        .getProjectsById(id)
+            .then(project => {
+                (project) ?
+                    res.status(200).json(project) :
+                    res.status(404).json({ error: `ID ${id} not found`});
+            })
+            .catch(err => res.status(500).json(err));
+})
+
+router.get('/actions', (req, res) => {
+    modelHelpers
+        .getActions()
+            .then(actions => {
+                res.status(200).json(actions)
+            })
+            .catch(err => res.status(500).json(err));
     
 })
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    modelHelpers
+        .getActionsById(id)
+            .then(action => {
+                (action) ?
+                    res.status(200).json(action) :
+                    res.status(404).json({ error: `ID ${id} not found`});
+            })
+            .catch(err => res.status(500).json(err));
+})
+
 // POST
 
 module.exports = router;
