@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
         return res.status(400).json({msg: 'please provide all required fields'});
     }
     actions
-        .add(newAction)
+        .insert(newAction)
         .then(response => {
             res.status(201).json(response);
         })
@@ -40,41 +40,22 @@ router.get('/', (req, res) => {
         });
 });
 
-
-
-// //get actions by id
-// router.get('/api/actions/:id', (req, res) => {
-//     const id = req.params.id;
-//     actions
-//         .get(id)
-//         .then(action => {
-//             if(!action) {
-//                 res.status(404).json({message: 'No Action with this ID exists'})
-//             } else {
-//                 res.status(200).send(action);
-//             }
-//         })
-//         .catch(err => {
-//             res.status(500).json({error: 'action can not be populated at this time'});
-//         });
-// });
-
-// //get actions by project id
-// router.get('/api/projects/:id/actions/', (req, res) => {
-//     const id = req.params.id;
-//     projects
-//     .getProjectActions(id)
-//     .then(actions => {
-//         if(!actions) {
-//             res.status(404).json({message:'no actions found for this project'});
-//         } else {
-//             res.status(200).send(actions);
-//         }
-//     })
-//     .catch(err => {
-//         res.status(500).json({message:'actions cannot be populated at this time.'});
-//     });
-// });
+//get actions by id
+router.get('/api/actions/:id', (req, res) => {
+    const id = req.params.id;
+    actions
+        .get(id)
+        .then(action => {
+            if(!action) {
+                res.status(404).json({message: 'No Action with this ID exists'})
+            } else {
+                res.status(200).send(action);
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: 'action can not be populated at this time'});
+        });
+});
 
 
 // //update action by id *** come back to check error handling

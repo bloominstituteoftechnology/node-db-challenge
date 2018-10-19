@@ -1,6 +1,7 @@
 const express = require('express');
 
 const projects = require('./pModels.js');
+const actions = require('./aModels.js');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.post('/', (req, res) => {
     const project = req.body;
   
     projects
-      .add(project)
+      .insert(project)
       .then(ids => {
         res.status(201).json(ids[0]);
       })
@@ -29,22 +30,37 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-// // get a cohort by id *
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
 
-//     const cohort = await cohorts.findById(id);
+router.get("/:id/actions", (req, res) => {
+  actions
+    .getProjectActions(req.params.id)
+    .then(action => {
+      if (action.length > 0) {
+        res.json(action);
+      } else
+        res.status(404).json({message:'no actions found for this project'});
+    })
+    .catch(err =>
+      res.status(500).json({message: 'actions cannot be populated at this time.'})
+    );
+});
 
-//     if (cohort) {
-//       res.status(200).json(cohort);
-//     } else {
-//       res.status(404).json({ message: 'cohort not found' });
-//     }
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
+// get a project by id *
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const project = await projects.findById(id);
+
+    if (project) {
+      res.status(200).json(project);
+    } else {
+      res.status(404).json({ message: 'project not found' });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 
 // // update cohorts  *
