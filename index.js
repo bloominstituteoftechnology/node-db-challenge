@@ -40,3 +40,29 @@ server.post('/api/projects', (request, response) => {
     })
     .catch( error => response.status(500).json(error) );
 });
+
+/// ---- READ Project By Id ----
+server.get('/api/projects/:id', (request, response) => {
+    
+    // Extract URL Parameter
+    const { id } = request.params;
+
+    if (!id || id < 1) {
+        return response.status(400).json({errorMessage: "Invalid project id. Please provide a valid project id."})
+    }
+
+    // Database Promise Methods
+    db('project as p')
+    .leftJoin('action as a', 
+    'a.project_id', 
+    'p.id')
+    .select('p.id as project_id', 
+    'p.name as project_name', 
+    'p.description as project_description', 
+    'p.complete as project_complete', 
+    'a.id', 
+    'a.description', 
+    'a.notes', 
+    'a.complete')
+    .where('p.id', id)
+    .then(project => { 
