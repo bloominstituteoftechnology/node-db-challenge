@@ -7,13 +7,13 @@ export function seed(knex, Promise) {
           id: 1,
           name: "Sprint Challenge: Week 12",
           description: "Challenge for the week",
-          completed: 0
+          completed: false
         },
         {
           id: 2,
           name: "Sprint Challenge: Week 11",
           description: "Challenge for the week",
-          completed: 0
+          completed: false
         }
       ]);
     });
