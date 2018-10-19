@@ -1,7 +1,15 @@
 {
   "dependencies": {
     "express": "^4.16.4",
+    "helmet": "^3.14.0",
     "knex": "^0.15.2",
-    "nodemon": "^1.18.4"
-  }
+    "nodemon": "^1.18.4",
+    "sqlite3": "^4.0.2"
+  },
+  "name": "y",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JGolden25/Sprint-Challenge-RDBMS.git",
+  "author": "Joseph Chretien-Golden <joechre@gmail.com>",
+  "license": "MIT"
 }
