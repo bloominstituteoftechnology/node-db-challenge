@@ -1,4 +1,4 @@
-exports.seed = function(knex, Promise) {
+export function seed(knex, Promise) {
   return knex("actions")
     .truncate()
     .then(function() {
@@ -29,4 +29,4 @@ exports.seed = function(knex, Promise) {
         }
       ]);
     });
-};
+}
