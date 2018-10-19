@@ -10,11 +10,13 @@ const router = express.Router();
 
 // GET
 router.get('/', (req, res) => {
-    getProjects()
-        .then(projects => {
-            res.status(200).json(projects)
-        })
-        .catch(err => res.status(500).json(err));
+    modelHelpers
+        .getProjects()
+            .then(projects => {
+                res.status(200).json(projects)
+            })
+            .catch(err => res.status(500).json(err));
+    
 })
 // POST
 
