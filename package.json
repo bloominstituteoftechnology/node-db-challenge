@@ -4,5 +4,11 @@
   "main": "index.js",
   "repository": "https://github.com/Xarfo/Sprint-Challenge-RDBMS.git",
   "author": "Abdul Ahmad",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
 }
