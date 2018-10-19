@@ -54,4 +54,24 @@ router.get('/:id', (req, res) => {
 
 // POST
 
+router.post('/', (req, res) => {
+    const newProject = req.body;
+    modelHelpers
+        .postProject(newProject)
+            .then(projectId => {
+                res.status(200).json(id);
+            })
+            .catch(err => res.status(500).json);
+})
+
+router.post('/actions', (req, res) => {
+    const newAction = req.body;
+    modelHelpers
+        .postAction(newAction)
+            .then(actionId => {
+                res.status(200).json(id);
+            })
+            .catch(err => res.status(500).json);
+})
+
 module.exports = router;

@@ -11,8 +11,8 @@ module.exports = {
     getActions,
     getProjectsById,
     getActionsById,
-    postProjects,
-    postActions
+    postProject,
+    postAction
 }
 
 function getProjects() {
@@ -35,13 +35,13 @@ function getActionsById(id) {
         .first();
 }
 
-function postProjects(project) {
+function postProject(project) {
     return db('projects')
         .insert(project)
         .into('projects');
 }
 
-function postActions(action) {
+function postAction(action) {
     return db('actions')
         .insert(action)
         .into('actions');
