@@ -3,6 +3,8 @@
 You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
 
 1.  Explain the difference between `RDBMS` and `SQL`.
+ SQL or Structured Query Language is a language used to communicate with a RDBMS or Relational Database Management System.
+
 1.  Why do tables need a `primary key`?
 1.  What is the name given to a table column that references the primary key
     on another table.
