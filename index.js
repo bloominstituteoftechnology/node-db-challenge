@@ -27,6 +27,19 @@ server.get('/api/projects', (req, res) => {
     })
 });
 
+// get all actions by project
+server.get('/api/projects/:id/actions', (req, res) => {
+  const { id } = req.params;
+  db('actions')
+    .where({ project_id: id })
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
 // create projects
 server.post('/api/projects', (req, res) => {
   const project = req.body;
@@ -52,7 +65,7 @@ server.get('/api/actions', (req, res) => {
     })
 });
 
-// create projects
+// create actions
 server.post('/api/actions', (req, res) => {
   const action = req.body;
   db.insert(action)
