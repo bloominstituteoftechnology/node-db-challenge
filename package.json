@@ -1,0 +1,20 @@
+{
+	"name": "rdbms",
+	"version": "1.0.0",
+	"description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
+	"main": "index.js",
+	"scripts": {
+		"server": "nodemon"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/micah-shrak/Sprint-Challenge-RDBMS.git"
+	},
+	"keywords": [],
+	"author": "Lavon",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/micah-shrak/Sprint-Challenge-RDBMS/issues"
+	},
+	"homepage": "https://github.com/micah-shrak/Sprint-Challenge-RDBMS#readme"
+}
