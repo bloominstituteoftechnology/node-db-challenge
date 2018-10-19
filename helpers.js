@@ -4,8 +4,6 @@ const knexConfig = require('./knexfile.js');
 // using knex to configure the knex init file
 const db = knex(knexConfig.development);
 
-
-
 // exports for helpers
 
 module.exports = {
