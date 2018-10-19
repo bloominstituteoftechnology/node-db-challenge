@@ -1,0 +1,26 @@
+{
+  "name": "rdbms-sprint-challenge",
+  "version": "1.0.0",
+  "description": "The sprint to end SQL week",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blokboy/Sprint-Challenge-RDBMS.git"
+  },
+  "author": "Jordan Marsaw, <jordan@bloklabs.org>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.1",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
