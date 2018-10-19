@@ -7,7 +7,7 @@ const server = express();
 
 // MIDDLEWARE
 server.use(express.json());
-server.use(helemet());
+server.use(helmet());
 
 // PORT
 const port = 3400;
