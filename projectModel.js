@@ -12,29 +12,29 @@ module.exports = {
 };
 
 function find() {
-  return db("courses");
+  return db("projects");
 }
 
 function findById(id) {
-  return db("courses")
+  return db("projects")
     .where({ id })
     .first();
 }
 
 function add(course) {
-  return db("courses")
+  return db("projects")
     .insert(course)
-    .into("courses");
+    .into("projects");
 }
 
 function update(id, changes) {
-  return db("courses")
+  return db("projects")
     .where({ id })
     .update(changes);
 }
 
 function remove(id) {
-  return db("courses")
+  return db("projects")
     .where({ id })
     .del();
 }

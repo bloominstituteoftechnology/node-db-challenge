@@ -4,7 +4,7 @@
   "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,8 @@
     "express": "^4.16.4",
     "helmet": "^3.14.0",
     "knex": "^0.15.2",
-    "sqlite3": "^4.0.2"
-  },
-  "devDependencies": {
+    "sqlite3": "^4.0.2",
     "nodemon": "^1.18.4"
   }
+
 }

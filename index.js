@@ -1,9 +1,8 @@
 const express = require("express");
 const helmet = require("helmet");
-
-const coursesRoutes = require("./courses/coursesRoutes.js");
-
 const server = express();
+const PORT = process.env.PORT || 9000;
+const projectsRoutes = require("./projectsRoutes.js");
 
 server.use(helmet());
 server.use(express.json());
@@ -13,6 +12,8 @@ server.get("/", (req, res) => {
   res.send("It's Alive");
 });
 
-server.use("/api/courses", coursesRoutes);
+server.use("/api/projects", projectsRoutes);
 
-server.listen(9000, () => console.log("\nAPI running on 9k\n"));
+server.listen(PORT, () =>
+  console.log("\nAPI running on http://localhost:${PORT} ===\n")
+);
