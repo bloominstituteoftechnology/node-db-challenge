@@ -46,7 +46,7 @@ server.get('/api/projects/:id', (request, response) => {
         return response.status(400).json({errorMessage: "Project Id invalid"})
     }
 
-    // promises 
+    // promises
     db('project as p')
     .leftJoin('action as a',
     'a.project_id',
@@ -85,7 +85,7 @@ server.get('/api/projects/:id', (request, response) => {
 
 // CREATE action
 server.post('/api/actions', (request, response) => {
-    // Deconstruct Request Body
+
     let { description, notes, complete, project_id } = request.body;
 
     if ( !description || description.length < 4 || !project_id || project_id < 1 ) {
