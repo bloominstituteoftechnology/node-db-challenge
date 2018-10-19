@@ -3,7 +3,7 @@ const db = require("./projectsModels.js");
 const router = express.Router();
 
 router
-  .route("/projects")
+  .route("/")
   .get((req, res) => {
     db.getProjects()
       .then(projects => res.status(201).json(projects))
@@ -22,7 +22,7 @@ router
       );
   });
 
-router.route("/projects/:id").get((req, res) => {
+router.route("/:id").get((req, res) => {
   const { id } = req.params;
   db.getProjectById(id)
     .then(project => {

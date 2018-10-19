@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
     t.boolean("completed");
   });
 };
+
 exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists("projects");
 };
