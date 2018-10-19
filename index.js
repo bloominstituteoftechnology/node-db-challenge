@@ -148,6 +148,44 @@ server.post('/api/actions', (req, res) => {
     })
 });
 
+// update actions
+server.put('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
+  const newAction = req.body;
+  db('actions')
+    .where({ id })
+    .update(newAction)
+    .then(action => {
+      if (!action || action < 1) {
+        res.status(404).json({ message: 'No records found to update' });
+      } else {
+        res.status(200).json(action);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
+// delete actions
+server.delete('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
+  db('actions')
+    .where({ id })
+    .del()
+    .then(action => {
+      if (!action || action < 1) {
+        res.status(404).json({ message: 'No records found to delete' });
+      } else {
+        res.status(200).json(action);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
+
 
 
 // listening port
