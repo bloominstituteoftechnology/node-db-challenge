@@ -119,6 +119,22 @@ server.get('/api/actions', (req, res) => {
     })
 });
 
+// read actions by id
+server.get('/api/actions/:id', (req, res) => {
+  const id = req.params.id;
+  db('actions').where({ id })
+    .then(action => {
+      if (action) {
+        res.status(200).json(action[0]);
+      } else {
+        res.status(404).json({ message: 'action not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
 // create actions
 server.post('/api/actions', (req, res) => {
   const action = req.body;
