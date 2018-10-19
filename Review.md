@@ -19,5 +19,6 @@ Primary keys are necessary as main indentifiers of every stored record in a tabl
 
 1.  What SQL statement is used to retrieve data from a table?
 SELECT * FROM [TABLENAME]
+
 1.  What SQL clause is used to filter the results of a query?
 using the WHERE clause filters the results of a TABLE depending on the clause

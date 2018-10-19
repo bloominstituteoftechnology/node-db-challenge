@@ -5,7 +5,16 @@
     "knex": "^0.15.2",
     "sqlite3": "^4.0.2"
   },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "devDependencies": {
     "nodemon": "^1.18.4"
-  }
+  },
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/verydecent/Sprint-Challenge-RDBMS.git",
+  "author": "verydecent <wnjhwng@gmail.com>",
+  "license": "MIT"
 }
