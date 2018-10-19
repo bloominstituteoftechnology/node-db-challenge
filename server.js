@@ -13,6 +13,10 @@ const appServ = express();
 //cors and helmet middlewares are not used
 appServ.use(express.json(), logger('combined'), cors(), helmet());
 
+//Import(require) knexfile & Instantiate a database object using knex
+const knexConfig = require('./knexfile.js');
+const db = knex(knexConfig.development);
+
 //Root Request/Route Handler
 appServ.get('/', (req, res) => {
     res.send('Test for root endpoint!')
