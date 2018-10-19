@@ -24,8 +24,8 @@ appServ.get('/', (req, res) => {
 
 //Post for Adding Projects Endpoint
 appServ.post('/api/projects',(req, res) => {
-    const {name, description} = req.body;
-    const project = {name, description};
+    const {name, description, completed} = req.body;
+    const project = {name, description, completed};
     if (!project) res.status(400).json({ error: 'Please provide a project' });
       db.insert(project)
         .into('projects')
@@ -45,21 +45,30 @@ appServ.post('/api/projects',(req, res) => {
       .         catch(err => res.status(500).json({ error: 'Action not           saved' }));
   });
 
-  //GET for Retrieving a Project by It's Id
-  appServ.get('/api/projects/:id', (req, res) => {
-    const { id } =  req.params.id;
-       db('projects')
-       .select()
-            .where({ id })
-                .then(projects => {
-                    if(project) {
-                        res.status(200).json(projects);
-                    } else {
-                            res.status(404).json({error: 'Cannot retrieve project with specified ID'});
-            }
-        })
-        .catch(error => res.status(500).json({ error: 'Cannot retrieve project information'}));
-     });
+
+// get project by ID
+   appServ.get('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+     db('projects')
+        .where('id', id)
+            .then(project => {
+                if(!project) {
+                    res.status(404).json({error: `Could not find project with ID ${id}`})
+        }
+        db('actions')
+            .where('project_id', id)
+                .then(actions => {
+                    project[0].actions = actions;
+            
+                        res.status(200).json(project)
+         })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(500).json({error: `An error occured retrieving project ${id}.`})
+        });
+    });
+});
+
 
 
      //Stretch Endpoints
@@ -71,6 +80,15 @@ appServ.post('/api/projects',(req, res) => {
          .catch(err => res.status(500).json({ error: 'Actions not retrieved'}));
       });
     
+
+    //projects endpoints
+    appServ.get('/api/projects', (req, res) => {
+    db('projects') 
+     .then(projects => res.status(200).json(projects))
+     .catch(err => res.status(500).json( `${err}: 'Projects cannot be retrieved'`));
+    });  
+
+
 //Port & Port Listener
 const port = 6000;
 appServ.listen(port, () => console.log(`\n Listening on ${port}`));
