@@ -8,7 +8,6 @@ const db = knex(knexConfig.development);
 
 module.exports = {
     getProjects,
-    getActions,
     getProjectsById,
     getActionsById,
     postProject,
@@ -19,10 +18,6 @@ function getProjects() {
     return db('projects');
 }
 
-function getActions() {
-    return db('actions');
-}
-
 function getProjectsById(id) {
     return db('projects')
         .where({ id })
@@ -31,8 +26,7 @@ function getProjectsById(id) {
 
 function getActionsById(id) {
     return db('actions')
-        .where({ id })
-        .first();
+        .where({ project_id: id })
 }
 
 function postProject(project) {

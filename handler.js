@@ -24,30 +24,13 @@ router.get('/:id', (req, res) => {
         .getProjectsById(id)
             .then(project => {
                 (project) ?
-                    res.status(200).json(project) :
-                    res.status(404).json({ error: `ID ${id} not found`});
-            })
-            .catch(err => res.status(500).json(err));
-})
-
-router.get('/actions', (req, res) => {
-    modelHelpers
-        .getActions()
-            .then(actions => {
-                res.status(200).json(actions)
-            })
-            .catch(err => res.status(500).json(err));
-    
-})
-
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    modelHelpers
-        .getActionsById(id)
-            .then(action => {
-                (action) ?
-                    res.status(200).json(action) :
-                    res.status(404).json({ error: `ID ${id} not found`});
+                    modelHelpers
+                        .getActionsById(id)
+                        .then(actions => {
+                            project.actions = actions;
+                            res.status(200).json(project)
+                        }) :
+                        res.status(404).json({ error: `ID ${id} not found`});
             })
             .catch(err => res.status(500).json(err));
 })
@@ -59,7 +42,7 @@ router.post('/', (req, res) => {
     modelHelpers
         .postProject(newProject)
             .then(projectId => {
-                res.status(200).json(id);
+                res.status(200).json(projectId);
             })
             .catch(err => res.status(500).json);
 })
@@ -69,7 +52,7 @@ router.post('/actions', (req, res) => {
     modelHelpers
         .postAction(newAction)
             .then(actionId => {
-                res.status(200).json(id);
+                res.status(200).json(actionId);
             })
             .catch(err => res.status(500).json);
 })
