@@ -41,6 +41,32 @@ server.post('/api/projects', (req, res) => {
 });
 
 
+// read all actions
+server.get('/api/actions', (req, res) => {
+  db('actions')
+    .then(actions => {
+      res.status(200).json(actions);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
+// create projects
+server.post('/api/actions', (req, res) => {
+  const action = req.body;
+  db.insert(action)
+    .into('actions')
+    .then(id => {
+      res.status(201).json(id);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
+
+
 // listening port
 const port = 5000;
 server.listen(port, function() {
