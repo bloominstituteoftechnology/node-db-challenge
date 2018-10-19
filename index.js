@@ -98,7 +98,7 @@ server.post('/api/actions', (request, response) => {
         complete = false;
     }
 
-     New Project Object
+     //New Project Object
     const newAction = { project_id, description, notes, complete }; //new prom obj
 
     db.insert(newAction)
