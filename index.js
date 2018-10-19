@@ -88,6 +88,24 @@ server.put('/api/projects/:id', (req, res) => {
     })
 });
 
+// delete projects
+server.delete('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+  db('projects')
+    .where({ id })
+    .del()
+    .then(project => {
+      if (!project || project < 1) {
+        res.status(404).json({ message: 'No records found to delete' });
+      } else {
+        res.status(200).json(project);
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
+});
+
 
 
 // read all actions
