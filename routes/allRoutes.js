@@ -2,12 +2,13 @@ const express = require("express");
 const knex = require("knex");
 const knexConfig = require("../knexfile.js");
 const db = knex(knexConfig.development);
+const db = require("./access.js");
 const router = express.Router();
 
 router
   .route("/projects")
   .get((req, res) => {
-    db("projects")
+    db.getProjects()
       .then(projects => res.status(201).json(projects))
       .catch(err =>
         res.status(500).json({ error: "The project(s) could not be found." })
@@ -15,7 +16,7 @@ router
   })
   .post((req, res) => {
     const project = req.body;
-    db.insert(project)
+    db.addProject(project)
       .into("projects")
       .then(newProject => res.status(201).json(newProject))
       .catch(err =>
@@ -28,7 +29,7 @@ router
 router
   .route("/actions")
   .get((req, res) => {
-    db("actions")
+    db.getActions()
       .then(actions => res.status(201).json(actions))
       .catch(err =>
         res.status(500).json({ error: "The action(s) could not be found." })
@@ -36,7 +37,7 @@ router
   })
   .post((req, res) => {
     const action = req.body;
-    db.insert(action)
+    db.addAction(action)
       .into("actions")
       .then(newAction => res.status(201).json(newAction))
       .catch(err =>
@@ -48,15 +49,14 @@ router
 
 router.route("/projects/:id").get((req, res) => {
   const { id } = req.params;
-  db("projects")
-    .first()
-    .where({ id })
+  db.getProjectById(id)
     .then(project => {
       if (!project || project < 1)
         return res.status(404).json({
           error: "A project with that ID could not be found at this time."
         });
-      return db("actions")
+      return db
+        .addActionsToProject(id)
         .select(
           "actions.id",
           "actions.description",
