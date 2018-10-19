@@ -17,3 +17,25 @@ appServ.use(express.json(), logger('combined'), cors(), helmet());
 appServ.get('/', (req, res) => {
     res.send('Test for root endpoint!')
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Port & Port Listener
+const port = 6000;
+appServ.listen(port, () => console.log(`\n Listening on ${port}`));
