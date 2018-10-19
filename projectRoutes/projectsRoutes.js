@@ -3,7 +3,7 @@ const db = require("./projectsModels.js");
 const router = express.Router();
 
 router
-  .route("/")
+  .route("/projects")
   .get((req, res) => {
     db.getProjects()
       .then(projects => res.status(201).json(projects))
@@ -14,7 +14,6 @@ router
   .post((req, res) => {
     const project = req.body;
     db.addProject(project)
-      .into("projects")
       .then(newProject => res.status(201).json(newProject))
       .catch(err =>
         res
@@ -23,7 +22,7 @@ router
       );
   });
 
-router.route("/:id").get((req, res) => {
+router.route("/projects/:id").get((req, res) => {
   const { id } = req.params;
   db.getProjectById(id)
     .then(project => {

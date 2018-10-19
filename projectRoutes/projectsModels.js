@@ -15,6 +15,7 @@ function getProjectById(id) {
     .first()
     .where({ id });
 }
+
 function addActionsToProject(id) {
   return db("actions")
     .select(
@@ -25,6 +26,7 @@ function addActionsToProject(id) {
     )
     .where({ project_id: id });
 }
+
 module.exports = {
   getProjects,
   addProject,
