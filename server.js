@@ -23,28 +23,30 @@ appServ.get('/', (req, res) => {
 });
 
 //Post for Adding Projects Endpoint
-appServ.post('/projects',(req, res) => {
-    const {project} = req.body;
+appServ.post('/api/projects',(req, res) => {
+    const {name, description} = req.body;
+    const project = {name, description};
     if (!project) res.status(400).json({ error: 'Please provide a project' });
-      db.insert({ project })
+      db.insert(project)
         .into('projects')
             .then(ids => res.status(201).json( ids))
                 .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
   });
 
   //POST for Adding Actions Enpoint
-  appServ.post('/actions',(req, res) => {
-    const {action} = req.body;
+  appServ.post('/api/actions',(req, res) => {
+    const {description, notes, project_id} = req.body;
+    const action = {description, notes, project_id};
   
     if (!action) res.status(400).json({ error: 'Please provide an action' });
-      db.insert({ action })
+      db.insert(action)
         .into('actions')
             .then(ids => res.status(201).json( ids ))
       .         catch(err => res.status(500).json({ error: 'Action not           saved' }));
   });
 
   //GET for Retrieving a Project by It's Id
-  appServ.get('/projects/:id', (req, res) => {
+  appServ.get('/api/projects/:id', (req, res) => {
     const { id } =  req.params.id;
        db('projects')
        .select()
@@ -60,6 +62,15 @@ appServ.post('/projects',(req, res) => {
      });
 
 
+     //Stretch Endpoints
+
+     appServ.get('/api/actions', (req, res) => {
+        db('actions')
+         .then(actions => 
+          res.status(200).json(actions))
+         .catch(err => res.status(500).json({ error: 'Actions not retrieved'}));
+      });
+    
 //Port & Port Listener
 const port = 6000;
 appServ.listen(port, () => console.log(`\n Listening on ${port}`));

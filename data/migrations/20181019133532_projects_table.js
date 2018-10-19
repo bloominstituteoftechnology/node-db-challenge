@@ -1,10 +1,10 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable('cohorts', tbl => {
+    return knex.schema.createTable('projects', tbl => {
        
         tbl.increments('id');
         tbl.string('name', 255).notNullable();
         tbl.string('description', 255);
-        tbl.boolean('completed')
+        tbl.boolean('completed').defaultTo(false);
     });
   };
   
