@@ -18,8 +18,16 @@ appServ.get('/', (req, res) => {
     res.send('Test for root endpoint!')
 });
 
-
-
+//Post for Adding Projects Endpoint
+server.post('/projects',(req, res) => {
+    const { project } = req.body;
+    if (!project) res.status(400).json({ error: 'Please provide a project' });
+    db
+      .insert({ project })
+      .into('projects')
+      .then(ids => res.status(201).json( ids))
+      .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
+  });
 
 
 
