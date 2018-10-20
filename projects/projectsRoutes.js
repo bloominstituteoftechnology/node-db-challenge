@@ -43,7 +43,31 @@ router.get('/:id', (req, res) => {
     })
 });
 
+// read projects by id (async try catch)
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
 
+//     const project = await db('projects')
+//       .where({ id })
+//       .first();
+
+//     if (project) {
+//       const actions = await db('actions')
+//         .where({ project_id: id });
+//         project.actions = actions;
+
+//         // or one line it
+//         // project.actions = await db('actions').where({ project_id: id });
+
+//         res.status(200).json(project);
+//     } else {
+//       res.status(404).json({ message: 'project not found' });
+//     }
+//   } catch (err) {
+//     res.json(err); 
+//   }
+// });
 
 // get all actions by project
 router.get('/:id/actions', (req, res) => {
