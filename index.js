@@ -1,10 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
-const knex = require('knex');
 
-const knexConfig = require('./knexfile');
-
-const db = knex(knexConfig.development);
+const projectsRoutes = require('./projects/projectsRoutes');
 
 const server = express();
 
@@ -15,97 +12,6 @@ server.use(helmet());
 server.get('/', (req, res) => {
   res.send('It is working!');
 });
-
-// read all projects
-server.get('/api/projects', (req, res) => {
-  db('projects')
-    .then(projects => {
-      res.status(200).json(projects);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
-// read projects by id
-server.get('/api/projects/:id', (req, res) => {
-  const id = req.params.id;
-  db('projects').where({ id })
-    .then(project => {
-      if (project) {
-        res.status(200).json(project[0]);
-      } else {
-        res.status(404).json({ message: 'project not found' });
-      }
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
-// get all actions by project
-server.get('/api/projects/:id/actions', (req, res) => {
-  const { id } = req.params;
-  db('actions')
-    .where({ project_id: id })
-    .then(actions => {
-      res.status(200).json(actions);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
-// create projects
-server.post('/api/projects', (req, res) => {
-  const project = req.body;
-  db.insert(project)
-    .into('projects')
-    .then(id => {
-      res.status(201).json(id);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
-// update projects
-server.put('/api/projects/:id', (req, res) => {
-  const { id } = req.params;
-  const newProject = req.body;
-  db('projects')
-    .where({ id })
-    .update(newProject)
-    .then(project => {
-      if (!project || project < 1) {
-        res.status(404).json({ message: 'No records found to update' });
-      } else {
-        res.status(200).json(project);
-      }
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
-// delete projects
-server.delete('/api/projects/:id', (req, res) => {
-  const { id } = req.params;
-  db('projects')
-    .where({ id })
-    .del()
-    .then(project => {
-      if (!project || project < 1) {
-        res.status(404).json({ message: 'No records found to delete' });
-      } else {
-        res.status(200).json(project);
-      }
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    })
-});
-
 
 
 // read all actions
@@ -124,10 +30,10 @@ server.get('/api/actions/:id', (req, res) => {
   const id = req.params.id;
   db('actions').where({ id })
     .then(action => {
-      if (action) {
+      if (action.id) {
         res.status(200).json(action[0]);
       } else {
-        res.status(404).json({ message: 'action not found' });
+        res.status(404).json('error');
       }
     })
     .catch(err => {
@@ -185,7 +91,7 @@ server.delete('/api/actions/:id', (req, res) => {
     })
 });
 
-
+server.use('/api/projects', projectsRoutes);
 
 
 // listening port
