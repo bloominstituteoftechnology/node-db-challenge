@@ -53,22 +53,22 @@ server.post('/api/actions', (req, res) => {
 server.get('/api/projects/:id', (req, res) => {
     const { id } = req.params;
     const projectId = { id };
-     db('projects')
-     .where(projectId)
-     .first()
-     .then(project => {
-         res.json(project)
-     } )
-     db('actions')
-     .select('actions.description', 'actions.notes', 'actions.complete', 'actions.project_id' )
-     .where({'project_id' : 'id'})
-     .then(actions => {
-     res.status(200).json(actions)
+    const noid = req.params.id;
+    db('projects').where(projectId).first()
+    .then(project => {
+        if(!project){
+            res.status(404)
+        }
+    db('actions').where('project_id', noid)
+    .then(actions => {
+        project.actions = actions
+        res.json(project)
+        })
     })
     .catch(err => {
-      res.send(err.message)
+        res.send(err.message)
     })
-  })
+ });
 
 
 
