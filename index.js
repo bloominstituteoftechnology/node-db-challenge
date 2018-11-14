@@ -61,6 +61,38 @@ server.get('/projects/:id', (req, res) => {
     });
   })
 
+  server.put('/projects/:id', (req, res) => {
+    const project = req.body;
+    db('projects')
+      .where({ id: req.params.id })
+      .update(project)
+      .then(project => {
+        if (project) {
+          res.status(200).json({ message: "Successfully Updated." });
+        } else {
+          res.status(404).json({ message: "No project associated with this ID" });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: "Sorry, we could not update this project." });
+      });
+  });
+
+  server.delete('/projects/:id', (req, res) => {
+    db('projects')
+      .where({ id: req.params.id })
+      .del()
+      .then(count => {
+        if (count) {
+          res.status(204).end();
+        } else {
+          res.status(404).json({ message: "No project associated with this ID" });
+        }
+      })
+      .catch(err => res.status(500).json(err));
+  });
+
+
   server.get('/actions', (req, res) => {
     db('actions')
     .then(actions => {
@@ -70,6 +102,17 @@ server.get('/projects/:id', (req, res) => {
     .catch(err => {
       res.status(500).json(err)
     });
+  });
+
+  server.get('/actions/:id', (req, res) => {
+    db('actions')
+      .where({ id: req.params.id })
+      .first()
+      .then(actions => {
+        res.status(200).json(actions);
+      })
+      .catch(err => 
+      res.status(500).json(err));
   });
 
   server.post('/actions', (req, res) => {
@@ -84,6 +127,40 @@ server.get('/projects/:id', (req, res) => {
       res.status(500).json(err)
     });
   })
+
+  server.put('/actions/:id', (req, res) => {
+    const action = req.body;
+    db('actions')
+      .where({ id: req.params.id })
+      .update(action)
+      .then(action => {
+        if (action) {
+          res.status(200).json({ message: "Successfully Updated." });
+        } else {
+          res.status(404).json({ message: "No action associated with this ID" });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: "Sorry, we could not update this cohort." });
+      });
+  });
+
+  server.delete('/actions/:id', (req, res) => {
+    db('actions')
+      .where({ id: req.params.id })
+      .del()
+      .then(count => {
+        if (count) {
+          res.status(204).end();
+        } else {
+          res.status(404).json({ message: "No cohort associated with this ID" });
+        }
+      })
+      .catch(err => res.status(500).json(err));
+  });
+
+
+
 
 
 
