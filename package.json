@@ -1,0 +1,28 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusufnafey/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yusufnafey/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/yusufnafey/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "knex": "^0.15.2",
+    "sqlite3": "^4.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}

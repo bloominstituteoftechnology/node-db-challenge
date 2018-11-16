@@ -11,7 +11,7 @@ Tables need primary keys so each row can be uniquely identified. If there is mor
 
 
 3.  What is the name given to a table column that references the primary key on another table.
-Not 100% sure about this, but I believe one to one relationship.
+When a table column references to the primary key on another table, it's called a foreign key.
 
 
 4.  What do we need in order to have a _many to many_ relationship between two tables.
@@ -19,7 +19,7 @@ For a many to many relationship between two tables, you need a table that holds 
 
 
 5.  What SQL statement is used to retrieve data from a table?
-To retrieve data from a table, use SELECT.
+To retrieve data from a table, use SELECT and FROM.
 
 
 6.  What SQL clause is used to filter the results of a query?
