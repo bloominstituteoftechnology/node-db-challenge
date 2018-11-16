@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
   const actionData = req.body;
   try {
     const id = await db.insert(actionData).into('actions');
-    res.status(201).json(id);
+    const action = await db('actions').where({ id: id[0] });
+    res.status(201).json(action);
   } catch (error) {
     res.status(500).json({ error: 'There was an error creating that action.' });
   }
