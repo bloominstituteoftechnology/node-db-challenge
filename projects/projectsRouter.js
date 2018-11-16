@@ -41,7 +41,8 @@ router.get('/api/projects/:projectId', async (req, res) => {
     .then(action => {
       db.getProject(projectId)
         .then(project => {
-          res.status(200).json({ project[0], actions: action });
+          foundProject = project[0];
+          res.status(200).json({ ...foundProject, actions: action });
         })
         .catch(_ => {
           res.status(404).json({ message: '404 project not found' });
