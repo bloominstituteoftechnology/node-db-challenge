@@ -1,13 +1,12 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('projects').truncate()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('projects').insert([
+        {name: "Complete Gatsby refactor of UI project", description: "A list of additional goals", completed: false},
+        {name: "Complete Pro Gatsby Course", description: "Watch videos and personalize project", completed: false},
       ]);
     });
 };
