@@ -3,7 +3,9 @@ const db = require('../dbConfig');
 module.exports = {
   get,
   getWithActions,
-  insert
+  insert,
+  update,
+  remove
 };
 
 function get(id) {
@@ -12,14 +14,24 @@ function get(id) {
   return query;
 }
 
-function getWithActions(id, Promise) {
-  // const project = db('project').where('id', id);
-  const actions = db('action').where('project_id', id);
-  return actions
+function getWithActions(id) {
+  return db('action')
+    .select('id', 'description', 'notes', 'completed')
+    .where({ project_id: Number(id) });
 }
 
 function insert(project) {
   return db('project').insert(project);
 }
 
-// getWithActions(13).then(res => console.log(res))
+function update(id, project) {
+  return db('project')
+    .where({ id: Number(id) })
+    .update(project);
+}
+
+function remove(id) {
+  return db('project')
+    .where({ id: Number(id) })
+    .del();
+}
