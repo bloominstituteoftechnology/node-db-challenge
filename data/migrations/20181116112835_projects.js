@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
     table.increments('id'); 
     
     table.string('name', 255);
-    table.string('description', 255);
-    table.integer('complete');
+    table.string('details', 255);
+    table.integer('finished');
     table.timestamps(true, true)
   })
 };

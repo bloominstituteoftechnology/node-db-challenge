@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
 
   return knex.schema.createTable('actions', table => {
 
-    table.increments(); 
+    table.increments('id'); 
     
     table.string('description', 255);
     table.string('notes', 255);
@@ -12,11 +12,11 @@ exports.up = function(knex, Promise) {
 
     // table.integer('project_id');
     table
-      // .integer('project_id')
+      .integer('project_id')
       // .unsigned()
       .foreign('id')
-      .references('project_id')
-      .inTable('projects');
+      .references('projects.id')
+      // .inTable('projects');
   })
 };
 

@@ -40,9 +40,9 @@ server.get('/', (req, res) => {
 
 // PROJECTS: POST
 server.post('/api/projects', nameCheck, (req, res) => {
-  const { name, description, complete } = req.body;
+  const { name, details, finished } = req.body;
   
-  const project = { name, description, complete };
+  const project = { name, details, finished };
 
   db('projects')
     .insert(project)
@@ -88,11 +88,18 @@ server.get('/api/projects/:id', (req, res) => {
 
 server.get('/api/projects/:id/actions', (req, res) => {
   const { id } = req.params;
-
-  db('projects')
-    .join('actions', 'projects.id', '=', 'actions.project_id')
+  db('actions')
+    .join('projects', 'projects.id', '=', 'actions.project_id')
     .select('*')
-    .then(actions => res.status(200).json(actions.filter(action => action.project_id === `${id}` / 1)))
+    .then(actions => res.status(200).json( { 
+      projects: { 
+        id: actions[id].id, 
+        name: actions[id].name, 
+        details: actions[id].details, 
+        finished: actions[id].finished 
+      }, 
+      actions: 
+        actions.filter(action => action.project_id === `${id}` / 1) } ))
     .catch(err => res.status(500).json({
       err
     }));
@@ -102,16 +109,18 @@ server.get('/api/projects/:id/actions', (req, res) => {
 // ACTIONS: POST
 
 server.post('/api/actions', (req, res) => {
-  // const { description, notes, complete, project_id } = req.body;
+  const { description, notes, complete, project_id } = req.body;
   // console.log(description, notes, complete, project_id)
-  // const action = { description, notes, complete, project_id };
+  const action = { description, notes, complete, project_id };
   // console.log(description, action)
-  const action = req.body
+  // const { action } = req.body
   console.log(action)
   db('actions')
     .insert(action)
-    .then(ids => {; 
-      res.status(200).json( { id: ids[0] } );//201 or 200
+    .then(ids => { 
+      // res.status(200).json( { id: ids[0] } );//201 or 200
+    res.status(200).json( { id: ids[0] } );//201 or 200
+
     })
     .catch(err => {
       res.status(500).json({ message: 'Error inserting', err })
@@ -133,7 +142,7 @@ server.get('/api/actions', (req, res) => {
 
 server.get('/api/actions/:id', (req, res) => {
   const { id } = req.params;
-
+  console.log(id)
   db('actions')
     .where({ id: id })
     .then(actions =>
