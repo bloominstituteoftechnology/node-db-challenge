@@ -3,6 +3,12 @@ exports.up = function(knex, Promise) {
   return knex.shema.createTable('actions', tbl => {
       tbl
       .increments()
+
+      tbl
+      .integer('projectId')
+      .unsigned()
+      .references('id')
+      .inTable('projects')
       
       tbl
       .string('description', 1000)
