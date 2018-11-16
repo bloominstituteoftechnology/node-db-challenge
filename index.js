@@ -55,10 +55,17 @@ server.post('/api/actions', (req, res) => {
 //GET project by id
 server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
-  db('projects')
+  return db('projects')
     .where({ id })
+    .first()
     .then(project => {
       if (project) {
+        db('actions')
+          .where({ project_id: id })
+          .then(actions => {
+            project.actions = actions;
+            return project;
+          });
         res.status(200).json(project);
       } else {
         res.status(404) >
