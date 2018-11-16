@@ -16,6 +16,10 @@ function addProject(project) {
     return db('projects').insert(project).into('projects');
 }
 
+function deleteProject(id) {
+    return db('projects').where({'id': id}).del();
+}
+
 // Actions Helpers --------------------------------------------------------------------------------------------------------------
 function getActions(id) {
     if (!id) {
@@ -29,4 +33,8 @@ function addAction(action) {
     return db('actions').insert(action).into('actions');
 }
 
-module.exports = {getProjects, getProject, addProject, getActions, addAction}
+function deleteAction(id) {
+    return db('actions').where({'id': id}).del();
+}
+
+module.exports = {getProjects, getProject, addProject, deleteProject, getActions, addAction, deleteAction}

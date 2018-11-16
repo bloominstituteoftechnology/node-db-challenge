@@ -59,6 +59,21 @@ server.get('/api/projects', (req, res) => {
         })
 })
 
+server.delete('/api/projects/:id', (req, res) => {
+    db.deleteProject(req.params.id)
+        .then(count => {
+            if (count) {
+                res.status(200).json(count);
+            }
+            else {
+                res.status(404).json({message: "The project with the specified ID does not exist."});
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: "The project could not be removed"});
+        })
+})
+
 // Actions API ---------------------------------------------------------------------------------------------------------------
 server.post('/api/actions', (req, res) => {
     const {description, notes, projectId} = req.body;
@@ -82,6 +97,21 @@ server.get('/api/actions', (req, res) => {
         })
         .catch(err => {
             res.status(500).json({message: "The actions could not be retrieved", err});
+        })
+})
+
+server.delete('/api/actions/:id', (req, res) => {
+    db.deleteAction(req.params.id)
+        .then(count => {
+            if (count) {
+                res.status(200).json(count);
+            }
+            else {
+                res.status(404).json({message: "The action with the specified ID does not exist."});
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: "The action could not be removed"});
         })
 })
 
