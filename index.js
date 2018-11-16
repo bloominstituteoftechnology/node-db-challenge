@@ -40,6 +40,14 @@ server.get('/api/projects/:id', (req,res)=>{
         .then(project=>res.status(201).json(project))
 
 })
+server.get('/api/projects', (req,res)=>{
+    db
+        .select()
+        .from('projects')
+        .then(projects=>{
+            res.status(201).json(projects)
+        })
+})
 const port = 3300;
 server.listen(port, function() {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
