@@ -2,11 +2,13 @@ const express = require('express')
 const router = express.Router()
 const knex = require('knex')
 const knexConfig = require('../knexfile')
- const db = knex(knexConfig.development)
+const db = knex(knexConfig.development)
+
+
  router.post('/', async (req, res) => {
-    const { name, description } = req.body
-    if (!name || !description) {
-        res.status(404).json({ message: 'Adding an action requires a name and description.' })
+    const { name, description, projectId } = req.body
+    if (!name || !description || !projectId) {
+        res.status(404).json({ message: 'Adding an action requires a name and description for the action and the projectId.' })
     }
     try {
         const action = await db('actions').insert(req.body)
@@ -27,19 +29,19 @@ const knexConfig = require('../knexfile')
     try {
         const count = await db('actions').where({ 'id': req.params.id }).del()
         count > 0
-            ? res.status(200).json(id)
+            ? res.status(200).json(count)
             : res.status(404).json({ message: 'An action with that ID could not be found.' })
     } catch (err) {
         res.status(500).json({ error: 'The action could not be deleted.' })
     }
 })
  router.put('/:id', async (req, res) => {
-    const { name, description } = req.body
+    const { name, description, projectId } = req.body
     const { id } = req.params
     if (!name && !description) res.status(400).json({ message: 'Updating an action requires a name and description.' })
     try {
-        const actionUpdate = await db('actions').update(req.body).where({'id': id})
-        actUp !== 0 ? res.status(200).json(actUp) : res.status(404).json({ message: 'An action with that ID could not be found' })
+        const count = await db('actions').update(req.body).where({'id': id})
+        count !== 0 ? res.status(200).json(count) : res.status(404).json({ message: 'An action with that ID could not be found' })
     } catch (err) {
         res.status(500).json({ error: 'The action could not be updated.' })
     }
