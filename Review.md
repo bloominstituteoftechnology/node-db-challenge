@@ -21,3 +21,5 @@ select * from table
 
 1.  What SQL clause is used to filter the results of a query?
 where()
+
+<!-- https://github.com/LambdaSchool/Sprint-Challenge-RDBMS/pull/271 -->
