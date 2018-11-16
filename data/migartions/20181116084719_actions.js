@@ -4,7 +4,7 @@ exports.up = function (knex, Promise) {
         tbl.increments();
         tbl.string('description', 255).notNullable();
         tbl.string('notes', 255);
-        tbl.boolean('complete');
+        tbl.boolean('completed').defaultTo(false);
 
         tbl
             .integer('project_id')

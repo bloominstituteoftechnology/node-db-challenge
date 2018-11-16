@@ -6,8 +6,7 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('projects').insert([
         { name: 'Sprint-Challenge-RDBMS',
-          description: 'something to work on to finish out the week and get ready for a break.',
-          complete: false}
+          description: 'something to work on to finish out the week and get ready for a break.' }
       ]);
     });
 };
