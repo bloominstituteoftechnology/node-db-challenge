@@ -1,12 +1,14 @@
 const express = require('express');
-const knex = require('knex');
 
-const knexConfig = require('../knexfile.js');
-
-const db = knex(knexConfig.development);
+const projectRouter = require('../endpoints/projects');
+const actionRouter = require('../endpoints/actions');
 
 const server = express();
 server.use(express.json());
+
+server.use('/api/projects', projectRouter);
+server.use('/api/actions', actionRouter);
+
 
 
 server.get('/', (req, res) => {
