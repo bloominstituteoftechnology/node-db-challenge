@@ -42,14 +42,14 @@ server.post('/api/projects/', async (req, res) => {
   
 //====UPDATE A PROJECT WITH ID===
 server.put('/api/projects/:id', async (req, res) => {
-    const {
-      params: { id },
-      body,
-    } = req;
+    const changes = req.body;
+    const { id } = req.params;
+    
     await db('projects')
       .where('id', '=', id)
-      .insert(body);
-    res.status(200).json(id);
+      .update(changes);
+      const updated = await db('projects').where({ id });
+    res.status(200).json(updated);
 });
   
 //====DELETE PROJECT BY ID====
