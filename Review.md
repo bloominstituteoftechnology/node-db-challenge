@@ -1,3 +1,29 @@
+# Project Features
+
+#Projects
+
+=== http://localhost:9000/projects ===
+
+GET , POST , PUT , DELETE , GET by id with context
+
+POST/PUT SCHEMA
+{
+"p_name": "Im Project 1",
+"p_description": "Im Project 1 with the following descriptions",
+}
+
+#Actions
+
+=== http://localhost:9000/actions ===
+
+GET , POST , PUT , DELETE , GET by id
+
+POST/PUT SCHEMA
+{
+"a_notes": "Action 1 updated",
+"a_description": "Action 1 updated"
+}
+
 # Questions - Self Study
 
 You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.

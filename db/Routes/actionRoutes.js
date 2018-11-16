@@ -30,4 +30,23 @@ router.post('/', (req, res) => {
     .catch(err => res.status(500).json({ message: 'Bad Request' }));
 });
 
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const action = req.body;
+  actionHelpers
+    .updateAction(action, id)
+    .then(resp =>
+      actionHelpers.getActions(id).then(resp => res.status(200).json(resp))
+    )
+    .catch(err => res.status(500).json({ message: 'Bad Request' }));
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  actionHelpers
+    .deleteAction(id)
+    .then(resp => res.status(200).json({ message: 'Success Deleting Action' }))
+    .catch(err => res.status(500).json({ message: 'Bad Request' }));
+});
+
 module.exports = router;
