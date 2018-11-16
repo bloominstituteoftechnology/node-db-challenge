@@ -7,5 +7,9 @@ module.exports = {
 
   addProject: project => {
     return db('projects').insert(project);
+  },
+
+  addAction: action => {
+    return db('actions').insert(action);
   }
 };
