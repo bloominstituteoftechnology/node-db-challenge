@@ -63,17 +63,19 @@ router.delete('/:id', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: 'The project could not be deleted.' })
     }
-    router.put('/:id', async (req, res) => {
-        const { name, description } = req.body
-        const { id } = req.params
-        if (!name && !description)
-            res.status(404).json({ message: 'Editing a project requires both a name and a description.' })
-        try {
-            const projUp = await db('projects').update(req.body).where({ 'id': id })
-            projUp !== 0 ? res.status(200).json(projUp) : res.status(400).json({ errorMessage: 'A project with that ID could not be found.' })
-        } catch (err) {
-            res.status(500).json({ error: 'The project could not be saved.' })
-        }
-    })
+})
 
-    module.exports = router
+
+router.put('/:id', async (req, res) => {
+    const { name, description } = req.body
+    const { id } = req.params
+    if (!name && !description)
+        res.status(404).json({ message: 'Editing a project requires both a name and a description.' })
+    try {
+        const projUp = await db('projects').update(req.body).where({ 'id': id })
+        projUp !== 0 ? res.status(200).json(projUp) : res.status(400).json({ errorMessage: 'A project with that ID could not be found.' })
+    } catch (err) {
+        res.status(500).json({ error: 'The project could not be saved.' })
+    }
+})
+module.exports = router
