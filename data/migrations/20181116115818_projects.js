@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments()
     table.string('name', 128).notNullable()
     table.text('description')
-    table.boolean('completed')
+    table.boolean('completed').defaultTo(false)
   })
 }
 

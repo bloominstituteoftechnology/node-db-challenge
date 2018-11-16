@@ -1,9 +1,9 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('recipes', table => {
+  return knex.schema.createTable('actions', table => {
     table.increments()
     table.text('description').notNullable()
     table.text('notes')
-    table.boolean('completed')
+    table.boolean('completed').defaultTo(false)
     table
       .integer('project_id')
       .unsigned()
@@ -14,5 +14,5 @@ exports.up = function(knex, Promise) {
 }
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('recipes')
+  return knex.schema.dropTableIfExists('actions')
 }
