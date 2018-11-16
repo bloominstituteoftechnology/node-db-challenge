@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
     return knex.schema.createTable('projects', function (projects) {
         projects
             .increments()
-            .primary();
+            .primary()
 
         projects
             .text('name')

@@ -8,9 +8,9 @@ const db = knex(knexConfig.development)
 
 //endpoints
 router.post('/', async (req, res) => {
-    const { action_description, notes } = req.body
-    if (!action_description || !notes) {
-        res.status(404).json({ message: 'Provide a description and notes for the action.' })
+    const { name, description } = req.body
+    if (!name || !description) {
+        res.status(404).json({ message: 'Adding an action requires a name and description' })
     }
     try {
         const action = await db('actions').insert(req.body)
@@ -29,21 +29,21 @@ router.get('/', async (req, res) => {
 })
 router.delete('/:id', async (req, res) => {
     try {
-        const id = await db('actions').where('id', req.params.id).del()
-        id > 0
+        const count = await db('actions').where({ 'id': req.params.id }).del()
+        count > 0
             ? res.status(200).json(id)
-            : res.status(400).json({ errorMessage: 'An action with that ID cannot be found.' })
+            : res.status(404).json({ errorMessage: 'An action with that ID cannot be found.' })
     } catch (err) {
         res.status(500).json({ error: 'An error occuried while trying to delete that action from the database.' })
     }
 })
 router.put('/:id', async (req, res) => {
-    const { action_description, notes } = req.body
+    const { name, description } = req.body
     const { id } = req.params
-    if (!action_description && !notes) res.status(404).json({ message: 'Provide an update.' })
+    if (!name && !description) res.status(400).json({ message: 'Updating an action requires a name and description.' })
     try {
-        const actUp = await db('actions').update(req.body).where('id', id)
-        actUp !== 0 ? res.status(200).json(actUp) : res.status(400).json({ errorMessage: 'That ID does not exist.' })
+        const actionUpdate = await db('actions').update(req.body).where('id', id)
+        actionUpdate !== 0 ? res.status(200).json(actUp) : res.status(400).json({ errorMessage: 'That ID does not exist.' })
     } catch (err) {
         res.status(500).json({ error: 'An error occuried while trying to update the action.' })
     }
