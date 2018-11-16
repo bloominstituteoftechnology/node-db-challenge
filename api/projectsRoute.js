@@ -5,6 +5,15 @@ const knexConfig = require('../knexfile')
 
 const db = knex(knexConfig.development)
 
+router.get('/', async (req, res) => {
+    try {
+        const projects = await db('projects')
+        res.status(200).json(projects)
+    } catch (e) {
+        res.status(500).json(e)
+    }
+})
+
 router.post('/', async (req, res) => {
     const { name, description } = req.body
     if (!name || !description) {
@@ -35,6 +44,32 @@ router.get('/:id', async (req, res) => {
     } catch (e) {
         console.log(e)
         res.status(500).json({ error: 'An error occuried while trying to access the project from the database.' })
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const id =
+            (await db('projects').where('id', req.params.id).del()) &&
+            (await db('actions').where('project_id', req.params.id).del())
+        id !== 0
+            ? res.status(200).json(id)
+            : res.status(400).json({ errorMessage: 'A project with that ID cannot be found.' })
+    } catch (e) {
+        res.status.json({ error: 'An error occuried while trying to delete that project from the database.' })
+    }
+})
+
+router.put('/:id', async (req, res) => {
+    const { name, description } = req.body
+    const { id } = req.params
+    if (!name && !description)
+        res.status(404).json({ message: 'Please provide a name or description with your updated project.' })
+    try {
+        const projUp = await db('projects').update(req.body).where('id', id)
+        projUp !== 0 ? res.status(200).json(projUp) : res.status(400).json({ errorMessage: 'That ID does not exist.' })
+    } catch (e) {
+        res.status(500).json(e)
     }
 })
 
