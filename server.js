@@ -72,7 +72,7 @@ app.get('/api/projects/:id', (req, res) => {
       });
 });
 
-server.put('/api/projects/:id', (req, res) => {
+app.put('/api/projects/:id', (req, res) => {
   const changes = req.body;
   const { id } = req.params;
 
@@ -85,7 +85,7 @@ server.put('/api/projects/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-server.put('/api/actions/:id', (req, res) => {
+app.put('/api/actions/:id', (req, res) => {
   const changes = req.body;
   const { id } = req.params;
 
