@@ -1,7 +1,8 @@
 const express = require('express')
-const knex = require('knex')
-const knexConfig = require('./knexfile.js')
-const db = knex(knexConfig.development)
+// const knex = require('knex')
+// const knexConfig = require('./knexfile.js')
+// const db = knex(knexConfig.development)
+const db = require('./data/dbMethods.js')
 
 const server = express()
 
@@ -14,8 +15,7 @@ server.post('/api/projects', (req, res) => {
     res.status(400).json({ message: 'Cannot save project without a name' })
   }
 
-  db('projects')
-    .insert(req.body)
+  db.postProject(req.body)
     .then(count => res.status(201).json(count))
     .catch(err => res.status(500).json(err))
 })
@@ -29,44 +29,18 @@ server.post('/api/actions', (req, res) => {
       .json({ message: 'Missing field(s) description and/or project id' })
   }
 
-  db('actions')
-    .insert(req.body)
-    .then(count => res.status(201).json(count))
-    .catch(err => {
-      console.log(err)
-      res.status(500).json(err)
-    })
+  db.postAction(req.body).catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  })
 })
 
-server.get('/api/projects/:id', async (req, res) => {
+server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params
 
-  const convertBinToBool = list =>
-    list.map(item => ({ ...item, completed: item.completed === 1 }))
-
-  try {
-    const project = await db('projects')
-      .where({ id })
-      .then(info => convertBinToBool(info))
-
-    const actions = await db('projects')
-      .join('actions', { 'projects.id': 'actions.project_id' })
-      .select(
-        'actions.id',
-        'actions.description',
-        'actions.notes',
-        'actions.completed'
-      )
-      .where({ 'projects.id': id })
-      .then(info => convertBinToBool(info))
-
-    const data = { ...project[0], actions }
-
-    res.status(200).json(data)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
+  db.getProjectById(id)
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(err))
 })
 
 server.listen(9000, () => console.log('\n== Port 9k ==\n'))
