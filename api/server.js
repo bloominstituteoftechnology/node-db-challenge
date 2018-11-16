@@ -30,6 +30,14 @@ server.get('/', (req, res) => {
 // notes column to add additional information. text
 // complete: integer 0 or 1. boolean (a flag that indicates if the action has been completed).
 
+server.get('/api/projects', (req, res) => {
+  db('projects')
+      //.select()
+      .then(projects => res.status(200).json(projects))
+      .catch(err => res.status(500).json({
+        err
+      }));
+  });
 
 
 
