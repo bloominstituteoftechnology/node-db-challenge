@@ -59,4 +59,23 @@ server.get('/api/projects/:id', (req, res) => {
 		});
 });
 
+// server.get('/api/projects/:id', async (req, res) => {
+//   try {
+//     const {id } = req.params;
+//     const project = await db('projects')
+//     .where({ id })
+//     .first()
+
+//     if (project) {
+//       project.actions = await db('action').where ({ project_id: id })
+
+//       res.status(200).json(project)
+//     } else {
+//       res.status(400).json({ message: 'project not found' })
+//     }
+//   } catch (err) {
+//     res.json(err)
+//   }
+// })
+
 server.listen(9000, () => console.log(`This server is OVER 9000!!`)); //set server on localhost:9000
