@@ -35,4 +35,28 @@ server.post("/api/projects", (req, res) => {
     }
 });
 
+server.post("/api/actions", (req, res) => {
+    let action = req.body;
+    if (action.description && action.project_id) {
+        action = {
+            notes: "",
+            completed: false,
+            ...action
+        };
+        db("actions")
+            .insert(action)
+            .then(idReturned => {
+                res.status(201).json(idReturned);
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: "Cannot post action to database.",
+                    error: err
+                });
+            });
+    } else {
+        res.status(400).json({ error: "Please provide a description and the ID of the corresponding project." });
+    }
+});
+
 server.listen(port, () => console.log(`\n== Port ${port} Running ==\n`));
