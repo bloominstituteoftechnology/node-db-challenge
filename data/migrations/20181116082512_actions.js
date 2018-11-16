@@ -4,13 +4,15 @@ exports.up = function(knex, Promise) {
       t.increments()
       t.text('description')
       t.text('notes')
-      t.boolean('complete')
+      t.boolean('complete').defaultTo(false)
 
       t
       .integer('project_id')
       .unsigned()
       .references('id')
       .inTable('projects')
+      .onDelete('RESTRICT')
+      .onUpdate('CASCADE')
   })
 };
 

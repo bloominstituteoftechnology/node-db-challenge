@@ -1,5 +1,7 @@
 const express = require('express')
 const helmet = require('helmet')
+const projectRoutes = require('./routes/projectRoutes.js')
+const actionRoutes = require('./routes/actionRoutes.js')
 
 
 
@@ -11,6 +13,8 @@ server.use(helmet())
 server.use(express.json())
 
 // Server Endpoints
+server.use('/api/projects', projectRoutes)
+server.use('/api/actions', actionRoutes)
 
 
 // Sanity Check

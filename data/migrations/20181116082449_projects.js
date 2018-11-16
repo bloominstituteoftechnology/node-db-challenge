@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       t.increments();
       t.string('name', 180).notNullable().unique()
       t.text('description')
-      t.boolean('complete')
+      t.boolean('complete').defaultTo(false)
   })
 };
 
