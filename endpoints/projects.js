@@ -64,15 +64,15 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     db('projects')
-        .where({id})
+        .where({ id })
         .del()
-        .then( count =>{
+        .then(count => {
             count
-            ? res.status(200).json(count)
-            : res.status(404).json({Message: 'Not found'})
+                ? res.status(200).json(count)
+                : res.status(404).json({ Message: 'Not found' })
         })
-        .catch(err =>{
-            res.status(500).json({Message: 'DB error', err})
+        .catch(err => {
+            res.status(500).json({ Message: 'DB error', err })
         })
 });
 
