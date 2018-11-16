@@ -43,19 +43,46 @@ server.post('/api/actions', (req, res) => {
     }
 });
 
-server.get('/api/project/:projectid', (req, res) => {
-    const { projectid } = req.params;
 
-    db('project')
-        .join('action', 'project.id', '=', 'action.project_id')
-        .groupBy('project.name')
-        .select('project.id', 'project.name', 'project.description', 'project.completed', 'action.id', 'action.description', 'action.notes', 'action.completed' )
-        .then(project => {
-            res.status(200).json({ project });
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Error fetching data.', err });
-        })
-})
+
+// server.get('/api/project/:projectid', (req, res) => {
+  
+//     const { projectid } = req.params;
+
+//     db('project')
+//         .join('action', 'project.id', '=', 'action.project_id')
+        
+//         .select('project.id', 'project.name', 'project.description', 'project.completed'  )
+//         .select('action.description', 'action.completed', 'action.notes')
+//         .where('project_id', projectid)
+//         .then(project => {
+//             res.status(200).json({ project });
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Error fetching data.', err });
+//         });
+
+// });
+    
+server.get('/api/project/:projectid', async (req, res) => {
+    
+    const { projectid } = req.params;
+    
+    try {
+        const project = await db('project').where('id', projectid);
+        const actions = await db('action').where('project_id', projectid);
+        
+        res.status(200).json({ ...project, actions: actions });
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error fetching the data.', err });
+    }
+
+});
+    
+    
+
+
+
+
 
 server.listen(3300, () => console.log('Server listening on port 3300.'));

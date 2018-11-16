@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
         tbl.integer('project_id')
             .unsigned()
             .references('id')
-            .inTable('dish');
+            .inTable('project');
     });
 };
 
