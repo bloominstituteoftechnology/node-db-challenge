@@ -6,12 +6,11 @@ exports.up = function(knex, Promise) {
 
     tbl.string("notes").notNullable();
 
-    tbl.boolean("completed");
+    tbl.boolean("completed").defaultTo(false);
 
     tbl
       .integer("project_id")
       .unsigned()
-      .notNullable()
       .references("id")
       .inTable("projects");
   });
