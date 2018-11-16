@@ -59,4 +59,38 @@ server.post("/api/actions", (req, res) => {
     }
 });
 
+server.get("/api/projects/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    db("projects")
+        .where("projects.id", projectId)
+        .then(projectsArray => {
+            if (!projectsArray.length) {
+                res.status(404).json({ error: "The project with the specified ID was not found." });
+            } else {
+                const result = {
+                    ...projectsArray[0],
+                    actions: [] 
+                };
+                db("actions")
+                    .where("actions.project_id", projectId)
+                    .then(list => {
+                        result.actions = list;
+                        res.status(200).json(result);
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            message: "Could not retrieve actions corresponding to project id.",
+                            error: err
+                        });
+                    });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Could not retrieve project with the specified ID.",
+                error: err
+            });
+        });
+});
+
 server.listen(port, () => console.log(`\n== Port ${port} Running ==\n`));
