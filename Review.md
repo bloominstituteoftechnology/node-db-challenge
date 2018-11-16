@@ -1,3 +1,4 @@
+Chad Jemmett
 # Questions - Self Study
 
 You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the future.
