@@ -50,6 +50,12 @@ server.get('/api/projects/:id', async (req, res) => {
   }
 });
 
+server.get('/api/projects', async (req, res) => {
+  const projects = await db('projects');
+
+  return res.status(200).json(projects);
+});
+
 server.listen(9000, () => {
-  console.log('\n==Listening on 9000==\n')
-})
+  console.log('\n==Listening on 9000==\n');
+});
