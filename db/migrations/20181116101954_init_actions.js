@@ -7,7 +7,9 @@ exports.up = function(knex, Promise) {
     tbl
       .integer('project_id')
       .notNullable()
-      .defaultTo(1);
+      .defaultTo(1)
+      .references('id')
+      .inTable('project');
   });
 };
 

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   projectHelpers
-    .getProjects(id)
+    .getProjectById(id)
     .then(resp => res.status(200).json(resp))
     .catch(err => res.status(500).json({ message: 'Bad Request' }));
 });
@@ -28,6 +28,23 @@ router.post('/', (req, res) => {
         .status(201)
         .json({ message: `Successfully created user with id of ${id}` })
     )
+    .catch(err => res.status(500).json({ message: 'Bad Request' }));
+});
+
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const project = req.body;
+  projectHelpers
+    .updateProjects(project, id)
+    .then(resp => res.status(201).json(resp))
+    .catch(err => res.status(500).json({ message: 'Bad Request' }));
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  projectHelpers
+    .deleteProjects(id)
+    .then(resp => res.status(200).json({ message: 'Success Deleting Project' }))
     .catch(err => res.status(500).json({ message: 'Bad Request' }));
 });
 
