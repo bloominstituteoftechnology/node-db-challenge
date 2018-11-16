@@ -16,7 +16,8 @@ exports.up = function(knex, Promise) {
       .integer('project_id')
       .unsigned()
       .references('id')
-      .inTable('projects');
+      .inTable('projects')
+      .notNullable();
 
     tbl.timestamps(true, true);
   });
