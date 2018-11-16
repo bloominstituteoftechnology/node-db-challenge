@@ -29,7 +29,7 @@ const controllersProject = {
 
   getProjectAction (req, res, next) {
     db('projects')
-     //  .select('projects.id', "projects.name", "actions.description")
+      .select('projects.id', "projects.name", "actions.description")
         .where('projects.id', req.params.id)
       .join('actions'  , {'projects.id' : 'actions.project_id'})
       .then((project) => {
@@ -41,7 +41,6 @@ const controllersProject = {
       })
       .catch(next)
   },
-
 
 
 
