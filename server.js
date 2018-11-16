@@ -66,14 +66,22 @@ app.get('/api/actions/:id', (req, res) => {
 
 app.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
-
-  db('projects')
-    .where({ id: id })
-    .leftJoin('actions', 'actions.projectId', '=', id)
-    .then(action => {
-      res.status(201).json({ action });
-    })
-    .catch(err => res.status(500).json(err));
+   db('projects')
+      .where({ id: id })
+      .then(project => {
+          db('actions')
+              .where({ projectId: id })
+              .then(action => {
+                  return res
+                      .status(200)
+                      .json({ ...project, actions: action });
+              });
+      })
+      .catch(() => {
+          return res
+              .status(500)
+              .json({ Error: "Project info could not be retrieved." })
+      });
 });
 
 
