@@ -2,7 +2,7 @@
 
 //== Project Constants =========================================================
 
-const PORT = 3300; // To Do: Get this from the command line
+const PORT = 3000; // To Do: Get this from the command line
 module.exports = {
     // Server Configuration
     PORT: PORT,
