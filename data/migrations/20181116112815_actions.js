@@ -8,15 +8,15 @@ exports.up = function(knex, Promise) {
     table.string('name', 255);
     table.string('description', 255);
     table.string('notes', 255);
-    table.integer('complete', 255);
+    table.integer('complete');
     table.timestamps(true, true)
 
-    table.string('name', 255);
-      table
-      .integer('project_id')
-      .unsigned()
-      .references('id')
-      .inTable('projects');
+  //   table.string('name', 255);
+  //     table
+  //     .integer('project_id')
+  //     .unsigned()
+  //     .references('id')
+  //     .inTable('projects');
   })
 };
 

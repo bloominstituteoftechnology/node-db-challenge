@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     
     table.string('name', 255);
     table.string('description', 255);
-    table.integer('complete', 255);
+    table.integer('complete');
     table.timestamps(true, true)
   })
 };
