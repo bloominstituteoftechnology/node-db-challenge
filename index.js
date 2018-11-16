@@ -23,6 +23,34 @@ server.get('/', (req, res) => {
 //     .catch(error => res.status(500).json({ message: "Could not retrieve projects and actions"}))
 // })
 
+server.get('/api/projects', (req, res) => {
+    db('projects')
+    .then(projects => res.status(200).json(projects))
+    .catch(error => res.status(500).json({ message: "failed to get projects"}))
+})
+
+server.get('/api/actions', (req, res) => {
+    db('actions')
+    .then(actions => res.status(200).json(actions))
+    .catch(error => res.status(500).json({ message: "failed to get actions"}))
+})
+
+server.get('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects')
+    .where({ id: id })
+    .then(projects => res.status(200).json(projects))
+    .catch(error => res.status(500).json({ message: "No project by that ID found"}))
+})
+
+server.get('/api/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions')
+    .where({ id: id })
+    .then(actions => res.status(200).json(actions))
+    .catch(error => res.status(500).json({ message: "No action by that ID found"}))
+})
+
 server.get('/api/projects/:id/actions', async (req, res) => {
     const { id } = req.params;
     try {
@@ -52,6 +80,52 @@ server.post('/api/actions', (req, res) => {
         res.status(201).json(ids);
     })
     .catch(error => res.status(500).json({ message: "Error posting new action"}))
+})
+
+server.put('/api/projects/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+    db('projects')
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+        res.status(200).json({ count });
+    })
+    .catch(error => res.status(500).json({ message: "Failed to update data"}))
+})
+
+server.put('/api/actions/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+    db('actions')
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+        res.status(200).json({ count });
+    })
+    .catch(error => res.status(500).json({ message: "Failed to update data"}))
+})
+
+server.delete('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects')
+    .where({ id: id})
+    .del()
+    .then(count => res.status(200).json(count))
+    .catch(err => {
+        res.status(400).json({ message: "failed to delete cohort"})
+    })
+})
+
+server.delete('/api/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions')
+    .where({ id: id})
+    .del()
+    .then(count => res.status(200).json(count))
+    .catch(err => {
+        res.status(400).json({ message: "failed to delete cohort"})
+    })
 })
 
 const port = 4000;
