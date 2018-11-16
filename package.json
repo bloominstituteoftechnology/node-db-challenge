@@ -4,8 +4,8 @@
   "main": "index.js",
   "author": "Quan Nguyen",
   "license": "MIT",
-  "scripts":{
-    "server":"nodemon index.js"
+  "scripts": {
+    "server": "nodemon index.js"
   },
   "dependencies": {
     "express": "^4.16.4",
