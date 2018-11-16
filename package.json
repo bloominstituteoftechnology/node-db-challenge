@@ -6,7 +6,7 @@
   "author": "sean-one <basement365@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon"
+    "server": "nodemon"
   },
   "dependencies": {
     "express": "^4.16.4",
