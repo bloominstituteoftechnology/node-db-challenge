@@ -114,10 +114,6 @@ server.get('/api/project/:id', (req, res) => {
               });
             });
  
-       
-
-    
-  
 
 const port = 8800;
 server.listen(port, function() {
