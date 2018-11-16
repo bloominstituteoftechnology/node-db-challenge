@@ -76,7 +76,13 @@ server.post('/api/actions', (req, res) => {
 })
 
 server.get('/api/actions', (req, res) => {
-    
+    db.getActions()
+        .then(actions => {
+            res.status(200).json(actions);
+        })
+        .catch(err => {
+            res.status(500).json({message: "The actions could not be retrieved", err});
+        })
 })
 
 // Dynamic Port

@@ -17,13 +17,13 @@ function addProject(project) {
 }
 
 // Actions Helpers --------------------------------------------------------------------------------------------------------------
-function getActions() {
-    return db('actions');
-}
-
 function getActions(id) {
-    return db('actions').where({'projectId': id});
-} 
+    if (!id) {
+        return db('actions');
+    } else {
+        return db('actions').where({'projectId': id});
+    }    
+}
 
 function addAction(action) {
     return db('actions').insert(action).into('actions');
