@@ -16,14 +16,5 @@ server.listen(config.PORT, function() {
 
 //-- Configure Server ----------------------------
 server.use(express.json());
-server.use(config.URL_PROJECTS, apiMaker(database.projects, {
-  skipGetAll: true,
-  skipDelete: true,
-  skipUpdate: true,
-}));
-server.use(config.URL_ACTIONS, apiMaker(database.actions, {
-  skipGetAll : true,
-  skipGetById: true,
-  skipDelete : true,
-  skipUpdate : true,
-}));
+server.use(config.URL_PROJECTS, apiMaker(database.projects));
+server.use(config.URL_ACTIONS , apiMaker(database.actions ));
