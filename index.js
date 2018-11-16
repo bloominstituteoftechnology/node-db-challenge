@@ -36,8 +36,8 @@ server.get('/api/projects/:id', (req, res) => {
             if (project) {
                 db.getActions(id)
                     .then(actions => {
-                        const result = Object.assign({project}, {actions: actions})
-                        res.status(200).json(result);
+                        project.actions = actions
+                        res.status(200).json(project);
                     })
                     .catch(err => res.status(500).json(err))
             } else {
