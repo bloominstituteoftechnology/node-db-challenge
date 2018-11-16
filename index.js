@@ -38,17 +38,36 @@ server.post('/api/actions', (req, res) => {
     })
 })
 
-server.get('/api/projects/:id', (req, res) => {
+server.get('/api/projects/:id', async (req, res) => {
   const { id } = req.params
 
-  db('projects')
-    .join('actions', { 'projects.id': 'actions.project_id' })
-    .where({ id })
-    .then(project => res.status(200).json(project))
-    .catch(err => {
-      console.log(err)
-      res.status(500).json(err)
-    })
+  try {
+    const project = await db('projects')
+      .where({ id })
+      .then(info =>
+        info.map(item => ({ ...item, completed: item.completed === 1 }))
+      )
+
+    const actions = await db('projects')
+      .join('actions', { 'projects.id': 'actions.project_id' })
+      .select(
+        'actions.id',
+        'actions.description',
+        'actions.notes',
+        'actions.completed'
+      )
+      .where({ 'projects.id': id })
+      .then(info =>
+        info.map(item => ({ ...item, completed: item.completed === 1 }))
+      )
+
+    const data = { ...project[0], actions }
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
 })
 
 server.listen(9000, () => console.log('\n== Port 9k ==\n'))
