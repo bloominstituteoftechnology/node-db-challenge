@@ -5,23 +5,24 @@ const knexConfig = require("./knexfile.js");
 const db = knex(knexConfig.development);
 
 module.exports = {
-    getProjects,
-    getProject,
-    addProject,
-  };
+  getProjects,
+  getProject,
+  addProject
+};
 
-  function getProjects() {
-    return db("projects");
-  }
+function getProjects() {
+  return db("projects");
+}
 
-  function getProject(id) {
+function getProject(id) {
     return db("projects")
-      .select("projects.name", "projects.description")
-      .where({ "projects.id": id })
+      .join("actions")
+      .select("projects.id", "projects.name", "projects.description", "projects.completed", "actions.id as ID", "actions.description as Description", "actions.notes as Notes", "actions.completed as Completed")
+      .where({ "projects.id": id });
   }
 
-  function addProject(project) {
-    return db("projects")
-      .insert(project)
-      .into("projects");
-  }
+function addProject(project) {
+  return db("projects")
+    .insert(project)
+    .into("projects");
+}
