@@ -90,6 +90,30 @@ server.put('/api/projects/:id', (req, res) => {
         })
 });
 
+// get all action
+server.get('/api/actions', (req, res) => {
+    db('action')
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+});
+
+// post new actions
+server.post('/api/actions', (req, res) => {
+    const action = req.body;
+    db('action')
+        .insert(action)
+        .then(id => {
+            res.status(201).json(id)
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+});
+
 
 const port = 9000;
 server.listen(port, function(){
