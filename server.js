@@ -9,6 +9,9 @@ const server = express();
 
 server.use(express.json(), logger('combined'), cors(), helmet());
 
+const knexConfig = require('./knexfile.js');
+const db = knex(knexConfig.development);
+
 server.get('/', (req, res) => {
     res.send('Test for root endpoint!')
 });
