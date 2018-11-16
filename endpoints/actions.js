@@ -35,4 +35,21 @@ router.post('/', (req, res) => {
         })
 });
 
+// delete action
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions')
+        .where({id})
+        .del()
+        .then( count =>{
+            count
+            ? res.status(200).json(count)
+            : res.status(404).json({Message: 'Not found'})
+        })
+        .catch(err =>{
+            res.status(500).json({Message: 'DB error', err})
+        })
+});
+
 module.exports = router;
