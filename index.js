@@ -12,6 +12,18 @@ server.get('/', (req, res) => {
   res.json({ api: 'are you ready to be productive?' });
 });
 
+//GET projects
+server.get('/api/projects', (req, res) => {
+  db('projects')
+    .then(projects => res.status(200).json(projects))
+    .catch(err =>
+      res.status(500).json({
+        message: 'The projects could not be retrieved.',
+        error: err
+      })
+    );
+});
+
 //POST project
 server.post('/api/projects', (req, res) => {
   const project = req.body;
@@ -36,7 +48,7 @@ server.post('/api/actions', (req, res) => {
     .catch(err =>
       res
         .status(400)
-        .json({ message: 'Your project could not be added.', error: err })
+        .json({ message: 'Your action could not be added.', error: err })
     );
 });
 
@@ -46,21 +58,21 @@ server.get('/api/projects/:id', (req, res) => {
   db('projects')
     .where({ id })
     .then(project => {
-      if (project) {
-        res.status(200).json(project);
-      } else {
-        res.status(404).json({
-          message: 'The project with the specified ID does not exist.',
-          error: err
-        });
-      }
+      return db('actions')
+        .select(
+          'actions.id',
+          'actions.description',
+          'actions.notes',
+          'actions.complete'
+        )
+        .where({ project_id: id })
+        .then(actions => res.status(200).json([...project, { actions }]));
     })
-    .catch(err => {
-      res.status(500).json({
-        message: 'The cohort information could not be retrieved.',
-        error: err
-      });
-    });
+    .catch(err =>
+      res
+        .status(404)
+        .json({ message: 'The project could not be found.', error: err })
+    );
 });
 
 const port = 7000;
