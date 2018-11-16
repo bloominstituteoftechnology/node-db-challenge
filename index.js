@@ -94,6 +94,27 @@ server.get('/projects/:id/actions', (request, response) =>{
         .catch(error => response.status(500).json(error));
 })
 
+/*****  PROJECTS and ACTIONS DELETE *****/
+server.delete('/projects/:id', (request, response) => {
+    db('projects')
+               .where('id','=', request.params.id)
+               .del()
+               .then(count => { response.status(200).json(count) })
+               .catch(error => {
+                    response.status(500).json({message : 'error deleting user'})
+                })
+})
+
+server.delete('/actions/:id', (request, response) => {
+    db('actions')
+               .where('id','=', request.params.id)
+               .del()
+               .then(count => { response.status(200).json(count) })
+               .catch(error => {
+                    response.status(500).json({message : 'error deleting user'})
+                })
+})
+
 const port = 3300;
 server.listen(port, function() {
 console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
