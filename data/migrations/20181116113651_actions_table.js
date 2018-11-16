@@ -6,7 +6,8 @@ exports.up = function (knex, Promise) {
 
         actions
             .integer('projectId')
-            .references('projects.id');
+            .references('projects.id')
+            .notNullable()
 
         actions
             .text('name')
