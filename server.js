@@ -53,49 +53,36 @@ app.post('/api/actions', (req, res) => {
     });
 });
 
-app.post('/api/zoos', (req, res) => {
-  const zoo = req.body;
-  db('zoos')
-    .insert(zoo)
-    .then(ids => {
-      res.status(201).json(ids);
-    })
-    .catch(err => {
-      res.status(500).json({ message: 'Error inserting', err });
-    });
-});
+app.get('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
 
-
-app.get('/api/zoos/:zooid', (req, res) => {
-  const { zooid } = req.params;
-
-  db('zoos')
-    .where({ id: zooid })
-    .then(zoo => {
-      res.status(201).json({ zoo });
+  db('actions')
+    .where({ id: id })
+    .then(action => {
+      res.status(201).json({ action });
     })
     .catch(err => res.status(500).json(err));
 });
 
-app.put('/api/zoos/:zooid', (req, res) => {
-  const changes = req.body;
-  const { zooid } = req.params;
+// app.put('/api/zoos/:zooid', (req, res) => {
+//   const changes = req.body;
+//   const { zooid } = req.params;
 
-  db('zoos')
-    .where({ id: zooid })
-    .update(changes)
-    .then(count => {
-      res.status(200).json({ count });
-    })
-    .catch(err => res.status(500).json(err));
-});
+//   db('zoos')
+//     .where({ id: zooid })
+//     .update(changes)
+//     .then(count => {
+//       res.status(200).json({ count });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
 
-app.delete('/api/zoos/:zooid', (req, res) => {
-  const { zooid } = req.params;
+app.delete('/api/actions/:id', (req, res) => {
+  const { id } = req.params;
 
-  db('zoos')
-    .where({ id: zooid })
+  db('actions')
+    .where({ id: id })
     .del()
     .then(count => {
       res.status(200).json({ count });
@@ -103,6 +90,16 @@ app.delete('/api/zoos/:zooid', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+app.delete('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
 
+  db('projects')
+    .where({ id: id })
+    .del()
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 module.exports = app;   
