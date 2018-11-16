@@ -19,7 +19,6 @@ router.get('/', (req,res) => {
 
 router.post('/', (req, res) => {
   const action =  req.body;
-  console.log(action)
   db('action')
     .insert(action)
     .then( count => {
