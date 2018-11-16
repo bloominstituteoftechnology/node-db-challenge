@@ -11,12 +11,16 @@ module.exports = {
     URL_PROJECTS: '/projects',
     URL_ACTIONS : '/actions' ,
     // Database Strings
-    TABLE_ACTIONS : 'actions' ,
-    TABLE_PROJECTS: 'projects',
+    TABLE_ACTIONS        : 'actions'        ,
+    TABLE_PROJECTS       : 'projects'       ,
+    TABLE_CONTEXTS       : 'contexts'       ,
+    TABLE_ACTION_CONTEXTS: 'action_contexts',
     FIELD_ID        : 'id'         ,
     FIELD_NAME      : 'name'       ,
     FIELD_DESC      : 'description',
     FIELD_NOTES     : 'notes'      ,
     FIELD_COMPLETED : 'completed'  ,
     FIELD_PROJECT_ID: 'project_id' ,
+    FIELD_ACTION_ID : 'action_id'  ,
+    FIELD_CONTEXT_ID: 'context_id' ,
 };
