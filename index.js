@@ -38,7 +38,7 @@ server.post('/api/projects', (req, res) => {
     );
 });
 
-//POST actions
+//POST action
 server.post('/api/actions', (req, res) => {
   const action = req.body;
   db('actions')
@@ -52,7 +52,7 @@ server.post('/api/actions', (req, res) => {
     );
 });
 
-//Get project by id
+//GET project by id
 server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
   db('projects')
