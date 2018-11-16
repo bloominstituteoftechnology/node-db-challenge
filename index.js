@@ -43,19 +43,6 @@ server.post('/api/projects', (req, res) => {
     }
 });
 
-// get all action by project
-server.get('/api/projects/:id/actions', (req, res) => {
-    const { id } = req.params;
-    db('project')
-        .where({id})
-        .then(project => {
-            res.status(200).json(project)
-        })
-        .catch(err => {
-            res.status(500).json({message: err})
-        })
-});
-
 // get project by id
 server.get('/api/projects/:id', (req, res) => {
     const { id } = req.params;
