@@ -1,23 +1,52 @@
 const express = require('express');
-const knex = require('knex');
 
-const knexConfig = require('./knexfile.js');
-
-const db = knex(knexConfig.development);
+const projects = require('./projects.js');
 
 const server = express();
 server.use(express.json());
 
-
-server.get('/', (req, res) => {
-    res.json({ api: 'up' });
-});
+// add a new project
+server.post("/projects", (req, res) => {
+    const { name, description } = req.body;
+    const project = { name, description };
+    if (!project) {
+      return res.status(400).send({
+        errorMessage: "Please provide a name for the project."
+      });
+    }
+    projects
+      .addProject(project)
+      .then(ids => {
+        res.status(201).json(ids);
+      })
+      .catch(error => {
+        res.status(500).json({ error: "Can not post the project. project may already exist." });
+      });
+  });
 
 server.get('/projects', (req, res) => {
-    db('projects')
-      .then(students => res.status(200).json(students))
+    projects
+      .getProjects()
+      .then(project => res.status(200).json(project))
       .catch(err => res.status(500).json(err));
 });
+
+server.get("/projects/:id", (req, res) => {
+    const { id } = req.params;
+    projects
+      .getProject(id)
+      .then(project => {
+        if (!project) {
+          return res.status(404).json({
+            message: "Can not find project with specified ID."
+          });
+        }
+        res.status(200).json(project);
+      })
+      .catch(error => {
+        res.status(500).json(error);
+      });
+  });
 
 
 const port = 8000;
