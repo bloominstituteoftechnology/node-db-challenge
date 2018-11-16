@@ -17,7 +17,7 @@ server.get("/", (req, res) => {
 
 // R O U T E S
 server.use("/api/projects", projectRouter);
-// server.use("/api/actions", actionRouter);
+server.use("/api/actions", actionRouter);
 
 const port = 9000;
 server.listen(port, () => console.log(`API running on port ${port}`));
