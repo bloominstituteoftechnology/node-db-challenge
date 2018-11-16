@@ -125,4 +125,19 @@ server.delete('/api/action/:actionid', async (req, res) => {
     }
 });
 
+server.get('/api/action/:actionid', async (req, res) => {
+    
+    const { actionid } = req.params;
+    
+    try {
+        const action = await db('action').where('id', actionid);
+        const contexts = await db('context').where('action_id', actionid);
+        
+        res.status(200).json({ ...action, contexts: contexts });
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error fetching the data.', err });
+    }
+
+});
+
 server.listen(3300, () => console.log('Server listening on port 3300.'));
