@@ -43,11 +43,15 @@ server.get("/api/projects/:id", (req, res) => {
     .where("id", id)
     .first()
     .then(project => {
-      db("actions")
-        .where("project_id", project.id)
-        .then(actions =>
-          res.status(200).json(projectBuilder(project, actions))
-        );
+      if (project) {
+        db("actions")
+          .where("project_id", project.id)
+          .then(actions =>
+            res.status(200).json(projectBuilder(project, actions))
+          );
+      } else {
+        res.status(404).json("404 not found.");
+      }
     })
     .catch(err => {
       res.status(500).json({ error: err });
