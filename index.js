@@ -23,9 +23,15 @@ server.get('/api/projects', async (req, res) => {
 //====GET PROJECT BY ID====
 server.get('/api/projects/:id', async (req, res) => {
     const { id } = req.params;
-    const payload = await db('projects').where('id', '=', id);
-    res.status(200).json(payload[0]);
-});
+    const projectFetch = db('projects').where('id', '=', id);
+    const actionsFetch = db('actions').where('projectId', '=', id);
+    const [[project], actions] = await Promise.all([projectFetch, actionsFetch]);
+    const packagedProject = {
+      ...project,
+      actions,
+    };
+    res.status(200).json(packagedProject);
+  });
   
 //====POST A NEW PROJECT====
 server.post('/api/projects/', async (req, res) => {
