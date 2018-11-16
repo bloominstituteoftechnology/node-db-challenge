@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     tbl
       .integer("project_id")
       .references("projects.id")
+      //.references('id).inTable('projects)
       .notNullable();
     tbl.string("description", 100).notNullable();
     tbl.string("additional_notes", 200);

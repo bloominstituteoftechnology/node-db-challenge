@@ -21,7 +21,7 @@ server.post("/api/projects", (req, res) => {
       message: "Please fill out the name and description for the new project."
     });
   } else {
-    project.completed
+    project.completed && project.completed != undefined
       ? (project.completed = "true")
       : (project.completed = "false");
     db("projects")
@@ -43,7 +43,8 @@ server.post("/api/actions", (req, res) => {
       message: "Please include a project ID and description for the new action."
     });
   } else {
-    action.complete
+    console.log(action.completed);
+    action.completed && action.completed != undefined
       ? (action.completed = "true")
       : (action.completed = "false");
     db("projects")
@@ -79,24 +80,24 @@ server.get("/api/projects/:id", async (req, res) => {
     //retrieve all actions linked to the specified project via the project_id
     const actionPromise = db("actions")
       .join("projects", "actions.project_id", "=", "projects.id")
+      .select(
+        "actions.id",
+        "actions.description",
+        "actions.additional_notes",
+        "actions.completed"
+      )
       .where("actions.project_id", "=", id);
 
     // return both promises on an awaited Promise.all, and store it in a temp constant for deconstruction
     const result = await Promise.all([projectPromise, actionPromise]);
     const [project, actions] = result;
+    project.completed !== true ? (project.completed = false) : null;
 
-    // db will return a 1 or 0 value, so convert that to T/F
-    project.completed === 0
-      ? (project.completed = false)
-      : (project.completed = true);
-
-    // same for each action in the returned actions array
-    actions.forEach(action =>
-      action.completed === 0
+    actions.forEach(action => {
+      action.completed !== true
         ? (action.completed = false)
-        : (action.completed = true)
-    );
-
+        : (action.completed = true);
+    });
     return project // use ternary to first check if a project was actually returned
       ? res.status(200).json({ ...project, actions }) // if yes, return the project with list of associated actions
       : res.status(404).json({ message: "No project with that ID exists." }); //if not, return 404
