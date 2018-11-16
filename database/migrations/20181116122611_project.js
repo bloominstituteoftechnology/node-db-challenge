@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
         table.increments(config.FIELD_ID).primary();
         table.string(config.FIELD_NAME).notNullable();
         table.string(config.FIELD_DESC).notNullable();
-        table.boolean(config.FIELD_COMPLETED).defaultTo(false);
+        table.boolean(config.FIELD_COMPLETED).notNullable();
     })
 };
 exports.down = function(knex, Promise) {
