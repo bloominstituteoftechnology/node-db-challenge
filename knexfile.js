@@ -8,7 +8,7 @@ module.exports = {
       filename: './data/sprint.sqlite3'
     },
     useNullAsDefault: true,
-    mirgartions: {
+    migrations: {
       directory: './data/migartions'
     },
     seeds: {
