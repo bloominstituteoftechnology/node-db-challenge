@@ -34,6 +34,26 @@ server.get('/api/projects/:id', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+// server.get('/api/actions/:id', (req, res) => {
+//   const { id } = req.params
+  // const actionQ = db('actions').where({ id })
+  // const contextsQ = db('actions as a')
+    // .join('actionsContexts as ac', 'ac.action_id', 'a.id')
+    // .where('a.id', id)
+    // .join('contexts as c', 'ac.context_id', 'c.id')
+    // .then(contexts => res.status(200).json(contexts))
+    // .catch(err => res.status(500).json(err))
+  // Promise.all([actionQ, contextsQ])
+  //   .then(actionInfo => {
+  //     let action = actionInfo[0][0]
+  //     let contexts = actionInfo[1]
+  //     action.complete = !!action.complete
+  //     const result = { ...action, contexts: contexts }
+  //     res.status(200).json(result)
+  //   })
+  //   .catch(err => res.status(500).json(err))
+// })
+
 server.get('/api/actions/:id', (req, res) => {
   const { id } = req.params
   db('actions')

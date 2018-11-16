@@ -13,4 +13,4 @@ exports.seed = function(knex, Promise) {
       { complete: true, description: 'stretch 2', project_id: 2},
     ])
   })
-};
+}
