@@ -1,78 +1,29 @@
 // projectsRoutes.js
 const express = require('express')
-const knex = require('knex')
 
-const knexConfig = require('../knexfile.js')
-const db = knex(knexConfig.development)
+const db = require('../data/dataHelpers.js')
 
 const router = express.Router();
 
-// const getAllprojects = (req, res) => {
-//   db('projects')
-//     .then(projects => {
-//       res.status(200).json(projects);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error)
-//     });
-// }
+const addProjectEP = (req, res) => {
+  const project = req.body;
 
-// const getproject = (req, res) => {
-//   const { id } = req.params
+  db.addProject(project)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(error => {
+      res.status(500).json(error)
+    });
+}
 
-//   db('projects')
-//     .where('id', id)
-//     .then(projects => {
-//       res.status(200).json(projects);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error)
-//     });
-// }
+const getProjectActionsEP = (req, res) => {
+  const { id } = req.params
 
-// const addproject = (req, res) => {
-//   const { name } = req.body
-//   console.log(name)
-
-//   db('projects')
-//     .insert({ name })
-//     .then(projects => {
-//       res.status(200).json(projects);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error)
-//     });
-// }
-
-// const updateproject = (req, res) => {
-//   const changes = req.body
-//   const { id } = req.params
-
-//   db('projects')
-//     .where('id', id)
-//     .update(changes)
-//     .then(projects => {
-//       res.status(200).json(projects);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error)
-//     });
-// }
-
-// const deleteproject = (req, res) => {
-//   const changes = req.body
-//   const { id } = req.params
-
-//   db('projects')
-//     .where('id', id)
-//     .del()
-//     .then(projects => {
-//       res.status(200).json(projects);
-//     })
-//     .catch(error => {
-//       res.status(500).json(error)
-//     });
-// }
+  db.getProjectActions(id)
+    .then(project => res.status(200).json(project))
+    .catch(err => res.status(500).json(err) )
+}
 
 const echo = (req, res) => {
   res.status(200).json({
@@ -83,7 +34,7 @@ const echo = (req, res) => {
   });
 }
 
-router.post('/', echo);
-router.get('/', echo);
+router.post('/', addProjectEP);
+router.get('/:id', getProjectActionsEP);
 
 module.exports = router;

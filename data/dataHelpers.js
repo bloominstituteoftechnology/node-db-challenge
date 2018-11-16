@@ -13,7 +13,6 @@ module.exports = {
   },
   getProjectActions: (projectId) => {
     return db('actions as a')
-      .join('projects as p', 'a.project_id', 'p.id')
       .select('a.id', 'a.description', 'a.notes', 'a.completed')
       .where('a.project_id', projectId)
       .then(actions => {

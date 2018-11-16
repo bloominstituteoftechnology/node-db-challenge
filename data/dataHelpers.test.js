@@ -1,7 +1,5 @@
 const db = require('./dataHelpers.js')
 
-
-
 const testAction = {
   description: 'build an email form',
   notes: 'use backend',
@@ -11,6 +9,7 @@ const testAction = {
 
 db.addAction(testAction).then(id => console.log(id))
 .catch(err => console.log(err))
+
 const testProject = {
   name: 'build a house',
   description: 'construction',
