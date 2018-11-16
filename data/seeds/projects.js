@@ -5,8 +5,7 @@ exports.seed = function(knex, Promise) {
 		return knex('projects').insert([
 			{
 				name: 'Super Website Project',
-				description: 'Make the best site ever',
-				completed: 0
+				description: 'Make the best site ever'
 			}
 		]);
 	});

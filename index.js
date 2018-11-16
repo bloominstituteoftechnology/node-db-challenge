@@ -39,15 +39,15 @@ server.get('/api/projects/:id', (req, res) => {
 	const { id } = req.params; // grab the id
 	db('projects') // grab database for projects
 		.where({ id }) // WHERE id = projects.id
-		.first() // set column to be inserted on the first position
+		.first() // gets the first element in the array from id
 		.then((projects) => {
 			if (projects) {
 				// if the project exists
 				db('action') // grab database for action
 					.where({ project_id: id }) // match the FK to the id
 					.then((actions) => {
-						projects.actions = actions;
-						res.status(200).json(projects);
+						projects.actions = actions; // get all the actions within the project
+						res.status(200).json(projects); // return the project with everything in it
 					})
 					.catch((err) => res.status(500).json({ message: 'There was an error on the servers side', err })); //
 			} else {

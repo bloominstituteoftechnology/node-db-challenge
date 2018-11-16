@@ -6,7 +6,6 @@ exports.seed = function(knex, Promise) {
 			{
 				description: 'Pick out colors',
 				notes: 'We all hate the color red, do not use it',
-				completed: false,
 				project_id: 1
 			}
 		]);
