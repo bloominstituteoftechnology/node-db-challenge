@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         table.increments('id')
         table.string('description', 128)
         table.string('notes', 500)
-        table.boolean('completed')
+        table.boolean('completed').defaultTo(false)
         table.integer('projectID').unsigned().references('id').inTable('project')
     }) 
 }

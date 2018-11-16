@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         table.increments('id')
         table.string('name', 128)
         table.string('description', 500)
-        table.boolean('completed')
+        table.boolean('completed').defaultTo(false)
     })
 }
 

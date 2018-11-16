@@ -18,7 +18,7 @@ server.post('/api/projects', (req, res) => {
     } else {
         db('project')
             .insert(req.body)
-            .into('projects')
+            .into('project')
             .then(project => {
                 res.status(201).json(project)
             })
@@ -47,17 +47,24 @@ server.post('/api/actions', (req, res) => {
 })
 
 // ===== GET PROJECT BY ID =====
-server.get('/api/projects/:id', (req, res) => {
-    const { id } = req.params
-    db('project')
-        .join('action', { 'project.id': 'action.projectID' })
-        .where({ id: id })
-        .then(project => {
-            res.status(200).json(project)
-        })
-        .catch(error => {
-            res.status(500).json({ message: "The information could not be retrieved.", error: error })
-        })
+server.get('/api/projects/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const pPromise = db('project')
+            .where('project.id', '=', id)
+            .first()
+       const aPromise = db('action')
+            .where('action.projectID', '=', id)
+       const result = await Promise.all([ pPromise, aPromise ]);
+       const [project, action] = result;
+       if (project) {
+           return res.status(200).json({ ...project, action });
+        } else {
+            return res.status(404).json({ message: "The project with the specified ID does not exist.", error: error });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "The project information could not be retrieved.", error: error })
+    }
 })
 
 const port = 8000
