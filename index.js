@@ -43,6 +43,21 @@ server.post('/api/projects', (req, res) => {
     }
 });
 
+// get all action by project
+server.get('/api/projects/:id/actions', (req, res) => {
+    const { id } = req.params;
+    db('action')
+        .where({project_id: id})
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+});
+
+
+
 const port = 9000;
 server.listen(port, function(){
     console.log(`\n===APP listening on port ${port} ===\n`)
