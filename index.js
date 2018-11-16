@@ -58,15 +58,15 @@ server.get('/api/projects/:id', (req, res) => {
   db('projects')
     .where({ id })
     .then(project => {
-      return db('actions')
-        .select(
-          'actions.id',
-          'actions.description',
-          'actions.notes',
-          'actions.complete'
-        )
-        .where({ project_id: id })
-        .then(actions => res.status(200).json([...project, { actions }]));
+      if (project) {
+        res.status(200).json(project);
+      } else {
+        res.status(404) >
+          json({
+            message: 'The project with the specified ID does not exist.',
+            error: err
+          });
+      }
     })
     .catch(err =>
       res
