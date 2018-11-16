@@ -21,9 +21,9 @@ server.post("/api/projects", (req, res) => {
       message: "Please fill out the name and description for the new project."
     });
   } else {
-    if (!project.completed) {
-      project.completed = false;
-    }
+    project.completed
+      ? (project.completed = "true")
+      : (project.completed = "false");
     db("projects")
       .insert(project)
       .then(id => res.status(201).json(id))
@@ -43,9 +43,9 @@ server.post("/api/actions", (req, res) => {
       message: "Please include a project ID and description for the new action."
     });
   } else {
-    if (!action.completed) {
-      action.completed = false;
-    }
+    action.complete
+      ? (action.completed = "true")
+      : (action.completed = "false");
     db("projects")
       .where({ id: action.project_id })
       .then(project => {
