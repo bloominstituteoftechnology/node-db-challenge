@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
   router.get('/', (req, res) => {
     db('projects')
       .then(projects => res.status(200).json(projects))
-      .catch(err => res.status(500).json({ message: 'could not get students', err }));
+      .catch(err => res.status(500).json({ message: 'could not get projects', err }));
   });
 
   router.get("/:id", async (req, res) => {
@@ -45,6 +45,31 @@ router.post('/', (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
+  });
+
+  router.put('/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+    
+    db('projects')
+      .where({ id })
+      .update(changes)
+      .then(count => {
+        res.status(200).json({ count });
+      })
+      .catch(err => res.status(500).json({ message: 'could not update project', err }));
+  });
+  
+  router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    
+    db('projects')
+      .where({ id })
+      .del()
+      .then(count => {
+        res.status(200).json({ count });
+      })
+      .catch(err => res.status(500).json({ message: 'could not delete project', err }));
   });
 
   module.exports = router;
