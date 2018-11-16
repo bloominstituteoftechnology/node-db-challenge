@@ -9,7 +9,7 @@ function getProjects() {
 }
 
 function getProject(id) {
-    return db('projects').where({'id': id});
+    return db('projects').where({'id': id}).first();
 }
 
 function addProject(project) {
