@@ -34,16 +34,43 @@ server.get('/api/projects/:id', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+server.get('/api/actions/:id', (req, res) => {
+  const { id } = req.params
+  db('actions')
+    .where( {id} )
+    .then(action => res.status(200).json(action))
+    .catch(err => res.status(500).json({ error: 'Action not found', err }))
+})
+
 const add = tbl => {
   server.post(`/api/${tbl}`, (req, res) => {
-    if (req.body) {
-      db(tbl)
-        .insert(req.body)
-        .then(id => res.status(201).json({ message: `Item added (id: ${id})` }))
-        .catch(err => res.status(500).json({ error: 'Item failed to add', err }))
-    } else {
-      res.status(400).json({ error: 'Please fill out item information' })
-    }
+    db(tbl)
+      .insert(req.body)
+      .then(id => res.status(201).json({ message: `Item added (id: ${id})` }))
+      .catch(err => res.status(500).json({ error: 'Item failed to add, ensure required fields are filled out', err }))
+  })
+}
+
+const update = tbl => {
+  server.put(`/api/${tbl}/:id`, (req, res) => {
+    const { id } = req.params
+    const changes = req.body
+    db(tbl)
+      .where({ id })
+      .update(changes)
+      .then(count => res.status(200).json({ message: `${count} item(s) updated` }))
+      .catch(err => res.status(500).json({ error: 'Item failed to update, ensure required fields are filled out', err }))
+  })
+}
+
+const remove = tbl => {
+  server.delete(`/api/${tbl}/:id`, (req, res) => {
+    const { id } = req.params
+    db(tbl)
+      .where({ id })
+      .delete()
+      .then(count => res.status(200).json({ message: `${count} item(s) deleted` }))
+      .catch(err => res.status(500).json({ error: 'Item failed to delete', err }))
   })
 }
 
@@ -51,6 +78,10 @@ get('projects')
 get('actions')
 add('projects')
 add('actions')
+update('projects')
+update('actions')
+remove('projects')
+remove('actions')
 
 const port = 9000;
 server.listen(port, function() {
