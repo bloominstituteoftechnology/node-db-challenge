@@ -5,6 +5,8 @@ exports.up = function(knex, Promise) {
       tbl.string('description', 528);
       tbl.string('notes', 1028);
       tbl.boolean('Completion_Status');
+      tbl.integer('ProjectID')
+      tbl.foreign('ProjectID').references('id').inTable('projects')
   })
 };
 
