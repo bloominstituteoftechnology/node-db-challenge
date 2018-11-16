@@ -56,6 +56,20 @@ server.get('/api/projects/:id/actions', (req, res) => {
         })
 });
 
+// get project by id
+server.get('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('project')
+        .where({id})
+        .then(project => {
+            if (project) {
+                res.status(200).json(project)
+            } else {
+                res.status(404).json({message: 'Project non found'})
+            }
+        })
+});
+
 
 
 const port = 9000;
