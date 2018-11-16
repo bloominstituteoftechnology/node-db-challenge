@@ -4,9 +4,15 @@
 //   - a description.
 //   - a flag that indicates if the project is complete or not.
 exports.up = function(knex, Promise) {
-  
+  return knex.schema.createTable('project', function(tbl){
+    tbl.increments();
+    tbl.string('name', 150).notNullable();
+    tbl.string('description', 255);
+    tbl.boolean('is_completed').notNullable();
+
+  })
 };
 
 exports.down = function(knex, Promise) {
-  
+  return knex.schema.dropTableIfExists('project');
 };

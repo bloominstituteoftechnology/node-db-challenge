@@ -4,9 +4,19 @@
 //   - a notes column to add additional information.
 //   - a flag that indicates if the action has been completed.
 exports.up = function(knex, Promise) {
-  
+  return knex.schema.createTable('action', function(tbl){
+    tbl.increments();
+    tbl.string('description', 255)
+    tbl.string('notes',255)
+    tbl.boolean('complete')
+    tbl.integer('project_id')
+        .notNullable()
+        .unsigned()
+        .references('id')
+        .inTable('project')
+  })
 };
 
 exports.down = function(knex, Promise) {
-  
+  return knex.schema.droptableIfExists('action')
 };
