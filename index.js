@@ -4,8 +4,6 @@ const knexConfig = require('./knexfile.js')
 const db = knex(knexConfig.development)
 
 const express = require('express');
-
-//const db = require('./data/data-access.js');
 const server = express();
 
 server.use(express.json());
@@ -46,10 +44,10 @@ server.get('/actions', (request, response) => {
 /*****  PROJECTS and ACTIONS  POST *****/
 server.post('/projects', (request, response) => {
     const {name, description, completed} = request.body;
-    if(name && !description) {
+    if(name || description) {
         console.log(request.body);
     db('projects')
-          .insert(request.body)
+          .insert({name, description, completed})
           .then(projectId => {
                 response.status(201).json(projectId);
            })
@@ -80,19 +78,35 @@ server.post('/actions', (request, response) => {
 
 
 //getProjectActions---
-server.get('/projects/:id/actions', (request, response) =>{
-    db('actions')
-      .join('projects', 'projects.id','=', 'actions.project_id')
-     /* select * from actions
-        JOIN projects ON actions.project_id = projects.id; */   
-        .then(actions => {
-               if(actions.length < 1) {
-                    response.status(404).json(`no action found for project  : ${request.params.description}`)
+server.get('/projects/:id/actions', (request, response) => {
+    const id = request.params.id;
+    console.log(id);
+        db('projects')
+            .where("projects.id", id)
+            .then(projectsArray => {
+                if (projectsArray.length === 0) {
+                    response.status(404).json({ error: "The project with the specified ID was not found." });
+                } else {
+                    const result = {         //construct new object 
+                        ...projectsArray[0], //with project info return after promise.. 
+                        actions: []          //and assign actions array empty for actions table info.
+                    };
+                    
+                    db('actions')
+                        .where("actions.project_id", id)
+                        .then(actionsList => {
+                            result.actions = actionsList;
+                            response.status(200).json(result);
+                        })
+                        .catch(error => {
+                            response.status(500).json({message: "Could not retrieve actions corresponding to project id.", error});
+                        });
                 }
-                    response.status(200).json(actions);
-         })
-        .catch(error => response.status(500).json(error));
-})
+            })
+            .catch(error => {
+                response.status(500).json({ message: "Could not retrieve project with the specified ID.", error });
+            });
+    });
 
 /*****  PROJECTS and ACTIONS DELETE *****/
 server.delete('/projects/:id', (request, response) => {
@@ -113,6 +127,41 @@ server.delete('/actions/:id', (request, response) => {
                .catch(error => {
                     response.status(500).json({message : 'error deleting user'})
                 })
+})
+
+/*****  PROJECTS and ACTIONS UPDATE *****/
+server.put('/projects/:id', (request, response) => {
+    const {notes, description, completed} = request.body;
+        db('projects')
+              .where('id', '=', request.params.id)
+              .update(request.body)
+              .then(count => {
+                  if(count) {
+                        response.status(200).json(count);
+                  } else {
+                        response.status(404).json({ message: "The project with the specified ID does not exist." })
+                  }
+               })
+              .catch(error => {
+                   response.status(500).json({ error: "The project information could not be modified." })
+               })
+})
+
+server.put('/actions/:id', (request, response) => {
+    const {notes, description, completed} = request.body;
+        db('actions')
+              .where('id', '=', request.params.id)
+              .update(request.body)
+              .then(count => {
+                  if(count) {
+                        response.status(200).json(count);
+                  } else {
+                        response.status(404).json({ message: "The project with the specified ID does not exist." })
+                  }
+               })
+              .catch(error => {
+                   response.status(500).json({ error: "The project information could not be modified." })
+               })
 })
 
 const port = 3300;
