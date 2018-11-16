@@ -12,12 +12,16 @@ server.use(express.json());
 
 
 //endpoints for projects
+
+//===GETS ALL PROJECTS===
 server.get('/api/projects', (req, res) => {
     db('projects')
       .then(project => res.status(200).json(project))
       .catch(err => res.status(500).json(err));
   });
 
+
+//===GETS PROJECTS BY ID===
   server.get('/api/projects/:id', (req, res) => {
     const { id } = req.params;
      db('projects')
@@ -35,6 +39,8 @@ server.get('/api/projects', (req, res) => {
 
     });
 
+
+//===ADDS NEW PROJECT===
 server.post('/api/projects', (req, res) => {
     const project = req.body;
 
@@ -51,6 +57,8 @@ server.post('/api/projects', (req, res) => {
 
 
 //endpoints for actions
+
+//===AADDS NEW ACTION===
 server.post('/api/projects/actions', (req, res) => {
     const action = req.body;
 
