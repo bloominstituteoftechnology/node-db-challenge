@@ -93,4 +93,23 @@ server.get("/api/projects/:projectId", (req, res) => {
         });
 });
 
+server.get("/api/actions/actionId", (req, res) => {
+    const { actionId } = req.params;
+    db("actions")
+        .where("actions.id", actionId)
+        .then(actionsArray => {
+            if (actionsArray.length) {
+                res.status(200).json(actionsArray[0]);
+            } else {
+                res.status(404).json({ error: "No action has the requested ID." });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Could not retrieve action with the specified ID.",
+                error: err
+            });
+        });
+});
+
 server.listen(port, () => console.log(`\n== Port ${port} Running ==\n`));
