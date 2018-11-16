@@ -7,6 +7,12 @@ exports.up = function(knex, Promise) {
       .boolean("completed")
       .notNullable()
       .defaultTo(false);
+    tbl
+      .integer("project_id")
+      .notNullable()
+      .unsigned()
+      .references("id")
+      .inTable("projects");
   });
 };
 
