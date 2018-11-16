@@ -12,12 +12,16 @@ const router = express.Router();
 router.get('/', (req, res) => {
     db('projects')
         .then(project => {
+            
+            console.log(project);
             res.status(200).json(project)
         })
         .catch(err => {
             res.status(500).json(err)
         })
 });
+
+//post project
 
 router.post('/', (req, res) =>{
     const newProject = req.body;

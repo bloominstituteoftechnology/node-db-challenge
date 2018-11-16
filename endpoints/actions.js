@@ -19,5 +19,20 @@ router.get('/', (req, res) => {
         })
 });
 
+//post actions
+
+router.post('/', (req, res) => {
+    const newActions = req.body;
+    db('actions')
+        .insert(newActions)
+        .then(action => {
+            action
+                ? res.status(200).json(action)
+                : res.status(404).json({ Message: 'action not added' })
+        })
+        .catch(err => {
+            res.status(500).json({ Message: 'Error', err })
+        })
+});
 
 module.exports = router;
