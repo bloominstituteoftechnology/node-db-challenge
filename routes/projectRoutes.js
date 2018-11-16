@@ -45,4 +45,35 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const count = await projectDb.remove(req.params.id);
+    count
+      ? res.status(200).json({ message: 'Successfully deleted project.' })
+      : res.status(404).json({ message: 'The project with the specified ID does not exist.' });
+  } catch (err) {
+    res.status(500).json({ error: 'There was a database error deleting the project.' });
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  if (req.body.name && req.body.description) {
+    try {
+      const newProject = await projectDb.update(req.params.id, req.body);
+      if (newProject) {
+        const project = await projectDb.get(req.params.id);
+        res.status(200).json(project);
+      } else {
+        res.status(404).json({ message: 'The project with the specified ID does not exist.' });
+      }
+    } catch (err) {
+      res.status(500).json({ error: 'The specified project could not be modified.' });
+    }
+  } else {
+    res
+      .status(400)
+      .json({ errorMessage: 'Please provide a name and description for the project.' });
+  }
+});
+
 module.exports = router;
