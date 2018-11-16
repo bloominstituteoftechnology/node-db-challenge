@@ -12,6 +12,28 @@ server.get('/', (req, res) => {
     res.json({ api: 'server is running!'});
 })
 
+// server.get('/api/projects/:id/actions', (req, res) => {
+//     const { id } = req.params;
+//     db('actions')
+//     .join('projects', 'projects.id', '=', 'actions.project_id')
+//     .select('projects', 'actions')
+//     .where('actions.project_id', id)
+//     .then(actions => actions.map(action => ({ action }))
+//     .then(res.status(200).json(actions)))
+//     .catch(error => res.status(500).json({ message: "Could not retrieve projects and actions"}))
+// })
+
+server.get('/api/projects/:id/actions', async (req, res) => {
+    const { id } = req.params;
+    try {
+    const actions = await db('actions').where('project_id', id)
+    const projects = await db('projects').where('id', id)
+    res.status(200).json({project: {...projects, actions: actions}})
+} catch (err){
+    res.status(500).json({ err, message: "Could not retrieve projects and actions"})
+}
+})
+
 server.post('/api/projects', (req, res) => {
     const body = req.body;
     db('projects')
