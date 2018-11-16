@@ -24,6 +24,22 @@ server.post('/projects',(req, res) => {
     .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
 });
 
+//GET Project By ID
+server.get('/projects/:id', (req, res) => {
+    const { id } =  req.params.id;
+    db('projects')
+    .select()
+            .where({ id })
+                .then(projects => {
+                    if(project) {
+                        res.status(200).json(projects);
+                    } else {
+                            res.status(404).json({error: 'Cannot retrieve project with specified ID'});
+            }
+        })
+        .catch(error => res.status(500).json({ error: 'Cannot retrieve project information'}));
+    });
+
 //Actions Post
 server.post('/actions',(req, res) => {
     const {action} = req.body;
