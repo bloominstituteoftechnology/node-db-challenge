@@ -14,10 +14,6 @@ server.use(morgan('dev'));
 server.get('/', (req, res) => res.send({API: "live"}));
 
 // Projects API --------------------------------------------------------------------------------------------------------------
-server.get('/api/projects', (req, res) => {
-    
-})
-
 server.post('/api/projects', (req, res) => {
     const {name, description} = req.body;
     if (!name || !description) {
@@ -53,6 +49,16 @@ server.get('/api/projects/:id', (req, res) => {
         })
 })
 
+server.get('/api/projects', (req, res) => {
+    db.getProjects()
+        .then(projects => {
+            res.status(200).json(projects);
+        })
+        .catch(err => {
+            res.status(500).json({message: "The projects could not be retrieved", err});
+        })
+})
+
 // Actions API ---------------------------------------------------------------------------------------------------------------
 server.post('/api/actions', (req, res) => {
     const {description, notes, projectId} = req.body;
@@ -69,6 +75,9 @@ server.post('/api/actions', (req, res) => {
     }
 })
 
+server.get('/api/actions', (req, res) => {
+    
+})
 
 // Dynamic Port
 const port = process.env.PORT || 9000;

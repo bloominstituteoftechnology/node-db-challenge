@@ -4,6 +4,10 @@ const db = knex(knexConfig.development);
 
 
 // Projects Helpers --------------------------------------------------------------------------------------------------------------
+function getProjects() {
+    return db('projects');
+}
+
 function getProject(id) {
     return db('projects').where({'id': id});
 }
@@ -13,6 +17,9 @@ function addProject(project) {
 }
 
 // Actions Helpers --------------------------------------------------------------------------------------------------------------
+function getActions() {
+    return db('actions');
+}
 
 function getActions(id) {
     return db('actions').where({'projectId': id});
@@ -22,4 +29,4 @@ function addAction(action) {
     return db('actions').insert(action).into('actions');
 }
 
-module.exports = {getProject, addProject, getActions, addAction}
+module.exports = {getProjects, getProject, addProject, getActions, addAction}
