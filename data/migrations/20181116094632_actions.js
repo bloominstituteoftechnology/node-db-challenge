@@ -14,4 +14,4 @@ exports.up = knex =>
     actions.boolean("completed").defaultTo(false);
   });
 
-exports.down = function(knex, Promise) {};
+exports.down = knex => knex.schema.dropTableIfExists("actions");
