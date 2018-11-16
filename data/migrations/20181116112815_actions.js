@@ -10,11 +10,12 @@ exports.up = function(knex, Promise) {
     table.integer('complete');
     table.timestamps(true, true);
 
-    table.integer('project_id')
+    // table.integer('project_id');
     table
-      .integer('project_id')
-      .unsigned()
-      .references('id')
+      // .integer('project_id')
+      // .unsigned()
+      .foreign('id')
+      .references('project_id')
       .inTable('projects');
   })
 };
