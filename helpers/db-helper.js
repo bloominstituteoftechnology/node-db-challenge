@@ -6,10 +6,15 @@ module.exports = {
   },
 
   getProject: id => {
-    return db('projects as p')
-      .select('p.id', 'p.name', 'p.description', 'p.completed', 'a.id', 'a.description', 'a.notes', 'a.completed')
-      .join('actions as a', 'a.project_id', 'p.id')
-      .where('p.id', id);
+    return db('projects')
+      .where({ id: Number(id) })
+      .select('id', 'name', 'description', 'completed');
+  },
+
+  getProjectActions: id => {
+    return db('actions')
+      .select('id', 'description', 'notes', 'completed')
+      .where({ project_id: Number(id) });
   },
 
   addProject: project => {

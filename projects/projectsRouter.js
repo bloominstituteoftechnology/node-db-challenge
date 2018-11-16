@@ -3,11 +3,15 @@ const router = express.Router();
 const db = require('../helpers/db-helper');
 
 // endpoints
+router.get('/api/projects/test', (req, res) => {
+  res.status(200).send('Server Listens and Obeys');
+});
+
 router.get('/api/projects/', async (req, res) => {
   console.log('Why is this not working?');
   try {
     const projects = await db.getProjects();
-    res.status(201).json(projects);
+    res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ error: 'There was an error while getting the projects. The error is ', error });
   }
@@ -33,17 +37,20 @@ router.post('/api/projects/', async (req, res) => {
 router.get('/api/projects/:projectId', async (req, res) => {
   const { projectId } = req.params;
 
-  try {
-    const project = await db.getProject(projectId);
-    {
-      project[0]
-        ? res.status(200).json({ project })
-        : res.status(404).json({ error: 'The project with that ID does not exist.' });
-    }
-  } catch (error) {
-    console.log('The error is: ', error);
-    res.status(500).json(error);
-  }
+  db.getProjectActions(projectId)
+    .then(action => {
+      db.getProject(projectId)
+        .then(project => {
+          res.status(200).json({ project[0], actions: action });
+        })
+        .catch(_ => {
+          res.status(404).json({ message: '404 project not found' });
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: '500 error fetching', err });
+    });
 });
 
 module.exports = router;
