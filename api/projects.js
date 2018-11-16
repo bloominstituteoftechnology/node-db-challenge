@@ -20,21 +20,41 @@ router.post('/', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 /* ----  PROJECT BY ID WITH ACTIONS  ---- */
+// router.get('/:id', (req, res) => {
+//   const { id } = req.params
+//   const projectsPromise =
+//     db('projects')
+
+//       .select()
+//       .where('projects.id', id)
+
+//   const actionsPromise = db('actions')
+//     .join('projects', 'actions.project_id', '=', 'projects.id')
+//     .where('actions.project_id', '=', id)
+//     .select('projects.id', 'projects.name', 'projects.description', 'projects.completed', 'actions.id as actions_id', 'actions.description', 'actions.notes')
+//     .then(projects => res.status(200).json(projects))
+//     .catch(err => res.status(500).json(err))
+
+// })
+
 router.get('/:id', (req, res) => {
-  const { id } = req.params
-  const projectsPromise =
-    db('projects')
+  const { id } = req.params;
 
-      .select()
-      .where('projects.id', id)
+  return db('projects')
+    .where({ id })
+    .first()
+    .then(project => {
+      if (project) {
+        db('actions')
+          .where({ project_id: id })
+          .then(actions => {
+            project.actions = actions;
+            res.status(200).json(project)
 
-  const actionsPromise = db('actions')
-    .join('projects', 'actions.project_id', '=', 'projects.id')
-    .where('actions.project_id', '=', id)
-    .select('projects.id', 'projects.name', 'projects.description', 'projects.completed', 'actions.id as actions_id', 'actions.description', 'actions.notes')
-    .then(projects => res.status(200).json(projects))
-    .catch(err => res.status(500).json(err))
-
+          })
+      } else {
+        res.status(404).json({ message: 'project not found' })
+      }
+    })
 })
-
 module.exports = router;
