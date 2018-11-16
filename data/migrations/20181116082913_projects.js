@@ -3,8 +3,8 @@ exports.up = function(knex, Promise) {
       tbl.increments();
 
       tbl.string('name', 255).notNullable().unique('name');
-      tbl.string('description', 255).notNullable().unique('description');
-      tbl.boolean('completed').defaultTo(false);
+      tbl.string('description', 255).notNullable();
+      tbl.boolean('completed').notNullable().defaultTo(false);
   })
 };
 

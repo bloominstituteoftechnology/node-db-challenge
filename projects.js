@@ -17,7 +17,7 @@ module.exports = {
   function getProject(id) {
     return db("projects")
       .select("projects.name", "projects.description")
-      .where({ "projects.id": id });
+      .where({ "projects.id": id })
   }
 
   function addProject(project) {

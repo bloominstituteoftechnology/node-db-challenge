@@ -7,8 +7,8 @@ server.use(express.json());
 
 // add a new project
 server.post("/projects", (req, res) => {
-    const { name, description } = req.body;
-    const project = { name, description };
+    const { name, description, completed } = req.body;
+    const project = { name, description, completed };
     if (!project) {
       return res.status(400).send({
         errorMessage: "Please provide a name for the project."
