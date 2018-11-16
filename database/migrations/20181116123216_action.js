@@ -19,7 +19,10 @@ exports.up = function(knex, Promise) {
         table.increments(config.FIELD_ID).primary();
         table.string(config.FIELD_DESC).notNullable();
         table.string(config.FIELD_NOTES);
-        table.boolean(config.FIELD_COMPLETE);
+        table.boolean(config.FIELD_COMPLETED).defaultTo(false);
+        table.integer(config.FIELD_PROJECT_ID).notNullable();
+        table.foreign(config.FIELD_PROJECT_ID)
+            .references(`${config.TABLE_PROJECTS}.${config.FIELD_ID}`);
     })
 };
 exports.down = function(knex, Promise) {

@@ -14,8 +14,8 @@ class CrudHelper {
     async get(itemId){
         // Get just one item by Id
         if(itemId){
-            let result = await this.db(this.table).where({id: itemId});
-            return result[0];
+            let result = await this.db(this.table).where({id: itemId}).first();
+            return result;
         }
         // Get all Items as an array
         return await this.db(this.table);

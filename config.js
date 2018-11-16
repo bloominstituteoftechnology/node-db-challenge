@@ -11,9 +11,10 @@ module.exports = {
     // Database Strings
     TABLE_ACTIONS : 'actions' ,
     TABLE_PROJECTS: 'projects',
-    FIELD_ID      : 'id'         ,
-    FIELD_NAME    : 'name'       ,
-    FIELD_DESC    : 'description',
-    FIELD_NOTES   : 'notes'      ,
-    FIELD_COMPLETE: 'complete'   ,
+    FIELD_ID        : 'id'         ,
+    FIELD_NAME      : 'name'       ,
+    FIELD_DESC      : 'description',
+    FIELD_NOTES     : 'notes'      ,
+    FIELD_COMPLETED : 'completed'  ,
+    FIELD_PROJECT_ID: 'project_id' ,
 };
