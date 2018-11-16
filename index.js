@@ -113,7 +113,7 @@ server.delete('/api/projects/:id', (req, res) => {
     .del()
     .then(count => res.status(200).json(count))
     .catch(err => {
-        res.status(400).json({ message: "failed to delete cohort"})
+        res.status(400).json({ message: "failed to delete project"})
     })
 })
 
@@ -124,7 +124,7 @@ server.delete('/api/actions/:id', (req, res) => {
     .del()
     .then(count => res.status(200).json(count))
     .catch(err => {
-        res.status(400).json({ message: "failed to delete cohort"})
+        res.status(400).json({ message: "failed to delete action"})
     })
 })
 
