@@ -10,8 +10,8 @@ exports.up = function(knex, Promise) {
     table.integer('complete');
     table.timestamps(true, true);
 
-    table.string('project_id', 255)
-    tableg
+    table.integer('project_id')
+    table
       .integer('project_id')
       .unsigned()
       .references('id')
