@@ -6,6 +6,26 @@ const server = express();
 const port = 9000;
 server.use(express.json());
 
+// made a helper because the get request was getting crouded
+const getProjectAndActions = (projectId) =>{
+    if(projectId) {
+    return db('actions')
+        .join('projects', 'actions.project_id', '=', 'projects.id')
+        .where('projects.id', projectId)
+        .select(
+            'projects.id',
+            'projects.name',
+            'projects.description',
+            'projects.is_completed',
+            'actions.project_id',
+            'actions.project_id',
+            'actions.name'
+            )
+    } else {
+        return db('project');
+}
+}
+
 server.get('/api/projects',(req,res) => {
     db('projects')
     .then(projects => res.status(200).json(projects))
@@ -36,5 +56,22 @@ server.post('/api/actions', (req,res) => {
         .catch(err => res.status(500).json({youdonefuckedup : err}));
     }
 })
+
+server.get('/api/projects/:id',(req,res) => {
+    const { id } = req.params;
+    getProjectAndActions(id)
+        .then(project => {
+            if(!project){
+                res.status(404).json("Project does not exist")
+            }else{
+                res.status(200).json(project)
+            }
+        })
+        .catch(err => {
+            res.status(500).json(`can't find specified project , ${err}`)
+        })
+})
+
+
 
 server.listen(port,() => {console.log(`server listening on port ${port}`)})
