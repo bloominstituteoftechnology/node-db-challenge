@@ -12,7 +12,10 @@ server.get("/", (req, res) => {
   res.json({ api: "running" });
 });
 //========================================================================== Post <----
-server.post("/projects", (req, res) => {
+server.post("/projects", (req, res, next) => {
+  if (!req.body || !req.body.description || !req.body.notes || !req.body.name) {
+    return next(Error("CONTENT_REQUIRED"));
+  }
   const project = req.body;
   console.log(project);
   db("projects")
@@ -20,7 +23,7 @@ server.post("/projects", (req, res) => {
     .then(ids => {
       res.status(201).json(ids);
     })
-    .catch(err => res.status(500).json({ message: "error creating project" }));
+    .catch(next);
 });
 
 server.post("/actions", (req, res) => {
@@ -31,10 +34,10 @@ server.post("/actions", (req, res) => {
     .then(ids => {
       res.status(201).json(ids);
     })
-    .catch(err => res.status(500).json({ message: "error creating project" }));
+    .catch(err => res.status(500).json({ message: "error creating actions" }));
 });
 
-//========================================================================== get <----
+//========================================================================== Get <----
 server.get("/projects", (req, res) => {
   db("projects")
     .then(project => res.status(200).json(project))
@@ -61,6 +64,18 @@ server.get("/projects/:id", (req, res) => {
         });
     })
     .catch(err => res.status(500).json(err));
+});
+
+//========================================================================== Error Handlers <----
+server.use((err, req, res, next) => {
+  switch (err.message) {
+    case "CONTENT_REQUIRED":
+      return res.status(400).json({
+        message: "Name, Description and Notes are required for project entry"
+      });
+    default:
+      return res.status(500).json(err.message);
+  }
 });
 
 server.listen(9000, () => console.log("running on port 9000"));
