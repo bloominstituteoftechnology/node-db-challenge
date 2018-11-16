@@ -36,6 +36,8 @@ exports.up = function(knex, Promise) {
     ]);
 };
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable(config.TABLE_CONTEXTS       );
-    return knex.schema.dropTable(config.TABLE_ACTION_CONTEXTS);
+    return Promise.all([
+        knex.schema.dropTable(config.TABLE_CONTEXTS       ),
+        knex.schema.dropTable(config.TABLE_ACTION_CONTEXTS),
+    ]);
 };

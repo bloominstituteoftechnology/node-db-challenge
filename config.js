@@ -8,8 +8,10 @@ module.exports = {
     PORT: PORT,
     MESSAGE_SERVER_START: `\nServer started on port ${PORT}\n`,
     // Route URLs
-    URL_PROJECTS: '/projects',
-    URL_ACTIONS : '/actions' ,
+    URL_PROJECTS       : '/projects'       ,
+    URL_ACTIONS        : '/actions'        ,
+    URL_CONTEXTS       : '/contexts'       ,
+    URL_ACTION_CONTEXTS: '/action_contexts',
     // Database Strings
     TABLE_ACTIONS        : 'actions'        ,
     TABLE_PROJECTS       : 'projects'       ,
