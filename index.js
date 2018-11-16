@@ -29,5 +29,16 @@ server.post('/api/projects', async (req, res) => {
   }
 });
 
+// Adding a new PROJECT
+server.post('/api/actions', async (req, res) => {
+  const actionData = req.body;
+  try {
+    const id = await db.insert(actionData).into('actions');
+    res.status(201).json(id);
+  } catch (error) {
+    res.status(500).json({ error: 'There was an error creating that action.' });
+  }
+});
+
 const port = 5000;
 server.listen(port, () => console.log(`\n Server Started on Port ${port} \n`));
