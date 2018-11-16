@@ -8,12 +8,13 @@ const server = express();
 const knex = require('knex');
 const knexConfig = require('./knexfile');
 
-//routes
-
-//calling server and routes
+//calling server
 server.use(express.json());
 server.use(helmet());
 server.use(morgan('dev'));
+
+
+//endpoints
 
 //port
 const port = 7000
