@@ -4,7 +4,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 
 1.  Explain the difference between `RDBMS` and `SQL`.
     
-    RDBMS is the system that manages schema and data, SQL is the languate that we use to query that data.
+    RDBMS is the system that manages schema and data, SQL is the language that we use to query that data.
 
 
 1.  Why do tables need a `primary key`?
