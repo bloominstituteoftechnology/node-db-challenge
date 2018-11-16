@@ -76,38 +76,37 @@ server.post('/api/projectactions/:id', async (req, res) => {
 });  
 
 // ___________ GET Projects + GET by ID_______________
-//[GET] /api/projects This route will return an array of all cohorts.
-//[GET] /api/projects/:id This route will return the cohort with the matching id.
+//[GET] /api/projects This route will return an array of all projects.
+//[GET] /api/projects/:id This route will return the project with the matching id.
 
-server.get('/api/cohorts', (req, res) => {
-  db('cohorts_table')
-    .then(cohorts => res.status(200).json(cohorts))
+server.get('/api/projects', (req, res) => {
+    db('projects')
+    .then(cohorts => res.status(200).json(projects))
     .catch(err => res.status(500).json(err));
 });
 
-server.get('/api/cohorts/:id', (req, res) => {
-  const { id } = req.params;
-  db('cohorts_table')
-  .where({ id:id })
-  .then(cohort => { 
-    if (!cohort ) { 
-    res.status(404).json({ message: "The cohort with the specified ID does not exist." });
-    return  
-    } else if (!cohort.length) { 
-     res.status(404).json({ message: "The cohort with the specified ID does not have any actions yet." });
-     return  
-     } else if (cohort && cohort.length){ 
-    res.status(200).json(cohort);
-    return  
-    }
-  })
-  .catch(err => {
-    res 
-      .status(500)
-      .json({ error: "The post information could not be retrieved." });
+server.get('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects')
+    .where({ id:id })
+    .then(project => { 
+      if (!project ) { 
+      res.status(404).json({ message: "The project with the specified ID does not exist." });
+      return  
+      } else if (!project.length) { 
+       res.status(404).json({ message: "The project with the specified ID does not have any actions yet." });
+       return  
+       } else if (project && project.length){ 
+      res.status(200).json(cohort);
+      return  
+      }
+    })
+    .catch(err => {
+      res 
+        .status(500)
+        .json({ error: "The post information could not be retrieved." });
+    });
   });
-});
-
 
 const port = 8800;
 server.listen(port, function() {
