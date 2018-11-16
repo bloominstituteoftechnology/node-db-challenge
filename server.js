@@ -15,16 +15,46 @@ app.get('/api/projects', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-app.get('/api/zoos/:zooid', (req, res) => {
-  const { zooid } = req.params;
-  db('zoos')
-    .then(zoos => res.status(200).json(zoos))
+app.get('/api/actions', (req, res) => {
+  db('actions')
+    .then(actions => res.status(200).json(actions))
     .catch(err => res.status(500).json(err));
+});
+
+
+// app.get('/api/projects/:id', (req, res) => {
+//   const { id } = req.params;
+//   db('zoos')
+//     .then(zoos => res.status(200).json(zoos))
+//     .catch(err => res.status(500).json(err));
+// });
+
+app.post('/api/projects', (req, res) => {
+  const project = req.body;
+  db('projects')
+    .insert(project)
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Error inserting', err });
+    });
+});
+
+app.post('/api/actions', (req, res) => {
+  const action = req.body;
+  db('actions')
+    .insert(action)
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Error inserting', err });
+    });
 });
 
 app.post('/api/zoos', (req, res) => {
   const zoo = req.body;
-
   db('zoos')
     .insert(zoo)
     .then(ids => {
@@ -34,6 +64,7 @@ app.post('/api/zoos', (req, res) => {
       res.status(500).json({ message: 'Error inserting', err });
     });
 });
+
 
 app.get('/api/zoos/:zooid', (req, res) => {
   const { zooid } = req.params;
