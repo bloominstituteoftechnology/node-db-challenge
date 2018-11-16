@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
       .string('description', 256)
       .notNullable();
     tbl.string('notes', 256);
-    tbl.boolean('completed');
+    tbl.boolean('completed').defaultTo(0);
   });
 };
 

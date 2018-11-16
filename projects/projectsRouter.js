@@ -5,11 +5,11 @@ const knexConfig = require('../knexfile');
 
 const db = knex(knexConfig.development);
 
-router.get('/', (req, res) => {
-  db('projects')
-    .then(projects => res.status(200).json(projects))
-    .catch(err => res.status(500).json(err));
-});
+// router.get('/', (req, res) => {
+//   db('projects')
+//     .then(projects => res.status(200).json(projects))
+//     .catch(err => res.status(500).json(err));
+// });
 
 router.post('/', (req, res) => {
   const project = req.body;
@@ -28,44 +28,42 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
 
-  db('projects')
-    .where({ id: id })
+  db('projects').where({ id: id })
     .then(project => {
-      res.status(201).json({ project });
+      res.status(200).json(project);
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => res.status(500).json(err))
+
 });
 
 
-router.put('/:id', (req, res) => {
-  const changes = req.body;
-  const { id } = req.params;
+// router.put('/:id', (req, res) => {
+//   const changes = req.body;
+//   const { id } = req.params;
 
-  db('projects')
-    .where({ id: id })
-    .update(changes)
-    .then(count => {
-      res.status(200).json({ count });
-    })
-    .catch(err => res.status(500).json(err));
-});
+//   db('projects')
+//     .where({ id: id })
+//     .update(changes)
+//     .then(count => {
+//       res.status(200).json({ count });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
+// router.delete('/:id', (req, res) => {
+//   const { id } = req.params;
 
-  db('projects')
-    .where({ id: id })
-    .del()
-    .then(count => {
-      res.status(200).json({ count });
-    })
-    .catch(err => res.status(500).json(err));
-});
+//   db('projects')
+//     .where({ id: id })
+//     .del()
+//     .then(count => {
+//       res.status(200).json({ count });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
 
 module.exports = router

@@ -27,45 +27,45 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-  const {
-    id
-  } = req.params;
+// router.get('/:id', (req, res) => {
+//   const {
+//     id
+//   } = req.params;
 
-  db('actions')
-    .where({ id: id })
-    .then(action => {
-      res.status(201).json({ action });
-    })
-    .catch(err => res.status(500).json(err));
-});
-
-
-router.put('/:id', (req, res) => {
-  const changes = req.body;
-  const { id } = req.params;
-
-  db('actions')
-    .where({ id: id })
-    .update(changes)
-    .then(count => {
-      res.status(200).json({ count });
-    })
-    .catch(err => res.status(500).json(err));
-});
+//   db('actions')
+//     .where({ id: id })
+//     .then(action => {
+//       res.status(201).json({ action });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
+// router.put('/:id', (req, res) => {
+//   const changes = req.body;
+//   const { id } = req.params;
 
-  db('actions')
-    .where({ id: id })
-    .del()
-    .then(count => {
-      res.status(200).json({ count });
-    })
-    .catch(err => res.status(500).json(err));
-});
+//   db('actions')
+//     .where({ id: id })
+//     .update(changes)
+//     .then(count => {
+//       res.status(200).json({ count });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
+
+
+// router.delete('/:id', (req, res) => {
+//   const { id } = req.params;
+
+//   db('actions')
+//     .where({ id: id })
+//     .del()
+//     .then(count => {
+//       res.status(200).json({ count });
+//     })
+//     .catch(err => res.status(500).json(err));
+// });
 
 
 module.exports = router
