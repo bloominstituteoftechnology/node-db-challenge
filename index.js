@@ -17,15 +17,15 @@ server.get('/', (req, res) => {
 });
 
 //Projects Post
-server.post('/projects',(req, res) => {
-    const {project} = req.body;
+server.post('/api/projects',(req, res) => {
+    const {name, description, completed} = req.body;
+    const project = {name, description, completed};
     if (!project) res.status(400).json({ error: 'Please provide a project' });
-    db
-    .insert({ project })
-    .into('projects')
-    .then(ids => res.status(201).json( ids))
-    .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
-});
+      db.insert(project)
+        .into('projects')
+            .then(ids => res.status(201).json( ids))
+                .catch(err => res.status(500).json({ error: 'Project cannot be saved' }));
+  });
 
 //GET Project By ID
 server.get('/projects/:id', (req, res) => {
@@ -44,15 +44,33 @@ server.get('/projects/:id', (req, res) => {
     });
 
 //Actions Post
-server.post('/actions',(req, res) => {
-    const {action} = req.body;
+server.post('/api/actions',(req, res) => {
+    const {description, notes, project_id} = req.body;
+    const action = {description, notes, project_id};
 
     if (!action) res.status(400).json({ error: 'Please provide an action' });
-    db.insert({ action })
-    .into('actions')
-    .then(ids => res.status(201).json( ids ))
-    .catch(err => res.status(500).json({ error: 'Action not saved' }));
+    db.insert(action)
+        .into('actions')
+            .then(ids => res.status(201).json( ids ))
+    .         catch(err => res.status(500).json({ error: 'Action not saved' }));
+  });
+
+// stretch 
+// get actions
+
+server.get('/api/actions', (req, res) => {
+    db('actions')
+    .then(actions => 
+    res.status(200).json(actions))
+    .catch(err => res.status(500).json({ error: 'Actions not retrieved'}));
 });
+//get projects
+
+server.get('/api/projects', (req, res) => {
+    db('projects') 
+    .then(projects => res.status(200).json(projects))
+    .catch(err => res.status(500).json( `${err}: 'Projects cannot be retrieved'`));
+    });  
 
 //Port 
 const port = 7777;
