@@ -5,6 +5,22 @@ const knexConfig = require('../../knexfile');
 const db = knex(knexConfig.development);
 const router = express.Router();
 
+// HELPER FUNCTION
+const getProjectWithActions = async id => {
+  try {
+    const project = await db('projects').where({ id });
+    const actions = await db
+      .select('actions.*')
+      .from('projects')
+      .join('actions', 'projects.id', 'actions.project_id')
+      .where({ 'projects.id': id });
+    return { ...project[0], actions };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 // GET ALL PROJECTS
 router.get('/', async (req, res) => {
   try {
@@ -21,15 +37,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const project = await db('projects').where({ id });
-    const actions = await db
-      .select('actions.*')
-      .from('projects')
-      .join('actions', 'projects.id', 'actions.project_id')
-      .where({ 'projects.id': id });
-    return !project.length
+    const projects = await getProjectWithActions(id);
+    return !projects.actions.length
       ? res.status(404).json({ message: "That project doesn't exist." })
-      : res.status(200).json({ ...project[0], actions });
+      : res.status(200).json(projects);
   } catch (error) {
     res
       .status(500)
@@ -42,7 +53,8 @@ router.post('/', async (req, res) => {
   const projectData = req.body;
   try {
     const id = await db.insert(projectData).into('projects');
-    res.status(201).json(id);
+    const project = await getProjectWithActions(id[0]);
+    res.status(201).json(project);
   } catch (error) {
     res
       .status(500)
