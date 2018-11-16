@@ -16,6 +16,10 @@ function addProject(project) {
     return db('projects').insert(project).into('projects');
 }
 
+function getActionsOnProject(id) {
+    return db('actions').where({'projectId': id});
+}
+
 function deleteProject(id) {
     return db('projects').where({'id': id}).del();
 }
@@ -24,9 +28,7 @@ function deleteProject(id) {
 function getActions(id) {
     if (!id) {
         return db('actions');
-    } else {
-        return db('actions').where({'projectId': id});
-    }    
+    }
 }
 
 function addAction(action) {
@@ -37,4 +39,4 @@ function deleteAction(id) {
     return db('actions').where({'id': id}).del();
 }
 
-module.exports = {getProjects, getProject, addProject, deleteProject, getActions, addAction, deleteAction}
+module.exports = {getProjects, getProject, getActionsOnProject, addProject, deleteProject, getActions, addAction, deleteAction}

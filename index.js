@@ -34,7 +34,7 @@ server.get('/api/projects/:id', (req, res) => {
     db.getProject(id)
         .then(project => {
             if (project) {
-                db.getActions(id)
+                db.getActionsOnProject(id)
                     .then(actions => {
                         project.actions = actions
                         res.status(200).json(project);
