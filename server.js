@@ -21,14 +21,6 @@ app.get('/api/actions', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-
-// app.get('/api/projects/:id', (req, res) => {
-//   const { id } = req.params;
-//   db('zoos')
-//     .then(zoos => res.status(200).json(zoos))
-//     .catch(err => res.status(500).json(err));
-// });
-
 app.post('/api/projects', (req, res) => {
   const project = req.body;
   db('projects')
@@ -69,17 +61,42 @@ app.get('/api/projects/:id', (req, res) => {
    db('projects')
       .where({ id: id })
       .then(project => {
-          db('actions').where({ projectId: id }).then(action => {
-                return res.status(200).json({ ...project, actions: action });
-            });
+        db('actions').where({ projectId: id }).then(action => {
+              return res.status(200).json({ ...project, actions: action });
+        });
       })
       .catch(() => {
           return res
               .status(500)
-              .json({ Error: "Project info could not be retrieved." })
+              .json({ Error: "Project Info Error" })
       });
 });
 
+server.put('/api/projects/:id', (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+
+  db('projects')
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+server.put('/api/actions/:id', (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+
+  db('actions')
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 app.delete('/api/actions/:id', (req, res) => {
   const { id } = req.params;
