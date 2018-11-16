@@ -86,17 +86,26 @@ server.get('/api/projects', (req, res) => {
 });
 
 server.get('/api/project/:id', (req, res) => {
-    const { id } = req.params;
+ const { id } = req.params;
     db('projects')
        .where({ id })
        .then(project => {
+        if (!project) { 
+            res.status(404).json({ message: "The project with the specified ID does not exist." });
+            return  
+            } else if (!project.length) { 
+             res.status(404).json({ message: "The project with the specified ID does not exist" });
+             return  
+             } else if (project && project.length) {
            db('actions')
             .where({ project_id: id })
             .then(action => {
                 return res
                 .status(200).json({ ...project, actions: action });
                });
+            }
             })
+        
             .catch(err => {
                 console.log(err)
                 res 
