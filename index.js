@@ -3,6 +3,8 @@ const helmet = require("helmet");
 const knex = require("knex");
 
 const knexConfig = require("./knexfile");
+const utils = require("./utils");
+const { binaryToBoolean, projectBuilder } = utils;
 
 const db = knex(knexConfig.development);
 
@@ -17,14 +19,7 @@ server.use(helmet());
 
 server.get("/api/projects", (req, res) => {
   db("projects")
-    .then(projects =>
-      res.status(200).json(
-        projects.map(project => ({
-          ...project,
-          completed: project.completed ? true : false
-        }))
-      )
-    )
+    .then(projects => res.status(200).json(binaryToBoolean(projects)))
     .catch(err => {
       res.status(500).json({ error: err });
       console.error(err);
@@ -33,14 +28,7 @@ server.get("/api/projects", (req, res) => {
 
 server.get("/api/actions", (req, res) => {
   db("actions")
-    .then(actions =>
-      res.status(200).json(
-        actions.map(action => ({
-          ...action,
-          completed: action.completed ? true : false
-        }))
-      )
-    )
+    .then(actions => res.status(200).json(binaryToBoolean(actions)))
     .catch(err => {
       res.status(500).json({ error: err });
       console.error(err);
@@ -58,16 +46,7 @@ server.get("/api/projects/:id", (req, res) => {
       db("actions")
         .where("project_id", project.id)
         .then(actions =>
-          res.status(200).json({
-            id: project.id,
-            name: project.name,
-            description: project.description,
-            completed: project.completed ? true : false,
-            actions: actions.map(action => ({
-              ...action,
-              completed: action.completed ? true : false
-            }))
-          })
+          res.status(200).json(projectBuilder(project, actions))
         );
     })
     .catch(err => {
