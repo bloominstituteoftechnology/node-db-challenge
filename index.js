@@ -25,6 +25,24 @@ server.get('/api/projects', (req, res) => {
         })
 });
 
+// create project
+server.post('/api/projects', (req, res) => {
+    const project = req.body;
+
+    if (!project.name || !project.description) {
+        return res.status(404).json({message: 'Please fill all the require thing'})
+    } else {
+    db('project')
+        .insert(project)
+        .then(id => {
+            res.status(201).json(id)
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+    }
+});
+
 const port = 9000;
 server.listen(port, function(){
     console.log(`\n===APP listening on port ${port} ===\n`)
