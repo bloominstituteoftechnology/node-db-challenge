@@ -9,9 +9,11 @@ module.exports = {
     MESSAGE_SERVER_START: `\nServer started on port ${PORT}\n`,
     // Route Paths
     // Database Strings
+    TABLE_ACTIONS : 'actions' ,
     TABLE_PROJECTS: 'projects',
-    FIELD_ID: 'id',
-    FIELD_NAME: 'name',
-    FIELD_DESC: 'description',
-    FIELD_COMPLETE: 'complete',
+    FIELD_ID      : 'id'         ,
+    FIELD_NAME    : 'name'       ,
+    FIELD_DESC    : 'description',
+    FIELD_NOTES   : 'notes'      ,
+    FIELD_COMPLETE: 'complete'   ,
 };
