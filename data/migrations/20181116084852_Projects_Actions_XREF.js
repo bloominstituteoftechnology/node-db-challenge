@@ -10,6 +10,9 @@ exports.up = function(knex, Promise) {
         table.integer('IdAction').notNullable();
         table.foreign('IdAction').references('Actions.Id')
         
+        table.integer("IdStatus").notNullable();
+        table.foreign('IdStatus').references('Status.Id')
+
         table.timestamps(true,true);
 
     })
