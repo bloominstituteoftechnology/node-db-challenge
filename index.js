@@ -1,4 +1,8 @@
 const express = require('express');
+const knex = require('knex');
+const knexConfig = require('./knexfile');
+
+const db = knex(knexConfig.development);
 const server = express();
 
 server.use(express.json());
@@ -10,6 +14,19 @@ server.get('/', (req, res) => {
       <p>Actions:  /api/actions</p>
     </div>`
   );
+});
+
+// Adding a new PROJECT
+server.post('/api/projects', async (req, res) => {
+  const projectData = req.body;
+  try {
+    const id = await db.insert(projectData).into('projects');
+    res.status(201).json(id);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'There was an error creating that project.' });
+  }
 });
 
 const port = 5000;
