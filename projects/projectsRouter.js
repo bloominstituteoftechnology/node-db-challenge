@@ -3,12 +3,11 @@ const router = express.Router();
 const db = require('../helpers/db-helper');
 
 // endpoints
-router.get('/api/projects/', (req, res) => {
+router.get('/api/projects/', async (req, res) => {
   console.log('Why is this not working?');
   try {
-    // const projects = await db.getProjects();
-    res.status(201);
-    // .json(projects);
+    const projects = await db.getProjects();
+    res.status(201).json(projects);
   } catch (error) {
     res.status(500).json({ error: 'There was an error while getting the projects. The error is ', error });
   }
