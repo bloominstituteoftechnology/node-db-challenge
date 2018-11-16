@@ -23,7 +23,7 @@ server.post('/actions', (req, res) => {
     db('actions')
         .insert(action)
         .then(id => {
-            res.status(201).json(id);   
+            res.status(201).json(id);       
         })
         .catch(err => {
             res.status(500).json({ message: 'Error Inserting' });
