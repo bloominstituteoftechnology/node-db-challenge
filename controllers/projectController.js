@@ -41,3 +41,5 @@ const controllersProject = {
   },
 
 }
+
+module.exports = controllersProject;

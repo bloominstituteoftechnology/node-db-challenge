@@ -7,7 +7,7 @@ router.post('/project', project.addProject)
 router.post('/action', project.addAction)
 
 
-router.get('/:id', dish.getProject)
+router.get('/:id', project.getProject)
 
 
 
