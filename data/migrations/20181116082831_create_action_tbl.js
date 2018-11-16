@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
     table.increments();
     table.string('description');
     table.string('notes');
-    table.boolean('completed');
+    table.boolean('completed').defaultTo(false);
     table
       .integer('project_id')
       .unsigned()
