@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       .notNullable();
     tbl.string("description", 100).notNullable();
     tbl.string("additional_notes", 200);
-    tbl.boolean("completed");
+    tbl.boolean("completed").defaultTo(false);
   });
 };
 
