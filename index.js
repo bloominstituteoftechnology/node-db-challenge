@@ -138,6 +138,6 @@ server.get('/api/action/:actionid', async (req, res) => {
         res.status(500).json({ error: 'There was an error fetching the data.', err });
     }
 
-});
+}); 
 
 server.listen(3300, () => console.log('Server listening on port 3300.'));
