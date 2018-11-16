@@ -79,10 +79,30 @@ server.get('/api/project/:projectid', async (req, res) => {
 
 });
     
-    
+server.put('/api/project/:projectid', async (req, res) => {
+    const { projectid } = req.params;
+    const changes = req.body;
 
+    try {
+        const count = await db('project').where({ id: projectid }).update(changes);
+        
+        res.status(201).json(count);
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error updating the project.', err });
+    }
+});
 
+server.put('/api/action/:actionid', async (req, res) => {
+    const { actionid } = req.params;
+    const changes = req.body;
 
-
+    try {
+        const count = await db('action').where({ id: actionid }).update(changes);
+        
+        res.status(201).json(count);
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error updating the action.', err });
+    }
+});
 
 server.listen(3300, () => console.log('Server listening on port 3300.'));
