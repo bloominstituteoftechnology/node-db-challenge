@@ -3,8 +3,21 @@ exports.seed = (knex, Promise) => {
     .truncate()
     .then(() => {
       return knex('actions').insert([
-        { description: 'action description', notes: 'the action notes', project_id: 1 },
-        { description: 'another action description', notes: 'the action notes', project_id: 1 }
+        {
+          project_id: 1,
+          description: 'Fork and Clone Repository',
+          notes: 'Repo URL: https://github.com/LambdaSchool/Sprint-Challenge-Node-Express'
+        },
+        {
+          project_id: 1,
+          description: 'Install Dependencies',
+          notes: 'Remember to cd into the folder where the Project was cloned'
+        },
+        {
+          project_id: 1,
+          description: 'Design and Build API Endpoints',
+          notes: 'This is where the magic happens!'
+        }
       ]);
     });
 };

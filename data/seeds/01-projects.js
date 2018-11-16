@@ -3,7 +3,11 @@ exports.seed = (knex, Promise) => {
     .truncate()
     .then(() => {
       return knex('projects').insert([
-        { name: 'project name here', description: 'the project description' }
+        {
+          name: 'Complete Node.js and Express Challenge',
+          description:
+            'Build and Awesome API Using Node.js and Express to Manage Projects and Actions GTD Style!'
+        }
       ]);
     });
 };
