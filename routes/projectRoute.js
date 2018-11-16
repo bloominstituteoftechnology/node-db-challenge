@@ -21,7 +21,6 @@ router.get('/:id', (req, res) => {
   db('project')
     .where('id', id)
     .then(project => {
-  
       if(!project) {
         res.status(404).json({message: 'Could not find a project with that Id'})
       }
@@ -32,7 +31,9 @@ router.get('/:id', (req, res) => {
           project[0].action = actions;
           res.status(200).json(project)
         })
-        
+        .catch(error => {
+          res.status(500).json({message: 'Error getting project', error})
+        }) 
     })
     
 })
@@ -40,14 +41,12 @@ router.get('/:id', (req, res) => {
 // adds a new project
 router.post('/', (req, res) => {
   const project = req.body;
-  
   db('project')
     .insert(project)
     .then( count => {
       res.status(201).json(count)
     })
     .catch( error => {
-      console.log(project)
       res.status(500).json({message: 'Error adding new project', error})
     })
 })
