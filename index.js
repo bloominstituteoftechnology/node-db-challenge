@@ -41,12 +41,13 @@ server.post('/api/actions', (req, res) => {
 server.get('/api/projects/:id', async (req, res) => {
   const { id } = req.params
 
+  const convertBinToBool = list =>
+    list.map(item => ({ ...item, completed: item.completed === 1 }))
+
   try {
     const project = await db('projects')
       .where({ id })
-      .then(info =>
-        info.map(item => ({ ...item, completed: item.completed === 1 }))
-      )
+      .then(info => convertBinToBool(info))
 
     const actions = await db('projects')
       .join('actions', { 'projects.id': 'actions.project_id' })
@@ -57,9 +58,7 @@ server.get('/api/projects/:id', async (req, res) => {
         'actions.completed'
       )
       .where({ 'projects.id': id })
-      .then(info =>
-        info.map(item => ({ ...item, completed: item.completed === 1 }))
-      )
+      .then(info => convertBinToBool(info))
 
     const data = { ...project[0], actions }
 
