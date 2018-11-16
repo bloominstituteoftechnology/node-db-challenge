@@ -24,7 +24,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 
 5.  What SQL statement is used to retrieve data from a table?
 
-    A SELECT statement is used to retrieve data from SQL tables.
+    A SELECT/FROM statement is used to retrieve data from SQL tables.
 
 6.  What SQL clause is used to filter the results of a query?
 

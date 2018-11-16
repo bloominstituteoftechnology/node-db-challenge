@@ -24,6 +24,17 @@ server.get('/api/projects', (req, res) => {
     );
 });
 
+server.get('/api/actions', (req, res) => {
+  db('actions')
+    .then(actions => res.status(200).json(actions))
+    .catch(err =>
+      res.status(500).json({
+        message: 'The actions could not be retrieved.',
+        error: err
+      })
+    );
+});
+
 //POST project
 server.post('/api/projects', (req, res) => {
   const project = req.body;
@@ -63,10 +74,11 @@ server.get('/api/projects/:id', (req, res) => {
         db('actions')
           .where({ project_id: id })
           .then(actions => {
+            console.log('here');
             project.actions = actions;
+            res.status(200).json(project);
             return project;
           });
-        res.status(200).json(project);
       } else {
         res.status(404) >
           json({
