@@ -16,6 +16,26 @@ server.get('/', (req, res) => {
   );
 });
 
+// GET project by ID
+server.get('/api/projects/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await db('projects').where({ id });
+    const actions = await db
+      .select('actions.*')
+      .from('projects')
+      .join('actions', 'projects.id', 'actions.project_id')
+      .where({ 'projects.id': id });
+    return !project.length
+      ? res.status(404).json({ message: "That project doesn't exist." })
+      : res.status(200).json({ ...project[0], actions });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'There was a problem getting that project.' });
+  }
+});
+
 // Adding a new PROJECT
 server.post('/api/projects', async (req, res) => {
   const projectData = req.body;
