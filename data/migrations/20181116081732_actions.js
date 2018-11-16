@@ -2,7 +2,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('actions', function(actions) {
     actions.increments().primary;
-    actions.integer('projectId').references('projects.id');
+    actions.integer('projectId').references('projects.id').notNullable();
     actions.text('name').notNullable();
     actions.text('description').notNullable();
     actions.boolean('completed').defaultTo(false);
