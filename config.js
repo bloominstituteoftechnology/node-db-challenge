@@ -7,7 +7,8 @@ module.exports = {
     // Server Configuration
     PORT: PORT,
     MESSAGE_SERVER_START: `\nServer started on port ${PORT}\n`,
-    // Route Paths
+    // Route URLs
+    URL_PROJECTS: '/projects',
     // Database Strings
     TABLE_ACTIONS : 'actions' ,
     TABLE_PROJECTS: 'projects',
