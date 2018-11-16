@@ -1,17 +1,17 @@
 
 exports.up = function (knex, Promise) {
   //makes changes to the database
-  return knex.schema.createTable('actions', function (tbl) {
+  return knex.schema.createTable('projects', function (tbl) {
     //primary key
     tbl.increments();
     //other fields
+    tbl.string('name', 120);
     tbl.string('description', 240);
-    tbl.string('notes', 120);
     tbl.boolean('completed').defaultTo(false)
     tbl.timestamps(true, true);
   })
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('actions');
+  return knex.schema.dropTableIfExists('projects');
 };
