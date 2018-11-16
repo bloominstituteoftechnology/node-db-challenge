@@ -7,6 +7,8 @@ exports.seed = function(knex, Promise) {
       return knex('context').insert([
         {action_id: 1, at_home: 'true', at_computer: 'false', at_bank: 'false'},
         {action_id: 2, at_home: 'false', at_computer: 'false', at_bank: 'true'},
+        {action_id: 3, at_home: 'true', at_computer: 'false', at_bank: 'false'},
+        {action_id: 4, at_home: 'false', at_computer: 'false', at_bank: 'true'}
       ]);
     });
 };
