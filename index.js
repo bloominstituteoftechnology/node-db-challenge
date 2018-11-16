@@ -1,7 +1,12 @@
 const express = require("express");
+const knex = require("knex");
 
 const projects = require("./projects.js");
 const actions = require("./actions.js");
+
+const knexConfig = require("./knexfile.js");
+
+const db = knex(knexConfig.development);
 
 const server = express();
 server.use(express.json());
@@ -35,21 +40,25 @@ server.get("/projects", (req, res) => {
 });
 
 server.get("/projects/:id", (req, res) => {
-    const { id } = req.params;
-    projects
-      .getProject(id)
-      .then(project => {
-        if (!project) {
-          return res.status(404).json({
-            message: "Can not find project with specified ID."
+  const { id } = req.params;
+
+  return db('projects')
+    .where({ id })
+    .first()
+    .then(project => {
+      if(project) {
+        db('actions')
+          .where({ project_id: id })
+          .then(actions => {
+            project.actions = actions;
+            res.status(200).json(project);
           });
-        }
-        res.status(200).json(project);
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  });
+      } else {
+        res.status(404).json({ message: 'project not found' });
+      }
+    });
+});
+
 
 // actions
 server.post("/actions", (req, res) => {

@@ -16,8 +16,8 @@ function getProjects() {
 
 function getProject(id) {
     return db("projects")
-      .join("actions")
-      .select("projects.id", "projects.name", "projects.description", "projects.completed", "actions.id as ID", "actions.description as Description", "actions.notes as Notes", "actions.completed as Completed")
+      .join("actions", "projects.id", "=", "actions.id")
+      .select("projects.id", "projects.name", "projects.description", "projects.completed", "actions.id as actionId", "actions.description as Description", "actions.notes as Notes", "actions.completed as Completed")
       .where({ "projects.id": id });
   }
 
