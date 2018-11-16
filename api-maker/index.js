@@ -112,6 +112,7 @@ async function create(request, response, next) {
     }
     // Inform user of failure (database error)
     catch(error){
+        console.log(error)
         response.status(500);
         response.json({
             error: "There was an error while saving the item to the database"
