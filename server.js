@@ -69,13 +69,9 @@ app.get('/api/projects/:id', (req, res) => {
    db('projects')
       .where({ id: id })
       .then(project => {
-          db('actions')
-              .where({ projectId: id })
-              .then(action => {
-                  return res
-                      .status(200)
-                      .json({ ...project, actions: action });
-              });
+          db('actions').where({ projectId: id }).then(action => {
+                return res.status(200).json({ ...project, actions: action });
+            });
       })
       .catch(() => {
           return res
