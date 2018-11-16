@@ -14,7 +14,7 @@ The values of the primary key column are unique and ensure that the data can be 
 
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
-    A third table with foreign keys that reference the primary key of the related tables.
+    A third table with foreign keys that reference the primary keys of the related tables.
 
 1.  What SQL statement is used to retrieve data from a table?
 select 
