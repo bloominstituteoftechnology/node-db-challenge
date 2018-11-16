@@ -8,37 +8,72 @@ server.use(express.json());
 
 
 // ___________ POST Project_______________
-//[POST] /api/cohorts This route should save a new cohort to the database.
-server.post('/api/cohorts', (req, res) => {
-  const cohort = req.body;
-  db('cohorts_table')
-    .insert(cohort)
-    //.returning('id')
-    .then(ids => {
-      res.status(201).json(ids);
-    })
+//[POST] /api/cohorts This route should save a new project to the database.
+server.post('/api/projects', async (req, res) => {
+    const projectData = req.body;
+    const characterLimit = 128;
+    let newProject;
 
-    .catch(err => {
-      res.status(500).json({ message: 'Error inserting', err });
-    });
+    if (!projectData.name || projectData.name==="" || !projectData.description || projectData.description===""  ) {
+        const errorMessage = "Please provide both a name and description for the project"; 
+        res.status(400).json({ errorMessage});
+        return
+    }   
+    if (projectData.name.length > characterLimit) {
+        const errorMessage = "Please provide name under 128 characters"; 
+        res.status(400).json({ errorMessage});
+        return
+    }  
+    try {
+        newProject = await db('projects').insert(projectData);
+    } catch (error) {
+            res.status(500).json({ error: "There was an error while saving the project to the database" });
+            return      
+    }
+    res.status(201).json(newProject);
+    return
 });
 
+
+
 // ___________ POST Action_______________
-//[POST] /api/cohorts This route should save a new cohort to the database.
-server.post('/api/cohorts', (req, res) => {
-    const cohort = req.body;
-    db('cohorts_table')
-      .insert(cohort)
-      //.returning('id')
-      .then(ids => {
-        res.status(201).json(ids);
-      })
+//[POST] /api/projectactions/:id This route should save a 
+// new action to the database. **Requires a project ID be provided.
+
+server.post('/api/projectactions/:id', async (req, res) => {
+    const { id } = req.params; 
+    const actionData = req.body;
+    const characterLimit = 128;
+    let newAction;
   
-      .catch(err => {
-        res.status(500).json({ message: 'Error inserting', err });
-      });
-  });
+    if (!actionData.project_id || actionData.project_id !== id || actionData.project_id=== "" ) {
+        const errorMessage = "Please provide the correct id number for project"; 
+        res.status(400).json({ errorMessage});
+        return
+    } 
   
+    if (!actionData.description|| actionData.description==="" || !actionData.notes || actionData.notes===""  ) {
+        const errorMessage = "Please provide both a note and description for the project"; 
+        res.status(400).json({ errorMessage});
+        return
+    }  
+    if (actionData.description.length > characterLimit) {
+        const errorMessage = "Please provide description under 128 characters"; 
+        res.status(400).json({ errorMessage});
+        return
+    }  
+    try {
+        newAction = await db('actions').insert(actionData)
+
+    } catch (error) {
+        console.log(error)
+            res.status(500).json({ error: "There was an error while saving the project to the database" });
+            return      
+    }
+
+    res.status(201).json(newAction);
+        return
+});  
 
 // ___________ GET Projects + GET by ID_______________
 //[GET] /api/projects This route will return an array of all cohorts.
