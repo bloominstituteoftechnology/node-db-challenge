@@ -12,7 +12,6 @@ server.use(express.json());
 server.post('/api/projects', async (req, res) => {
     const projectData = req.body;
     const characterLimit = 128;
-    let newProject;
 
     if (!projectData.name || projectData.name==="" || !projectData.description || projectData.description===""  ) {
         const errorMessage = "Please provide both a name and description for the project"; 
@@ -25,12 +24,13 @@ server.post('/api/projects', async (req, res) => {
         return
     }  
     try {
-        newProject = await db('projects').insert(projectData);
+        await db('projects').insert(projectData);
     } catch (error) {
+        console.log(error)
             res.status(500).json({ error: "There was an error while saving the project to the database" });
             return      
     }
-    res.status(201).json(newProject);
+    res.status(201).json(projectData);
     return
 });
 
@@ -63,7 +63,7 @@ server.post('/api/projectactions/:id', async (req, res) => {
         return
     }  
     try {
-        newAction = await db('actions').insert(actionData)
+        newActions = await db('actions').insert(actionData)
 
     } catch (error) {
         console.log(error)
@@ -81,32 +81,34 @@ server.post('/api/projectactions/:id', async (req, res) => {
 
 server.get('/api/projects', (req, res) => {
     db('projects')
-    .then(cohorts => res.status(200).json(projects))
+    .then(projects => res.status(200).json(projects))
     .catch(err => res.status(500).json(err));
 });
 
-server.get('/api/projects/:id', (req, res) => {
+server.get('/api/project/:id', (req, res) => {
     const { id } = req.params;
     db('projects')
-    .where({ id:id })
-    .then(project => { 
-      if (!project ) { 
-      res.status(404).json({ message: "The project with the specified ID does not exist." });
-      return  
-      } else if (!project.length) { 
-       res.status(404).json({ message: "The project with the specified ID does not have any actions yet." });
-       return  
-       } else if (project && project.length){ 
-      res.status(200).json(cohort);
-      return  
-      }
-    })
-    .catch(err => {
-      res 
-        .status(500)
-        .json({ error: "The post information could not be retrieved." });
-    });
-  });
+       .where({ id })
+       .then(project => {
+           db('actions')
+            .where({ project_id: id })
+            .then(action => {
+                return res
+                .status(200).json({ ...project, actions: action });
+               });
+            })
+            .catch(err => {
+                console.log(err)
+                res 
+                  .status(500)
+                  .json({ error: "The post information could not be retrieved." });
+              });
+            });
+ 
+       
+
+    
+  
 
 const port = 8800;
 server.listen(port, function() {
