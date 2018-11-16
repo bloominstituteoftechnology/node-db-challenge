@@ -64,18 +64,17 @@ app.get('/api/actions/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-// app.put('/api/zoos/:zooid', (req, res) => {
-//   const changes = req.body;
-//   const { zooid } = req.params;
+app.get('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
 
-//   db('zoos')
-//     .where({ id: zooid })
-//     .update(changes)
-//     .then(count => {
-//       res.status(200).json({ count });
-//     })
-//     .catch(err => res.status(500).json(err));
-// });
+  db('projects')
+    .where({ id: id })
+    .leftJoin('actions', 'actions.projectId', '=', id)
+    .then(action => {
+      res.status(201).json({ action });
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 
 app.delete('/api/actions/:id', (req, res) => {
