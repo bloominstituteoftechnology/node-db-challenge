@@ -43,7 +43,6 @@ server.post("/api/actions", (req, res) => {
       message: "Please include a project ID and description for the new action."
     });
   } else {
-    console.log(action.completed);
     action.completed && action.completed != undefined
       ? (action.completed = "true")
       : (action.completed = "false");
@@ -80,6 +79,7 @@ server.get("/api/projects/:id", async (req, res) => {
     //retrieve all actions linked to the specified project via the project_id
     const actionPromise = db("actions")
       .join("projects", "actions.project_id", "=", "projects.id")
+      //choose what you want returned and match it to the README structure
       .select(
         "actions.id",
         "actions.description",
@@ -91,7 +91,11 @@ server.get("/api/projects/:id", async (req, res) => {
     // return both promises on an awaited Promise.all, and store it in a temp constant for deconstruction
     const result = await Promise.all([projectPromise, actionPromise]);
     const [project, actions] = result;
+
+    //account for null/undefined edge cases
     project.completed !== true ? (project.completed = false) : null;
+
+    //account for null/undefined edge cases
 
     actions.forEach(action => {
       action.completed !== true
