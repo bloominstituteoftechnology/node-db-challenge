@@ -35,10 +35,11 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 - Build the database and tables using knex migrations. **Seeding is not needed**.
 - Build the API with the following endpoints:
+
   - POST for adding projects.
   - POST for adding actions.
   - GET for retrieving a `project` by its `id` that returns an object
-  with the following structure:
+    with the following structure:
 
     ```js
     {
@@ -77,7 +78,8 @@ A `context` can be applied to more than one `action`. An action can be tied to m
 
 When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
 
-
 **Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.**
 
 _Good luck and have fun!_
+
+read
