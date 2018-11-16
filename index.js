@@ -18,6 +18,23 @@ server.get('/api/projects', (req, res) => {
       .catch(err => res.status(500).json(err));
   });
 
+  server.get('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+     db('projects')
+        .where({ id })
+        .then(project => {
+            db('actions')
+                .where({ projectId: id })
+                .then(action => {
+                    return res.status(200).json({ ...project, actions: action });
+                });
+        })
+        .catch(() => {
+            return res.status(500).json({ Error: "Project info could not be retrieved." })
+        });
+
+    });
+
 server.post('/api/projects', (req, res) => {
     const project = req.body;
 
@@ -56,4 +73,4 @@ server.get('/', (req, res) => {
   
 
 //defines port  
-  server.listen(9000, () => console.log('\n== Port 9k ==\n'));
+  server.listen(9000, () => console.log('\n== Port 9k ==\n'))
