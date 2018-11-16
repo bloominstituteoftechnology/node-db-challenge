@@ -20,4 +20,14 @@ router.post("/", (req, res) => {
   }
 });
 
+router.delete("/:id", (req, res, next) => {
+  db("actions")
+    .where({ id: req.params.id })
+    .del()
+    .then(count =>
+      count ? res.status(200).json(count) : next(Error("ID_NOT_FOUND"))
+    )
+    .catch(next);
+});
+
 module.exports = router;
