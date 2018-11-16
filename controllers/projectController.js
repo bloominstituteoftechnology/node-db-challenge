@@ -17,7 +17,7 @@ const controllersProject = {
   },
 
   addAction (req, res, next) {
-    if (!req.body.name || req.body.length <= 0) {
+    if ( req.body.length <= 0) {
       next(new Error('EMPTY BODY'))
     }
     const actionName = req.body
@@ -27,15 +27,31 @@ const controllersProject = {
       .catch(next)
   },
 
-  getProject (req, res, next) {
+  getProjectAction (req, res, next) {
     db('projects')
-        .join('actions', 'projects.id','actions.project_id')
-      .where('projects.id', req.params.id)
+     //  .select('projects.id', "projects.name", "actions.description")
+        .where('projects.id', req.params.id)
+      .join('actions'  , {'projects.id' : 'actions.project_id'})
       .then((project) => {
-        if (!dish.length) {
+        // console.log("project = ", projects.id);
+        if (!project.length) {
           next(new Error('ID NOT FOUND'))
         }
-        res.status(200).json(dish)
+        else res.status(200).json(project)
+      })
+      .catch(next)
+  },
+
+
+
+
+  getProject (req, res, next) {
+    db('projects')
+      .then((project) => {
+        if (!project.length) {
+          next(new Error('ID NOT FOUND'))
+        }
+        res.status(200).json(project)
       })
       .catch(next)
   },

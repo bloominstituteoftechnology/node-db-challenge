@@ -7,8 +7,8 @@ router.post('/project', project.addProject)
 router.post('/action', project.addAction)
 
 
-router.get('/:id', project.getProject)
-
+router.get('/project/:id', project.getProjectAction)
+router.get('/project', project.getProject)
 
 
 module.exports = router
