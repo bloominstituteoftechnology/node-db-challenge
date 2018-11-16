@@ -7,6 +7,7 @@ const db = knex(knexConfig.development)
 
 router.post('/', async (req, res) => {
     const { action_description, notes } = req.body
+    req.body = { ...req.body, action_completed: 0 }
     if (!action_description || !notes) {
         res.status(404).json({ message: 'Please provide a description and notes for the action.' })
     }
@@ -35,6 +36,23 @@ router.delete('/:id', async (req, res) => {
             : res.status(400).json({ errorMessage: 'An action with that ID cannot be found.' })
     } catch (e) {
         res.status(500).json({ error: 'An error occuried while trying to delete that action from the database.' })
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const action = await db('actions')
+            .join('contexts', 'actions.id', 'contexts.action_id')
+            .select('actions.*')
+            .where('actions.id', id)
+        const context = await db('contexts').where('contexts.action_id', id).groupBy('contexts.name')
+
+        action
+            ? res.status(200).json({ ...action[0], context })
+            : res.status(404).json({ errorMessage: 'An action with that ID does not exist.' })
+    } catch (e) {
+        res.status(500).json({ error: 'An error occuried while trying to get that action.' })
     }
 })
 

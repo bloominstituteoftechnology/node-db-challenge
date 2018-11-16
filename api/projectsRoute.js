@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const { name, description } = req.body
+    req.body = { ...req.body, project_completed: 0 }
     if (!name || !description) {
         res.status(404).json({ message: 'Please provide a name and a description for the project.' })
     }
@@ -49,12 +50,13 @@ router.get('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        const id =
-            (await db('projects').where('id', req.params.id).del()) &&
-            (await db('actions').where('project_id', req.params.id).del())
-        id !== 0
-            ? res.status(200).json(id)
-            : res.status(400).json({ errorMessage: 'A project with that ID cannot be found.' })
+        const id = await db('projects').where('id', req.params.id).del()
+        if (id > 0) {
+            res.status(200).json(id)
+        }
+        else {
+            res.status(404).json({ errorMessage: 'That ID does not exist.' })
+        }
     } catch (e) {
         res.status.json({ error: 'An error occuried while trying to delete that project from the database.' })
     }
