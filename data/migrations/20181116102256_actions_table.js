@@ -1,12 +1,12 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable("projects", tbl => {
+  return knex.schema.createTable("actions", tbl => {
     tbl.increments();
-    tbl.string("name", 100).notNullable();
     tbl.string("description", 100).notNullable();
+    tbl.string("additional notes", 200);
     tbl.boolean("completed");
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("projects");
+  return knex.schema.dropTableIfExists("actions");
 };
