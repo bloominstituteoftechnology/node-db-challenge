@@ -8,7 +8,7 @@ exports.up = function (knex, Promise) {
     tbl.string('description', 240);
     tbl.string('notes', 120);
     tbl.boolean('completed').defaultTo(false);
-    tbl.text('projectId').references('projects.id')
+    tbl.integer('projectId').references('projects.id')
   })
 };
 
