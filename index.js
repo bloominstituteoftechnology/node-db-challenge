@@ -70,6 +70,25 @@ server.get('/api/projects/:id', (req, res) => {
         })
 });
 
+// update project
+server.put('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    const newProject = req.body;
+
+    db('project')
+        .where({id})
+        .update(newProject)
+        .then(project => {
+            if(!project) {
+                res.status(404).json({message: 'project non found'})
+            } else {
+                res.status(200).json(project)
+            }
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+});
 
 
 const port = 9000;
