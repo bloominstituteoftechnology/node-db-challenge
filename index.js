@@ -53,6 +53,16 @@ server.post('/actions', async function(req, res){
     }
 });
 
+server.get('/projects', async function(req, res){
+    try{
+        const projects = await db('projects');    
+        res.status(200).json(projects)
+    }
+    catch(err){
+        res.status(500).json({message: 'Error handling request.'})
+    }
+});
+
 
 
 
