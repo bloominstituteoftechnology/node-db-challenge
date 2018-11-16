@@ -50,4 +50,40 @@ router.post('/', async (req, res) => {
   }
 });
 
+// UPDATE a project
+router.put('/:id', async (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+  try {
+    const count = await db('projects')
+      .where({ id })
+      .update(changes);
+    const project = await db('projects').where({ id });
+    return count
+      ? res.status(200).json(project)
+      : res.status(404).json({ message: 'Make sure that id exists.' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'There was an error updating that project.' });
+  }
+});
+
+// DELETE a project
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const count = await db('projects')
+      .where({ id })
+      .del();
+    return count
+      ? res.status(200).json(count)
+      : res.status(404).json({ message: 'Make sure that id exists.' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'There was an error deleting that project.' });
+  }
+});
+
 module.exports = router;

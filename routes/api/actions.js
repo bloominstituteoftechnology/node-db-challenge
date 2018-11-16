@@ -39,4 +39,36 @@ router.post('/', async (req, res) => {
   }
 });
 
+// UPDATE a action
+router.put('/:id', async (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+  try {
+    const count = await db('actions')
+      .where({ id })
+      .update(changes);
+    const action = await db('actions').where({ id });
+    return count
+      ? res.status(200).json(action)
+      : res.status(404).json({ message: 'Make sure that id exists.' });
+  } catch (error) {
+    res.status(500).json({ error: 'There was an error updating that action.' });
+  }
+});
+
+// DELETE an action
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const count = await db('actions')
+      .where({ id })
+      .del();
+    return count
+      ? res.status(200).json(count)
+      : res.status(404).json({ message: 'Make sure that id exists.' });
+  } catch (error) {
+    res.status(500).json({ error: 'There was an error deleting that action.' });
+  }
+});
+
 module.exports = router;
