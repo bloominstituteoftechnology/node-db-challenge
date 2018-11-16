@@ -85,7 +85,6 @@ server.put('/api/project/:projectid', async (req, res) => {
 
     try {
         const count = await db('project').where({ id: projectid }).update(changes);
-        
         res.status(201).json(count);
     } catch (err) {
         res.status(500).json({ error: 'There was an error updating the project.', err });
@@ -98,10 +97,31 @@ server.put('/api/action/:actionid', async (req, res) => {
 
     try {
         const count = await db('action').where({ id: actionid }).update(changes);
-        
         res.status(201).json(count);
     } catch (err) {
         res.status(500).json({ error: 'There was an error updating the action.', err });
+    }
+});
+
+server.delete('/api/project/:projectid', async (req, res) => {
+    const { projectid } = req.params;
+
+    try {
+        const count = await db('project').where({ id: projectid }).del();
+        res.status(200).json(count);
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error deleting the project.', err });
+    }
+});
+
+server.delete('/api/action/:actionid', async (req, res) => {
+    const { actionid } = req.params;
+
+    try {
+        const count = await db('action').where({ id: actionid }).del();
+        res.status(200).json(count);
+    } catch (err) {
+        res.status(500).json({ error: 'There was an error deleting the action.', err });
     }
 });
 
