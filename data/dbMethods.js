@@ -2,7 +2,7 @@ const knex = require('knex')
 const knexConfig = require('../knexfile.js')
 const db = knex(knexConfig.development)
 
-module.exports = {
+const methods = {
   postProject: project => db('projects').insert(project),
   postAction: action => db('actions').insert(action),
   getProjectById: async id => {
@@ -22,5 +22,11 @@ module.exports = {
     const data = { ...project[0], actions }
 
     return data
-  }
+  },
+  getAllProjects: () =>
+    db('projects')
+      .then(projects => projects.map(({ id }) => id))
+      .map(id => methods.getProjectById(id))
 }
+
+module.exports = methods

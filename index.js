@@ -43,4 +43,10 @@ server.get('/api/projects/:id', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+server.get('/api/projects', (req, res) => {
+  db.getAllProjects()
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(err))
+})
+
 server.listen(9000, () => console.log('\n== Port 9k ==\n'))
