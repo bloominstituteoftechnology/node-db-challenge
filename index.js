@@ -35,20 +35,17 @@ server.post('/api/actions', (req, res) => {
     }
 })
 
-server.get('/api/projects/:id', (req, res) => {
-    const id = req.params
-    db('project')
-        .where(id)
-        .then(project => {
-            if(project.length === 0) {
-                res.status(404).json({ message: 'Could not find id in database' })
-            } else {
-                res.status(200).json(project)
-            }
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'Error with database, please try again' })
-        })
+server.get('/api/projects/:id', async (req, res) => {
+    const { id } = req.params
+   
+    try {
+        const project = db('project').where('project.Id', '=', id).first();
+        const action = db('action').join('project', 'action.project_Id', '=', 'project.id').where('project.id', '=', id)
+        const joined = await Promise.all([project, action])
+        return id ? res.status(200).json(joined) : res.status(404).json({ message: 'error finding id' })
+    } catch {
+        res.status(500).json({ message: 'error with database, please try again later' })
+    }
 })
 
 server.listen(9000, () => console.log('Running on port 9000'))
