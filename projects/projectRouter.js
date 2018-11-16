@@ -40,4 +40,42 @@ router.post("/", (req, res) => {
     });
 });
 
+//                                 //
+//  S T R E T C H   R O U T I N G //
+//  ▼                        ▼ //
+
+// G E T   A L L   P R O J E C T S
+router.get("/", (req, res) => {
+  db("projects")
+    .then(project => res.status(200).json(project))
+    .catch(err => res.status(500).json(err));
+});
+
+// U P D A T E   P R O J E C T
+router.put("/:id", (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+
+  db("projects")
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+// D E L E T E   P R O J E C T
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("projects")
+    .where({ id: id })
+    .del()
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(err => res.status(500).json(err));
+});
+
 module.exports = router;
