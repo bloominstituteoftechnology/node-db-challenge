@@ -104,7 +104,7 @@ server.put('/api/projects/:id', (req, res) => {
 server.delete('/api/projects/:id', (req, res) => {
   const { id } = req.params;
 
-  db('actions')
+  db('projects')
     .where({
       id: id
     })
