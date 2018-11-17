@@ -56,7 +56,7 @@ server.post('/api/projects', nameCheck, (req, res) => {
 
 // PROJECTS: GET
 server.get('/api/projects', (req, res) => {
-  console.log(res)
+
   db('projects')
       //.select()
       .then(projects => res.status(200).json(projects))
@@ -86,23 +86,42 @@ server.get('/api/projects/:id', (req, res) => {
 // ACTIONS: GET
 
 
-server.get('/api/projects/:id/actions', (req, res) => {
+// server.get('/api/projects/:id/actions', (req, res) => {
+//   const { id } = req.params;
+//   db('actions')
+//     .join('projects', 'projects.id', '=', 'actions.project_id')
+//     .select('*')
+//     .then(actions => res.status(200).json( { 
+//       projects: { 
+//         id: actions[0].id, 
+//         name: actions[0].name, 
+//         details: actions[0].details, 
+//         finished: actions[0].finished 
+//       }, 
+//       actions: 
+//         actions.filter(action => action.project_id === `${id}` / 1) } ))
+//     .catch(err => res.status(500).json({
+//       err
+//     }));
+// });
+
+server.get('/api/projects/:id/actions', async (req, res) => {
   const { id } = req.params;
-  db('actions')
-    .join('projects', 'projects.id', '=', 'actions.project_id')
-    .select('*')
-    .then(actions => res.status(200).json( { 
-      projects: { 
-        id: actions[id].id, 
-        name: actions[id].name, 
-        details: actions[id].details, 
-        finished: actions[id].finished 
-      }, 
-      actions: 
-        actions.filter(action => action.project_id === `${id}` / 1) } ))
+
+  const project = await db('projects')
+    .where({ id: id })
     .catch(err => res.status(500).json({
       err
     }));
+
+  const actions = await db('actions')
+    .where({ project_id: id })
+    .catch(err => res.status(500).json({
+      err
+    }));
+
+    return res.status(200).json( { project: project[0], actions: actions } ) 
+
 });
 
 
@@ -114,7 +133,7 @@ server.post('/api/actions', (req, res) => {
   const action = { description, notes, complete, project_id };
   // console.log(description, action)
   // const { action } = req.body
-  console.log(action)
+
   db('actions')
     .insert(action)
     .then(ids => { 
@@ -131,7 +150,7 @@ server.post('/api/actions', (req, res) => {
 // ACTIONS: GET
 
 server.get('/api/actions', (req, res) => {
-  console.log(res)
+
   db('actions')
       //.select()
       .then(actions => res.status(200).send(actions))

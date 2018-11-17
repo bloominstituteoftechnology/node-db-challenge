@@ -13,10 +13,10 @@ exports.up = function(knex, Promise) {
     // table.integer('project_id');
     table
       .integer('project_id')
-      // .unsigned()
-      .foreign('id')
-      .references('projects.id')
-      // .inTable('projects');
+      .notNullable()
+      // .foreign('id')
+      .references('id')
+      .inTable('projects');
   })
 };
 
