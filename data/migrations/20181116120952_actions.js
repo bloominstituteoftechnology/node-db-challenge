@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
     // foreign key
     tbl
       .integer('project_id')
-      .notNullable()
       .references('id')
       .inTable('projects')
 

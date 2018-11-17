@@ -5,11 +5,11 @@ const knexConfig = require('../knexfile');
 
 const db = knex(knexConfig.development);
 
-// router.get('/', (req, res) => {
-//   db('projects')
-//     .then(projects => res.status(200).json(projects))
-//     .catch(err => res.status(500).json(err));
-// });
+router.get('/', (req, res) => {
+  db('projects')
+    .then(projects => res.status(200).json(projects))
+    .catch(err => res.status(500).json(err));
+});
 
 router.post('/', (req, res) => {
   const project = req.body;
@@ -30,12 +30,21 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  db('projects').where({ id: id })
+  return db('projects')
+    .where({ id })
+    .first()
     .then(project => {
-      res.status(200).json(project);
-    })
-    .catch(err => res.status(500).json(err))
-
+      if(project) {
+        db('actions')
+          .where({ project_id: id })
+          .then(actions => {
+            project.actions = actions;
+            res.status(200).json(project);
+          })
+      } else {
+        res.status(404).json({ message: 'project not found' });
+      }
+    });
 });
 
 
