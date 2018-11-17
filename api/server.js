@@ -63,49 +63,8 @@ server.get('/api/projects', (req, res) => {
       .catch(err => res.status(500).json({ err }));
   });
 
-  // PROJECTS GET BY ID
-server.get('/api/projects/:id', (req, res) => {
-  const { id } = req.params;
-
-  db('projects')
-    .where({ id: id })
-    .then(projects =>
-      projects[0] ?
-      res.status(200).json(projects[0]) :
-      res.status(404).json({
-        error: "there is no project with that id",
-        "log": console.log(id)
-      }))
-    .catch(err => res.status(500).json({
-      err
-    }));
-});
-
-// ACTIONS
-
-// ACTIONS: GET
-
-
-// server.get('/api/projects/:id/actions', (req, res) => {
-//   const { id } = req.params;
-//   db('actions')
-//     .join('projects', 'projects.id', '=', 'actions.project_id')
-//     .select('*')
-//     .then(actions => res.status(200).json( { 
-//       projects: { 
-//         id: actions[0].id, 
-//         name: actions[0].name, 
-//         details: actions[0].details, 
-//         finished: actions[0].finished 
-//       }, 
-//       actions: 
-//         actions.filter(action => action.project_id === `${id}` / 1) } ))
-//     .catch(err => res.status(500).json({
-//       err
-//     }));
-// });
-
-server.get('/api/projects/:id/actions', async (req, res) => {
+  // PROJECTS: GET BY ID WITH ACTION
+server.get('/api/projects/:id', async (req, res) => {
   const { id } = req.params;
 
   const project = await db('projects')
@@ -124,10 +83,45 @@ server.get('/api/projects/:id/actions', async (req, res) => {
 
 });
 
+server.put('/api/projects/:id', (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+
+  db('projects')
+    .where({ id: id }) // 
+    .update(changes)
+    .then(count => {
+      res.status(200).json({
+        id: changes.id,
+        name: changes.name,
+        details: changes.details,
+        finished: changes.finished,
+      });
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+server.delete('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  db('actions')
+    .where({
+      id: id
+    })
+    .del()
+    .then(count => {
+      res.status(200).json({
+        count
+      });
+    })
+    .catch(err => res.status(500).json(err));
+});
+
+// ACTIONS
 
 // ACTIONS: POST
 
-server.post('/api/actions', (req, res) => {
+server.post('/api/actions', descriptionCheck, (req, res) => {
   const { description, notes, complete, project_id } = req.body;
   // console.log(description, notes, complete, project_id)
   const action = { description, notes, complete, project_id };
@@ -174,6 +168,27 @@ server.get('/api/actions/:id', (req, res) => {
     .catch(err => res.status(500).json({
       err
     }));
+});
+
+// ACTIONS: PUT
+
+server.put('/api/actions/:id', (req, res) => {
+  const changes = req.body;
+  const { id } = req.params;
+
+  db('actions')
+    .where({ id: id }) // 
+    .update(changes)
+    .then(count => {
+      res.status(200).json({
+        id: changes.id,
+        description: changes.description,
+        notes: changes.notes,
+        complete: changes.complete,
+        project_id: changes.project_id
+      });
+    })
+    .catch(err => res.status(500).json(err));
 });
 
 server.delete('/api/actions/:id', (req, res) => {
