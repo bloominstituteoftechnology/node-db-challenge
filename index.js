@@ -40,31 +40,35 @@ server.post("/api/actions", (req, res) => {
 server.get("/api/projects/:id", async (req, res) => {
   const { id } = req.params;
 
-  const actionsList = db("projects")
-    .join("actions", "projects.id", "=", "actions.project_id")
-    .where("projects.id", "=", id)
-    .select(
-      "actions.id",
-      "actions.description",
-      "actions.notes",
-      "actions.complete"
-    )
-    .then(actions => actions.map(action => action));
+  try {
+    const actionsList = db("projects")
+      .join("actions", "projects.id", "=", "actions.project_id")
+      .where("projects.id", "=", id)
+      .select(
+        "actions.id",
+        "actions.description",
+        "actions.notes",
+        "actions.complete"
+      )
+      .then(actions => actions.map(action => action));
 
-  const result = await actionsList;
+    const result = await actionsList;
 
-  db("projects")
-    .where({ id: id })
-    .then(project => {
-      res.status(200).json({
-        id: project[0].id,
-        name: project[0].name,
-        description: project[0].description,
-        completed: project[0].complete === 1 ? "true" : "false",
-        actions: result
-      });
-    })
-    .catch(err => res.status(500).json(err));
+    db("projects")
+      .where({ id: id })
+      .then(project => {
+        res.status(200).json({
+          id: project[0].id,
+          name: project[0].name,
+          description: project[0].description,
+          completed: project[0].complete ? "true" : "false",
+          actions: result
+        });
+      })
+      .catch(err => res.status(500).json(err));
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 server.put("/api/projects/:id", (req, res) => {
@@ -106,15 +110,15 @@ server.delete("/api/projects/:id", (req, res) => {
 });
 
 server.delete("/api/actions/:id", (req, res) => {
-    const { id } = req.params;
-  
-    db("actions")
-      .where({ id: id })
-      .del()
-      .then(count => {
-        res.status(200).json({ count });
-      })
-      .catch(err => res.status(500).json(err));
-  });
+  const { id } = req.params;
+
+  db("actions")
+    .where({ id: id })
+    .del()
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json(err));
+});
 
 server.listen(9000, () => console.log("port 9000 is running"));

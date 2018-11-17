@@ -4,11 +4,11 @@ exports.up = function(knex, Promise) {
     // make changes to the table using the tbl object passed as a parameter
 
     // primary key
-    tbl.increments(); // generate and id field and make it autoincfement and the primary key
+    tbl.increments(); // generate and id field and make it autoincrement and the primary key
 
     // other fields
     tbl.string("description", 255);
-    tbl.string("notes", 255);
+    tbl.text("notes");
 
 
     tbl.boolean("complete");
