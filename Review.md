@@ -10,7 +10,7 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 
 1.  What is the name given to a table column that references the primary key
     on another table.
---Unique Key
+--foreign Key
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
 when a table has many items that can appear in many other tables such as ingredients that may end up in multiple recipes.
