@@ -23,7 +23,13 @@ router.post('/', (req, res) => {
 
   router.get('/', (req, res) => {
     db('actions')
-      .then(actions => res.status(200).json(actions))
+      .then(actions => {
+          actions.map(action => {
+              action.completed = Boolean(action.completed)
+              return actions
+          })
+          res.status(201).json(actions)
+        })
       .catch(err => res.status(500).json({ message: 'could not get actions', err }));
   });
   
