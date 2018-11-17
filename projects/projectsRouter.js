@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
     .where({ id })
     .first()
     .then(project => {
-      if(project) {
+      if (project) {
         db('actions')
           .where({ project_id: id })
           .then(actions => {
