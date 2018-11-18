@@ -39,10 +39,15 @@ server.get('/api/projects/:id', async (req, res) => {
     const { id } = req.params
    
     try {
-        const project = db('project').where('project.Id', '=', id).first();
-        const action = db('action').join('project', 'action.project_Id', '=', 'project.id').where('project.id', '=', id)
-        const joined = await Promise.all([project, action])
-        return id ? res.status(200).json(joined) : res.status(404).json({ message: 'error finding id' })
+        const project = await db('project')
+            .where({id})
+            .first()
+        if(project) {
+            project.action = await db('action').where({ project_Id: id })
+            res.status(200).json(project)
+        } else {
+            res.status(404).json({ message: 'Project not found' })
+        }
     } catch {
         res.status(500).json({ message: 'error with database, please try again later' })
     }

@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
         .string('notes')
        tbl
         .boolean('completed')
+        .defaultTo(false)
         .notNullable()   
        tbl
         .integer('project_Id')
