@@ -41,4 +41,17 @@ server.get("/projects/:id/actions", async (req, res) => {
   res.status(200).json(response);
 });
 
+server.get("/actions/:id/context", (req, res) => {
+  const { id } = req.params;
+  db("actions")
+    .join("contexts", "actions.context_id", "contexts.id")
+    .where("actions.id", id)
+    .then(context => {
+      res.status(200).json(context);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "could find a context", err });
+    });
+});
+
 server.listen(4000, () => console.log("\n=== Server running on port 4000 ===\n"));

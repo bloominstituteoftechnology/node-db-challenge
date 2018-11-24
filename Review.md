@@ -26,4 +26,4 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
 
 6)  What SQL clause is used to filter the results of a query?
 
-`Where`
+    `Where`

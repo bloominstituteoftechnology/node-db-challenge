@@ -10,6 +10,12 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .references("id")
       .inTable("projects");
+    tbl
+      .integer("context_id")
+      .unsigned()
+      .notNullable()
+      .references("id")
+      .inTable("context");
   });
 };
 
