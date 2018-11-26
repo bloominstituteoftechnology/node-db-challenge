@@ -11,7 +11,7 @@ const controllersProject = {
     db("projects")
       .insert(projectName)
       .then(id => res.status(201).json(id))
-      .catch(next);
+      .catch(()=> next(new Error("Project Not Added")));
   },
 
   addAction(req, res, next) {
@@ -22,7 +22,7 @@ const controllersProject = {
     db("actions")
       .insert(actionName)
       .then(id => res.status(201).json(id))
-      .catch(next(new Error("ID NOT FOUND")));
+      .catch(()=> next(new Error("ID NOT FOUND")));
   },
 
 
