@@ -16,5 +16,6 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  
+  // remove table on rollback
+  return knex.schema.dropTable('actions');
 };

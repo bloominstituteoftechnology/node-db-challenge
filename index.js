@@ -22,7 +22,7 @@ server.get('/api/projects', (req, res) => {
 server.get('/api/projects/:id', (req, res) => {
     projectDb.getProject(req.params.id)
         .then(project => {
-            if (project.length) {
+            if (project) {
                 res.status(200).json(project);
             } else {
                 throw new Error();
