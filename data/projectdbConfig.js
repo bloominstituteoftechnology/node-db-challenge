@@ -13,4 +13,9 @@ module.exports = {
             .then(ids => {id: ids[0]} )
   },
 
+  getFullProject(id) {
+    return db('projects')
+      .where({ id: Number(id) })
+  }
+
 }

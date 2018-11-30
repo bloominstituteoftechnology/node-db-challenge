@@ -22,6 +22,15 @@ server.get('/actions', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+//GET PROJECT BY ID w structure
+server.get('/projects/:projectid', (req, res) => {
+  const { projectid } = req.params;
+  projectsDB.getFullProject(projectid)
+    .where({id: projectid})
+    .then(projects => res.status(200).json(projects))
+    .catch(err => res.status(500).json(err))
+});
+
 //POSTS
 server.post('/projects', (req, res) => {
   const project = req.body;
@@ -46,11 +55,6 @@ server.post('/actions', (req, res) => {
       res.status(500).json({message: 'error inserting action', err})
     })
 });
-
-
-
-//GET PROJECT BY ID that returns structure
-
 
 
 //server running GET
