@@ -22,7 +22,7 @@ server.get('/actions', (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-//POST
+//POSTS
 server.post('/projects', (req, res) => {
   const project = req.body;
 
@@ -32,6 +32,18 @@ server.post('/projects', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({message: 'error inserting project', err})
+    })
+});
+
+server.post('/actions', (req, res) => {
+  const action = req.body;
+
+  actionsDB.addAction(action)
+    .then(action => {
+      res.status(201).json({message: 'action added', action})
+    })
+    .catch(err => {
+      res.status(500).json({message: 'error inserting action', err})
     })
 });
 
