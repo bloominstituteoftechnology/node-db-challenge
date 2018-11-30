@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
             .catch(error => {
               res 
                 .status(500)
-                .json({ error: "There was a problem saving the action to the database..."})
+                .json({ error: "There was a problem saving the action to the database...", error})
             })
         } 
     } catch (error) {
