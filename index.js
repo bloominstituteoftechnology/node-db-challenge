@@ -16,5 +16,45 @@ server.get("/api/projects", (req, res) => {
 });
 
 
+// GET ALL ACTIONS //
+
+server.get("/api/actions", (req, res) => {
+    db("actions")
+    .then(actions => res.status(200).json(actions))
+    .catch(err => res.status(500).json(err));
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 server.listen(3000, () => console.log("\n=== Server running on port 3K ===\n"));
