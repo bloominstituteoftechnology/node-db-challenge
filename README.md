@@ -1,6 +1,7 @@
 # Sprint Challenge for RDBMS and SQL
 
 The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.
+.
 
 Please work on this challenge alone, but feel free to use outside resources. You can _reference_ any old code you may have, however, please refrain from copying and pasting any of your answers. Try and understand the question and put your responses in your own words. Be as thorough as possible when explaining something.
 
