@@ -8,5 +8,8 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
     on another table.
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
+A third table for the original 2 tables to give information to
 1.  What SQL statement is used to retrieve data from a table?
+select
 1.  What SQL clause is used to filter the results of a query?
+where
