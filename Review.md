@@ -10,3 +10,8 @@ You can exercise your Google-Fu for this and any other _Sprint Challenge_ in the
     tables.
 1.  What SQL statement is used to retrieve data from a table?
 1.  What SQL clause is used to filter the results of a query?
+
+ //create knex file: knex init
+ //knex migrate:make projects_table
+ //knex migrate:make actions_table
+
