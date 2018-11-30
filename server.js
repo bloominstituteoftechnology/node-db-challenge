@@ -1,6 +1,10 @@
 const express = require('express');
 const server = express();
 
+const configMiddleware = require('./middleware/middleware')
+
+configMiddleware(server);
+
 server.get('/', (req, res) => {
   res
     .status(200)
