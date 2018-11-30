@@ -57,7 +57,17 @@ server.post('/api/projects', (req, res) => {
     })
 })
 
-
+server.post('/api/actions', (req, res) => {
+  const change = req.body;
+  db('action')
+    .insert(change)
+    .then(ids => {
+      res.status(201).json(ids)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
 
 
 const port = 3300;
