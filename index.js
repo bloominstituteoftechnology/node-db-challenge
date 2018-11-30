@@ -23,13 +23,19 @@ server.get('/actions', (req, res) => {
 })
 
 //GET PROJECT BY ID w structure
-server.get('/projects/:projectid', (req, res) => {
+server.get('/projects/:id', (req, res) => {
   const { projectid } = req.params;
   projectsDB.getFullProject(projectid)
-    .where({id: projectid})
-    .then(projects => res.status(200).json(projects))
-    .catch(err => res.status(500).json(err))
-});
+    // .where({id: projectid})
+    // .then(projects => res.status(200).json(projects))
+    // .catch(err => res.status(500).json(err))
+    .then(action => {
+      return res.status(201).json({...project, actions:action})
+    })
+    .catch(err => {
+      return res.status(500).json({message: 'error finding project', err})
+    })
+})
 
 //POSTS
 server.post('/projects', (req, res) => {
