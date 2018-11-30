@@ -1,0 +1,59 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Rudy\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Users\Rudy\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\chocolatey\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\Rudy\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\Rudy\AppData\Roaming\npm;C:\Users\Rudy\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.12.3
+
+Node version: 
+  8.11.4
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Lambda-School\workspace\SQL\sprint\Sprint-Challenge-RDBMS\package.json: Unexpected string in JSON at position 533
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1631:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:304:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:315:13
+      at <anonymous>
+
+npm manifest: 
+  {
+      "name": "Sprint-Challenge-RDBMS",
+      "version": "1.0.0",
+      "description": "The purpose of this exercise is to get you used to being quizzed on _interview questions_ commonly asked about Relational Database Management Systems and SQL.",
+      "main": "index.js",
+      "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "devDependencies": {
+          "nodemon": "^1.18.6"
+      },
+      "dependencies": {
+          "express": "^4.16.4",
+          "knex": "^0.15.2",
+          "sqlite3": "^4.0.4"
+      }
+      "repository": {
+          "type": "git",
+          "url": "git+https://github.com/RaDeleon/Sprint-Challenge-RDBMS.git"
+      },
+      "keywords": [],
+      "author": "Angelo Deleon <rudy209@comcast.net>",
+      "license": "ISC",
+      "bugs": {
+          "url": "https://github.com/RaDeleon/Sprint-Challenge-RDBMS/issues"
+      },
+      "homepage": "https://github.com/RaDeleon/Sprint-Challenge-RDBMS#readme"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
