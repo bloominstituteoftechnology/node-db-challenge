@@ -61,7 +61,7 @@ server.post("/api/projects", (req, res) => {
         res.status(201).json(ids);
       })
       .catch(err => {
-        res.status(500).json({ error: "could not add a new project", err });
+        res.status(500).json({ error: "Could not add a new project", err });
       });
   });
 
@@ -76,7 +76,7 @@ server.post("/api/actions", (req, res) => {
         res.status(201).json(ids);
       })
       .catch(err => {
-        res.status(500).json({ error: "could not add a new action", err });
+        res.status(500).json({ error: "Could not add a new action", err });
       });
   });
 
