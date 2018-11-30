@@ -76,7 +76,7 @@ server.get('/api/portfolios/:id', (req, res) => {
     .join('projects', 'portfolios.id', '=', 'projects.portfolio_id')
     .where('portfolios.id', '=', id)
     .then(portfolio => res.status(201).json(portfolio))
-    .catch(error => res.status(500).json({ message: 'LERRRROOOOOOY JEENNNKIINNNNNNS = You', error }))
+    .catch(error => res.status(500).json({ message: 'LERRRROOOOOOY JEENNNKIINNNNNNS! = You', error }))
 });
 
 server.get('/api/projects', (req, res) => {
