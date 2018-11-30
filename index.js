@@ -36,7 +36,8 @@ server.get('/projects/actions/:id', async (req, res) => {
     try {
         const projects = await db('projects')
         .join('portfolios', 'portfolios.id', '=', 'projects.portfolio_id')
-        .where('projects.id', '=', id);
+        .where('projects.id', '=', id)
+        .first();
         
 
         const actions = await db('junction')
