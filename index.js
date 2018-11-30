@@ -18,6 +18,16 @@ server.get('/api/projects', (req, res) => {
   })
 })
 
+server.get('/api/actions', (req, res) => {
+  db('action')
+  .then(actions => {
+    res.status(200).json(actions)
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
+})
+
 
 
 
