@@ -49,6 +49,102 @@ server.get('/api/projects/:id', (req, res) => {
 			res.status(500).json({ message: 'ERROR', err });
 		});
 });
+
+
+  // POST A NEW PROJECT //
+
+server.post("/api/projects", (req, res) => {
+    const project = req.body;
+    db("projects")
+      .insert(project)
+      .then(ids => {
+        res.status(201).json(ids);
+      })
+      .catch(err => {
+        res.status(500).json({ error: "could not add a new project", err });
+      });
+  });
+
+
+  // POST A NEW ACTION //
+
+server.post("/api/actions", (req, res) => {
+    const action = req.body;
+    db("actions")
+      .insert(action)
+      .then(ids => {
+        res.status(201).json(ids);
+      })
+      .catch(err => {
+        res.status(500).json({ error: "could not add a new action", err });
+      });
+  });
+
+
+  // UPDATE A PROJECT //
+
+server.put("/api/projects/:id", (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+  
+    db("projects")
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json({ error: err }));
+  });
+  
+  
+  // UPDATE AN ACTION //
+  
+  server.put("/api/actions/:id", (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+  
+    db("actions")
+    .where({ id: id })
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ count });
+    })
+    .catch(err => res.status(500).json({ error: err }));
+  });
+  
+  
+  // DELETE A PROJECT //
+  
+  server.delete("/api/projects/:id", (req, res) => {
+    const { id } = req.params;
+  
+    db("projects")
+      .where({ id: id })
+      .delete()
+      .then(count => {
+        res.status(200).json({ count });
+      })
+      .catch(err => res.status(500).json({ error: err }));
+  });
+  
+  
+  // DELETE AN ACTION // 
+  
+  server.delete("/api/actions/:id", (req, res) => {
+    const { id } = req.params;
+  
+    db("actions")
+      .where({ id: id })
+      .delete()
+      .then(count => {
+        res.status(200).json({ count });
+      })
+      .catch(err => res.status(500).json({ error: err }));
+  });
+  
+  
+  server.listen(3000, () => console.log("\n=== Server running on port 3K ===\n"));
+ 
   
 
 
@@ -82,5 +178,3 @@ server.get('/api/projects/:id', (req, res) => {
 
 
 
-
-server.listen(3000, () => console.log("\n=== Server running on port 3K ===\n"));
