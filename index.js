@@ -45,6 +45,18 @@ server.get('/api/projects/:id', (req, res) => {
     })
 })
 
+server.post('/api/projects', (req, res) => {
+  const change = req.body;
+  db('project')
+    .insert(change)
+    .then(ids => {
+      res.status(201).json(ids)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 
 
 
