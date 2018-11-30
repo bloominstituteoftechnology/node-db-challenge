@@ -37,4 +37,17 @@ router.get('/:id', (req, res) => {
             res.status(500).json({ message: 'There was an error getting the project'})
         })
 })
+// Post New Project
+router.post('/', (req, res) => {
+    const newProject = req.body;
+
+    db('projects')
+        .insert(newProject)
+        .then(count => {
+            res.status(201).json(count)
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'There was an error posting your project' })
+        })
+})
 module.exports = router;
