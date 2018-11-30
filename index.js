@@ -23,32 +23,21 @@ server.get("/projects", (req, res) => {
       });
   });
 
+  
   // GET BY ID
-
-server.get("/projects/:id", (req, res) => {
+  
+  server.get("/projects/:id", (req, res) => {
     const { id } = req.params;
     db("projects")
       .where({ id: id})
-      .first()
       .then(projects => {
-          if (projects) {
-            db("actions")
-            .where({ project_id: id})
-            .then(actions => {
-                projects.actions = actions;
-                res.status(200).json(projects)
-            })
-            .catch(err => {
-                res.status(500).json(err)
-            });
-        } else {
-            res.status(404).json({ message: 'Project not found' });
-        }
-          })
+          res.status(200).json(projects)
+      })
       .catch(err => {
           res.status(500).json(err)
       });
   });
+  
 
 // POST
 
@@ -164,6 +153,36 @@ server.delete("/actions/:id", (req, res) => {
       })
       .catch(err => {
           res.status(500).json({ error: err })
+      });
+  });
+
+
+  //------------PROJECTS&ACTIONS----------------
+
+    // GET BY ID WITH PROJECTS AND ACTIONS
+
+server.get("/projects/:id/actions", (req, res) => {
+    const { id } = req.params;
+    db("projects")
+      .where({ id: id})
+      .first()
+      .then(projects => {
+          if (projects) {
+            db("actions")
+            .where({ project_id: id})
+            .then(actions => {
+                projects.actions = actions;
+                res.status(200).json(projects)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            });
+        } else {
+            res.status(404).json({ message: 'Project not found' });
+        }
+          })
+      .catch(err => {
+          res.status(500).json(err)
       });
   });
 
