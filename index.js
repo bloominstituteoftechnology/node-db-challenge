@@ -1,15 +1,12 @@
 const express = require("express");
-const knex = require("knex");
-const port = 8000;
-
-const knexConfig = require("./knexfile.js");
-
-const db = knex(knexConfig.development);
+const projectRoutes = require('./routes/projectRoutes.js');
 
 const server = express();
 
 server.use(express.json());
 
+// Endpoints
+server.use('/api/projects', projectRoutes);
 
 
 
@@ -17,9 +14,6 @@ server.use(express.json());
 
 
 
-
-
-
-
+const port = 8000;
 
 server.listen(port, () => console.log(`\n== Port ${port} ==\n`));
