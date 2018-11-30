@@ -15,7 +15,7 @@ primary key is unqiue in retrieving information specific to that key.
 
 1.  What do we need in order to have a _many to many_ relationship between two
     tables.
-    tables
+    join two tables that have the many to many relationship
 
 1.  What SQL statement is used to retrieve data from a table?
     Select
