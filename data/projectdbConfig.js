@@ -15,17 +15,17 @@ module.exports = {
 
   getFullProject(id) {  
     return db('projects')
-      .where({ id: Number(id) })
-      .then(project => {
-        db('actions')
-        .where({ projectNum: project.id})
-        .then(action => {
-          return res.status(201).json({...project, actions:action})
-        })
-        .catch(err => {
-          return res.status(500).json({message: 'error finding project', err})
-        })
-      })
+      //.where({ id: Number(id) })
+      // .then(project => {
+      //   db('actions')
+      //   .where({ projectNum: project.id})
+      //   .then(action => {
+      //     return res.status(201).json({...project, actions:action})
+      //   })
+      //   .catch(err => {
+      //     return res.status(500).json({message: 'error finding project', err})
+      //   })
+      // })
   }
 
 }
