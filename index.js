@@ -66,6 +66,35 @@ server.post("/projects", (req, res) => {
       });
   });
 
+  // UPDATE
+
+server.put("/projects/:id", (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+    db("projects")
+      .where({ id: id })
+      .update(changes)
+      .then(count => {
+          res.status(200).json(count)
+      })
+      .catch(err => res.status(500).json({ error: err }));
+  });
+
+// DELETE
+
+server.delete("/projects/:id", (req, res) => {
+    const { id } = req.params;
+    db("cohorts")
+      .where({id:id})
+      .del()
+      .then(ids => {
+          res.status(200).json(ids)
+      })
+      .catch(err => {
+          res.status(500).json({ error: err })
+      });
+  });
+
 //------------ACTIONS----------------
 
 // GET
@@ -103,6 +132,35 @@ server.post("/actions", (req, res) => {
       .insert(actions)
       .then(ids => {
           res.status(201).json(ids)
+      })
+      .catch(err => {
+          res.status(500).json({ error: err })
+      });
+  });
+
+// UPDATE
+
+server.put("/actions/:id", (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+    db("actions")
+      .where({ id: id })
+      .update(changes)
+      .then(count => {
+          res.status(200).json(count)
+      })
+      .catch(err => res.status(500).json({ error: err }));
+  });
+
+// DELETE
+
+server.delete("/actions/:id", (req, res) => {
+    const { id } = req.params;
+    db("actions")
+      .where({id:id})
+      .del()
+      .then(ids => {
+          res.status(200).json(ids)
       })
       .catch(err => {
           res.status(500).json({ error: err })
