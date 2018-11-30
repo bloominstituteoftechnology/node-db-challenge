@@ -28,6 +28,23 @@ server.get('/api/actions', (req, res) => {
   })
 })
 
+server.get('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+  db('project')
+    .where({ id })
+    .then(project => {
+      db('action')
+        .where({ project_id: id })
+        .then(action => {
+          console.log(action);
+          return res.status(200).json({...project,actions:action})
+        })
+        .catch(() => {
+          return res.status(500).json({ Error: 'Cannot find that project info'})
+        })
+    })
+})
+
 
 
 
