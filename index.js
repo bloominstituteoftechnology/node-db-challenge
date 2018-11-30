@@ -9,7 +9,7 @@ const server = express();
 
 server.use(express.json());
 
-//------------PROJECT----------------
+//------------PROJECTS----------------
 
 // GET
 
@@ -29,9 +29,22 @@ server.get("/projects/:id", (req, res) => {
     const { id } = req.params;
     db("projects")
       .where({ id: id})
+      .first()
       .then(projects => {
-          res.status(200).json(projects)
-      })
+          if (projects) {
+            db("actions")
+            .where({ project_id: id})
+            .then(actions => {
+                projects.actions = actions;
+                res.status(200).json(projects)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            });
+        } else {
+            res.status(404).json({ message: 'Project not found' });
+        }
+          })
       .catch(err => {
           res.status(500).json(err)
       });
@@ -95,18 +108,6 @@ server.post("/actions", (req, res) => {
           res.status(500).json({ error: err })
       });
   });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
