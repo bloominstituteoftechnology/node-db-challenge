@@ -69,6 +69,17 @@ server.post('/api/actions', (req, res) => {
     })
 })
 
+server.delete('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+  db('project')
+  .where({ id: id })
+  .del()
+  .then(count => {
+    res.status(200).json({ count });
+  })
+  .catch(err => res.status(500).json(err));
+})
+
 
 const port = 3300;
 server.listen(port, () => console.log(`Listening on http://localhost:${port}`));
