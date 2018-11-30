@@ -6,8 +6,6 @@ const db = knex(knexConfig.development);
 // const projectsDB = require('./data/projectdbConfig.js');
 // const actionsDB = require('./data/actionsdbConfig.js');
 
-//const db = knex(knexConfig.development);
-
 const server = express();
 
 server.use(express.json());
@@ -28,23 +26,18 @@ server.get('/actions', (req, res) => {
 })
 
 //GET PROJECT BY ID w structure
-server.get('/projects/:id', (req, res) => {
+server.get('/projects/:projectid', (req, res) => {
   const { projectid } = req.params;
 
   db('projects')
-/*       .where({ id: projectid })
-      .then(project => {
-        actionsDB.getActions('actions')
-        .where({ projectNum : projectid})
-        console.log(projectid)
-        .then(action => {
-          return res.status(201).json({...project, actions})
-        })
-        .catch(err => {
-          return res.status(500).json({message: 'error finding project', err})
-        })
-      }) */
-      
+    .where({id: projectid})
+    .then(project => {
+      db('actions').where({ projectNum: projectid}).then(action => {
+        return res.status(200).json({ ...project, actions: action });
+      })
+    })
+    .catch(err => res.status(500).json({message: 'error finding project', err}))
+
     // .where({id: projectid})
     // .then(projects => res.status(200).json(projects))
     // .catch(err => res.status(500).json(err))
