@@ -17,26 +17,37 @@ server.get('/', (request, response) => {
     response.send("Let's get it!")
 });
 
+ // POST Project
+
+server.post('/api/project', (req, res) => {
+  const projects_table = req.body;
+  db('projects_table')
+    .insert(project)
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+     .catch(err => {
+      res.status(500).json({ message: 'Error with insert', err });
+    });
+});
+
+//POST Action
+server.post('/api/actions', (req, res) => {
+    const actions_table = req.body;
+    db('actions_table')
+      .insert(action)
+      //.returning('id')
+      .then(ids => {
+        res.status(201).json(ids);
+      })
+  
+      .catch(err => {
+        res.status(500).json({ message: 'Error inserting', err });
+      });
+  });
+
+
 const port = 8888;
 server.listen(port, () => {console.log(`\n#### Server running on port ${port} ####\n`)})
 
-// const express = require('express');
-// const knex = require('knex');
-// const knexConfig = require('./knexfile.js');
-// const db = knex(knexConfig.development);
-// const server = express();
-//  server.use(express.json());
-//  // ___________ POST Project_______________
-// //[POST] /api/cohorts This route should save a new cohort to the database.
-// server.post('/api/cohorts', (req, res) => {
-//   const cohort = req.body;
-//   db('cohorts_table')
-//     .insert(cohort)
-//     //.returning('id')
-//     .then(ids => {
-//       res.status(201).json(ids);
-//     })
-//      .catch(err => {
-//       res.status(500).json({ message: 'Error inserting', err });
-//     });
-// });
+
