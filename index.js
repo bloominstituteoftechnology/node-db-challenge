@@ -29,12 +29,12 @@ server.get('/projects/:id', (req, res) => {
     // .where({id: projectid})
     // .then(projects => res.status(200).json(projects))
     // .catch(err => res.status(500).json(err))
-    .then(action => {
-      return res.status(201).json({...project, actions:action})
-    })
-    .catch(err => {
-      return res.status(500).json({message: 'error finding project', err})
-    })
+    // .then(action => {
+    //   return res.status(201).json({...project, actions:action})
+    // })
+    // .catch(err => {
+    //   return res.status(500).json({message: 'error finding project', err})
+    // })
 })
 
 //POSTS

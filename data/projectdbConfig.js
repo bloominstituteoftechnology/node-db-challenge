@@ -18,7 +18,7 @@ module.exports = {
       .where({ id: Number(id) })
       .then(project => {
         db('actions')
-        .where({ projectNum: id})
+        .where({ projectNum: project.id})
         .then(action => {
           return res.status(201).json({...project, actions:action})
         })
