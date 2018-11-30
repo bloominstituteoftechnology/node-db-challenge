@@ -70,6 +70,15 @@ server.get('/projects/actions/:id', async (req, res) => {
     }
 });
 
+server.get('/api/portfolios/:id', (req, res) => {
+    const { id } = req.params;
+    db('portfolios')
+    .join('projects', 'portfolios.id', '=', 'projects.portfolio_id')
+    .where('portfolios.id', '=', id)
+    .then(portfolio => res.status(201).json(portfolio))
+    .catch(error => res.status(500).json({ message: 'LERRRROOOOOOY JEENNNKIINNNNNNS = You', error }))
+});
+
 server.get('/api/projects', (req, res) => {
     db('projects')
     .then(project => res.status(200).json(project))
@@ -82,13 +91,22 @@ server.get('/api/actions', (req, res) => {
     .catch(error => res.status(500).json({ message: `Can't Retrieve action Data`, error }))
 });
 
+server.get('/api/portfolios', (req, res) => {
+    db('portfolios')
+    .then(portfolio => res.status(200).json(portfolio))
+    .catch(error => res.status(500).json({ message: `Can't Retrieve portfolio Data`, error }))
+});
+
+
 server.get('/api/junction', (req, res) => {
     db('junction')
+    // .join('projects', 'projects.id', '=', 'junction.projects_id')
+    // .join('actions', 'actions.id', '=', 'junction.actions_id')
     .then(junction => res.status(200).json(junction))
     .catch(error => res.status(500).json({ message: `Can't Retrieve junction Data`, error }))
 });
 
-server.put('/api/projects', (req, res) => {
+server.put('/api/projects/:id', (req, res) => {
     const changes = req.body;
     const { id } = req.params;
 
@@ -101,7 +119,7 @@ server.put('/api/projects', (req, res) => {
     .catch(error => res.status(500).json({ message: `Could Not Implement '${changes}'`, error }))
 });
 
-server.put('/api/actions', (req, res) => {
+server.put('/api/actions/:id', (req, res) => {
     const changes = req.body;
     const { id } = req.params;
 
@@ -114,7 +132,7 @@ server.put('/api/actions', (req, res) => {
     .catch(error => res.status(500).json({ message: `Could Not Implement '${changes}'`, error }))
 });
 
-server.put('/api/portfolios', (req, res) => {
+server.put('/api/portfolios/:id', (req, res) => {
     const changes = req.body;
     const { id } = req.params;
 
@@ -127,7 +145,7 @@ server.put('/api/portfolios', (req, res) => {
     .catch(error => res.status(500).json({ message: `Could Not Implement '${changes}'`, error }))
 });
 
-server.put('/api/junction', (req, res) => {
+server.put('/api/junction/:id', (req, res) => {
     const changes = req.body;
     const { id } = req.params;
 
@@ -187,11 +205,6 @@ server.delete('/api/portfolio/:id', (req, res) => {
     })
     .catch(err => res.status(500).json(err));
 });
-
-
-
-
-
 
 
 
