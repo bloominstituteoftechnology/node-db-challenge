@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
         res.status(500).json({ message: err })
     })
 })
+//Get Project and Associated Actions
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     db('projects')
