@@ -8,6 +8,15 @@ const db = knex(knexConfig.development);
 server.use(express.json());
 
 
+server.get('/api/projects', (req, res) => {
+  db('project')
+  .then(projects => {
+    res.status(200).json(projects)
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
+})
 
 
 
