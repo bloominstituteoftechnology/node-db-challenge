@@ -34,7 +34,7 @@ server.get('/projects/:id', (req, res) => {
     .select()
             .where({ id })
                 .then(projects => {
-                    if(project) {
+                    if(projects) {
                         res.status(200).json(projects);
                     } else {
                             res.status(404).json({error: 'Cannot retrieve project with specified ID'});
@@ -52,7 +52,7 @@ server.post('/api/actions',(req, res) => {
     db.insert(action)
         .into('actions')
             .then(ids => res.status(201).json( ids ))
-    .         catch(err => res.status(500).json({ error: 'Action not saved' }));
+                .catch(err => res.status(500).json({ error: 'Action not saved' }));
   });
 
 // stretch 
