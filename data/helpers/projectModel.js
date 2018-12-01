@@ -1,4 +1,4 @@
-const db = require('./dbConfig.js');
+const db = require('../dbConfig.js');
 const mappers = require('./mappers');
 
 module.exports = {

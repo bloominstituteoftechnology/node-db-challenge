@@ -43,7 +43,7 @@ route.post('/', (req, res) => {
     } else {
         projectModel.insert({name, description})
         .then(project => {
-            res.status(200)
+            res.status(200).json(project)
         })
         .catch(err => {
             res.status(500).json({ message: 'Unable to create a new project, please try again.'})
