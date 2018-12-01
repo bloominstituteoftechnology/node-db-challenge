@@ -12,10 +12,10 @@ const db = knex(knexConfig.development);
 //Connect Middleware to Server 
 server.use(helmet(), express.json());
 
-// SANITY CHECK
-server.get('/', (request, response) => {
-    response.send("Let's get it!")
-});
+// // SANITY CHECK
+// server.get('/', (request, response) => {
+//     response.send("Let's get it!")
+// });
 
  // POST Project
 
@@ -65,7 +65,7 @@ server.get('/api/projects/:id', (req, res) => {
     res.status(404).json({ message: "The project with provided ID does not contain any actions." });
     return  
     } else if (project && project.length){ 
-    res.status(200).json(cohort);
+    res.status(200).json(project);
     return  
     }
     })
@@ -74,6 +74,29 @@ server.get('/api/projects/:id', (req, res) => {
         .status(500)
         .json({ error: "Not available." });
     });
+});
+
+  //DELETE Projects
+server.delete('/api/projects/:id', (req, res) => {
+    const { id } = request.params;
+
+    if ( !id || id < 1 ) {
+        return response.status(400).json({ errorMessage: "The project id is invalid." })
+    }
+    
+    db('projects_table')
+    .where({ id })
+    .del()
+    .then( deleted => {
+        if (!deleted || deleted < 1) {
+            return response.json({errorMessage:"Cannot delete the project with the specified id."})
+        }
+
+        response.json(deleted)
+    }
+
+    )
+    .catch(error => response.status(500).json(error))
 });
 
 
