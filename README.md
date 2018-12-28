@@ -32,10 +32,10 @@ Demonstrate your understanding of this week's concepts by answering the followin
 1. Why do tables need a `primary key`?
 1. What is the name given to a table column that references the primary key on another table.
 1. What do we need in order to have a _many to many_ relationship between two tables.
-1. What SQL statement is used to retrieve data from a table?
-1. What SQL clause is used to filter the results of a query?
 
 ## Minimum Viable Product
+
+**NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
 
 - [ ] A `project` can contain multiple actions and has:
   - [ ] a unique Id.
@@ -52,13 +52,12 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 ### Tasks
 
-- Build the database and tables using knex migrations. **Seeding is not needed**.
-- Build the API with the following endpoints:
+- [ ]Build the database and tables using knex migrations. **Seeding is not needed**.
+- [ ]Build the API with the following endpoints:
 
-  - POST for adding projects.
-  - POST for adding actions.
-  - GET for retrieving a `project` by its `id` that returns an object
-    with the following structure:
+  - [ ] POST for adding projects.
+  - [ ] POST for adding actions.
+  - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
 
     ```js
     {
