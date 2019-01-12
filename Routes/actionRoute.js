@@ -24,3 +24,5 @@ router.post('/', (req, res) => {
                 .json({ error: "Error adding action to database", err })
         })
 })
+
+module.exports = router;

@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
             console.log(err)
             res
                 .status(500)
-                .json({ error: "Error adding dish to database", err })
+                .json({ error: "Error adding project to database", err })
         })
 })
 
@@ -50,3 +50,5 @@ router.get('/:id', (req, res) => {
                 })
         })
 })
+
+module.exports = router;
