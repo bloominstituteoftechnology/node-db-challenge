@@ -2,11 +2,11 @@ module.exports = {
     development: {
       client: 'sqlite3',
       connection: {
-        filename: ''
+        filename: './data/sprint.sqlite3'
       },
       useNullAsDefault: true,
       migrations: {
-          directory: ''
+          directory: './data/migrations'
         },
         seeds: {
             directory: ''
