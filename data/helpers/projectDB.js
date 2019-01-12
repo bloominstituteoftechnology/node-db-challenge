@@ -24,6 +24,15 @@ module.exports = {
     //get all actions
     getActions: function(){
         return db('actions')
+    },
+
+    addAction: function(newAction){
+        return db('actions')
+        .insert(newAction)
+        .then(ids =>{
+            return {id: ids[0]}
+        })
     }
+
 
 }

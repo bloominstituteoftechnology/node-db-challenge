@@ -18,4 +18,18 @@ router.get('/', (req,res) =>{
     })
 })
 
+//add an action
+router.post('/', (req,res) =>{
+    const newAction = req.body;
+    actionsDb.addAction(newAction)
+    .then(id =>{
+        res.status(201)
+        res.json(id)
+    })
+    .catch(err =>{
+        res.status(500).json({error: "Unable to add action"})
+    })
+})
+
+
 module.exports = router;
