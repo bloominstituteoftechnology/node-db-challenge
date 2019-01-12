@@ -72,4 +72,28 @@ router.post('/', (req, res) => {
     }
 })
 
+router.delete('/:id', (req, res) => {
+    const {id} = req.params;
+    db.get(id)
+        .then(action => {
+            const theAction = action;
+            if(Object.keys(action).length === 0){
+                res.status(400).json({ message: "That action ID is invalid!" })
+            } else {
+                db.remove(id)
+                    .then(response => {
+                        if(response){
+                            res.json(theAction)
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).json({ message: "This action is impenetrable and cannot be deleted." })
+                    })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: "This action could not be located. It sensed your sinister intentions and ran." })
+        })
+})
+
 module.exports = router;

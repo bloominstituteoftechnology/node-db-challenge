@@ -37,6 +37,10 @@ function getActions(id){
         })
 }
 
+function remove(id){
+    return db('actions').where('id', id).del()
+}
+
 module.exports = {
-    get, add, getActions
+    get, add, getActions, remove,
 };
