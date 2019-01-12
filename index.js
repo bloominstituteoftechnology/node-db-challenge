@@ -56,10 +56,11 @@ server.get('/api/projects', (req, res) => {
 server.post('/api/projects', (req, res) => {
   const newProject = req.body;
   if (newProject.project) {
-    db.insert(newProject)
-      .then(newProject => {
+      console.log("newProject:", newProject)
+    db('projects').insert(newProject)
+      .then(ids => {
         res.status(201)
-          .json(newProject);
+          .json(ids);
       })
       .catch(err => {
         res
@@ -69,7 +70,7 @@ server.post('/api/projects', (req, res) => {
   } else {
     res
       .status(400)
-      .json({ message: "missing contents" })
+     .json({ message: "missing contents" })
   }
 });
 
