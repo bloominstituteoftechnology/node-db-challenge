@@ -31,8 +31,26 @@ server.post('/api/projects', (req, res) => {
 });
 
 server.post('/api/actions', (req, res) => {
-    
-})
+    const { description, notes, projectId } = req.body;
+    const action = { description, notes, projectId };
+    if (!action) {
+        res
+            .status(400)
+            .json({ message: 'Please enter an action' });
+    }
+    db.insert(action)
+        .into('actions')
+        .then(ids => {
+            res
+                .status(201)
+                .json( ids );
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ message: 'The action could not be posted' });
+        })
+});
 
 server.get('/api/projects/:id', (req, res) => {
     db('projects')
