@@ -21,6 +21,15 @@ module.exports = {
         })
     },
 
+    //get project by id
+    getProject: function(id){
+        return db('actions')
+        .join('projects', {'actions.project_id': 'projects.id'})
+        .where('projects.id', id)
+
+ 
+    },
+
     //get all actions
     getActions: function(){
         return db('actions')
