@@ -19,7 +19,7 @@ module.exports = {
         .then(ids =>{
             return {id: ids[0]}
         })
-    }
+    },
 
     //get all actions
     getActions: function(){

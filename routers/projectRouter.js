@@ -18,7 +18,19 @@ router.get('/', (req, res) =>{
     })
 })
 
-
+//add a new project
+router.post('/', (req,res) =>{
+    const newProject = req.body
+    projectDb.addProject(newProject)
+    .then(id =>{
+        console.log('hello from here')
+        res.status(201)
+        res.json(id)
+    })
+    .catch(err =>{
+        res.status(500).json({error: "Unable to add project"})
+    })
+})
 
 //export router
 module.exports = router;
