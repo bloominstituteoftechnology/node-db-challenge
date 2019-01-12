@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         table.increments().unique();
         table.string('description');
         table.string('notes');
-        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.boolean('completed');
         table.integer('project_id').unsigned().unique();
         table.foreign('project_id').references('id').inTable('Projects');
 })

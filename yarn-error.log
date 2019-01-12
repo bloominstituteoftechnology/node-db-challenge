@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js knex migrate: make Actions
+  C:\Program Files\nodejs\node.exe C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js knex migrate: rollback
 
 PATH: 
   C:\Users\kamma\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\kamma\bin;C:\Python37\Scripts;C:\Python37;C:\Program Files (x86)\Intel\TXE Components\TCS;C:\Program Files\Intel\TXE Components\TCS;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\TXE Components\DAL;C:\Program Files (x86)\Intel\TXE Components\DAL;C:\Program Files\Intel\TXE Components\IPT;C:\Program Files (x86)\Intel\TXE Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\Microsoft VS Code\bin;C:\Users\kamma\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\kamma\AppData\Local\Programs\Python\Python36-32;C:\Users\kamma\AppData\Local\Microsoft\WindowsApps;C:\Users\kamma\AppData\Local\atom\bin;C:\Program Files\Heroku\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\MongoDB\Server\3.6\bin;C:\Users\kamma\AppData\Roaming\npm;C:\cygwin64\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -18,6 +18,9 @@ npm manifest:
     "name": "Sprint-Challenge-RDBMS",
     "version": "1.0.0",
     "main": "index.js",
+    "scripts": {
+      "start": "nodemon"
+    },
     "repository": "https://github.com/kellymanahan/Sprint-Challenge-RDBMS.git",
     "author": "kammagik <kammagik@yahoo.com>",
     "license": "MIT",
@@ -2299,7 +2302,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: C:\windows\system32\cmd.exe
-  Arguments: /d /s /c C:\Users\kamma\LambdaSchool\Sprint-Challenge-RDBMS\node_modules\.bin\knex migrate: make Actions
+  Arguments: /d /s /c C:\Users\kamma\LambdaSchool\Sprint-Challenge-RDBMS\node_modules\.bin\knex migrate: rollback
   Directory: C:\Users\kamma\LambdaSchool\Sprint-Challenge-RDBMS
   Output:
   

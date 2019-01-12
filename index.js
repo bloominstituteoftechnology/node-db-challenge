@@ -11,7 +11,7 @@ server.use(express.json());
 //POST endpoint for projects
 server.post('/api/projects', (req, res) => {
     const project = req.body;
-    db('projects').insert(project)
+    db('Projects').insert(project)
     .then(projectData => {
         res.status(201).json(projectData);
     })
@@ -23,7 +23,7 @@ server.post('/api/projects', (req, res) => {
 //POST endpoint for actions
 server.post('/api/actions', (req, res) => {
     const action = req.body;
-    db('actions').insert(action)
+    db('Actions').insert(action)
     .then(actionData => {
         res.status(201).json(actionData);
     })
@@ -34,7 +34,7 @@ server.post('/api/actions', (req, res) => {
 
 //GET for retrieving a project by its id that returns an object
 server.get('/api/projects', (req, res) => {
-    db('Projects').leftJoin('actions', 'project_id', 'project.id')
+    db('Projects').join('Actions')
     .then(projectInfo => {res.send(projectInfo)})
     .catch(err => {
         res.status(500).json({err: 'whoops, something went wrong!'})
