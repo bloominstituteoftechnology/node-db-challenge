@@ -20,41 +20,32 @@ router.post('/', (req, res) => {
 
 // GET /api/projects
 router.get('/', (req, res) => {
-  db('projects').then(rows => {
-    res.json(rows);
+  db('projects').then(project => {
+    res.json(project);
   }).catch(err => {
     res.status(500)
       .json({err: 'failed to find projects'});
   });
 });
 
-// GET /api/projects/:id
-router.get('/:id', (req, res) => {
+// GET /api/projects/:id/actions
+router.get('/:id/actions', (req, res) => {
   const { id } = req.params;
-  db('projects').where('id', id).then(rows => {
-    res.json(rows);
+  db('projects').where('id', id).then(project => {
+    console.log(project);
+    db('actions').where('project_id', id).then(actions => {
+      res.json({
+        id: project[0].id,
+        name: project[0].name,
+        description: project[0].description,
+        complete: project[0].complete,
+        actions: [actions]
+       });
+    });
   }).catch(err => {
     res.status(500)
       .json({err: 'failed to find project'});
   });
-});
-
-// GET /api/projects/:id/actions
-router.get('/:id/actions', (req, res) => {
-  const { id } = req.params;
-
-});
-
-// PUT /api/projects/:id
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-
-});
-
-// DELETE /api/projects/:id
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-
 });
 
 module.exports = router;
