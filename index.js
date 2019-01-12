@@ -22,15 +22,39 @@ server.post('/projects', (req, res) => {
         });
 });
 
+server.get('/projects', (req, res) => {
+    db('projects')
+        .then(rows => {
+            res.json(rows);
+        }).catch(err => {
+            res.status(500).json({ err: 'Failed to get projects' });
+        });
+});
+
 server.get('/projects/:id', (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     db('projects').where('id', id)
-    .then(rows => {
-      res.json(rows);
-    }).catch(err => {
-      res.status(500).json({err: 'Failed to get project'});
-    })
-  });
+        .then(project => {
+            db('actions')
+                .where('project_id', id)
+                .then(actions => {
+                    project[0].actions = actions;
+                    res.status(200).json(project);
+                })
+        }).catch(err => {
+            res.status(500).json({ err: 'Failed to get project' });
+        })
+});
+
+server.delete('/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db('projects').where('id', id).del()
+        .then(rowCount => {
+            res.status(201).json(rowCount);
+        }).catch(err => {
+            res.status(500).json({ err: 'Failed to delete project' });
+        });
+});
 
 //endpoints for actions
 
@@ -42,6 +66,24 @@ server.post('/actions', (req, res) => {
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to create action' });
+        });
+});
+
+server.get('/actions', (req, res) => {
+    db('actions').then(rows => {
+        res.json(rows);
+    }).catch(err => {
+        res.status(500).json({ err: 'Failed to get actions' });
+    });
+});
+
+server.delete('/actions/:id', (req, res) => {
+    const { id } = req.params;
+    db('actions').where('id', id).del()
+        .then(rowCount => {
+            res.status(201).json(rowCount);
+        }).catch(err => {
+            res.status(500).json({ err: 'Failed to delete action' });
         });
 });
 
