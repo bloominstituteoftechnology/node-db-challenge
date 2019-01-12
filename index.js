@@ -9,8 +9,17 @@ const server = express();
 
 server.use(express.json());
 
-server.post('/api/projects', (req, res) => {
-  // we'll add our database code here shortly
+server.post('/projects', (req, res) => {
+  const project = req.body;
+
+  db.insert(project)
+    .into('projects')
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 server.listen(8000, () => console.log('Running on port 8000'));
