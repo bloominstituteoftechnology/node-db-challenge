@@ -5,14 +5,14 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './data/getthingsdone.sqlite3'
+      filename: './data/gtd.sqlite3'
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
     }
-  },
-  useNullAsDefault: true,
-  migrations: {
-    directory: './data/migrations'
-  },
-  seeds: {
-    directory: './data/seeds'
   }
 };
