@@ -11,13 +11,23 @@ router.post('/', (req, res) => {
 
 // GET /api/projects
 router.get('/', (req, res) => {
-
+  db('projects').then(rows => {
+    res.json(rows);
+  }).catch(err => {
+    res.status(500)
+      .json({err: 'failed to find projects'});
+  });
 });
 
 // GET /api/projects/:id
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-
+  db('projects').where('id', id).then(rows => {
+    res.json(rows);
+  }).catch(err => {
+    res.status(500)
+      .json({err: 'failed to find project'});
+  });
 });
 
 // GET /api/projects/:id/actions
