@@ -27,3 +27,36 @@ Project: Action
 
 Action : Contexts
 Many : Many
+
+
+Seed Data:
+
+Projects
+[
+    {project_name: "Build chicken coop", project_description: "Create a fortified home for the precious birds", completed: 0},
+    {project_name: "Bake a cake", project_description: "Make grandma happy by giving her a cake for her 71st birthday", completed: 0},
+    {project_name: "Learn piano", project_description: "Gain a useful life skill to show off at parties", completed: 0},
+]
+
+[
+    {action_description: "Dig a hole", action_notes: "6 ft deep, 10x10, fortify with wire", completed: 1, project_id: 1},
+    {action_description: "Build the coop", action_notes: "Follow designs and paint with enthusiasm", completed: 0, project_id: 1},
+    {action_description: "Setup night cameras", action_notes: "Order from amazon", completed: 0, project_id: 1},
+    {action_description: "Purchase ingredients", action_notes: "", completed: 0, project_id: 2},
+    {action_description: "Bake and decorate", action_notes: "Channel your inner Martha", completed: 0, project_id: 2},
+    {action_description: "Get a piano teacher", action_notes: "Setup weekly lessons", completed: 1, project_id: 3},
+    {action_description: "Practice", action_notes: "At least 30 min daily", completed: 0, project_id: 3},
+]
+
+[
+    {context: "Errands", action_id: 4},
+    {context: "Online", action_id: 3},
+    {context: "At home", action_id: 5},
+    {context: "At the farm", action_id: 1},
+    {context: "At the farm", action_id: 2},
+    {context: "At home", action_id: 7 },
+]
+
+
+
+//In an ideal world, each context would only be listed once and could list as many action ids as pertains to each project, keeping contexts unique. How do you set this up?
