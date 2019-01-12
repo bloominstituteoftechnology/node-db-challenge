@@ -28,4 +28,23 @@ router.get('/:id', (req, res) => {
         })
 });
 
+router.post('/', (req, res) => {
+    const project = req.body;
+    if(project.project_name && project.project_description){
+        db.add(project)
+            .then(newProject => {
+                res.status(201).json(newProject)
+            })
+            .catch(err => {
+                res.status(500).json({ message: "Your project was rejected for unknown reasons. Try again later." })
+            })
+    } else if(project.project_name){
+        res.status(400).json({ message: "Your new project needs a description too, silly." })
+    } else if(project.project_description){
+        res.status(400).json({ message: "A new project without a name? Are you crazy?" })
+    } else {
+        res.status(400).json({ message: "A new project needs a name and a description. Didn't you know?" })
+    }
+})
+
 module.exports = router;
