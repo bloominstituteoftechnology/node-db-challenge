@@ -49,6 +49,18 @@ server.get('/projects', (req , res) => {
     })
 });
 
+// GET for retrieving actions
+server.get('/actions', (req , res) => {
+    db('actions')
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({err: "Failed to retrieve actions"})
+    })
+})
+
 // GET for retrieving projects with specific ID
 server.get('/projects/:id', (req , res) => {
     const {id} = req.params;
@@ -58,6 +70,18 @@ server.get('/projects/:id', (req , res) => {
     })
     .catch(err => {
         res.status(500).json({err: "Failed to find specific project id"});
+    })
+})
+
+// GET for retrieving actions with specific ID
+server.get('/actions/:id', (req , res) => {
+    const {id} = req.params;
+    db('actions').where('id', id)
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to find specific action id"});
     })
 })
 
@@ -72,6 +96,36 @@ server.get('/projects/:id/actions', (req , res) => {
         res.status(500).json({err: "Failed to find specific project and all associated actions"});
     })
 })
+
+// UPDATE projects
+server.put('/projects/:id', (req , res) => {
+    const {id} = req.params;
+    const project = req.body;
+
+    db('projects').where('id', id).update(project)
+    .then(rowCount => {
+        res.status(200).json(rowCount)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to update project"});
+    })
+})
+
+// UPDATE actions
+server.put('/actions/:id', (req , res) => {
+    const {id} = req.params;
+    const action = req.body;
+
+    db('actions').where('id', id).update(action)
+    .then(rowCount => {
+        res.status(200).json(rowCount)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to update action"});
+    })
+})
+
+
 
 // SERVER LISTEN
 server.listen(PORT, () => {
