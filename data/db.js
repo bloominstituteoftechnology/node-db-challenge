@@ -1,18 +1,16 @@
-const db = require('../dbConfig.js');
+const db = require('../dbConfig');
 
 module.exports = {
-  addProject: function (project) {
+  addProject:function(project) {
     return db('projects')
-      .insert(project)
-      .then(ids => ({ id: ids[0] }));
+      .insert(project);
   },
-  addAction: function(action){
+  addAction:function(action){
     return db('actions')
-      .insert(action)
-      .then(ids => ({id: ids[0]}));
+      .insert(action);
   },
-  getProjectByID: function(id){
-    return db('projects').Join('actions');
+  getProjectByID:function(id){
+    return db('projects').where('id',id)
   }
 }
 

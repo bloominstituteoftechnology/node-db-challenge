@@ -2,13 +2,13 @@ const express = require('express');
 const server = express();
 const PORT = process.env.PORT || 5000;
 server.use(express.json());
-const db = ('data/db.js');
+const db = require('./data/db')
 
 //POST for adding project
 
 server.post('/api/projects', (req,res) => {
 const project = req.body;
-db.addAction(project)
+db.addProject(project)
   .then(project => res.status(201).json(`sucessfully inserted project with an id of ${project}`))
   .catch(err => res.status(500).json({error:'failed to insert your project'}) )
 });
@@ -18,7 +18,7 @@ db.addAction(project)
 server.post('/api/actions', (req, res) => {
   const action = req.body;
   db.addAction(action)
-    .then(action => res.status(201).json(`sucessfully inserted action with an id of ${action}`))
+    .then(id => res.status(201).json(`sucessfully inserted action with an id of ${id}`))
     .catch(err => res.status(500).json({ error: 'failed to insert your action' }))
 });
 
