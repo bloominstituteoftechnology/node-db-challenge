@@ -1,5 +1,4 @@
-const knex = require('knex');
-const db_config = require('../knexfile');
+const db = require('../dbConfig.js');
 
 module.exports = {
   addProject: function (project) {
