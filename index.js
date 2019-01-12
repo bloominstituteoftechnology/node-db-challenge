@@ -106,26 +106,6 @@ server.post('/api/actions', (req, res) => {
     });
 }); 
 
-/* server.get('/api/recipe', (req, res) => {
-  db('recipe').leftJoin('dish', 'recipe.dish_id', 'dish.id')
-    .then(recipeInfo => {
-      res.json(recipeInfo);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
-});
- */
-/* server.get('/api/steps', (req, res) => {
-  db('steps').leftJoin('recipe', 'recipe_id', 'steps.id')
-    .then(stepsInfo => {
-      res.send(stepsInfo);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
-});
- */
 
 server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
