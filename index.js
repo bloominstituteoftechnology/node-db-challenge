@@ -24,20 +24,15 @@ server.post('/actions', (req, res) => {
 
 server.get('/projects/:id', (req, res) => {
   const { id } = req.params;
-  let project = {};
   db('projects')
     .where('id', id)
     .then(result => {
       db('actions')
         .where('project_id', id)
         .then(actions => {
-          project = Object.assign({}, result[0]);
-          project.actions = actions;
-          console.log('actions', actions);
+          result[0].actions = actions;
+          res.status(200).json(result[0]);
         });
-      console.log(project);
-      res.status(200).json(project);
-      setTimeout(() => console.log('while after', project), 2000);
     })
     .catch(err => res.status(500).json({ err }));
 });
