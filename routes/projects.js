@@ -6,7 +6,16 @@ const router = express.Router();
 // POST /api/projects
 router.post('/', (req, res) => {
   const project = req.body;
-
+  db('projects').insert(project)
+    .then(idInfo => {
+      db('projects').get(idInfo.id)
+        .then(project => {
+          res.status(201).json(idInfo);
+        });
+    }).catch(err => {
+      res.status(500)
+        .json({err: 'failed to insert project into db'});
+    });
 });
 
 // GET /api/projects
