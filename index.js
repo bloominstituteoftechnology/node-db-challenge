@@ -7,6 +7,7 @@ dbConfig = require('./knexfile');
 
 // require routes here
 const projectsRoute = require('./routes/projects');
+const actionsRoute = require('./routes/actions');
 
 const app = express();
 const db = knex(dbConfig.development);
@@ -18,6 +19,7 @@ app.use(logger('dev'));
 
 // routes
 app.use('/api/projects', projectsRoute);
+app.use('/api/actions', actionsRoute);
 
 app.get('/', (req, res) => {
   res.json({ message: 'app is running' });
