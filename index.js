@@ -45,3 +45,5 @@ server.get('/project/:id', (req, res) => {
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
+//When I run the server it says it's running on port 74, not sure why this is. Unable to test endpoints
