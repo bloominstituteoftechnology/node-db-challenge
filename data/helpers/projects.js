@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("./projectsModel.js");
+const _ = require("lodash")
 
 const router = express.Router();
 
@@ -44,14 +45,18 @@ router.post("/", (req, res) => {
 // [GET] GET for retrieving a project by its id that returns project with actions
 router.get('/:id/actions', (req, res) => {
     const { id } = req.params;
+    const project = db.project(id)
+    const action = db.actions(id)
 
-    db.project(id)
-        .then(list => {
-            res.status(200).json(list)
+
+
+    Promise.all([project, action])
+        .then(values => {
+            let [project, action] = values;
+            project = project[0];
+          res.status(200).json({...project, actions:action})
         })
-        .catch(err => {
-            res.status(500).json(err)
-        })
+
 })
 
 module.exports = router;

@@ -8,13 +8,14 @@
   },
   "author": {
     "name": "Stefan Clem",
-     "email": "steaclem@gmail.com"
+    "email": "steaclem@gmail.com"
   },
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
     "init": "^0.1.2",
     "knex": "^0.16.3",
+    "lodash": "^4.17.11",
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {

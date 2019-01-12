@@ -12,7 +12,7 @@ module.exports = {
     add,
     update,
     remove,
-    project
+    project, actions
 }
 
 
@@ -22,7 +22,7 @@ function find(){
 }
 
 function findById(id) {
-    return db('prohec')
+    return db('projects')
         .where({ id })
         .first()
 }
@@ -47,7 +47,13 @@ function remove(id) {
 }
 
 function project(id) {
-    return db('projects as p')
-        .join('actions as a', 'a.project_id', 'p.id')
-        .where('p.id', id)
+    return db('projects')
+        .where({ id })
+
+
+}
+
+function actions(id) {
+    return db('actions')
+        .where("project_id", id)
 }
