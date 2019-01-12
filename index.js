@@ -33,7 +33,7 @@ server.get('/api/actions', (req, res) => {
         });
 });
 
-/********* Get Single Post *************/
+/********* Post New Project *************/
 server.post('/api/projects', (req, res) => {
     const newProject = req.body;
     if (newProject.project) {
@@ -55,7 +55,7 @@ server.post('/api/projects', (req, res) => {
     }
 });
 
-/********* Get Single Post *************/
+/********* Post New Action *************/
 server.post('/api/actions', (req, res) => {
     const newAction = req.body;
     if (newAction.description) {
@@ -77,6 +77,7 @@ server.post('/api/actions', (req, res) => {
     }
 });
 
+/********* Get Single Project with Actions *************/
 server.get("/api/projects/:id", (req, res) => {
     const { id } = req.params;
     console.log("id", id);
@@ -84,6 +85,19 @@ server.get("/api/projects/:id", (req, res) => {
         .where("projects.id", id)
         .then(project => {
             res.json(project);
+        })
+        .catch(err => {
+            res.status(500).json({ error: err });
+        });
+});
+
+/********* Get Single Action *************/
+server.get("/api/actions/:id", (req, res) => {
+    const { id } = req.params;
+    db('actions')
+        .where("actions.id", id)
+        .then(action => {
+            res.json(action);
         })
         .catch(err => {
             res.status(500).json({ error: err });
