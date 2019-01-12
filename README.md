@@ -29,9 +29,20 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+
+`RDBMS stands for "relational database management system", which is the engine that stores data in tables. Since these tables cannot be read by just opening a file, it requires a SQL varient to access. SQL is "Structured query language", which is the code/instructions used to setup, access, and manipulate the data stored within the RDBMS database.`
+
+2. Why do tables need a `primary key`?
+
+`Tables need a way of differentiating between one row and another, so that queries can be done without affecting every row in the table (which can still be done if needed). This is done by making one field unique - so that no other row can have the same value in that particular field.  Often, this is done by using an auto_incrementing ID number.`
+
+3. What is the name given to a table column that references the primary key on another table.
+
+`The name given to the table column that references a primary key on another table is a "foreign key". This foreign key allows us to use the 'relational' side of RDBMS, where data can be pulled from multiple tables into one result.`
+
+4. What do we need in order to have a _many to many_ relationship between two tables.
+
+`For a many-to-many relationship, we need to have an intermediary/join table, which would consist of it's own primary key, followed by columns for each foreign key that need to be tied to each other. For example: | id | recipe_id | ingredient_id |`
 
 ## Minimum Viable Product
 
