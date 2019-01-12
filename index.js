@@ -3,13 +3,13 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const knex = require('knex');
 
-// dbConfig = require('./knexfile');
+dbConfig = require('./knexfile');
 
 // require routes here
-
+const projectsRoute = require('./routes/projects');
 
 const app = express();
-// const db = knex(dbConfig.development);
+const db = knex(dbConfig.development);
 const PORT = 8888;
 
 app.use(express.json());
@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(logger('dev'));
 
 // routes
-
+app.use('/api/projects', projectsRoute);
 
 app.get('/', (req, res) => {
   res.json({ message: 'app is running' });
