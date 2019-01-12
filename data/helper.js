@@ -14,5 +14,11 @@ module.exports = {
   },
   addAction: action => {
     return db.insert(action).into("actions");
+  },
+  getContexts: () => {
+    return db("contexts");
+  },
+  addContext: context => {
+    return db.insert(context).into("context");
   }
 };

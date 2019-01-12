@@ -24,7 +24,7 @@ server.get("/api/projects", (req, res) => {
       res.status(200).json(projects);
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({ message: "Could not load projects." });
     });
 });
 
@@ -50,7 +50,7 @@ server.get("/api/actions", (req, res) => {
       res.status(200).json(actions);
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({ message: "Could not load actions." });
     });
 });
 
@@ -64,6 +64,31 @@ server.post("/api/actions", (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ message: "Could not add new action." });
+    });
+});
+
+// Action endpoints
+server.get("/api/contexts", (req, res) => {
+  helper
+    .getContexts()
+    .then(contexts => {
+      res.status(200).json(contexts);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Could not load contexts." });
+    });
+});
+
+server.post("/api/contexts", (req, res) => {
+  const newContext = req.body;
+
+  helper
+    .addContext(newContext)
+    .then(context => {
+      res.status(201).json(context);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Could not add new context." });
     });
 });
 
