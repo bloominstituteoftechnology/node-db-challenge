@@ -21,9 +21,35 @@ router.get('/api/projects', (req,res) => {
     });
 });
 
+router.get('/api/projects/:id', (req,res) => {
+      const {id} = req.params;
+      const idNumber = +(id);
+      const index =  1 - idNumber;
+      console.log("this is id", id);
+      console.log(typeof idNumber);
+      db('project').where('id', id)
+      .then( project => {
+          if(!project)  res.status(404).json({errorMessage:`Failed to the projects now`})
+              db('actions')
+              .where('project_id', id)
+              .then(action =>  { 
+                 project[idNumber].actions = action
+              });
+          res.status(200).json(project);
+      })
+      .catch(err => {
+            res.status(500).json({error:`Failed to fetch the projects`});
+      });
+});
+
 router.post('/api/projects', (req,res) => {
      const project = req.body;
-     if(!project) res.status(404).json({Message: `Make sure you add a valid project`});
+     const {project_name, project_des} = project;
+
+     if(!project) res.status(400).json({Message: `Make sure you add a valid project`});
+     if(!project_name) res.status(400).json({Message:`Please enter a valid name`});
+     if(!project_des) res.status(400).json({Message:`Please enter your project description`});
+
      db('project')
         .insert(project)
         .then( projectCount => {

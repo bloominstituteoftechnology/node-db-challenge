@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.string('project_name').notNullable().unique();
         table.string('project_des').notNullable();
-        table.boolean('isCompleted');
+        table.boolean('isCompleted').defaultTo(0);
     });
 };
 
