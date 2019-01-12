@@ -1,6 +1,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("projects", table => {
-    table.increments();
+    table.increments("project_id");
     table
       .string("name", 255)
       .unique()
