@@ -18,7 +18,7 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 
 ## Description
 
-In this challenge, you build an application that lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
+-In this challenge, you build an application that lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
 
 Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
 
