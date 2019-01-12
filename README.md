@@ -29,9 +29,43 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
+
+A relational database management system (RDBMS) is a collection of programs and capabilities that enable 
+IT teams and others to create, update, administer and otherwise interact with a relational database. 
+Most commercial RDBMSes use Structured Query Language (SQL) to access the database, although SQL 
+was invented after the initial development of the relational model and is not necessary for its use.
+RDBMS is the database software itself, which manages storage, querying, updating, and, well, everything. 
+
+SQL, the Structured Query Language, is a language (or a family of closely related languages or dialects) which is 
+typically used to query the RDBMS. If you want to work with SQL, you just learn SQL and maybe a tiny bit of relational 
+model theory for background.
+
+So it comes down to this: RDBMS is the system, and SQL is the language used to interact with the system.
+
 1. Why do tables need a `primary key`?
+
+A primary key is used to accomplish two things: ensure a unique row identifier AND provide for enforcement of referential integrity. 
+That second one is important because it separates the primary key from simply a uniqueness constraint. 
+Generally speaking tables should have a primary key especially if you are using it as a relational database. 
+
+A good example of where you need one but not the other is a many-many resolution table (also called an associative entity). 
+This table in its simplest form consists of two columns each containing a foreign key reference to another table. 
+This table doesn't need a primary key but it does need a unique constraint since every combination should occur only once.
+
 1. What is the name given to a table column that references the primary key on another table.
+
+A foreign key is used to link two tables together. It is a field (or collection of fields) in one table that refers 
+to the primary key in another table. The table containing the foreign key is called the child table, and the table containing the 
+candidate key is called the referenced or parent table. It can also be called a referencing key.
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+
+Need to create a joining table or bridging table. This consists of two columns. Each of them being primary keys from
+the other two tables. This new table will contain separate records for each combination of the two primary key columns.
+Though the two colums in the new table were primary keys they will have repeated values in the new table. 
+
+Every field that is used must contain a primary key.
+
 
 ## Minimum Viable Product
 
