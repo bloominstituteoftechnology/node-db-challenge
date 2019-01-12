@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     tbl.foreign('project_id').references('projects.id');
     tbl.string('action_description').notNullable();
     tbl.string('additional_information');
-    tbl.boolean('completed').notNullable();
+    tbl.boolean('completed').defaultTo(false);
   });
 };
 
