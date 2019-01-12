@@ -1,0 +1,21 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon"
+  },
+  "repository": "https://github.com/alasalle/Sprint-Challenge-RDBMS.git",
+  "author": "alasalle <angela.lasalle91@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "knex": "^0.16.3",
+    "morgan": "^1.9.1",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
