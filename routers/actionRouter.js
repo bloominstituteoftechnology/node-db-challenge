@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   actionDb
-    .get()
+    .getAction()
     .then(actions => {
       actions[0]
         ? res.json(actions)
@@ -25,32 +25,23 @@ router.post("/", (req, res) => {
       .json({ error: "project id must be included and must be a number" });
   } else {
     projectDb
-      .get(newAction.project_id)
+      .getProject(newAction.project_id)
       .then(project => {
         if (project[0]) {
           if (
-            !newAction.action_name ||
-            typeof newAction.action_name !== "string" ||
-            newAction.action_name === ""
+            !newAction.action_description ||
+            typeof newAction.action_description !== "string" ||
+            newAction.action_description === ""
           ) {
             res
               .status(400)
-              .json({ error: "project name is required and must be a string" });
-          } else if (
-            !newProject.project_completed ||
-            typeof newProject.project_completed !== "boolean"
-          ) {
-            res
-              .status(400)
-              .json({
-                error: "completed status is required and must be a boolean"
-              });
+              .json({ error: "action description is required and must be a string" });
           } else {
-            projectDb
-              .insert(newProject)
+            actionDb
+              .insert(newAction)
               .then(id => res.status(200).json(id))
               .catch(err =>
-                res.status(500).json({ error: "trouble adding project" })
+                res.status(500).json({ error: "trouble adding action" })
               );
           }
         } else {
