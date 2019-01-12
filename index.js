@@ -12,10 +12,6 @@ server.use(express.json());
 server.use('/projects', projectRouter);
 server.use('/actions', actionRouter);
 
-//get project by id that also returns array of actions
-//post project
-//post action
-
 //SERVER
 
 server.listen(PORT, () => {
