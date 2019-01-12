@@ -16,13 +16,6 @@ server.get('/', (req,res) => {
     res.json({Message: `Server is up and running now at ${PORT}`});
 });
 
-//Get and post projects
-
-
-
-//Get and post actions
-
-
 
 server.listen(PORT, () => {
    console.log(`Server is up and running at localhost://${PORT}`);

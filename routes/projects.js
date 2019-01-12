@@ -6,6 +6,7 @@ const router = express.Router();
 const dbConfig = require('../knexfile.js');
 const db = knex(dbConfig.development);
 
+//Get and post projects
 router.get('/api/projects', (req,res) => {
      res.json({Message:'Server is up and running now'});
 })
