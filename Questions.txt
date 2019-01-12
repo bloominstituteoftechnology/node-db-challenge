@@ -1,0 +1,13 @@
+Explain the difference between RDBMS and SQL.
+- SQL or structured query language is the language used to interact with a SQL database
+    RDBMS's are management systems (like Db browser) that allow developers to interact with a database
+
+Why do tables need a primary key?
+- tables need a primary key so that a unique identifier is present in every table.
+    This allows SQL to query the database without running into reference errors.
+
+What is the name given to a table column that references the primary key on another table.
+- foreign key
+
+What do we need in order to have a many to many relationship between two tables
+- a third table or foreign key table
