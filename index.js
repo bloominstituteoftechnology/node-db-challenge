@@ -125,7 +125,29 @@ server.put('/actions/:id', (req , res) => {
     })
 })
 
+// DELETE projects
+server.delete('/projects/:id', (req , res) => {
+    const {id} = req.params;
+    db('projects').where('id', id).del()
+    .then(rowCount => {
+        res.status(201).json(rowCount)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to delete project"})
+    })
+})
 
+// DELETE actions
+server.delete('/actions/:id', (req , res) => {
+    const {id} = req.params;
+    db('actions').where('id', id).del()
+    .then(rowCount => {
+        res.status(201).json(rowCount)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to delete action"})
+    })
+})
 
 // SERVER LISTEN
 server.listen(PORT, () => {
