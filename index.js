@@ -12,6 +12,27 @@ server.use(express.json());
 
 //POST for adding projects.
 
+server.post('/api/projects', (req, res) =>{
+    const project = req.body;
+    if(project.name && project.description && project.finished){
+        db('project').insert(project)
+        .then(id => {
+            res
+            .status(201)
+            .json({message: `Project ${id} created`})
+        })
+        .catch(err=>{
+            res
+            .status(500)
+            .json({error: "There was an error while saving your project to the database"})
+        })
+    } else {
+        res
+        .status(400)
+        .json({errorMessage: "Please provide the necessary details for the project"})
+    }
+});
+
 // POST for adding actions.
 
 // GET for retrieving a project by its id that returns actions aswell
