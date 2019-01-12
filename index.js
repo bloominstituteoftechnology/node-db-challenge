@@ -18,7 +18,6 @@ server.post("/projects", (req, res) => {
       res.json({ message: `new project created with id ${id}` });
     })
     .catch(err => {
-      console.log(err.Error);
       if (newProject.name && err.code === "SQLITE_CONSTRAINT") {
         res.status(400).json({ message: "please enter a unique project name" });
       } else if (err.code === "SQLITE_CONSTRAINT") {
@@ -38,7 +37,6 @@ server.post("/projects/actions", (req, res) => {
       res.json({ message: `new action created with id ${id}` });
     })
     .catch(err => {
-      console.log(err.Error);
       if (err.code === "SQLITE_CONSTRAINT") {
         res.status(400).json({
           message: "action description and project id are required fields"
@@ -55,7 +53,6 @@ server.get("/projects/:id", (req, res) => {
     .where("projects.id", id)
     .then(project => {
       const selectedProject = project[0];
-      console.log(selectedProject.id);
       db("actions")
         .select(
           "actions.id",
@@ -75,7 +72,6 @@ server.get("/projects/:id", (req, res) => {
         });
     })
     .catch(err => {
-      console.log(err);
       res.status(500).json({ message: "could not retrieve project" });
     });
 });
