@@ -30,6 +30,7 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 1. Explain the difference between `RDBMS` and `SQL`.
 
+A relational database management system is a program that lets you create and update with a relational database, while SQL is the language that you use to access the database.
 
 1. Why do tables need a `primary key`?
 
@@ -43,7 +44,6 @@ Foreign Key
 
 A many to many relationship is created when the parent table’s data can have multiple associated data entries in the corresponding children table, for example, actors to movies.
 
-A relational database management system is a program that lets you create and update with a relational database, while SQL is the language that you use to access the database.
 
 ## Minimum Viable Product
 
