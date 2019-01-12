@@ -29,9 +29,16 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
+  RDBMS stand for relational Database management system , it's a type of database one can use to store data meanwhile sql stand for structured query language ,a form of language use to query a RDBMS to extract data and present data.
+
 1. Why do tables need a `primary key`?
+  A primary key is used to ensure data in the specific column is unique
+
 1. What is the name given to a table column that references the primary key on another table.
+  the name given to a table column referencing the primary key on another table is foreing key
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+   we a third table usually name joins table 
 
 ## Minimum Viable Product
 
