@@ -26,7 +26,7 @@ server.post('/api/Projects', (req, res) => {
                 .json({err: 'Failed to post new Project to Project list.'});
         })
 });
-server.post('./api/Project-Actions', (req, res) => {
+server.post('/api/Project-Actions', (req, res) => {
     db('Project-Actions').insert(req.body)
         .then(response => { 
             res
@@ -54,9 +54,10 @@ server.get('/api/Projects', (req, res) => {
                 .status(500)
                 .json({err: 'Failed to find Projects.'});
         })
-})
+});
 server.get('/api/Projects/:id', (req, res) => {
-    db('Projects').where('id', req.params)
+    const {id} = req.params;
+    db('Projects').where('id', id)
         .then(response => {
             res
                 .status(200)
@@ -68,7 +69,21 @@ server.get('/api/Projects/:id', (req, res) => {
                 .status(500)
                 .json({err: 'Failed to find Project with this id.'});
         })
-})
+});
+server.get('/api/Project-Actions', (req, res) => {
+    db('Project-Actions').select()
+        .then(response => {
+            res
+                .status(200)
+                .json(response);
+        })
+        .catch(error => {
+            console.log(error);
+            res
+                .status(500)
+                .json({err: 'Failed to find Project-Actions.'});
+        })
+});
 
 server.listen(Port, () => {
     console.log(`Server at Port ${Port} is up an running!`)
