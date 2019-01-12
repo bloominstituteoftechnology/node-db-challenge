@@ -33,6 +33,19 @@ server.post('/api/actions', (req, res) => {
     });
 });
 
+server.get('/api/projects/:id', (req, res) => {
+  const { id } = req.params;
+  db('projects')
+    .leftJoin('actions', 'project_id', 'projects.id')
+    .where('id', id)
+    .then((projectInfo) => {
+      res.send(projectInfo);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: 'Failed to find project' });
+    });
+});
+
 server.listen(port, () => {
   console.log(`\n*** Web API listening on http://localhost:${port} ***\n`);
 });
