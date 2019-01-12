@@ -22,4 +22,18 @@ server.post('/projects', (req, res) => {
     });
 });
 
+server.post('/actions', (req, res) => {
+  const project = req.body;
+
+  db.insert(project)
+    .into('actions')
+    .then(ids => {
+      res.status(201).json(ids);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+
 server.listen(8000, () => console.log('Running on port 8000'));
