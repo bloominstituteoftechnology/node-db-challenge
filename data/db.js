@@ -27,6 +27,10 @@ function addAction(action) {
 // helper method to get project and return project details and related actions
 
 function getProject(id) {
+
+    // RETURN PROJECT WITH UNNESTED ACTION
+
     return db('projects_table')
-        .where('id', id);
-}
+        .where('projects_table.id', id)
+        .leftJoin('actions_table', {'projects_table.id': 'project_id'});
+};
