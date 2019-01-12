@@ -8,7 +8,7 @@ server.use(express.json());
 //endpoints here
 server.use("/api/projects", projectsRouter);
 
-server.length("/", (req, res) => {
+server.get("/", (req, res) => {
   res.send("This is the projects Server. It's Live!");
 });
 
