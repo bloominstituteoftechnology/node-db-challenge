@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  knex.schema.createTable('Projects', table => {
+  return knex.schema.createTable('Projects', table => {
       table.increments();
       table.string('name').notNullable();
       table.string('description').notNullable();
@@ -9,5 +9,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  knex.schema.dropTableIfExists('Projects');
+  return knex.schema.dropTableIfExists('Projects');
 };
