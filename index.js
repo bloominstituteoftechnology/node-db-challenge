@@ -7,6 +7,8 @@ const server = express();
 const db = knex(dbConfig.development);
 const helper = require("./helper.js");
 
+server.use(express.json());
+
 const PORT = 6000;
 
 //add project
@@ -30,15 +32,15 @@ server.post("/api/actions", (req, res) => {
 });
 
 //get project by id
-server.get("/api/project/:id", (req, res)=> {
+server.get("/api/projects/:id", (req, res)=> {
     const {id} = req.params;
     helper.getProject(id)
         .then(project => {
             project.length > 0 ? res.json(project) : res.status(400).json({err: `the project with an id of ${id} does not exist`})
         })
-        .catch(err => res.status(500).json({err: "error retreiving project"}));
+        .catch(err => res.status(500).json({err: `error retreiving project ${err}`}));
 })
 
 server.listen(PORT, () => {
-    `server is up and running on ${PORT}`
+    console.log(`server is up and running on ${PORT}`)
 });

@@ -1,7 +1,6 @@
-const express = require("express");
 const knex = require("knex");
-
-const db = require("./knexfile.js");
+const dbConfig = require("./knexfile.js")
+const db = knex(dbConfig.development);
 
 module.exports = {
     addProject,
@@ -21,8 +20,14 @@ function addAction(action) {
         .then(ids => ({id: ids[0]}));
 }
 
+//couldn't figure out how to return this in the nested fashion the instructions are calling for
 function getProject(id) {
     return db("actions as a")
         .join("projects as p", "p.id", "a.project_id")
+        // .select("p.id", "p.project_name", "p.description", "p.completed",
+        //     { actions: [
+        //         "a.action_description",
+        //     }
+        //     })
         .where("a.project_id", id)
 }
