@@ -30,9 +30,21 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+    RDBMS is a relational data modeling and more part of the API itself, where 
+    SQL is the language used for the database.
+
+2. Why do tables need a `primary key`?
+    Primary key is very much the same as saying "Unique ID", that being said it's
+    important each table has a unique ID otherwise within the API accessing the 
+    desired data correctly might be uneccisarily difficult.
+
+3. What is the name given to a table column that references the primary key on another table.
+    That's called a "Foreign Reference" and seriously helps out with accessing the DB
+
+4. What do we need in order to have a _many to many_ relationship between two tables.
+    Accessing the primary key or 'ID' of each desired table is a must, then there
+    needs to be a seperate check that compares related key's between two tables.
+    
 
 ## Minimum Viable Product
 
