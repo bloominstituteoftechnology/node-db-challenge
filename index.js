@@ -58,6 +58,25 @@ server.post('/api/actions', (req, res) =>{
 
 // GET for retrieving a project by its id that returns actions aswell
 
+server.get('/api/projects/:id', (req, res) =>{
+    const {id} = req.params;
+    db('project').where('id', id).fullOuterJoin('action', 'id', 'project_id')
+    .then(projectInfo =>{
+        if(projectInfo.lengtj !==0){
+            res
+            .status(200)
+            .json(projectInfo)
+        } else {
+            res
+            .status(404)
+            .json({error: "The Project with the specified ID does not exist"})
+        }
+    })
+    .catch(err =>{
+        res.status(500).json({error: "The Project could not be retrieved "})
+    })
+})
+
 server.listen(PORT, () =>{
     console.log(`Server is listening on ${PORT}`)
 })
