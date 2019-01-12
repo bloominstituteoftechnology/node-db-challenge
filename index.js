@@ -1,11 +1,23 @@
 const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const knex = require('knex');
 const dbConfig = require('./knexfile');
-const server = express();
 const db = knex(dbConfig.development);
+
+const actionsRouter = require('./routers/actionsRouter.js');
+const projectsRouter = require('./routers/projectsRouter.js');
+
+const server = express();
 const PORT = 4500;
 
 server.use(express.json());
+sergver.use(cors());
+server.use(helmet());
+server.use(morgan('dev'));
+server.use('/api/actions', actionsRouter);
+server.use('/api/projects', projectsRouter);
 
 //beginning of /api/projects endpoints
 
