@@ -1,15 +1,17 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable("actions", function(table) {
+  return knex.schema.createTable("actions", table => {
     table.increments();
-    table.string("description");
-    table.string("notes");
-    table.boolean("completed").defaultTo(false);
+    table.string("description", 255).notNullable();
+    table.string("notes", 255);
+    table.boolean("complete").defaultTo(false);
+    table.integer("project_id").unsigned();
     table
-      .integer("project_id")
+      .foreign("project_id")
       .references("id")
-      .inTable("project");
+      .on("projects");
   });
 };
+
 exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists("actions");
 };
