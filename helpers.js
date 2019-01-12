@@ -13,5 +13,7 @@ module.exports.addAction = function(action) {
 }
 
 module.exports.getProjectByID = function(id) {
-    return db('projects').where('id', id).select();
+    return db('projects')
+    .leftJoin('actions', 'actions.project_id', 'projects.id')
+    .where('projects.id', id);
 }

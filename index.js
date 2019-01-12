@@ -12,13 +12,37 @@ server.post('/api/projects', (req, res) => {
     const project = req.body;
     if (project.project_name) {
         helper.addProject(project)
-        .then((whatDataIsThis) => {
-            res.status(201).json(whatDataIsThis);
+        .then((projectID) => {
+            res.status(201).json(projectID);
         })
         .catch((error) => {
             res.status(500).json(error);
         })
     }
+})
+
+server.post('/api/actions', (req, res) => {
+    const action = req.body;
+    if (action.action_name) {
+        helper.addAction(action)
+        .then((actionID) => {
+            res.status(201).json(actionID);
+        })
+        .catch((error) => {
+            res.status(500).json(error);
+        })
+    }
+})
+
+server.get('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    helper.getProjectByID(id)
+    .then((project) => {
+        res.status(200).json(project);
+    })
+    .catch((error) => {
+        res.status(500).json(error);
+    })
 })
 
 server.listen(PORT, () => {
