@@ -29,9 +29,20 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
+
+An Rataional Database Management System (RDBMS) is how everything is structured and stored in a database. I think, althought there is a little confusion on this, it can also include the code in how it is stored, managed, queried, etc. Structered Query Langugae (SQL) is the language used to interact with the system. By language, some may think I may mean code, but in our module this week we used a library (knex), or query builder, to query, connect, and display SQL (we didn't use `SELECT * FROM employees`, but rather used `select('nameOfDB`)).
+
 1. Why do tables need a `primary key`?
+
+`Primary key` constraints identify the column or set of columns that have values that uniqueily identify a row in a table. A `primary key` has to be unique (having other things be unique is optional) because the `primary key` is the identifier for that portion of the data.
+
 1. What is the name given to a table column that references the primary key on another table.
+
+The name given to a table column that references the primary key on another table would typically be `nameOfReferencingTable_id`.
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+
+In order to have a _many to many_ relationship, we would need to have a third table that references two different `nameOfReferencingTable_id`'s. 
 
 ## Minimum Viable Product
 
