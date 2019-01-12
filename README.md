@@ -42,6 +42,8 @@ Foreign key
 
 1. What do we need in order to have a _many to many_ relationship between two tables.
 
+To model this relationship we need to introduce a third table that holds foreign keys that reference the primary key on the related tables.
+
 ## Minimum Viable Product
 
 **NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
