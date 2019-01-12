@@ -3,6 +3,7 @@ const router = express.Router();
 
 const db = require('../data/actionsModel');
 const projectDb = require('../data/projectsModel');
+const contextDb = require('../data/contextsModel');
 
 router.get('/', (req, res) => {
     db.get()
@@ -21,7 +22,19 @@ router.get('/:id', (req, res) => {
             if(Object.keys(action).length === 0){
                 res.status(404).json({ message: "That's not a valid action ID, didn't you know?" })
             } else {
-                res.json(action)
+                let actionObj = action;
+                console.log('else achieved', actionObj);
+                contextDb.getContexts(id)
+                    .then(response => {
+                        res.json({
+                            id: actionObj.id,
+                            description: actionObj.action_description,
+                            notes: actionObj.action_notes,
+                            completed: actionObj.completed,
+                            contexts: response
+                        })
+                    })
+                    .catch(err => res.status(500).json({message: 'Ooops could not fetch that info.' }))
             }
         })
         .catch(err => {
