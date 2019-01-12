@@ -38,7 +38,28 @@ server.post('/actions', (req , res) => {
 })
 
 // GET for retrieving projects
+server.get('/projects', (req , res) => {
+    db('projects')
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({err: "Failed to retrieve projects"});
+    })
+});
 
+// GET for retrieving projects with specific ID
+server.get('/projects/:id/actions', (req , res) => {
+    const {id} = req.params;
+    db('actions').where('project_id', id)
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to find specific project and all associated actions"});
+    })
+})
 
 // SERVER LISTEN
 server.listen(PORT, () => {
