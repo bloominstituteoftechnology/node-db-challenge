@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id;
 
-  db('project')
+  db('project').where('id', id)
   .then(project => {
     if (project.length > 0) {
       res.json(project);
