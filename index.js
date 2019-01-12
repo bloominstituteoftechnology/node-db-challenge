@@ -4,16 +4,24 @@ const server = express();
 
 // PORT
 const PORT = 2300;
-//Knex
-const dbConfig = require('./knexfile.js');
-const db = knex(dbConfig.development);
+//Route files
+const projects = require('./routes/projects');
 
 //Middleware
 server.use(express.json());
+server.use('/', projects);
+
 
 server.get('/', (req,res) => {
     res.json({Message: `Server is up and running now at ${PORT}`});
 });
+
+//Get and post projects
+
+
+
+//Get and post actions
+
 
 
 server.listen(PORT, () => {
