@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 const PORT = process.env.PORT || 5000;
 server.use(express.json());
-const db = ('/data/db.js');
+const db = ('data/db.js');
 
 //POST for adding project
 
