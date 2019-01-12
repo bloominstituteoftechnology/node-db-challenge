@@ -148,3 +148,5 @@ server.get("/projects", (req, res) => {
           res.status(500).json({ error: err })
       });
   });
+
+  server.listen(3000, () => console.log("Server up and running on port 3000."));
