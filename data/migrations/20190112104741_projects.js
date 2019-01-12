@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments(); //unique ID
     table.string('name').notNullable(); // a name
     table.string('description').notNullable(); // description of what needs to be done
-    table.boolean('completed').notNullable(); // flag that indicated if the project is complete or not
+    table.boolean('completed').defaultTo(false); // flag that indicated if the project is complete or not, 0 or 1
   })
 };
 

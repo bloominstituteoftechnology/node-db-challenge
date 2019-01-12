@@ -38,12 +38,21 @@ server.post('/api/actions', (req, res) => {
 server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params;
   db('projects').where('id', id)
-    .then(rows => {
-      res.json(rows);
+    .then(project => {
+      if(project) {
+        db('actions').where('project_id', id)
+          .then(actions => {
+            project[0].actions = actions;
+            res.status(200).json(project);
+          })
+          .catch(err => {
+            res.status(500).json({ error: 'Database go boom' })
+          })
+      } else {
+        res.status(404).json({ error: 'Failed to find project' })
+      }
     })
-    .catch(err => {
-      res.status(500).json({ error: 'Failed to find project' })
-    })
+    
 })
 
 const PORT = 3000;
