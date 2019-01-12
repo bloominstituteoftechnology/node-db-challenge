@@ -8,12 +8,10 @@ const PORT = process.env.PORT || 3500;
 
 server.use(express.json());
 
-//GET
 
-server.use('./projects', projectRouter);
-server.use('./actions', actionRouter);
+server.use('/projects', projectRouter);
+server.use('/actions', actionRouter);
 
-//get project
 //get project by id that also returns array of actions
 //post project
 //post action
