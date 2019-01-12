@@ -1,0 +1,25 @@
+{
+  "name": "sprint-challenge-rdbms",
+  "version": "1.0.0",
+  "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project. This Sprint explored Adding Data Persistence to Web API's and you were taught the following modules: Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeds and Introduction to Data Modeling. In your challenge for this Sprint, you will demonstrate proficiency by creating an application that uses ReactJS to consume live data retrieved from the World Wide Web.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FreeKeyBoy/Sprint-Challenge-RDBMS.git"
+  },
+  "author": "James Hutton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FreeKeyBoy/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/FreeKeyBoy/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "excel": "^1.0.0",
+    "knex": "^0.16.3",
+    "npm": "^6.5.0",
+    "sqlite3": "^4.0.6"
+  }
+}
