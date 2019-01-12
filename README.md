@@ -29,9 +29,21 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
+
+  * RDBMS stands for relational database management system.  As the name implies, this is software that manages a datase system. It contains the database as well as tool that are used to manage the database(s). An example of a RDBMS would be SQL Server, which is the software built by Microsoft that manages databases stored within it. 
+  * SQL is the language that is used to manipulate a database.  It is not the software that manages the database.  SQL is used to create, manipulate, and remove databases within the RDBMS. 
+
+2. Why do tables need a `primary key`?
+
+  * Tables need a primary key in order to identity a particular row within a database table.  A primary key is unique and therefore the row identified by it is unique. This also keeps duplicate records from being entered into the table. 
+
+3. What is the name given to a table column that references the primary key on another table.
+
+  * The column that references the primary key on another table is called the **foreign key**.
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+
+  * In order for there to be a many to many relationship each table entity must have the potential to be associated with more than one of the entities represented by the other table.  An example would be a recipe table and an ingredient table.  A recipe can obviously have more than one ingredient and an ingredient can be associated with more than one recipe.
 
 ## Minimum Viable Product
 
