@@ -50,12 +50,11 @@ server.get("/projects/:id", (req, res) => {
         .where("proj_id", id)
         .then(actions => {
           project[0].actions = actions;
-        }).then(() => {
-            console.log(project);
-            res.json(project);
-          })
+        })
+        .then(() => {
+          res.json(project);
+        })
     )
-    
     .catch(err => {
       res
         .status(500)
