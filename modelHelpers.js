@@ -9,7 +9,8 @@ module.exports = {
   addAction,
   getProjects,
   getProject,
-  getActions
+  getActions,
+  getActionsByProject
 };
 
 function addProject(project) {
@@ -25,11 +26,13 @@ function getProjects() {
 }
 
 function getProject(id) {
-  return db('projects')
-    .leftJoin('actions', 'project_id', 'project.id')
-    .where({ id });
+  return db('projects').where({ id });
 }
 
 function getActions() {
   return db('actions');
+}
+
+function getActionsByProject(id) {
+  return db('actions').where('project_id', id);
 }

@@ -29,4 +29,16 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/project/:id', (req, res) => {
+  const { id } = req.params;
+  actionsDb
+    .getActionsByProject(id)
+    .then(actions => {
+      res.json(actions);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;
