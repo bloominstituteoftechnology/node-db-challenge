@@ -22,6 +22,12 @@ router.get('/:id', (req,res) => {
   Promise.all([q1, q2]).then(values => {
     let [project, action] = values;
     project = project[0];
+    project.completed = project.completed === 0 ? "false" : "true";
+    
+    for( let i = 0; i < action.length; i++ ){
+      action[i].completed = action[i].completed === 0 ? "false" : "true";
+    }
+
     res.status(200).json({ ...project, actions: action })
   })
 
