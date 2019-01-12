@@ -2,6 +2,7 @@ const express = require('express');
 const knex = require('knex');
 
 const dbConfig = require('./knexfile');
+const helper = require('./helpers.js')
 
 const server = express();
 const db = knex(dbConfig.development);
@@ -39,6 +40,32 @@ server.post('/api/action', (req, res) => {
     }
 })
 
+// server.get('/api/project/:id', (req, res) => {
+//     const {id} = req.params;
+//     db('action')
+//     .where('project_id', id)
+//     .leftJoin('project', 'project.id', 'project_id')
+//     .then(info => {
+//         res.json(info)
+//     })
+//     .catch(err => {
+//         res.status(500).json({err: 'error getting that project and actions'})
+//     })
+// })
+
+server.get('/api/project/:id', (req, res) => {
+    const {id} = req.params;
+    db('project').where('id', id)
+    .then(info => {
+        const actions = helpers.getActions(id)
+        res.json(info, actions)
+
+    })
+    .catch(err => {
+        res.status(500).json({err: 'error getting that project and actions'})
+    })
+})
+
 server.get('/api/project', (req, res) => {
     db('project')
     .then(rows => {
@@ -62,3 +89,5 @@ server.get('/api/action', (req, res) => {
 server.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
 })
+
+//helper.getActions(1)
