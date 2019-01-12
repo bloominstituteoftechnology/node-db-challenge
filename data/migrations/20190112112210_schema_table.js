@@ -11,11 +11,8 @@ exports.up = function(knex, Promise) {
       action.text("action_description", 255).notNullable();
       action.text("action_notes", 255).notNullable();
       action.boolean("action_is_complete");
-      action
-        .integer("projectId")
-        .notNullable()
-        .unsigned()
-        .references("projects.id");
+      action.integer("projectId").unsigned();
+      action.foreign("projectId").references("projects.id");
     });
 };
 
