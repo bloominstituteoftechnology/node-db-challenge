@@ -5,7 +5,7 @@ const knex = require('knex');
 const dbConfig = require('./knexfile');
 
 const db = knex(dbConfig.development);
-const PORT = process.env.PORT || 3400;
+const PORT = process.env.PORT || 3500;
 
 server.use(express.json());
 
