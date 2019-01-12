@@ -7,9 +7,18 @@ const PORT = 4000;
 
 server.use(express.json());
 
-server.get('/api/cohorts/:id', (req, res) => {
-    const {id} = req.params
-    db('cohorts').where({id}).then(id => {
+server.get('/api/projects', (req, res) => {
+    
+    db('projects').then(id => {
+      res.status(201).json(id); 
+    })
+    .catch(err => { res.status(500).json({err: "there was an error"})
+  })
+})
+
+server.get('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    db('projects').then(id => {
       res.status(201).json(id); 
     })
     .catch(err => { res.status(500).json({err: "there was an error"})
