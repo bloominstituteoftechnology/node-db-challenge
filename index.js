@@ -50,6 +50,18 @@ server.get('/projects', (req , res) => {
 });
 
 // GET for retrieving projects with specific ID
+server.get('/projects/:id', (req , res) => {
+    const {id} = req.params;
+    db('projects').where('id', id)
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to find specific project id"});
+    })
+})
+
+// GET for retrieving projects with specific ID and associated actions
 server.get('/projects/:id/actions', (req , res) => {
     const {id} = req.params;
     db('actions').where('project_id', id)
