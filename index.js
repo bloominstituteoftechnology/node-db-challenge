@@ -40,9 +40,12 @@ server.get('/api/projects', (req, res) => {
 server.get('/api/projects/:id/actions', (req, res) => {
     const { id } = req.params;
 
-    db('project').where('project_id', id )
-    .then(rows => {
-        res.json(rows);
+    db('project').where({ id: id} )
+    .then(project => {
+        db('action').where({ project_id: id})
+        .then(action => {
+            res.json({...project, actions: action})
+        })
     })
     .catch(err => {
         res.status(500).json({err: 'Failed to get actions by project id'});
