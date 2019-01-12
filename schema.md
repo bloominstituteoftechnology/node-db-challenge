@@ -19,3 +19,11 @@ Context Table
 - table.string('context').notNullable()
 - table.integer().unsigned()
 - table.foreign('action_id').references('id').on('actions')
+
+
+
+Project: Action
+1: Many
+
+Action : Contexts
+Many : Many
