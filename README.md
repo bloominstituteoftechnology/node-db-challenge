@@ -29,9 +29,18 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
+An RDBMS is the database software where as SQL is the language.
+As an example a RDBMS is like a compiler (GNU, Microsoft Visual C++) where C/C++ is the language.
+
 1. Why do tables need a `primary key`?
+A primary key ensures you always have a unique value attached to everything added to a table in the database.
+This also allows us to connect various tables by connecting foreign keys to the items in another table using the primary key and then join them while selecting.
+
 1. What is the name given to a table column that references the primary key on another table.
+A foreign key. 
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+You need to create another table which has foreign keys pointing to primary keys on both tables you would like to join.
 
 ## Minimum Viable Product
 
@@ -53,11 +62,11 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 ### Tasks
 
 - [x] Build the database and tables using knex migrations. **Seeding is not needed**.
-- [ ] Build the API with the following endpoints:
+- [x] Build the API with the following endpoints:
 
-  - [ ] POST for adding projects.
-  - [ ] POST for adding actions.
-  - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
+  - [x] POST for adding projects.
+  - [x] POST for adding actions.
+  - [x] GET for retrieving a `project` by its `id` that returns an object with the following structure:
 
     ```js
     {
