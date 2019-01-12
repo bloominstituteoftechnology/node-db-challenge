@@ -42,6 +42,7 @@ server.get('/api/projects/:id', (req, res) => {
     const {id} = req.params;
     db('projects').where('id', id)
     .then(project => {
+        if (project.length > 0) {
         db('actions').where('project_id', id)
         .then(actions => {
             project = project[0]
@@ -59,12 +60,41 @@ server.get('/api/projects/:id', (req, res) => {
                 }
             })
             res.json(project)
-        })
+        })} else {
+            res.status(404).json({ error: 'No project to display.'})
+        }
     })
     .catch(err => {
         res.status(500).json({err: 'Failed to find project'})
     })
 })
+
+server.delete('/api/actions/:id', (req,res) => {
+    const {id} = req.params;
+    db('actions').where('id', id).del()
+    .then(count => {
+      res.status(200).json({ success: 'Action successfully deleted' })
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to delete action.' })
+    })
+  });
+
+  server.delete('/api/projects/:id', (req,res) => {
+    const {id} = req.params;
+    db('projects').where('id', id).del()
+    .then(count => {
+        db('actions').where('project_id', id).del()
+        .then(count => {
+            res.status(200).json({ success: 'Project and associated actions successfully deleted' })
+        })
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to delete project.' })
+    })
+  });
+
+
   const port = 3302;
   server.listen(port, function() {
     console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
