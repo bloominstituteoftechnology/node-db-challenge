@@ -49,7 +49,6 @@ router.get('/:id/actions', (req, res) => {
     const action = db.actions(id)
 
 
-
     Promise.all([project, action])
         .then(values => {
             let [project, action] = values;
