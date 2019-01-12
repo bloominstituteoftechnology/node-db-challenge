@@ -2,7 +2,18 @@
   "name": "1_Sprint-RDBMS",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "server": "nodemon"
+  },
   "repository": "https://github.com/pghrogue/Sprint-Challenge-RDBMS.git",
   "author": "Jennifer King <jenbellpgh@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
 }
