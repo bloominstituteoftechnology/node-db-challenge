@@ -95,6 +95,27 @@ server.delete('/api/actions/:id', (req,res) => {
   });
 
 
+  server.get('/api/projects', (req, res) => {
+    db('projects')
+    .then(arr => {
+      if (arr.length > 0) {
+        arr.forEach(project => {
+            if (project.project_complete === 0) {
+                project.project_complete = false;
+            } else {
+                project.project_complete = true;
+            }
+        })
+      res.status(200).json(arr);
+      } else {
+       res.status(404).json({ error: 'No projects to display.'})
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to get projects.'})
+    })
+  });
+
   const port = 3302;
   server.listen(port, function() {
     console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
