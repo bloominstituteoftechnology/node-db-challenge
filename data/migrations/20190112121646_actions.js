@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('action_description').notNullable();
       table.string('notes');
-      table.boolean('action_completed').notNullable();
+      table.boolean('action_completed').defaultTo(false);
       table.integer('proj_ID').unsigned();
       table.foreign('proj_ID').references('id').on('projects');
   })
