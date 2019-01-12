@@ -17,16 +17,24 @@ server.get('/api/projects', (req, res) => {
 })
 
 server.get('/api/projects/:id', (req, res) => {
-    const {id} = req.params;
-    db('projects').then(id => {
-      res.status(201).json(id); 
+    const {id} = req.params
+    db('projects').where('id',id).first().then(project => {
+      if(project){
+          db('actions').where('project_id',id)
+          .then(actions =>{
+              project.actions=actions;
+              res.status(200).json(project)
+          })
+      }else{
+        res.status(400).json({err : 'Failed to find project'})
+      }
     })
     .catch(err => { res.status(500).json({err: "there was an error"})
   })
 })
 
 
-server.post('/api/projects/:id', (req, res) => {
+server.post('/api/projects', (req, res) => {
     const content = req.body
     db('projects').insert(content).then( id => {
       res.status(200).json(id)
