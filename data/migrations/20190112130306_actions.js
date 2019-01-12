@@ -3,6 +3,8 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('actions', table => {
     table.increments();
     table.string('description').notNullable();
+    table.string('notes');
+    table.boolean('complete').defaultTo(0);
     table.integer('project_id').unsigned().references('id').inTable('projects');
   });
 };
