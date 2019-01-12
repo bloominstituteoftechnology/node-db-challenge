@@ -27,11 +27,40 @@ server.get('api/product/:id',(req,res) => {
         .then(product => {
             res.status(200).json(product);
         })
-        .catch(err => 
-            res.status(500).json({err : "Find product by ID failed"});
+        .catch(err => {
+            res.status(500).json({err : "Find product by ID failed"})
+        });
 });
 
+// POST projects
+server.post('api/product',(req,res) => {
+    const product = req.body;
 
+    db('product')
+        .insert(product)
+        .returning('id')
+        .then(id => {
+            res.status(201).json(id)
+        })
+        .catch(err => {
+            res.status(500).json({err : "Could not POST product"})
+        });
+});
+
+// POST actions
+server.post('api/actions',(req,res) => {
+    const action = req.body;
+
+    db('actions')
+        .insert(action)
+        .returning('id')
+        .then(id => {
+            res.status(201).json(id)
+        })
+        .catch(err => {
+            res.status(500).json({err : "Could not POST action"})
+        });
+});
 
 
 
