@@ -19,6 +19,16 @@ server.get('/projects', (req, res) =>{
         res.status(500).json({err : 'Failed to get projects'})
     })
 })
+
+server.get('/projects/:id', (req, res) =>{
+    const {id} = req.params;
+    db('projects').where('id', id).then(rows =>{
+        res.json(rows);
+    })
+    .catch(err =>{
+        res.status(500).json({err: 'Faile to find project with specified ID'})
+    })
+})
 //post for projects
 //INSERT INTO projects (name, description, completed) VALUES (1, 2, 3)
 server.post('/projects', (req, res) =>{
@@ -29,6 +39,27 @@ server.post('/projects', (req, res) =>{
     })
     .catch(err =>{
         res.status(500).json({err: 'Failed to insert new project'})
+    })
+})
+
+server.delete('/projects/:id', (req,res) =>{
+    const {id} = req.params;
+    db('projects').where('id', id).del().then(rowCount =>{
+        res.status(201).json(rowCount);
+    })
+    .catch(err =>{
+        res.status(500).json({err: 'Failed to delete project'})
+    })
+})
+
+server.put('/projects/:id', (req, res) =>{
+    const {id} = req.params;
+    const projectBody = req.body;
+    db('projects').where('id', id).update(projectBody).then(rowCount =>{
+        res.json(rowCount);
+    })
+    .catch(err =>{
+        res.status(500).json({err: 'Failed to update project'});
     })
 })
 
