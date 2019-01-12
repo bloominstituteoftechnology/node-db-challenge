@@ -1,0 +1,23 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "RDBMS Sprint Challenge",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon"
+  },
+  "author": {
+    "name": "Stefan Clem",
+     "email": "steaclem@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "init": "^0.1.2",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
