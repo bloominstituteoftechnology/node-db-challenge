@@ -2,7 +2,7 @@
 exports.up = function(knex, Promise) {
     // Product schema
     return knex.schema.createTable('product', table => {
-        table.increments()
+        table.increments().notNullable().unique();
         table.string('name');
         table.string('description');
         table.boolean('product_finished');
