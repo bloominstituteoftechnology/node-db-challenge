@@ -35,6 +35,27 @@ server.post('/api/projects', (req, res) =>{
 
 // POST for adding actions.
 
+server.post('/api/actions', (req, res) =>{
+    const action = req.body;
+    if(action.description && action.finished){
+        db('action').insert(action)
+        .then(id => {
+            res
+            .status(201)
+            .json({message: `Action ${id} created`})
+        })
+        .catch(err=>{
+            res
+            .status(500)
+            .json({error: "There was an error while saving your action to the database"})
+        })
+    } else {
+        res
+        .status(400)
+        .json({errorMessage: "Please provide the necessary details for the action"})
+    }
+});
+
 // GET for retrieving a project by its id that returns actions aswell
 
 server.listen(PORT, () =>{
