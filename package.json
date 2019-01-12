@@ -1,0 +1,10 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+      "server": "nodemon"
+  },
+  "repository": "https://github.com/bcabanayan/Sprint-Challenge-RDBMS.git",
+  "license": "MIT"
+}
