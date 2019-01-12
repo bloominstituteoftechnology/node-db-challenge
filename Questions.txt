@@ -11,3 +11,5 @@ What is the name given to a table column that references the primary key on anot
 
 What do we need in order to have a many to many relationship between two tables
 - a third table or foreign key table
+
+https://github.com/LambdaSchool/Sprint-Challenge-RDBMS/pull/355
