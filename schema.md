@@ -73,4 +73,10 @@ Postman Test Data
         "project_name": "Learn web development",
         "project_description": "Become a geeky badass and rule the world",
         "completed": 1
-    }
+}
+
+{
+    "action_description": "Purchase ingredients",
+    "action_notes": "",
+    "project_id": 2
+}
