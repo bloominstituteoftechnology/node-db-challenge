@@ -29,9 +29,16 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
+    RDBMS is the relational database management system, its how we build tables that are grouped in meaningful ways, and related to eachother in specific ways. SQL is the language that is used to query that database.  We use Knex to write javascript that translates that JS into SQL to query the DB
+
 1. Why do tables need a `primary key`?
+    each element of a table needs a primary key in order to have a unique reference to that element
+
 1. What is the name given to a table column that references the primary key on another table.
+    foreign key
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+    A third table that uses foreign keys to "tie" those two tables together
 
 ## Minimum Viable Product
 
