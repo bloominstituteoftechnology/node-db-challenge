@@ -6,6 +6,9 @@
   "repository": "https://github.com/cpdis/Sprint-Challenge-RDBMS.git",
   "author": "Colin Dismuke <colin.dismuke@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "server": "nodemon"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
