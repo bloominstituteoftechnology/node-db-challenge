@@ -1,11 +1,11 @@
 // Base requirements
 const express = require('express');
-const knex = require('knex');
+//const knex = require('knex');
 
 // Server requirements
 const server = express();
 const dbConfig = require('./knexfile');
-const db = knex(dbConfig.development);
+//const db = knex(dbConfig.development);
 const PORT = 5454;
 
 // Middleware requirements
@@ -28,8 +28,8 @@ server.use(
 
 
 /* ---------- Endpoints ---------- */
-//server.use('/api/projects', projRouter);
-//server.use('/api/actions', actsRouter);
+server.use('/api/projects', projRouter);
+server.use('/api/actions', actsRouter);
 
 
 /* ---------- Listener ---------- */
