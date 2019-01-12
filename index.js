@@ -37,21 +37,19 @@ server.get('/api/projects', (req, res) => {
     .catch(err => {
       res.status(500).json({ error: err });
     });
-
-
 });
 
+server.get('/api/actions', (req, res) => {
 
+    db('actions')
+      .then(actions => {
+        res.json(actions);
+      })
+      .catch(err => {
+        res.status(500).json({ error: err });
+      });
+  });
 
-/* server.get('/api/dish', (req, res) => {
-  db('dish')
-    .then(dish => {
-      res.json(dish);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
-    });
-}); */
 
 server.post('/api/projects', (req, res) => {
   const newProject = req.body;
@@ -74,17 +72,39 @@ server.post('/api/projects', (req, res) => {
   }
 });
 
-/* server.get("/api/dish/:id", (req, res) => {
+server.post('/api/actions', (req, res) => {
+    const newAction = req.body;
+    if (newAction.description) {
+        console.log("newAction:", newAction)
+      db('actions').insert(newAction)
+        .then(ids => {
+          res.status(201)
+            .json(ids);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ message: "failed to insert action into db" })
+        })
+    } else {
+      res
+        .status(400)
+       .json({ message: "missing contents" })
+    }
+  });
+
+ server.get("/api/projects/:id", (req, res) => {
   const { id } = req.params;
-  db("dish")
-    .where("id", id)
-    .then(dish => {
-      res.json(dish);
+  console.log("id", id);
+  db('projects').leftJoin('actions', 'projects.id', 'actions.project_id')
+    .where("projects.id", id)
+    .then(project => {
+      res.json(project);
     })
     .catch(err => {
       res.status(500).json({ error: err });
     });
-}); */
+}); 
 
 /* server.get('/api/recipe', (req, res) => {
   db('recipe').leftJoin('dish', 'recipe.dish_id', 'dish.id')
