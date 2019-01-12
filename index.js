@@ -17,7 +17,7 @@ server.post('/api/projects', (req, res) => {
             res.status(201).json(id);
         })
         .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to insert project' });
+            res.status(500).json({ errorMessage: 'Failed to insert project.  Please make sure there is a project_name a project_description and a project_completed' });
         });
 });
 
