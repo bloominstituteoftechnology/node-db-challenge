@@ -21,6 +21,22 @@ function add(action){
         .then( ([id]) => this.get(id) )
 }
 
+function getActions(id){
+    return db('actions').where('project_id', id)
+        .then(actions => {
+            const mapped = actions.map( x => {
+                let newObj = {
+                    id: x.id,
+                    description: x.action_description,
+                    notes: x.action_notes,
+                    completed: x.completed
+                }
+                return newObj
+            })
+            return mapped
+        })
+}
+
 module.exports = {
-    get, add,
+    get, add, getActions
 };

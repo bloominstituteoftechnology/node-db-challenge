@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../data/projectsModel');
+const actionsDb = require('../data/actionsModel');
 
 router.get('/', (req, res) => {
     db.get()
@@ -21,6 +22,31 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({ message: "That's not a valid Project ID. You sure about that one?" })
             } else {
                 res.json(project)
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Could not find that project. It's off running rampant...again..." })
+        })
+});
+
+router.get('/:id/actions', (req, res) => {
+    const {id} = req.params;
+    db.get(id)
+        .then(project => {
+            if(Object.keys(project).length === 0){
+                res.status(404).json({ message: "That's not a valid Project ID. You sure about that one?" })
+            } else {
+                let projectObj = project;
+                actionsDb.getActions(id)
+                    .then(response => {
+                        res.json({ 
+                            id: projectObj.id, 
+                            name: projectObj.project_name,
+                            description: projectObj.project_description,
+                            completed: projectObj.completed, 
+                            actions: response})
+                    })
+                    .catch(err => res.json(err))
             }
         })
         .catch(err => {
