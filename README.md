@@ -107,3 +107,21 @@ When retrieving an `action` by _id_, add a property that lists all the `contexts
 **Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.**
 
 _Good luck and have fun!_
+
+
+## test project
+
+{
+  "proj_name": "project named #1",
+  "proj_descr": "this project is described thusly",
+  "proj_complete": "false"
+}
+
+## test action
+
+{
+  "act_descr": "this 1st action is a thing that needs to be done",
+  "act_notes": "this note is perfect for this action",
+  "act_complete": "false",
+  "proj_id": 1
+}
