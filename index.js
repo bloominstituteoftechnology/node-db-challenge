@@ -1,17 +1,19 @@
 const express = require('express');
 const knex = require('knex');
-const dbConfig = require('./knexfile');
+const dbConfig = require('./knexfile.js');
+
+const db = knex(dbConfig.development);
 
 const server = express();
-const db = knex(dbConfig.development);
+
 const port = 5000;
 
 server.use(express.json());
 
 //get all for projects to test with Postman
-server.get('/api/projects', (req, res) =>{
-    db('projects').then(rows =>{
-        res.json(rows);
+server.get('/projects', (req, res) =>{
+    db('projects').then(projects =>{
+        res.json(projects);
     })
     .catch(err =>{
         res.status(500).json({err : 'Failed to get projects'})
@@ -19,14 +21,14 @@ server.get('/api/projects', (req, res) =>{
 })
 //post for projects
 //INSERT INTO projects (name, description, completed) VALUES (1, 2, 3)
-server.post('/api/projects', (req, res) =>{
+server.post('/projects', (req, res) =>{
     const project = req.body;
-    db('projects').insert(project)
+    db('projects').insert(project).into('projects')
     .then(ids =>{
         res.status(201).json(ids);
     })
     .catch(err =>{
-        res.status(500).json({err: 'Failed to inseert new project'})
+        res.status(500).json({err: 'Failed to insert new project'})
     })
 })
 
