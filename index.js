@@ -137,6 +137,41 @@ server.delete('/api/actions/:id', (req, res) => {
 });
 
 
+/********* Update Project *************/
+server.put('/api/projects/:id', (req, res) => {
+    const { id } = req.params
+    const newProject = req.body
+    db('projects')
+        .where('id', id)
+        .update(newProject)
+        .then(updatedProject => {
+            res
+                .json(updatedProject);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ error: "The project could not be modified." });
+        });
+});
+
+/********* Update Action *************/
+server.put('/api/actions/:id', (req, res) => {
+    const { id } = req.params
+    const newAction = req.body
+    db('actions')
+        .where('id', id)
+        .update(newAction)
+        .then(updatedAction => {
+            res
+                .json(updatedAction);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ error: "The action could not be modified." });
+        });
+});
 
 /************* End of CRUD  *************/
 
