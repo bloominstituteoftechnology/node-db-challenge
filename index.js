@@ -34,6 +34,36 @@ server.post('/actions', (req, res) => {
       res.status(500).json(err);
     });
 });
+server.get('/projects', (req, res) => {
+  helper.getProjects()
+      .then(projects => {
+          res
+              .json(projects);
+      })
+      .catch(err => {
+          res
+              .status(500)
+              .json({message: 'Projects could not be retrieved at this time.'})
+      });
+});
+
+server.get('/project/:id', (req, res) => {
+  const { id } = req.params;
+  db('projects').where('id', id)
+  .then(response => {
+    res
+        .status(200)
+        .json(response);
+})
+.catch(error => {
+    console.log(error);
+    res
+        .status(500)
+        .json({message: 'Failed to find project with this id.'});
+})
+});
+
+
 
 
 server.listen(8000, () => console.log('Running on port 8000'));
