@@ -16,20 +16,15 @@ const db = knex(dbConfig.development);
 router.get('/:id', (req,res) => {
   const {id} = req.params;
   
-  db('projects').where('id', id)
-    .then( (projRows) => {
-      db('actions').where('proj_id', id)
-        .then( (actRows) => {
-          
-          res.json({...projRows, actRows});
-        });
-      // end-actiondb
-      //res.json(projRows);
-    })
-    .catch( (err) => {
-      res.status(500).json({ error: "Could not get project."})
-    });
-  // end-projdb
+  const q1 = db('projects').where('id', id);
+  const q2 = db('actions').select('id', 'desc', 'notes', 'completed').where('proj_id', id);
+
+  Promise.all([q1, q2]).then(values => {
+    let [project, action] = values;
+    project = project[0];
+    res.status(200).json({ ...project, actions: action })
+  })
+
 });
 
 // -----
