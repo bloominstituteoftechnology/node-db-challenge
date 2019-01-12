@@ -5,8 +5,10 @@ const db = knex(knexConfig.development);
 module.exports = {
     addProject,
     addAction,
-    // getProject
+    getProject
 }
+
+// helper method to insert project into database and return ID
 
 function addProject(project) {
     return db('projects_table')
@@ -14,8 +16,17 @@ function addProject(project) {
         .then(ids => ({id: ids[0]}));
 };
 
+// helper method to insert action into database and return ID
+
 function addAction(action) {
     return db('actions_table')
         .insert(action)
         .then(ids => ({id: ids[0]}));
 };
+
+// helper method to get project and return project details and related actions
+
+function getProject(id) {
+    return db('projects_table')
+        .where('id', id);
+}

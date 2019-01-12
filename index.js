@@ -40,6 +40,29 @@ server.post('/api/actions', (req, res) => {
         });
 });
 
+// get project and related actions
+
+server.get('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    db.getProject(id)
+        .then(project => {
+            if (project.length > 0) {
+                res
+                    .json(project);
+            }
+            else {
+                res
+                    .status(404)
+                    .json({message: 'There is no project with the specified ID.'});
+            }
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({message: 'The project could not be retrieved at this time.'});
+        });
+});
+
 // initiate listening
 
 server.listen(PORT, err => {
