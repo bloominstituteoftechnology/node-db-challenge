@@ -31,7 +31,7 @@ server.post("/api/actions", (req, res) => {
 });
 
 //get project by id
-server.get("/api/project/:id", (req, res)=> {
+server.get("/api/projects/:id", (req, res)=> {
     const {id} = req.params;
     helper.getProject(id)
         .then(project => {
