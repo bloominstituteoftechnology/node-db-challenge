@@ -31,13 +31,13 @@ Demonstrate your understanding of this week's concepts by answering the followin
 1. Explain the difference between `RDBMS` and `SQL`.
    /*RDBMS is essentially a software application, or system, for managing relational databases. In the other hand, SQL is the programming language used to communicate with a relational database.
    */
-1. Why do tables need a `primary key`?
+2. Why do tables need a `primary key`?
    /*A primary key is needed so that each table created has something to be uniquely identified. It also allows us to know that at least one column contains completely unique values for each row of data, to differentiate them and call on one specifically.
    */
-1. What is the name given to a table column that references the primary key on another table.
+3. What is the name given to a table column that references the primary key on another table.
    /*Foreign key
    */
-1. What do we need in order to have a _many to many_ relationship between two tables.
+4. What do we need in order to have a _many to many_ relationship between two tables.
    /*Each table has more than two entities associated to it. Example, a users table has many books, and the books table has many users.
    A many-to-many relationship occurs when multiple records in a table are associated with multiple records in another table.  In order to have two relationships between a table, we need to put in a foreign key to reference the primary key.
    */
