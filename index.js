@@ -116,6 +116,46 @@ server.delete('/api/actions/:id', (req,res) => {
     })
   });
 
+  server.put('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const project = req.body;
+    if (project.project_name){ 
+    db('projects').where('id',id).update(project)
+    .then(count => {
+      if (count) {
+      res.status(200).json({ success: 'Updated project' });
+      } else {
+        res.status(404).json({ error: 'Project with that ID does not exist.' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to update.'})
+    })
+    } else {
+      res.status(400).json({ error: "Please provide a project name." })
+    }
+  });
+
+  server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const action = req.body;
+    if (action.action_description){ 
+    db('actions').where('id', id).update(action)
+    .then(count => {
+      if (count) {
+      res.status(200).json({ success: 'Updated action' });
+      } else {
+        res.status(404).json({ error: 'Action with that ID does not exist.' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to update.'})
+    })
+    } else {
+      res.status(400).json({ error: "Please provide an action description." })
+    }
+  });
+
   const port = 3302;
   server.listen(port, function() {
     console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
