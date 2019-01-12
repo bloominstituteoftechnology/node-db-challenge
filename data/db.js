@@ -5,7 +5,7 @@ const db = knex(knexConfig.development);
 module.exports = {
     addProject,
     addAction,
-    getProject
+    // getProject
 }
 
 function addProject(project) {

@@ -23,6 +23,23 @@ server.post('/api/projects', (req, res) => {
         });
 });
 
+// add action
+
+server.post('/api/actions', (req, res) => {
+    const newAction = req.body;
+    db.addAction(newAction)
+        .then(idInfo => {
+            res
+                .status(201)
+                .json(idInfo);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({message: 'The action could not be added at this time.'});
+        });
+});
+
 // initiate listening
 
 server.listen(PORT, err => {
