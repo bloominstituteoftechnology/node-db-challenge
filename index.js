@@ -44,9 +44,35 @@ server.get('/api/projects/:id', (req, res) => {
         });
 });
 
-// PUT
+// PUT /api/projects/:id
+server.put('/api/projects/:id', (req, res) => {
+    const { id } = req.params;
+    const project = req.body;
+    db('projects').where('id',id).update(project)
+        .then(project => {
+            res.json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ errorMessage: 'Failed to update Project.' });
+        });
+});
 
-// DELETE
+// DELETE /api/projects/:id
+server.delete('/api/projects/id', (req, res) => {
+    const { id } = req.params;
+    db('projects').where('id', id).del()
+        .then(project => {
+            res.json(project);
+        })
+        .catch(err => {
+            res.status(500).json({ errorMessage: 'Failed to delete project.' });
+        });
+});
+
+//end of /api/projects endpoints
+//beginning of /api/actions endpoints
+
+
 server.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);
 })
