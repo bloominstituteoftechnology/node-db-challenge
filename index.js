@@ -21,7 +21,12 @@ server.post("/api/projects", (req, res) => {
 
 //add action
 server.post("/api/actions", (req, res) => {
-    
+    const action = req.body;
+    action.action_description
+    ? helper.addAction(action)
+        .then(actionId => res.status(201).json(actionId))
+        .catch(err => res.status(401).json({err: "error adding action"}))
+    : res.status(400).json({err : "please provide action_description"})
 });
 
 //get project by id
