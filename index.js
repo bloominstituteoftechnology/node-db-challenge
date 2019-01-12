@@ -77,6 +77,37 @@ server.get('/api/projects/:id', (req, res) => {
     });
 });
 
+//stretch goal 1 
+server.get('/api/actions', (req, res) => {
+    db('actions')
+        .then(actions => {
+            res
+                .status(200)
+                .json(actions);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ message: 'The actions cannot be retreived' });
+        })
+});
+
+server.get('/api/projects', (req, res) => {
+    db('projects') 
+        .then(projects => {
+            res
+                .status(200)
+                .json(projects);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ message: 'The projects could not be retreived' });
+        })
+});  
+
+//end of stretch goal 1
+
 server.listen(PORT, () => {
     console.log(`server listening on port ${PORT}`);
 });
