@@ -23,7 +23,6 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({ message: "That's not a valid action ID, didn't you know?" })
             } else {
                 let actionObj = action;
-                console.log('else achieved', actionObj);
                 contextDb.getContexts(id)
                     .then(response => {
                         res.json({

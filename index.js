@@ -16,14 +16,6 @@ server.use(express.json());
 server.use('/projects', projectRouter);
 server.use('/actions', actionRouter);
 
-server.get('/', (req, res) => {
-    db('projects').leftJoin('actions', 'project_id', 'projects.id')
-        .then(allInfo => {
-            res.send(allInfo)
-        })
-        .catch(err => console.log(err))
-})
-
 //SERVER
 
 server.listen(PORT, () => {
