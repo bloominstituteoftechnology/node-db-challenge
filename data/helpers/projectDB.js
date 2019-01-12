@@ -26,7 +26,13 @@ module.exports = {
         return db('actions')
         .join('projects', {'actions.project_id': 'projects.id'})
         .where('projects.id', id)
-
+        .select('projects.id as id', 'projects.project_name as name',
+                'projects.proj_description as description',
+                'projects.proj_completed as completed',
+                'actions.id as action_id',
+                'actions.action_description',
+                'actions.action_notes',
+                'actions.action_completed')
  
     },
 

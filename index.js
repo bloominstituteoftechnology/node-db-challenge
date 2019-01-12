@@ -14,12 +14,6 @@ server.use('/api/projects', projectsRoutes);
 const actionsRoutes = require('./routers/actionRouter');
 server.use('/api/actions', actionsRoutes)
 
-//validation function
-// server.get('/api', (req, res) =>{
-//     res.json('hello there')
-// })
-
-
 
 //listener
 const PORT = 4000;
