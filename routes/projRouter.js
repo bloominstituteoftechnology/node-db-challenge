@@ -8,6 +8,31 @@ const db = knex(dbConfig.development);
 /* ---------- Routes ---------- */
 
 // -----
+// - GET for retrieving project by id. Rather than using a join, I'm going to do this
+// -     in two parts so that the data can be returned in the format that I want it to.
+// - SELECT * from projects WHERE id={id};
+// - SELECT * from actions WHERE proj_id={id}
+// ----- 
+router.get('/:id', (req,res) => {
+  const {id} = req.params;
+  
+  db('projects').where('id', id)
+    .then( (projRows) => {
+      db('actions').where('proj_id', id)
+        .then( (actRows) => {
+          
+          res.json({...projRows, actRows});
+        });
+      // end-actiondb
+      //res.json(projRows);
+    })
+    .catch( (err) => {
+      res.status(500).json({ error: "Could not get project."})
+    });
+  // end-projdb
+});
+
+// -----
 // - POST for adding projects
 // - INSERT INTO projects ('name','desc','completed') VALUES ('','',0);
 // ----- 
