@@ -55,11 +55,16 @@ server.post('/api/action', (req, res) => {
 
 server.get('/api/project/:id', (req, res) => {
     const {id} = req.params;
-    db('project').where('id', id)
-    .then(info => {
-        const actions = helpers.getActions(id)
-        res.json(info, actions)
+    let project = [];
 
+    db('project').where('id', id)
+    .then(projectInfo => {
+        project = [projectInfo[0]];
+        helper.getActions(id)
+        .then(actionInfo => {
+            project[0].actions = actionInfo;
+            res.json(project)
+        })
     })
     .catch(err => {
         res.status(500).json({err: 'error getting that project and actions'})

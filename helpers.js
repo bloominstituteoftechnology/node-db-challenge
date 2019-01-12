@@ -10,7 +10,4 @@ module.exports = {
 
 function getActions(id) {
     return db('action').where('project_id', id)
-    .then(info => {
-        console.log(info)
-    })
 }
