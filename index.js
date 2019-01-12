@@ -99,7 +99,39 @@ server.get('/actions/:id', (req, res) =>{
 
 //post for actions
 //INSERT INTO actions (action_description, notes, completed, project_id) VALUES (w, x, y, z)
+server.post('/actions', (req, res) =>{
+    const action = req.body;
+    db('actions').insert(action).into('actions')
+        .then(ids =>{
+            res.status(201).json(ids);
+        })
+    .catch(err =>{
+        res.status(500).json({err: 'Failed to insert action'})
+    })    
+})
 
+server.delete('/actions/:id', (req,res) =>{
+    const {id} = req.params;
+    db('actions').where('id', id).del()
+        .then(rowCount =>{
+            res.status(201).json(rowCount);
+        })
+    .catch(err =>{
+        res.status(500).json({err : 'Failed to delete specified action'})
+    })    
+})
+
+server.put('/actions/:id', (req, res) =>{
+    const {id} = req.params;
+    const actionBody = req.body;
+    db('actions').where('id', id).update(actionBody)
+        .then(rowCount =>{
+            res.json(rowCount)
+        })
+        .catch(err =>{
+            res.status(500).json({err: 'Failed to update specified action'})
+        })
+})
 
 
 server.listen(port, () =>{
