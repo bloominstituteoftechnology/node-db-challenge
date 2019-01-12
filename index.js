@@ -6,10 +6,12 @@ const server = express();
 const PORT = 2300;
 //Route files
 const projects = require('./routes/projects');
+const actions = require('./routes/actions');
 
 //Middleware
 server.use(express.json());
 server.use('/', projects);
+server.use('/', actions);
 
 
 server.get('/', (req,res) => {
