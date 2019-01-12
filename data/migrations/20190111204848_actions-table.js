@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
       table.string('actionDescription').notNullable().unique();
       table.string('notes').notNullable();
       table.boolean('actionComplete').notNullable();
-      table.integer('project_id').unsigned().unique();
-      table.foriegn('project_id').references('id').on('project');
+      table.integer('project_id').unsigned();
+      table.foreign('project_id').references('id').on('project');
   })
 };
 
