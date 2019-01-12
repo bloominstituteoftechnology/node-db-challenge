@@ -8,14 +8,6 @@ router.use(parser)
 
 //endpoint
 
-// router.get('/', (req, res)=>{
-
-// })
-
-// router.get('/:id',(req, res)=>{
-
-// })
-
 router.post('/', (req, res) =>{
   const action = req.body
   db('actions').insert(action)
@@ -30,16 +22,5 @@ router.post('/', (req, res) =>{
     .json({message:'unable to save information to database'})
   })
 })
-
-// router.put('/:id',(req, res)=>{
-
-// })
-
-// router.delete('/:id',(req, res)=>{
-
-// })
-
-
-
 
 module.exports = router;
