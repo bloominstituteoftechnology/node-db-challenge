@@ -8,6 +8,32 @@ const PORT = 42;
 
 server.use(express.json());
 
+server.post('/api/projects', (req, res) => {
+    const { name, description, completed } = req.body;
+    const project = { name, description, completed };
+    if (!project) {
+        res
+            .status(400)
+            .json({ message: 'Please enter a project' });
+    }
+    db.insert(project)
+        .into('projects')
+        .then(ids => {
+            res
+                .status(201)
+                .json( ids );
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ message: 'The project could not be posted' });
+        })
+});
+
+server.post('/api/actions', (req, res) => {
+    
+})
+
 server.get('/api/projects/:id', (req, res) => {
     db('projects')
         .where('id', id)
