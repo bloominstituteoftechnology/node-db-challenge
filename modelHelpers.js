@@ -45,5 +45,5 @@ function getActions() {
 }
 
 function getActionsByProject(id) {
-  return db('actions').where('project_id', id);
+  return db('actions').where({ project_id: id, completed: false });
 }
