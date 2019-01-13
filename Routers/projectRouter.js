@@ -42,4 +42,40 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.get("/", (req, res) => {
+  projectDB
+    .getAll()
+    .then(projects => {
+      res.json(projects);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const update = req.body;
+  projectDB
+    .update(id, update)
+    .then(response => {
+      res.json({ message: `project with id ${response} has been updated.` });
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  projectDB
+    .remove(id)
+    .then(count => {
+      res.json({ message: `project and all actions have been deleted.` });
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
 module.exports = router;

@@ -17,5 +17,18 @@ module.exports = {
         "actions.action_complete as complete"
       )
       .where("actions.project_id", projectId);
+  },
+  getAll: function() {
+    return db("actions");
+  },
+  update: function(id, change) {
+    return db("actions")
+      .where("id", id)
+      .update(change);
+  },
+  remove: function(id) {
+    return db("actions")
+      .where("id", id)
+      .del();
   }
 };
