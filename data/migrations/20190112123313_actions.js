@@ -4,11 +4,11 @@ exports.up = function (knex, Promise) {
     table.string('name').notNullable();
     table.integer('Project_ID').unsigned().references('id').inTable('projects')
     table.text('description');
-    table.text('additional_information');
+    table.text('additional_information').notNullable();
     table.boolean('completed');
   })
 };
 
 exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('projects');
-};
+ };

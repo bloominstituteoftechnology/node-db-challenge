@@ -26,10 +26,11 @@ server.post('/api/actions', (req, res) => {
 
 server.get('/api/projects/:id', (req,res) => {
   const {id} = req.params;
-  db.getProjectByID(id)
-  .then(project => res.json(project))
-  .catch(err => res.status(500).json({error:`failed to get your project with id of ${id}`}))
-})
+  db.getActionsByProjectID(id)
+    .then(project => {
+      res.json(project)
+    })
+    .catch(err => res.status(500).json(err))})
 
 server.listen(PORT, () => {
   console.log(`server is up and running on ${PORT}`)

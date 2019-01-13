@@ -11,6 +11,11 @@ module.exports = {
   },
   getProjectByID:function(id){
     return db('projects').where('id',id)
+  },
+  getActionsByProjectID: function(id){
+    return db('projects')
+    .join('actions','actions.project_ID','projects.id')
+    .where('projects.id',id)
   }
 }
 
