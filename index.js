@@ -36,7 +36,7 @@ server.post('/api/actions', (req, res) => {
 
 server.get('/api/projects/:id', (req, res) => {
     const {id} = req.params;
-    helper.getProjectByID(id)
+    helper.getProjectByIDFormatted(id)
     .then((project) => {
         res.status(200).json(project);
     })
