@@ -1,0 +1,21 @@
+{
+  "name": "Sprint-Challenge-RDBMS_cspt2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/d2rd/Sprint-Challenge-RDBMS_cspt2.git",
+  "author": "Glenn-David Daniel <d2rd@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "cors": "^2.8.4",
+    "helmet": "^3.12.1",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "scripts": {
+    "server": "nodemon"
+  }
+}
