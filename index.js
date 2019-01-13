@@ -1,11 +1,17 @@
 const express = require('express');
+
 const knex = require('knex');
 const dbConfig = require('./knexfile');
-const server = express();
 const db = knex(dbConfig.development);
+
+const projectsRouter = require('./routers/projectsRouter');
+const actionsRouter = require('./routers/actionsRouter');
 const PORT = 4500;
+const server = express();
 
 server.use(express.json());
+server.use('/api/projects', projectsRouter);
+server.use('/api/actions', actionsRouter);
 
 //beginning of /api/projects endpoints
 
@@ -33,16 +39,45 @@ server.get('/api/projects', (req, res) => {
 });
 
 //GET BY ID /api/projects/:id
+// server.get('/api/projects/:id', (req, res) => {
+//     const { id } = req.params;
+//     db('projects').where('id', id)
+//         .then(project => {
+//             res.status(200).json(project);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ errorMessage: 'Failed to find project with that id.' });
+//         });
+// });
+
 server.get('/api/projects/:id', (req, res) => {
-    const { id } = req.params;
-    db('projects').where('id', id)
-        .then(project => {
-            res.status(200).json(project);
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to find project with that id.' });
-        });
+	const { id } = req.params; 
+	db('projects').where('id', id)
+		.then(projects => {
+            if(projects) {
+                db('actions').where('project_id', id)
+                    .then(actions => {
+                        projects.actions = actions;
+                        res.status(200).json(projects);
+                    })
+            }
+			// if (projects) {
+			// 	db('actions').where('project_id', project_id) 
+			// 		.then(actions => {
+			// 			projects.actions = actions; 
+			// 			res.status(200).json(projects); 
+			// 		})
+			// 		.catch((err) => res.status(500).json({ message: 'ERRO 22R', err })); 
+			// } else {
+			// 	res.status(404).json({ message: 'Project not found' });
+            // }
+
+		})
+		.catch((err) => {
+			res.status(500).json({ errorMessage: 'Failed to find project with that id.' });
+		});
 });
+
 
 // PUT /api/projects/:id
 server.put('/api/projects/:id', (req, res) => {
