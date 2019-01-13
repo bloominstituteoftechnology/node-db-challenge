@@ -6,8 +6,15 @@ const server = express();
 const db = knex(db_config.development);
 const PORT = 5678;
 
+_ = require("lodash");
+
 server.use(express.json());
 
+const booleanMap = (...props) => {
+    return function(obj){       
+    return props.reduce((acc, next) => ({ ...acc, [next]: !!acc[next] }), obj);
+        };
+    };
 
 /********* Get Projects *************/
 server.get('/api/projects', (req, res) => {
@@ -78,7 +85,7 @@ server.post('/api/actions', (req, res) => {
 });
 
 /********* Get Single Project with Actions *************/
-server.get("/api/projects/:id", (req, res) => {
+/* server.get("/api/projects/:id", (req, res) => {
     const { id } = req.params;
     console.log("id", id);
     db('projects').leftJoin('actions', 'projects.id', 'actions.project_id')
@@ -89,7 +96,7 @@ server.get("/api/projects/:id", (req, res) => {
         .catch(err => {
             res.status(500).json({ error: err });
         });
-});
+}); */
 
 /********* Get Single Action *************/
 server.get("/api/actions/:id", (req, res) => {
@@ -172,6 +179,30 @@ server.put('/api/actions/:id', (req, res) => {
                 .json({ error: "The action could not be modified." });
         });
 });
+
+server.route("/api/projects/:id")
+.get(function (req, res, next) {
+//server.get("/api/projects/:id")
+  //server.get(function (req, res, next) {
+    const project = db("projects")
+    //console.log("req.params.id", req.params.id)
+      .where("projects.id", req.params.id)
+      .first();
+    const action = db("actions").where("project_id", req.params.id);
+
+    Promise.all([project, action])
+    .then(([project, action]) => {
+      if (!project) {
+        return res.status(400).json({ message: "the project was not found" });
+      }
+
+      let result = booleanMap("complete")(project);
+      result.action = action.map(action =>
+        _.omit(booleanMap("complete")(action), "project_id"));
+      res.status(200).json(result);
+    })
+      .catch(next);
+  });
 
 /************* End of CRUD  *************/
 
