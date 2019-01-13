@@ -11,9 +11,19 @@ server.use(express.json());
 
 server.post('/api/projects', (req, res) => {
   const project = req.body
+  console.log(project)
   db("projects").insert(project).then(proj => {
       res.status(201)
       .json(proj)
+  })
+  .catch(err => { message: `could not post project error ${err}`
+  })
+})
+
+server.get('/api/projects', (req, res) => {
+  db("projects").then(proj => {
+    res.status(200)
+    .send(proj)
   })
 })
 
