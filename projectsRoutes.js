@@ -35,7 +35,9 @@ router.get('/:id', (req, res) => {
   projectsDb
     .getProject(id)
     .then(project => {
-      project ? res.json(project) : res.status(404).json({ err: 'no project' });
+      project
+        ? res.json(project)
+        : res.status(404).json({ err: `No project with the id of ${id}.` });
     })
     .catch(err => {
       res.status(500).json(err);

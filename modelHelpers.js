@@ -34,8 +34,11 @@ function getProject(id) {
 
   return Promise.all(promises).then(results => {
     let [project, actions] = results;
-    project.actions = actions;
+    if (!project) {
+      return null;
+    }
 
+    project.actions = actions;
     return project;
   });
 }
