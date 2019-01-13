@@ -1,6 +1,6 @@
 const express = require('express');
-const projectsRouter = require('./routers/projectsRouter');
-const actionsRouter = require('./routers/actionsRouter');
+const projectsRouter = require('./routers/projectsRouter.js');
+const actionsRouter = require('./routers/actionsRouter.js');
 const PORT = 4500;
 const server = express();
 
@@ -100,70 +100,6 @@ server.delete('/api/projects/id', (req, res) => {
 });
 
 //end of /api/projects endpoints
-
-//beginning of /api/actions endpoints
-
-//POST /api/actions
-server.post('/api/actions', (req, res) => {
-    const action = req.body;
-    db('actions').insert(action)
-        .then(id => {
-            res.status(201).json(id);
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to insert action' });
-        });
-});
-
-//GET /api/actions
-server.get('/api/actions', (req, res) => {
-    db('actions')
-        .then(actions => {
-            res.status(200).json(actions);
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to find actions' });
-        });
-});
-
-//GET BY ID /api/actions/:id
-server.get('/api/actions/:id', (req, res) => {
-    const { id } = req.params;
-    db('actions').where('id', id)
-        .then(action => {
-            res.status(200).json(action);
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to find action with that id.' });
-        });
-});
-
-//PUT /api/actions/:id
-server.put('/api/actions/:id', (req, res) => {
-    const { id } = req.params;
-    const action = req.body;
-    db('actions').where('id',id).update(action)
-        .then(action => {
-            res.json(action)
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to update action.' });
-        });
-});
-
-//DELETE /api/projects/:id
-server.delete('/api/actions/id', (req, res) => {
-    const { id } = req.params;
-    db('actions').where('id', id).del()
-        .then(action => {
-            res.json(action);
-        })
-        .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to delete action.' });
-        });
-});
-
-//end of /api/actions endpoints
 
 server.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);
