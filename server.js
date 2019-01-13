@@ -7,6 +7,9 @@ const dbCONFIG = require('./knexfile.js')
 const server = express()
 const db = knex(dbCONFIG[ENV])
 
+server.use(express.json());
+
+
 const PORT = 4444;
 
 server.get('/api/actions', (req, res) => {
@@ -74,6 +77,37 @@ server.get('/api/actions/:id', (req,res) => {
     .catch(err =>
     res.status(500).json({message: `Could not find action ${err}`}))
 })
+
+server.post('/api/projects', (req,res) => {
+    const project = req.body;
+    const missing = ['project_name', 'project_description', 'project_complete'].filter(item => {return project.hasOwnProperty(item) === false})
+    if(missing.length===0)
+    {db('projects').insert(project)
+    .then(ids => {
+        res.status(201).json(res.json({message: `${project.project_name} added`}))})
+    .catch(err => {
+        res.status(500).json({err: `Could not add project! ${err}`})
+    })
+    }
+
+    else {res.status(500).json({message: `missing info: ${missing}`})}
+    })
+
+    server.post('/api/actions', (req,res) => {
+        const action = req.body;
+        
+        const missing = ['project_id', 'action_description', 'action_complete'].filter(item => {return action.hasOwnProperty(item) === false})
+        if(missing.length===0)
+        {db('actions').insert(action)
+        .then(ids => {
+            res.status(201).json(res.json({message: `${action.action_description} added`}))})
+        .catch(err => {
+            res.status(500).json({err: `Could not add project! ${err}`})
+        })
+        }
+    
+        else {res.status(500).json({message: `missing info: ${missing}`})}
+        })
 
 server.listen(PORT, (err) => {
     if (err) {console.log(err);}
