@@ -1,27 +1,22 @@
 const express = require('express');
 const knex = require('knex');
 
-const db_config = require('./knexfile.js');
+const configDB = require('./knexfile.js');
 
 const server = express();
-const db = knex(db_config.development);
-const PORT = 5678;
+const db = knex(configDB.development);
+const PORT = 4000;
 
 server.use(express.json());
 
-server.get('/api/zoos', (req, res) => {
-  db('zoos').leftJoin('addresses', 'zoo_id', 'zoos.id')
-  .then(zooInfo => {
-    res.send(zooInfo);
-  });
-});
+server.post('/api/projects', (req, res) => {
+  const project = req.body
+  db("projects").insert(project).then(proj => {
+      res.status(201)
+      .json(proj)
+  })
+})
 
-server.get('/api/animals', (req, res) => {
-  db('animals').leftJoin('species', 'species_id', 'species.id')
-  .then(animalInfo => {
-    res.send(animalInfo);
-  });
-});
 
 server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
