@@ -22,24 +22,21 @@ router.get('/api/projects', (req,res) => {
 });
 
 router.get('/api/projects/:id', (req,res) => {
-      const {id} = req.params;
-      const idNumber = +(id);
-      const index =  1 - idNumber;
-      console.log("this is id", id);
-      console.log(typeof idNumber);
-      db('project').where('id', id)
-      .then( project => {
-          if(!project)  res.status(404).json({errorMessage:`Failed to the projects now`})
-              db('actions')
-              .where('project_id', id)
-              .then(action =>  { 
-                 project[idNumber].actions = action
-              });
-          res.status(200).json(project);
-      })
-      .catch(err => {
-            res.status(500).json({error:`Failed to fetch the projects`});
-      });
+       
+        const {id}=req.params;
+        let newProject = {};
+        db('project').where('project.id', id).then( project => {
+            if(!project) { res.status(404).json({Message: `Failed to find the project with the ID ${id}`})}
+            newProject = Object.assign( {}, project[0]);
+            db('actions')
+            .where('project_id', id)
+            .then(results => {
+               res.status(200).json({...newProject, actions: results})
+            })
+       })
+       .catch(err => {
+           res.status(500).json({Message: `Failed to find the project with actions`});
+       })
 });
 
 router.post('/api/projects', (req,res) => {
