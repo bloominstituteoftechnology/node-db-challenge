@@ -21,6 +21,7 @@ router.post("/", (req, res) => {
     });
 });
 
+//GET all actions
 router.get("/", (req, res) => {
   actionDB
     .getAll()
@@ -33,6 +34,7 @@ router.get("/", (req, res) => {
     });
 });
 
+//UPDATE action by ID
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const update = req.body;
@@ -46,6 +48,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//DELETE action by ID
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   actionDB
@@ -56,6 +59,23 @@ router.delete("/:id", (req, res) => {
     .catch(err => {
       res.status(500).json({ error: err });
     });
+});
+
+//GET action by ID with contexts
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  actionDB.getAction(id).then(action => {
+    const selectedAction = action[0];
+    actionDB.getActionContexts(id).then(selectedContexts => {
+      res.json({
+        id: selectedAction.id,
+        action: selectedAction.action_description,
+        notes: selectedAction.notes,
+        completed: selectedAction.action_complete,
+        contexts: selectedContexts
+      });
+    });
+  });
 });
 
 module.exports = router;

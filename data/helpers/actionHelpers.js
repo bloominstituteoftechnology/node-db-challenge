@@ -30,5 +30,13 @@ module.exports = {
     return db("actions")
       .where("id", id)
       .del();
+  },
+  getAction: function(id) {
+    return db("actions").where("id", id);
+  },
+  getActionContexts: function(id) {
+    return db("contexts")
+      .select("contexts.context")
+      .where("action_id", id);
   }
 };
