@@ -41,9 +41,9 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const action = req.body;
-    db('actions').where('id',id).update(action)
-        .then(action => {
-            res.json(action)
+        actionsDB.update(id, action)
+.then(id => {
+            res.status(200).json(id)
         })
         .catch(err => {
             res.status(500).json({ errorMessage: 'Failed to update action.' });
@@ -61,5 +61,4 @@ router.delete('/:id', (req, res) => {
         });
 });
 
-//end of /api/actions endpoints
 module.exports = router;
