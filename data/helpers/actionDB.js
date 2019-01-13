@@ -13,5 +13,5 @@ module.exports = {
         return db('actions')
             .insert(action)
             .then(ids => ({ id: ids[0] }));
-    }
+    },
 };
