@@ -11,10 +11,10 @@ _ = require("lodash");
 server.use(express.json());
 
 const booleanMap = (...props) => {
-    return function(obj){       
-    return props.reduce((acc, next) => ({ ...acc, [next]: !!acc[next] }), obj);
-        };
+    return function (obj) {
+        return props.reduce((acc, next) => ({ ...acc, [next]: !!acc[next] }), obj);
     };
+};
 
 /********* Get Projects *************/
 server.get('/api/projects', (req, res) => {
@@ -180,29 +180,28 @@ server.put('/api/actions/:id', (req, res) => {
         });
 });
 
+/********* Get Single Project with Actions *************/
 server.route("/api/projects/:id")
-.get(function (req, res, next) {
-//server.get("/api/projects/:id")
-  //server.get(function (req, res, next) {
-    const project = db("projects")
-    //console.log("req.params.id", req.params.id)
-      .where("projects.id", req.params.id)
-      .first();
-    const action = db("actions").where("project_id", req.params.id);
+    .get(function (req, res, next) {
+        const project = db("projects")
 
-    Promise.all([project, action])
-    .then(([project, action]) => {
-      if (!project) {
-        return res.status(400).json({ message: "the project was not found" });
-      }
+            .where("projects.id", req.params.id)
+            .first();
+        const action = db("actions").where("project_id", req.params.id);
 
-      let result = booleanMap("complete")(project);
-      result.action = action.map(action =>
-        _.omit(booleanMap("complete")(action), "project_id"));
-      res.status(200).json(result);
-    })
-      .catch(next);
-  });
+        Promise.all([project, action])
+            .then(([project, action]) => {
+                if (!project) {
+                    return res.status(400).json({ message: "the project was not found" });
+                }
+
+                let result = booleanMap("complete")(project);
+                result.action = action.map(action =>
+                    _.omit(booleanMap("complete")(action), "project_id"));
+                res.status(200).json(result);
+            })
+            .catch(next);
+    });
 
 /************* End of CRUD  *************/
 
