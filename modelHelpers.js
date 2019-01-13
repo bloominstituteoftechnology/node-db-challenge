@@ -34,6 +34,7 @@ function getProject(id) {
 
   return Promise.all(promises).then(results => {
     let [project, actions] = results;
+    // if no project, return null for better error handling
     if (!project) {
       return null;
     }
@@ -55,9 +56,11 @@ function getActions() {
 }
 
 function getActionsByProject(id) {
+  // Getting all actions that are not completed
   return db('actions').where({ project_id: id, completed: false });
 }
 
+// SQLite represents booleans as 1s and 0s. This function converts the integer stored in the database to the boolean value it represents
 function intToBoolean(int) {
   return int === 1 ? true : false;
 }
