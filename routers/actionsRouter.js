@@ -4,23 +4,21 @@ const projectsDB = require('../data/helpers/projectDB');
 const express = require('express');
 const router = express.Router();
 
-//beginning of /api/actions endpoints
-
-//POST /api/actions
 router.post('/', (req, res) => {
     const action = req.body;
-    db('actions').insert(action)
-        .then(id => {
-            res.status(201).json(id);
+    actionsDB.insert(action).then(actionId => {
+        actionsDB.get(actionId.id)
+            .then(action => {
+                res.status(201).json(action);
         })
         .catch(err => {
-            res.status(500).json({ errorMessage: 'Failed to insert action' });
+            res.status(500).json({ errorMessage: 'Failed to insert project.  Please make sure there is a project_name a project_description and a project_completed' });
         });
+    });
 });
 
-//GET /api/actions
 router.get('/', (req, res) => {
-    db('actions')
+    actionsDB.get()
         .then(actions => {
             res.status(200).json(actions);
         })
@@ -29,19 +27,17 @@ router.get('/', (req, res) => {
         });
 });
 
-//GET BY ID /api/actions/:id
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    db('actions').where('id', id)
-        .then(action => {
-            res.status(200).json(action);
+    actionsDB.get(id)
+        .then(id => {
+            res.status(200).json(id);
         })
         .catch(err => {
             res.status(500).json({ errorMessage: 'Failed to find action with that id.' });
         });
 });
 
-//PUT /api/actions/:id
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const action = req.body;
@@ -54,10 +50,9 @@ router.put('/:id', (req, res) => {
         });
 });
 
-//DELETE /api/projects/:id
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    db('actions').where('id', id).del()
+    actionsDB.remove(id)
         .then(action => {
             res.json(action);
         })
