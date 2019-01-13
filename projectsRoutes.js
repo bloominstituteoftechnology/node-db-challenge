@@ -35,8 +35,7 @@ router.get('/:id', (req, res) => {
   projectsDb
     .getProject(id)
     .then(project => {
-      project.actions = projectsDb.getActionsByProject(id);
-      res.json(project);
+      project ? res.json(project) : res.status(404).json({ err: 'no project' });
     })
     .catch(err => {
       res.status(500).json(err);

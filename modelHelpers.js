@@ -26,7 +26,18 @@ function getProjects() {
 }
 
 function getProject(id) {
-  return db('projects').where({ id });
+  let query = db('projects')
+    .where({ id })
+    .first();
+
+  const promises = [query, this.getActionsByProject(id)];
+
+  return Promise.all(promises).then(results => {
+    let [project, actions] = results;
+    project.actions = actions;
+
+    return project;
+  });
 }
 
 function getActions() {
