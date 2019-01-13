@@ -22,10 +22,9 @@ router.get('/api/projects', (req,res) => {
 });
 
 router.get('/api/projects/:id', (req,res) => {
-       
         const {id}=req.params;
         let newProject = {};
-        db('project').where('project.id', id).then( project => {
+         db('project').where('project.id', id).then( project => {
             if(!project) { res.status(404).json({Message: `Failed to find the project with the ID ${id}`})}
             newProject = Object.assign( {}, project[0]);
             db('actions')
@@ -55,7 +54,26 @@ router.post('/api/projects', (req,res) => {
         .catch(err => {
           res.status(500).json({error:`Failed to create a new project at this time`});
      });
-})
+});
+
+router.put('/api/projects/:id', (req,res) => {
+       const {id} = req.params;
+       const {project_name, project_des, isCompleted } = req.body;
+       if(!project_name) res.status(404).json({Message: `Please provide a valid name`});
+       if(!project_des) res.status(404).json({Message: `Your project needs a description`});
+       if(!isCompleted) res.status(404).json({Message: `Completed or not??`});
+       const project = req.body;
+       db('project')
+       .where('id',id)
+       .insert(project)
+       .then( newProjectId => {
+          console.log(newProjectId);
+          res.status(201).json(newProjectId);
+       })
+       .catch( err => {
+          res.status(500).json({Message:`Failed to update the project with the ID ${id}`});
+       })
+});
 
 
 module.exports = router;
