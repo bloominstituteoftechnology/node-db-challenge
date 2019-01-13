@@ -30,13 +30,20 @@ function getProject(id) {
     .where({ id })
     .first();
 
-  const promises = [query, this.getActionsByProject(id)];
+  const promises = [query, getActionsByProject(id)];
 
   return Promise.all(promises).then(results => {
     let [project, actions] = results;
     if (!project) {
       return null;
     }
+
+    project.completed = intToBoolean(project.completed);
+
+    actions = actions.map(action => ({
+      ...action,
+      completed: intToBoolean(action.completed)
+    }));
 
     project.actions = actions;
     return project;
@@ -49,4 +56,8 @@ function getActions() {
 
 function getActionsByProject(id) {
   return db('actions').where({ project_id: id, completed: false });
+}
+
+function intToBoolean(int) {
+  return int === 1 ? true : false;
 }
