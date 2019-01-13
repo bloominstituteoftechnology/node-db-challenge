@@ -1,9 +1,4 @@
 const express = require('express');
-
-const knex = require('knex');
-const dbConfig = require('./knexfile');
-const db = knex(dbConfig.development);
-
 const projectsRouter = require('./routers/projectsRouter');
 const actionsRouter = require('./routers/actionsRouter');
 const PORT = 4500;
