@@ -28,10 +28,11 @@ server.get('/api/projects/:id', (req,res) => {
   const {id} = req.params;
   db.getProjectByID(id)
     .then(project => {
+      project = project[0]
       db.getActionsByID(id)
       .then(action =>{
-        action = {project,action}
-        res.json(action)
+        actions = {project,action}
+        res.json(actions)
       })
     })
     .catch(err => res.status(500).json(err))})
