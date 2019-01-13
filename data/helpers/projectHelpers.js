@@ -24,8 +24,7 @@ module.exports = {
       .where({ project_id: id })
       .del()
       .then(response => {
-        console.log(response);
-        db("projects")
+        return db("projects")
           .where({ id: id })
           .del();
       });
