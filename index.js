@@ -30,7 +30,7 @@ server.get('/api/projects/:id', (req,res) => {
     .then(project => {
       db.getActionsByID(id)
       .then(action =>{
-        action = {action,project}
+        action = {project,action}
         res.json(action)
       })
     })
