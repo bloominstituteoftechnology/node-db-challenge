@@ -1,3 +1,6 @@
+Initial Commits Project Setup @FireInjun #372
+https://github.com/LambdaSchool/Sprint-Challenge-RDBMS/pull/372
+
 ## Self-Study/Essay Questions
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
