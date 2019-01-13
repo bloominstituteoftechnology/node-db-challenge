@@ -34,23 +34,25 @@ server.post('/api/actions',(req, res)=>{
 
 server.get('/api/projects/:id', (req, res)=>{
     const { id } = req.params;
-    db('projects').join('action','project_id','projects.id')
-    .where({id:id})
-    .then(projects =>{
-        if(projects.length > 0){
-            res.json(projects)
-        }else{
-            res.status(404).json({message:'The project with the specified id does not exist'})
-        }
-    }).catch(err =>{
+    db('projects').where('id', id)
+    .then(joined =>{
+        db('action').where({project_id:id}).first()
+        .then(actions =>{
+          joined[0].actions = actions
+            res.json(joined)
+        }).catch(error =>{
+            res.status(500).json({error:"The project with the specified id does not exist!"})
+        })
+    })
+    .catch(err=>{
         console.log(err)
-        res.status(500).json({error:"Trouble getting the project"})
+        res.status(500).json({message:"that joined did not work"})
     })
 })
 
 //Just for testing purposes
 // server.get('/api/projects', (req, res) => {
-//     db('projects').leftJoin('action', 'project_id', 'project.id')
+//     db('projects').leftJoin('action','project_id', 'projects.id')
 //     .then(pInfo => {
 //       res.send(pInfo);
 //     });
@@ -67,3 +69,5 @@ server.get('/api/projects/:id', (req, res)=>{
 server.listen(PORT, ()=>{
     console.log(`Listening on port ${PORT}!`)
 })
+
+
