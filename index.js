@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 server.use(express.json());
 const db = require('./data/db')
 
@@ -26,9 +26,13 @@ server.post('/api/actions', (req, res) => {
 
 server.get('/api/projects/:id', (req,res) => {
   const {id} = req.params;
-  db.getActionsByProjectID(id)
+  db.getProjectByID(id)
     .then(project => {
-      res.json(project)
+      db.getActionsByID(id)
+      .then(action =>{
+        action = {action,project}
+        res.json(action)
+      })
     })
     .catch(err => res.status(500).json(err))})
 
