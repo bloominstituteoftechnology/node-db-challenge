@@ -1,15 +1,18 @@
 const express = require('express');
+const actionDB = require('../helpers/actionModel');
+
 const router = express.Router();
-const knex = require('knex');
-const dbConfig = require('../knexfile');
-const db = knex(dbConfig.development);
+
+// const knex = require('knex');
+// const dbConfig = require('../knexfile');
+// const db = knex(dbConfig.development);
 
 router.use((req, res, next) => {
   next();
 });
 
 router.get('/', (req, res) => {
-  db('action')
+  actionDB.get()
   .then(actions => {
     res.json(actions);
   })
@@ -21,7 +24,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id;
 
-  db('action').where('id', id)
+  actionDB.get(id)
   .then(action => {
     if (action.length > 0) {
       res.json(action);
@@ -34,11 +37,11 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.post('/:id', (req, res) => {
+router.post('/', (req, res) => {
   const action = req.body;
 
   if (action.description && action.notes && action.project_id) {
-    db('action')
+    actionDB
     .insert(action)
     .then((ids) => {
       res.status(201).json(ids);
