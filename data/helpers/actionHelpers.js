@@ -11,12 +11,12 @@ module.exports = {
   getActionsByProjectId: function(projectId) {
     return db("actions")
       .select(
-        "actions.id",
-        "actions.action_description as description",
-        "actions.notes",
-        "actions.action_complete as complete"
+        "id",
+        "action_description as description",
+        "notes",
+        "action_complete as complete"
       )
-      .where("actions.project_id", projectId);
+      .where("project_id", projectId);
   },
   getAll: function() {
     return db("actions");
@@ -32,11 +32,18 @@ module.exports = {
       .del();
   },
   getAction: function(id) {
-    return db("actions").where("id", id);
+    return db("actions")
+      .select(
+        "id",
+        "action_description as description",
+        "notes",
+        "action_complete as completed"
+      )
+      .where("id", id);
   },
   getActionContexts: function(id) {
     return db("contexts")
-      .select("contexts.context")
+      .select("context")
       .where("action_id", id);
   }
 };

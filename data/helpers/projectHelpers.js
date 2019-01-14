@@ -9,7 +9,7 @@ module.exports = {
       }));
   },
   getProject: function(projectId) {
-    return db("projects").where("projects.id", projectId);
+    return db("projects").where("id", projectId);
   },
   getAll: function() {
     return db("projects");

@@ -67,13 +67,8 @@ router.get("/:id", (req, res) => {
   actionDB.getAction(id).then(action => {
     const selectedAction = action[0];
     actionDB.getActionContexts(id).then(selectedContexts => {
-      res.json({
-        id: selectedAction.id,
-        action: selectedAction.action_description,
-        notes: selectedAction.notes,
-        completed: selectedAction.action_complete,
-        contexts: selectedContexts
-      });
+      selectedAction.contexts = selectedContexts;
+      res.json(selectedAction);
     });
   });
 });

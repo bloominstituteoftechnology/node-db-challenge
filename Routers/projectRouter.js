@@ -28,13 +28,8 @@ router.get("/:id", (req, res) => {
     .then(project => {
       const selectedProject = project[0];
       actionDB.getActionsByProjectId(id).then(actionResponse => {
-        res.json({
-          id: selectedProject.id,
-          name: selectedProject.name,
-          description: selectedProject.description,
-          completed: selectedProject.completed,
-          actions: actionResponse
-        });
+        selectedProject.actions = actionResponse;
+        res.json(selectedProject);
       });
     })
     .catch(err => {
