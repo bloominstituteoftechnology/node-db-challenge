@@ -36,7 +36,7 @@ server.get('/projects', (req, res) => {
 
 // ACTIONS
 // POST = INSERT INTO actions (id, description,notes, flag) VALUES ('','','','')
-server.post('/api/actions', (req, res) => {
+server.post('/actions', (req, res) => {
   const action = req.body;
   if (action.description) {
     db('actions').insert(action)
