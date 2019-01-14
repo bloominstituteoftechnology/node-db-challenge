@@ -37,13 +37,20 @@ server.post('/actions', (req, res)=>{
 })
 
 server.get('/projects/:id', (req, res)=>{
-    const {id} = req.params
-    db('projects').join()
-        .then(projects=>{
-            res.json(projects);
+    const {id} = req.params;
+    db('projects').where('id',id).first()
+        .then(proj=>{
+           
+                db('actions')
+                    .where("project_id", id)
+                    .then(actions =>{
+                        proj.actions = actions;
+                        res.json(proj)
+                    })
+            
         })
         .catch(err=>{
-            res.status(500).json({err:'trouble wth grabbing all these projects'})
+            res.status(500).json({err:'Trouble grabbing the project you requested'})
         })
 });
 
