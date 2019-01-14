@@ -3,9 +3,9 @@ const ENV = 'development';
 const express = require('express');
 const knex = require('knex');
 const dbCONFIG = require('./knexfile.js')
-
 const server = express()
 const db = knex(dbCONFIG[ENV])
+
 
 server.use(express.json());
 
@@ -64,7 +64,6 @@ server.get('/api/projects/:id', (req,res) => {
 
 server.get('/api/actions/:id', (req,res) => {
     const {id} = req.params;
-
     db('actions').where('id',id)
     .then(info => {
         if (info.length === 1) {
@@ -108,6 +107,57 @@ server.post('/api/projects', (req,res) => {
     
         else {res.status(500).json({message: `missing info: ${missing}`})}
         })
+
+        server.delete('/api/actions/:id', (req,res) => {
+            const {id} = req.params;
+            
+            db('actions').where('id',id).del()
+            .then(count => {res.json({message: `${count} deleted`})})
+            .catch(err => {
+                res.status(500).json({message: `Could not delete`})
+            })})
+
+
+            server.delete('/api/projects/:id', (req,res) => {
+                const {id} = req.params;
+                
+                db('projects').where('id',id).del()
+                .then(count => {res.json({message: `${count} deleted`})})
+                .catch(err => {
+                    res.status(500).json({message: `Could not delete`})
+                })})
+
+            server.put('/api/projects/:id', (req,res) => {
+                const {id} = req.params;
+                const project = req.body;
+                const missing = ['project_name', 'project_description', 'project_complete'].filter(item => {return project.hasOwnProperty(item) === false})
+                if(missing.length===0)
+                {
+                db('projects').where('id', id).update(project)
+                .then(count => {res.json({message: `${project.project_name} updated`})})
+                .catch(err => {
+                    res.status(500).json({message: `Could not update`})
+                })
+                }
+            
+                else {res.status(500).json({err: `missing info: ${missing}`})}
+            })
+
+            server.put('/api/actions/:id', (req,res) => {
+                const {id} = req.params;
+                const action = req.body;
+                const missing = ['project_id', 'action_description', 'action_complete'].filter(item => {return action.hasOwnProperty(item) === false})
+                if(missing.length===0)
+                {
+                db('actions').where('id', id).update(action)
+                .then(count => {res.json({message: `${action.action_description} updated`})})
+                .catch(err => {
+                    res.status(500).json({message: `Could not update`})
+                })
+                }
+            
+                else {res.status(500).json({err: `missing info: ${missing}`})}
+            })
 
 server.listen(PORT, (err) => {
     if (err) {console.log(err);}
