@@ -1,11 +1,12 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('actions', table => {
-    table.increments();
+    table.increments('action_id');
     table.text('description').notNullable();
     table.text('notes');
-    table.isBoolean(0)('flag').notNullable();
-    table.foreign('project_id').references('id').on('project');
+    table.boolean('complete').notNullable();
+    table.timestamps(); // use to compare age
+    // table.foreign('project_id').references('id').on('projects');
   })
 };
 

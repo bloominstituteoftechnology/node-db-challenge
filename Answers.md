@@ -1,9 +1,9 @@
-Initial Commits Project Setup @FireInjun #372
+Initial Commits projects Setup @FireInjun #372
 https://github.com/LambdaSchool/Sprint-Challenge-RDBMS/pull/372
 
 ## Self-Study/Essay Questions
 
-Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
+Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your projects manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
     A: RDBMS (Relational Database Management System) is an application that stores data and allows retrieval in response to specific requests called "queries".  The data is traditionally stored in objects called 'tables'.  Tables are organized in columns and rows similar to a spreadsheet.  Rows are sometimes referred as 'records' and typically reference to one 'thing' in the real world, like a person, building or company.  The system is called 'relational' because the tables can be connected or 'related' to each other by a common datum that is present in the related tables.  The datum needs to be unique to each row (i.e. record).  There are many different versions of RDBMS apps available.  Some are generic and some are highly specialized.  Well known RDBMS applications include Oracle, MySQL, Microsoft SQL Server and PostgreSQL.  

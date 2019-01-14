@@ -1,6 +1,6 @@
 # Sprint Challenge: RDBMS and SQL - Projects & Actions
 
-This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project. This Sprint explored Adding Data Persistence to Web API's and you were taught the following modules: Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeds and Introduction to Data Modeling. In your challenge for this Sprint, you will demonstrate proficiency by creating an application that uses ReactJS to consume live data retrieved from the World Wide Web.
+This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete projects. This Sprint explored Adding Data Persistence to Web API's and you were taught the following modules: Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeds and Introduction to Data Modeling. In your challenge for this Sprint, you will demonstrate proficiency by creating an application that uses ReactJS to consume live data retrieved from the World Wide Web.
 
 ## Instructions
 
@@ -14,19 +14,19 @@ You have three hours to complete this challenge. Plan your time accordingly.
 
 ## Commits
 
-Commit your code regularly and meaningfully. This helps both you (in case you ever need to return to old code for any number of reasons and your project manager.
+Commit your code regularly and meaningfully. This helps both you (in case you ever need to return to old code for any number of reasons and your projects manager.
 
 ## Description
 
 In this challenge, you build an application that lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
 
-Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
+Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `projects Tracker` application that persists data to a _SQLite_ database.
 
 This will be akin to the Web API that you built in the last sprint, only this time, you'll be writing the persistence layer.
 
 ## Self-Study/Essay Questions
 
-Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
+Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your projects manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
 1. Why do tables need a `primary key`?
@@ -35,14 +35,14 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 ## Minimum Viable Product
 
-**NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
+**NOTE** There is no boilerplate for you for this projects. You will need to take the steps necessary for creating this projects from scratch. Start by initializing your projects with a `package.json` file and go from there.
 
-- [ ] A `project` can contain multiple actions and has:
+- [ ] A `projects` can contain multiple actions and has:
   - [ ] a unique Id.
   - [ ] a name.
   - [ ] a description.
-  - [ ] a flag that indicates if the project is complete or not.
-- [ ] An `action` belongs to only one project. An action has:
+  - [ ] a flag that indicates if the projects is complete or not.
+- [ ] An `action` belongs to only one projects. An action has:
   - [ ] a unique id.
   - [ ] a description of what needs to be done.
   - [ ] a notes column to add additional information.
@@ -57,13 +57,13 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
   - [ ] POST for adding projects.
   - [ ] POST for adding actions.
-  - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
+  - [ ] GET for retrieving a `projects` by its `id` that returns an object with the following structure:
 
     ```js
     {
       id: 1,
-      name: 'project name here',
-      description: 'the project description',
+      name: 'projects name here',
+      description: 'the projects description',
       completed: false, // or true, the database will return 1 for true and 0 for false
       actions: [
         {

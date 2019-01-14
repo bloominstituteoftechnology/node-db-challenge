@@ -11,22 +11,22 @@ server.use(express.json());
 
 // PROJECTS
 // POST = INSERT INTO projects (id, name, description,flag) VALUES ('','','','')
-server.post('/api/d2rd-projects', (req, res) => {
-  const project = req.body;
-  if (project.name) {
-    db('d2rd-projects').insert(project)
+server.post('/api/projects', (req, res) => {
+  const projects = req.body;
+  if (projects.name) {
+    db('projects').insert(projects)
     .then(ids => {
       res.status(201).json(ids)
     })
     .catch(err => {
-      res.status(500).json({err: 'Failed to insert project'})
+      res.status(500).json({err: 'Failed to insert projects'})
     })
   }
 });
 
-//GET ALL = SELECT * FROM d2rd-projects
-server.get('/d2rd-projects', (req, res) => {
-  db('d2rd-projects').then(rows => {
+//GET ALL = SELECT * FROM projects
+server.get('/projects', (req, res) => {
+  db('projects').then(rows => {
     res.json(rows);
   }).catch(err => {
     res.status(500).json({err: 'Failed to find projects'});
