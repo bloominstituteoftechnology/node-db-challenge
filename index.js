@@ -13,7 +13,7 @@ server.use(express.json());
 // POST = INSERT INTO projects (id, name, description,flag) VALUES ('','','','')
 server.post('/projects', (req, res) => {
   const project = req.body;
-  if (projects.name) {
+  if (project.name) {
     db('projects').insert(project)
     .then(ids => {
       res.status(201).json(ids)

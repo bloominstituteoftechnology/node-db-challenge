@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.text('notes');
     table.boolean('complete').notNullable();
     table.timestamps(); // use to compare age
-    // table.foreign('project_id').references('id').on('projects');
+    // table.foreign('id').references('id').on('projects');
   })
 };
 
