@@ -11,10 +11,10 @@ server.use(express.json());
 
 // PROJECTS
 // POST = INSERT INTO projects (id, name, description,flag) VALUES ('','','','')
-server.post('/api/projects', (req, res) => {
-  const projects = req.body;
+server.post('/projects', (req, res) => {
+  const project = req.body;
   if (projects.name) {
-    db('projects').insert(projects)
+    db('projects').insert(project)
     .then(ids => {
       res.status(201).json(ids)
     })
@@ -56,4 +56,8 @@ server.get('/actions', (req, res) => {
   }).catch(err => {
     res.status(500).json({err: 'Failed to find actions'});
   });
+});
+
+server.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
