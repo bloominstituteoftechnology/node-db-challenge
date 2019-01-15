@@ -41,4 +41,39 @@ router.post("/", (req, res) => {
         });
 });
 
+
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+    db.update(id, changes)
+        .then(count => {
+            if (!count || count < 1) {
+            res.status(404).json({message:'No Action found to update.'})
+            }
+            else {
+                res.status(200).json(count)
+            }
+        })
+        .catch(err => {
+        res.status(500).json(err)
+    })
+
+})
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.remove(id).
+        then(count => {
+            if (!count || count < 1) {
+                res.status(400).json({message: "No actions found to delete"})
+            }
+            else {
+                res.status(200).json(count)
+            }
+        })
+        .catch(err => {
+        res.status(500).json(err)
+    })
+})
 module.exports = router;
