@@ -12,7 +12,7 @@ router
       : db('projects')
           .insert(project)
           .then(ids => res.status(201).json(ids[0]))
-          .catch(err => res.status(500).json({ err }));
+          .catch(err => res.status(500).json(err));
   })
   .get('/:id', (req, res) => {
     const { id } = req.params;
@@ -31,7 +31,7 @@ router
                 res.status(200).json(result);
               })
       )
-      .catch(err => res.status(500).json({ err }));
+      .catch(err => res.status(500).json(err));
   })
   .get('/', (req, res) => {
     db('projects')
@@ -42,7 +42,7 @@ router
             })
           : res.status(200).json(projects)
       )
-      .catch(err => res.status(500).json({ err }));
+      .catch(err => res.status(500).json(err));
   })
   .put('/:id', (req, res) => {
     const { id } = req.params;
@@ -57,7 +57,7 @@ router
               .json({ error: 'There is no project with the specified ID.' })
           : res.json(count)
       )
-      .catch(err => res.status(500).json({ err }));
+      .catch(err => res.status(500).json(err));
   })
   .delete('/:id', (req, res) => {
     const { id } = req.params;
@@ -71,7 +71,7 @@ router
               .json({ error: 'There is no project with the specified ID.' })
           : res.status(201).json(count)
       )
-      .catch(err => res.status(500).json({ err }));
+      .catch(err => res.status(500).json(err));
   });
 
 module.exports = router;
