@@ -19,16 +19,26 @@ server.get("/projects", (req, res) => {
       });
   });
 
-  server.get("/projects/:id", (req, res) => {
-    const { id } = req.params;
-    db("projects")
-      .where({ id: id})
-      .then(projects => {
-          res.status(200).json(projects)
-      })
-      .catch(err => {
-          res.status(500).json(err)
+  // GET BY ID
+
+  server.get('/projects/:id', async (req, res) => {
+    try {
+      const projects = await db('projects')
+        .where({
+          'projects.id': req.params.id
+        })
+        .first();
+      const actions = await db('actions').where({
+        'actions.project_id': req.params.id
       });
+      projects
+        ? res.status(200).json({ ...projects, actions })
+        : res.status(404).json({
+            message: 'The project with the specified id does not exist.'
+          });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
 
 
@@ -93,25 +103,17 @@ server.get("/projects", (req, res) => {
 
    // GET BY ID
 
-   server.get('/projects/:id', async (req, res) => {
-    try {
-      const projects = await db('projects')
-        .where({
-          'projects.id': req.params.id
+  server.get('/actions/:id', (req, res) => {
+      const { id } = req.params;
+      db('actions')
+        .where({ id })
+        .then(actions => {
+            res.status(200).json(actions)
         })
-        .first();
-      const actions = await db('actions').where({
-        'actions.project_id': req.params.id
-      });
-      projects
-        ? res.status(200).json({ ...projects, actions })
-        : res.status(404).json({
-            message: 'The project with the specified id does not exist.'
-          });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
+        .catch(err => {
+            res.status(500).json(err)
+        })
+    })
 
  // POST
 
