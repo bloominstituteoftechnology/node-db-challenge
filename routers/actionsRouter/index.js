@@ -85,7 +85,7 @@ router.delete("/:id/actions/:action_id", (req, res) => {
     .then(action => {
       // check if action exists
       if (action.length) {
-        DB.deleteAction(action_id)
+        DB.deleteAction(action_id, id)
           .then(result => {
             if (result) {
               res.json({ action, result });

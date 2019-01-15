@@ -43,9 +43,10 @@ module.exports = {
       .where("project_id", project_id)
       .del();
   },
-  deleteAction: id => {
+  deleteAction: (id, project_id) => {
     return DB("actions")
       .where("id", id)
+      .andWhere("project_id", project_id)
       .del();
   },
   updateAction: (id, project_id, action) => {
