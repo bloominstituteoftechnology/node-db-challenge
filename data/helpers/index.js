@@ -20,6 +20,11 @@ module.exports = {
   addAction: action => {
     return DB("actions").insert(action);
   },
+  getAction: (id, project_id) => {
+    return DB("actions")
+      .where("id", id)
+      .andWhere("project_id", project_id);
+  },
   getActions: project_id => {
     return DB("actions").where("project_id", project_id);
   },
