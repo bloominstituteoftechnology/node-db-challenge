@@ -12,4 +12,4 @@ Foreign key
 
 4. What do we need in order to have a _many to many_ relationship between two tables.
 
-A table join with a sort of "bridge" used as a one-to-many in between the many-to-many tables.
+A joining table which acts as a sort of "bridge" used as a one-to-many in between the many-to-many tables.
