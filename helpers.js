@@ -13,8 +13,8 @@ function getProjects(res){
  return db('projects');
 }
 
-function getProject(res){
+function getProject(id){
   return db('actions')
  .join({"projects.id": "actions.project_id"})
-  .where({ "actions.project_id": 'id' });
+  .where( 'project_id', id );
  }

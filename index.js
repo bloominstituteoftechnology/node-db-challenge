@@ -50,18 +50,22 @@ server.get('/projects', (req, res) => {
 server.get('/project/:id', (req, res) => {
   const { id } = req.params;
   db('projects').where('id', id)
-  .then(response => {
-    res
-        .status(200)
-        .json(response);
-})
-.catch(error => {
-    console.log(error);
-    res
-        .status(500)
-        .json({message: 'Failed to find project with this id.'});
-})
-});
+    .then(project => {
+      if(project) {
+        db('actions').where('project_id', id)
+          .then(actions => {
+            project[0].actions = actions;
+            res.status(200).json(project);
+          })
+          .catch(err => {
+            res.status(500).json({ error: 'Project does not exist' })
+          })
+      } else {
+        res.status(404).json({ error: 'Failed to find project' })
+      }
+    })
+
+ })
 
 
 
