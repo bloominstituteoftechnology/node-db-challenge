@@ -13,7 +13,8 @@ server.use(express.json());
 // POST = INSERT INTO projects (id, name, description,flag) VALUES ('','','','')
 server.post('/projects', (req, res) => {
   const project = req.body;
-  if (project.name) {
+  console.log('project info', project)
+  // if (project.name) {
     db('projects').insert(project)
     .then(ids => {
       res.status(201).json(ids)
@@ -21,7 +22,7 @@ server.post('/projects', (req, res) => {
     .catch(err => {
       res.status(500).json({err: 'Failed to insert projects'})
     })
-  }
+  // }
 });
 
 //GET ALL = SELECT * FROM projects
