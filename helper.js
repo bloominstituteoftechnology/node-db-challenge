@@ -25,6 +25,6 @@ function addAction(action) {
 
 function getProject(id) {
     return db("actions as a")
-        .join("projects as p", "p.id", "a.project_id")
-        .where("a.project_id", id)
+        .join("projects as p", "p.id", "a.projects_id")
+        .where("a.projects_id", id)
 } 
