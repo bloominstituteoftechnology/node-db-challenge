@@ -12,5 +12,15 @@ module.exports = {
   },
   getActions: project_id => {
     return DB("actions").where("project_id", project_id);
+  },
+  getActionsCompleted: project_id => {
+    return DB("actions")
+      .where("project_id", project_id)
+      .andWhere("completed", 1);
+  },
+  getActionsNotCompleted: project_id => {
+    return DB("actions")
+      .where("project_id", project_id)
+      .andWhere("completed", 0);
   }
 };
