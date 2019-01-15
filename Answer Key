@@ -1,0 +1,21 @@
+
+1. Explain the difference between RDBMS and SQL.
+        SQL is the basic language that is used to create databases. It has been around for ages, but this is because it is a good language to work with.
+        It is simple to understand, and is used in conjunction with a RDBMS to provide the data needed for programmers.
+        A RDBMS is a program that interprets, reads, and writes the SQL code. It is an in-between or middle-man for the user and SQL code.
+        This management system will include methods and functions that will work to interpret the SQL code, and connect the database to other backend files, which in turn is used as a whole to connect information with front-end developers. 
+
+2. Why do tables need a primary key?
+
+    Primary keys are critical to place in entries in order for data to be identified by the person grabbing it.
+    Primary keys are a way to give each item in the table a unique way (usually a number) to distinguish it from all the rest of the entries.
+
+3. What is the name given to a table column that references the primary key on another table.
+
+    It is called a foreign key. The foreign key helps connect one database to another one that is related.
+    For instance, a table of computer software could have a foreign id linking it to a specific class that is being taught.
+
+4. What do we need in order to have a many to many relationship between two tables.
+
+    Because of the type of relationship, foreign keys will not be very useful. If you have a many to many relationship,
+    a secondary table will need to be the link between the other two tables. This will allow the two main tables to have shared data.
