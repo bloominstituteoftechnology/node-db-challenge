@@ -4,11 +4,21 @@ module.exports = {
   addProject: project => {
     return DB("projects").insert(project);
   },
-  addAction: action => {
-    return DB("actions").insert(action);
-  },
   getProject: id => {
     return DB("projects").where("id", id);
+  },
+  deleteProject: id => {
+    return DB("projects")
+      .where("id", id)
+      .del();
+  },
+  updateProject: (id, updates) => {
+    return DB("projects")
+      .where("id", id)
+      .update(updates);
+  },
+  addAction: action => {
+    return DB("actions").insert(action);
   },
   getActions: project_id => {
     return DB("actions").where("project_id", project_id);
@@ -22,5 +32,15 @@ module.exports = {
     return DB("actions")
       .where("project_id", project_id)
       .andWhere("completed", 0);
+  },
+  deleteAction: id => {
+    return DB("actions")
+      .where("id", id)
+      .del();
+  },
+  updateAction: (id, updated) => {
+    return DB("actions")
+      .where("id", id)
+      .update(updated);
   }
 };
