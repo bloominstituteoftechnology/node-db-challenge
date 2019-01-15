@@ -5,13 +5,35 @@ const router = express.Router();
 // ADD A NEW PROJECT TO THE DB
 router.post("/", (req, res) => {
   const { project } = req.body;
-  DB.addProject(project)
-    .then(result => {
-      res.status(201).json({ result });
-    })
-    .catch(err => {
-      res.status(500).json({ error: "error code: NOPOSPJ" });
+  // check if project name and description are present
+  if (project.name.length && project.description.length) {
+    DB.addProject(project)
+      .then(result => {
+        // check if our result is truthy
+        if (result.length) {
+          const id = result[0];
+
+          DB.getProject(id).then(newProject => {
+            // check if newProject is truthy
+            if (newProject.length) {
+              res.status(201).json({ newProject });
+            } else {
+              res
+                .status(400)
+                .json({ error: "Please retry creating this project." });
+            }
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: "error code: NOADDPJ" });
+      });
+  } else {
+    res.status(401).json({
+      error:
+        "Please input information in the name and description fields of the new project to create."
     });
+  }
 });
 
 // GET A PROJECT BY ID
@@ -76,14 +98,20 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const { project } = req.body;
   const { id } = req.params;
-
-  DB.updateProject(id, project)
-    .then(result => {
-      res.json({ result });
-    })
-    .catch(err => {
-      res.status(500).json({ error: "error code: NOUPDPROJ" });
-    });
+  // check if something is in project
+  if (project.length) {
+    DB.updateProject(id, project)
+      .then(result => {
+        res.json({ result });
+      })
+      .catch(err => {
+        res.status(500).json({ error: "error code: NOUPDPROJ" });
+      });
+  } else {
+    res
+      .status(401)
+      .json({ error: "Please enter some data to update project." });
+  }
 });
 
 module.exports = router;
