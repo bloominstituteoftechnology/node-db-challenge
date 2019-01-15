@@ -62,10 +62,10 @@ server.get("/api/projects/:id", (req, res) => {
                                 completed: action.completed,
                             });
                         });
+                        //return project object
+                        res.status(200).json(returnObj);
                     });
 
-                    //return project object
-                res.status(200).json(returnObj);
             } else
                 res.status(404).json({ "error": "Project not found" });
         }).catch(error => {
