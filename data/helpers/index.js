@@ -33,6 +33,11 @@ module.exports = {
       .where("project_id", project_id)
       .andWhere("completed", 0);
   },
+  deleteActionsForDeletedProject: project_id => {
+    return DB("actions")
+      .where("project_id", project_id)
+      .del();
+  },
   deleteAction: id => {
     return DB("actions")
       .where("id", id)
