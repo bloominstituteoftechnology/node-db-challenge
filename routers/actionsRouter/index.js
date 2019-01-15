@@ -17,23 +17,4 @@ router.post("/:id/actions", (req, res) => {
     });
 });
 
-// DELETE A PROJECT BASED ON ID
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
-  DB.deleteProject(id)
-    .then(deletedProject => {
-      DB.deleteActionsForDeletedProject(id)
-        .then(deletedActions => {
-          res.json({ deletedActions, deletedProject });
-        })
-        .catch(err => {
-          res.status(500).json({ error: "error code: NODELIDACT" });
-        });
-    })
-    .catch(err => {
-      res.status(500).json({ error: "error code: NODELIDPROJ" });
-    });
-});
-
 module.exports = router;
