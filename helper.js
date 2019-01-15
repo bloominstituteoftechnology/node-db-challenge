@@ -24,10 +24,15 @@ function addAction(action) {
 function getProject(id) {
     return db("actions as a")
         .join("projects as p", "p.id", "a.project_id")
-        // .select("p.id", "p.project_name", "p.description", "p.completed",
-        //     { actions: [
-        //         "a.action_description",
-        //     }
-        //     })
+        .select({
+            id: "p.id", 
+            name: "p.project_name", 
+            decription: "p.description", 
+            completed: "p.completed",
+            actions_id: "a.id",
+            action_decription: "a.action_description",
+            notes: "a.notes",
+            action_completed: "a.action_completed"
+        })
         .where("a.project_id", id)
 }
