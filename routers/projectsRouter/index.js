@@ -17,7 +17,6 @@ router.post("/", (req, res) => {
 // GET A PROJECT BY ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-<<<<<<< HEAD
 
   // get project from database using data/helpers
   DB.getProject(id)
@@ -84,18 +83,6 @@ router.put("/:id", (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: "error code: NOUPDPROJ" });
-=======
-  DB.getProject(id)
-    .then(result => {
-      result = result[0];
-      DB.getActions(id).then(actions => {
-        const project = Object.assign({}, result, { actions: actions });
-        res.json({ project });
-      });
-    })
-    .catch(err => {
-      res.status(500).send(err);
->>>>>>> 3b336a0818980a314e9f99dad6153dba93f48b08
     });
 });
 
