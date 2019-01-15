@@ -1,4 +1,5 @@
 
+//Creating table for actions
 exports.up = function(knex, Promise) {
     return knex.schema.createTable("actions", table => {
         table.increments("id").primary();
