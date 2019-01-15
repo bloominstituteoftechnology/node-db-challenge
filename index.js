@@ -58,11 +58,25 @@ server.post('/api/actions', (req, res) =>{
 
 // GET for retrieving a project by its id that returns actions aswell
 
+server.get('/api/projects', (req, res) =>{
+    db('project')
+    .then(projects => {
+        res
+        .status(200)
+        .json(projects)
+    })
+    .catch(err =>{
+        res
+        .status(500)
+        .json({error: "Unable to retrieve projects"})
+    })
+});
+
 server.get('/api/projects/:id', (req, res) =>{
     const {id} = req.params;
     db('project').where('id', id).fullOuterJoin('action', 'id', 'project_id')
     .then(projectInfo =>{
-        if(projectInfo.lengtj !==0){
+        if(projectInfo.length !==0){
             res
             .status(200)
             .json(projectInfo)
