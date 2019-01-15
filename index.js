@@ -37,7 +37,7 @@ server.post('/api/projects', (req, res) =>{
 
 server.post('/api/actions', (req, res) =>{
     const action = req.body;
-    if(action.description && action.finished){
+    if(action.action_description && action.action_finished){
         db('action').insert(action)
         .then(id => {
             res
@@ -74,12 +74,20 @@ server.get('/api/projects', (req, res) =>{
 
 server.get('/api/projects/:id', (req, res) =>{
     const {id} = req.params;
-    db('project').where('id', id).fullOuterJoin('action', 'id', 'project_id')
+    db('project')
+    .where('id', id).first()
     .then(projectInfo =>{
         if(projectInfo.length !==0){
-            res
-            .status(200)
-            .json(projectInfo)
+            db('action')
+            .where('project_id', id)
+            .then(actions => {
+                projectInfo.actions = actions;
+                res
+                .status(200)
+                .json(projectInfo)
+
+            })
+            
         } else {
             res
             .status(404)
@@ -90,6 +98,7 @@ server.get('/api/projects/:id', (req, res) =>{
         res.status(500).json({error: "The Project could not be retrieved "})
     })
 })
+
 
 server.listen(PORT, () =>{
     console.log(`Server is listening on ${PORT}`)
