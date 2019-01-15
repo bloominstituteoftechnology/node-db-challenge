@@ -1,7 +1,11 @@
 const express = require('express');
-const knex = require('knex');
 
+const knex = require('knex');
 const dbConfig = require('./knexfile');
+
+// HELPER FUNCTIONS
+//const dbHelpers = require('./data/db_helpers');
+
 
 const server = express();
 const db = knex(dbConfig.development);
@@ -61,6 +65,32 @@ server.get('/actions', (req , res) => {
     })
 })
 
+
+// GET for retrieving contexts
+server.get('/contexts', (req , res) => {
+    db('contexts')
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({err: "Failed to retrieve contexts"})
+    })
+})
+
+// GET for retrieving actioncontexts
+server.get('/actioncontexts', (req , res) => {
+    db('actioncontexts')
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({err: "Failed to retrieve ActionContexts"});
+    })
+})
+
+
 // GET for retrieving projects with specific ID
 server.get('/projects/:id', (req , res) => {
     const {id} = req.params;
@@ -73,7 +103,7 @@ server.get('/projects/:id', (req , res) => {
     })
 })
 
-// GET for retrieving actions with specific ID
+//GET for retrieving actions with specific ID
 server.get('/actions/:id', (req , res) => {
     const {id} = req.params;
     db('actions').where('id', id)
@@ -85,7 +115,30 @@ server.get('/actions/:id', (req , res) => {
     })
 })
 
-// GET for retrieving projects with specific ID and associated actions
+// GET for retrieving actions with specific ID and associated contexts
+server.get('/actioncontexts/:id', (req , res) => {
+    const {id} = req.params;
+    db('actioncontexts').where('action_id', id)
+    .then(rows => {
+        res.json(rows)
+    })
+    .catch(err => {
+        res.status(500).json({err: "Failed to find specific action and associated contexts"});
+    })
+})
+// HELPER FUNCTION When retrieving an action by id, add a property that lists all the contexts related to that action.
+// server.get('/actions/:id', (req , res) => {
+//     dbHelpers.getActionById()
+//     .then(rows => {
+//         res.send(rows)
+//     })
+//     .catch(err => {
+//         res.status(500).send(err);
+//     })
+// })
+
+
+//GET for retrieving projects with specific ID and associated actions
 server.get('/projects/:id/actions', (req , res) => {
     const {id} = req.params;
     db('actions').where('project_id', id)
@@ -148,6 +201,8 @@ server.delete('/actions/:id', (req , res) => {
         res.status(500).json({err: "Failed to delete action"})
     })
 })
+
+
 
 // SERVER LISTEN
 server.listen(PORT, () => {
