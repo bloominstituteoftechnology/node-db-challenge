@@ -13,10 +13,10 @@ router.post("/:id/actions", (req, res) => {
 
     DB.addAction(newAction)
       .then(result => {
-        result = result[0];
         // if result return new action created
-        if (result) {
-          DB.getAction(result)
+        if (result[0]) {
+          const action_id = result[0];
+          DB.getAction(action_id, id)
             .then(action => {
               action = action[0];
               res.status(201).json({ action });
@@ -75,6 +75,67 @@ router.get("/:id/actions", (req, res) => {
     .catch(err => {
       res.status(500).json({ error: "error code: NOACTFORID" });
     });
+});
+
+// DELETE AN ACTION BASED ON ACTION ID AND PROJECT ID
+router.delete("/:id/actions/:action_id", (req, res) => {
+  const { id, action_id } = req.params;
+
+  DB.getAction(action_id, id)
+    .then(action => {
+      // check if action exists
+      if (action.length) {
+        DB.deleteAction(action_id)
+          .then(result => {
+            if (result) {
+              res.json({ action, result });
+            } else {
+              res.status(400).json({ error: "This action was not deleted" });
+            }
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: "Try again error code: NOACTIDRESDEL" });
+          });
+      } else {
+        res.status(404).json({ erorr: "This action does not exist" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: "error code: NODELACTID" });
+    });
+});
+
+// UPDATE AN ACTION BY PROJECT ID AND ACTION ID
+router.put("/:id/actions/:action_id", (req, res) => {
+  const { id, action_id } = req.params;
+  const { action } = req.body;
+  // check if action is truthy
+  if (action) {
+    DB.updateAction(action_id, id, action)
+      .then(result => {
+        // check if result is true
+        if (result) {
+          DB.getAction(action_id, id)
+            .then(action => {
+              res.json({ action, message: "updated action" });
+            })
+            .catch(err => {
+              res.status(500).json({ error: "NOACTUDPID" });
+            });
+        } else {
+          res.status(401).json({ error: "Action not updated, try again." });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: "error code: NOACTUDP" });
+      });
+  } else {
+    res
+      .status(401)
+      .json({ error: "Please enter new information to update an action." });
+  }
 });
 
 module.exports = router;
