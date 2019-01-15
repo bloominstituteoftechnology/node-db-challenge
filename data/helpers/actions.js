@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
         const action = await db.findById(id);
 
         if (action) {
-            res.status(200).json(project);
+            res.status(200).json(action);
         } else {
             res.status(404).json({ message: " Action  is not found" });
         }
