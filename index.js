@@ -93,16 +93,24 @@ server.get("/projects", (req, res) => {
 
    // GET BY ID
 
- server.get("/actions/:id", (req, res) => {
-    const { id } = req.params;
-    db("actions")
-      .where({ id: id})
-      .then(actions => {
-          res.status(200).json(actions)
-      })
-      .catch(err => {
-          res.status(500).json(err)
+   server.get('/projects/:id', async (req, res) => {
+    try {
+      const projects = await db('projects')
+        .where({
+          'projects.id': req.params.id
+        })
+        .first();
+      const actions = await db('actions').where({
+        'actions.project_id': req.params.id
       });
+      projects
+        ? res.status(200).json({ ...projects, actions })
+        : res.status(404).json({
+            message: 'The project with the specified id does not exist.'
+          });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
 
  // POST
