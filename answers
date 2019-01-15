@@ -1,0 +1,15 @@
+1. Explain the difference between `RDBMS` and `SQL`.
+
+RDBMS refers to the database software itself while SQL refers to the query language used to interact with the database.
+
+2. Why do tables need a `primary key`?
+
+Tables need a primary key in order to unambiguously refer to a specific table row or piece of data.
+
+3. What is the name given to a table column that references the primary key on another table.
+
+Foreign key
+
+4. What do we need in order to have a _many to many_ relationship between two tables.
+
+A table join with a sort of "bridge" used as a one-to-many in between the many-to-many tables.
