@@ -40,7 +40,6 @@ server.get('/projects/:id', (req, res)=>{
     const {id} = req.params;
     db('projects').where('id',id).first()
         .then(proj=>{
-           
                 db('actions')
                     .where("project_id", id)
                     .then(actions =>{
