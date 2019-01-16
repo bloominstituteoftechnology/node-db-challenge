@@ -27,15 +27,16 @@ router.get('/:id', (req, res) => {
 
   projectDB.get(id)
   .then(project => {
+    res.json(project);
     // if (project.length > 0) { // this messes it up, ***but it doesn't return it if number > project.length***
-    if (project) {
-      res.json(project);
-    } else {
-      res.status(404).json({ err: "The project with the specified ID does not exist." });
-    }
+    // if (project) {
+    //   res.json(project);
+    // } else {
+    //   res.status(500).json({ err: "Failed to find project." });
+    // }
   })
   .catch(err => {
-    res.status(500).json({ err: "Failed to find project." });
+    res.status(404).json({ err: "The project with the specified ID does not exist." });
   });
 });
 
