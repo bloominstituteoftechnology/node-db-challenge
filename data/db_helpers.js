@@ -6,8 +6,15 @@ const db = knex(db_config.development);
 
 module.exports = {
 
-    getActionById: (id) => {
-        return db('actioncontexts').where('action_id', id);
+
+    getProjects: () => {
+        return db('projects')
+        .leftJoin('actions', 'projects.id', 'actions.project_id')
     }
+
+    // getActionById: (id) => {
+    //     return db('actioncontexts').where('action_id', id);
+    // }
+
 
 }

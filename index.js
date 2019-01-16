@@ -41,7 +41,7 @@ server.post('/actions', (req , res) => {
     })
 })
 
-// GET for retrieving projects
+//GET for retrieving projects
 server.get('/projects', (req , res) => {
     db('projects')
     .then(rows => {
@@ -52,6 +52,16 @@ server.get('/projects', (req , res) => {
         res.status(500).json({err: "Failed to retrieve projects"});
     })
 });
+
+// server.get('/projects', (req , res) => {
+//     dbHelpers.getProjects()
+//     .then(projectInfo => {
+//         res.send(projectInfo)
+//     })
+//     .catch(err => {
+//         res.status(500).send(err);
+//     })
+// });
 
 // GET for retrieving actions
 server.get('/actions', (req , res) => {
@@ -126,16 +136,17 @@ server.get('/actioncontexts/:id', (req , res) => {
         res.status(500).json({err: "Failed to find specific action and associated contexts"});
     })
 })
-// HELPER FUNCTION When retrieving an action by id, add a property that lists all the contexts related to that action.
-// server.get('/actions/:id', (req , res) => {
-//     dbHelpers.getActionById()
-//     .then(rows => {
-//         res.send(rows)
-//     })
-//     .catch(err => {
-//         res.status(500).send(err);
-//     })
-// })
+
+// // HELPER FUNCTION When retrieving an action by id, add a property that lists all the contexts related to that action.
+// // server.get('/actions/:id', (req , res) => {
+// //     dbHelpers.getActionById()
+// //     .then(rows => {
+// //         res.send(rows)
+// //     })
+// //     .catch(err => {
+// //         res.status(500).send(err);
+// //     })
+// // })
 
 
 //GET for retrieving projects with specific ID and associated actions
