@@ -2,12 +2,17 @@ const express = require('express');
 const server = express();
 
 const knex = require('knex');
-const dbConfig = require('./knexfile');
+const dbConfig = require('./knexfile.js');
 
 const db = knex(dbConfig.development);
+
 const PORT = process.env.PORT || 5500;
 
 server.use(express.json());
+
+server.get('/', (req, res) => {
+  res.send('I am responding to your GET request, Dave!');
+});
 
 // PROJECTS
 // POST = INSERT INTO projects (id, name, description,flag) VALUES ('','','','')
@@ -17,12 +22,11 @@ server.post('/projects', (req, res) => {
   // if (project.name) {
     db('projects').insert(project)
     .then(ids => {
-      res.status(201).json(ids)
+      res.status(201).json({ id: ids[0] });
     })
     .catch(err => {
       res.status(500).json({err: 'Failed to insert projects'})
     })
-  // }
 });
 
 //GET ALL = SELECT * FROM projects

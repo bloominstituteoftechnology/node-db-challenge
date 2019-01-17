@@ -16,6 +16,6 @@
     "nodemon": "^1.18.9"
   },
   "scripts": {
-    "server": "nodemon"
+    "start": "nodemon"
   }
 }
