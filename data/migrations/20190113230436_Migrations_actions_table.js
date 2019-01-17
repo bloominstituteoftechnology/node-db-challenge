@@ -1,11 +1,11 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('actions', (table) => {
          table.increments()
-         table.string('description').notNullable();
-         table.string('notes').notNullable();
-         table.boolean('completed').notNullable();
+         table.string('adescription').notNullable();
+         table.string('anotes').notNullable();
+         table.boolean('acompleted').notNullable();
          table.integer('projects_id').unsigned().references('id').inTable('projects')
-         table.timestamp('created_at').defaultTo(knex.fn.now())
+         table.timestamp('acreated_at').defaultTo(knex.fn.now())
        })
  };
  

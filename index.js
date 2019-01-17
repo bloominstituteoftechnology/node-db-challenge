@@ -1,6 +1,6 @@
 const   express = require('express'),
-        //Middleware = require('./MIddleware/Middleware'),
-        port = 5050,
+        Middleware = require('./middleware/middlewares'),
+        port = 3050,
         server = express();
 
      
@@ -8,7 +8,7 @@ const   express = require('express'),
 
 
 // import middleware  and call 
-//Middleware(server);
+Middleware(server);
 
 
 
