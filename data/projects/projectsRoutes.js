@@ -1,10 +1,10 @@
 const express = require("express");
 const route = express.Router();
-const db = require("../dbConfig");
+const db = require("./projectsModal");
 
 route.get("/", async (req, res) => {
   try {
-    const projects = await db("projects");
+    const projects = await db.get();
     res.json(projects);
   } catch (err) {
     res.status(500).json({ error: "Could not retrieve projects data." });
@@ -13,9 +13,7 @@ route.get("/", async (req, res) => {
 
 route.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const project = await db("projects")
-    .where({ id })
-    .first();
+  const project = await db.get(id);
 
   try {
     !project
@@ -31,8 +29,8 @@ route.get("/:id", async (req, res) => {
 route.post("/", async (req, res) => {
   const project = req.body;
   try {
-    await db("projects").insert(project);
-    res.json({ message: "A new project has been created" });
+    await db.insert(project);
+    res.status(201).json({ message: "A new project has been created" });
   } catch (err) {
     res.status(500).json({ error: "Could not create a new project." });
   }
@@ -43,9 +41,7 @@ route.put("/:id", async (req, res) => {
   const changes = req.body;
 
   try {
-    const project = await db("projects")
-      .where({ id })
-      .first();
+    const project = await db.update(id, changes);
 
     !project
       ? res
@@ -53,7 +49,7 @@ route.put("/:id", async (req, res) => {
           .json({ error: "A project with that ID does not exist." })
       : await db("projects").where({ id }.update(changes));
 
-    res.json(project);
+    res.status(202).json(project);
   } catch (err) {
     res.status(500).json({ error: "Could not update the project." });
   }
@@ -63,9 +59,7 @@ route.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const project = await db("projects")
-      .where({ id })
-      .first();
+    const project = await db.remove(id);
     !project
       ? res
           .status(404)
@@ -74,7 +68,7 @@ route.delete("/:id", async (req, res) => {
           .where({ id })
           .del();
 
-    res.json({ message: "The project has been deleted." });
+    res.status(202).json({ message: "The project has been deleted." });
   } catch (err) {
     res.status(500).json({ error: "Unable to delete the project." });
   }
