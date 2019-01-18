@@ -1,6 +1,6 @@
 const server = require('./server.js');
-const actions = require('./routes/actions.js');
-const projects = require('./routes/projectRoutes.js');
+const actionRoutes = require('./routes/actions.js');
+const projectRoutes = require('./routes/projectRoutes.js');
 
-server.use('/actions', actions);
-server.use('/projects', projects);
+server.use('/actions', actionRoutes);
+server.use('/projects', projectRoutes);
