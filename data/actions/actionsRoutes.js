@@ -42,11 +42,11 @@ route.put("/:id", async (req, res) => {
   const changes = req.body;
 
   try {
-    const action = await db.update(id, changes);
+    const action = await db.get(id);
 
     !action
       ? res.status(404).json({ error: "A action with that ID does not exist." })
-      : await db("actions").where({ id }.update(changes));
+      : await db.update(id, changes);
 
     res.status(202).json(action);
   } catch (err) {
@@ -58,14 +58,12 @@ route.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const action = await db.remove(id);
+    const action = await db.get(id);
     !action
       ? res
           .status(404)
           .json({ error: "The action with this id does not exist." })
-      : await db("actions")
-          .where({ id })
-          .del();
+      : await db.remove(id);
 
     res.status(202).json({ message: "The action has been deleted." });
   } catch (err) {

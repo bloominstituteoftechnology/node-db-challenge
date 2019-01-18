@@ -41,13 +41,13 @@ route.put("/:id", async (req, res) => {
   const changes = req.body;
 
   try {
-    const project = await db.update(id, changes);
+    const project = await db.get(id);
 
     !project
       ? res
           .status(404)
           .json({ error: "A project with that ID does not exist." })
-      : await db("projects").where({ id }.update(changes));
+      : await db.update(id, changes);
 
     res.status(202).json(project);
   } catch (err) {
@@ -59,14 +59,12 @@ route.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const project = await db.remove(id);
+    const project = await db.get(id);
     !project
       ? res
           .status(404)
           .json({ error: "The project with this id does not exist." })
-      : await db("projects")
-          .where({ id })
-          .del();
+      : await db.remove(id);
 
     res.status(202).json({ message: "The project has been deleted." });
   } catch (err) {
