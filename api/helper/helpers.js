@@ -1,0 +1,10 @@
+const knex = require('knex');
+
+const knexConfig = require('../../knexfile.js');
+const db = knex (knexConfig.development);
+
+module.exports = {
+    createProject:  function(body){
+        return db.insert(body).into('projects')
+    }
+}
