@@ -7,7 +7,7 @@ route.get("/", async (req, res) => {
     const projects = await db("projects");
     res.json(projects);
   } catch (err) {
-    res.json({ error: "Could not retrieve projects data." });
+    res.status(500).json({ error: "Could not retrieve projects data." });
   }
 });
 
@@ -24,7 +24,7 @@ route.get("/:id", async (req, res) => {
           .json({ error: "A project with that ID does not exist." })
       : res.json({ project });
   } catch (err) {
-    res.json({ error: "Could not retrieve the project data." });
+    res.status(500).json({ error: "Could not retrieve the project data." });
   }
 });
 
@@ -34,7 +34,49 @@ route.post("/", async (req, res) => {
     await db("projects").insert(project);
     res.json({ message: "A new project has been created" });
   } catch (err) {
-    res.json({ error: "Could not create a new project." });
+    res.status(500).json({ error: "Could not create a new project." });
+  }
+});
+
+route.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  try {
+    const project = await db("projects")
+      .where({ id })
+      .first();
+
+    !project
+      ? res
+          .status(404)
+          .json({ error: "A project with that ID does not exist." })
+      : await db("projects").where({ id }.update(changes));
+
+    res.json(project);
+  } catch (err) {
+    res.status(500).json({ error: "Could not update the project." });
+  }
+});
+
+route.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const project = await db("projects")
+      .where({ id })
+      .first();
+    !project
+      ? res
+          .status(404)
+          .json({ error: "The project with this id does not exist." })
+      : await db("projects")
+          .where({ id })
+          .del();
+
+    res.json({ message: "The project has been deleted." });
+  } catch (err) {
+    res.status(500).json({ error: "Unable to delete the project." });
   }
 });
 
