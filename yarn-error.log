@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js knex migrate: rollback
+  C:\Program Files\nodejs\node.exe C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add nodemon--s
 
 PATH: 
   C:\Users\kamma\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\kamma\bin;C:\Python37\Scripts;C:\Python37;C:\Program Files (x86)\Intel\TXE Components\TCS;C:\Program Files\Intel\TXE Components\TCS;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\TXE Components\DAL;C:\Program Files (x86)\Intel\TXE Components\DAL;C:\Program Files\Intel\TXE Components\IPT;C:\Program Files (x86)\Intel\TXE Components\IPT;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\Microsoft VS Code\bin;C:\Users\kamma\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\kamma\AppData\Local\Programs\Python\Python36-32;C:\Users\kamma\AppData\Local\Microsoft\WindowsApps;C:\Users\kamma\AppData\Local\atom\bin;C:\Program Files\Heroku\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\MongoDB\Server\3.6\bin;C:\Users\kamma\AppData\Roaming\npm;C:\cygwin64\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -2299,17 +2299,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.0.3.tgz#b4b049e314be545e3ce802236d6cd22cd91c3de9"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: C:\windows\system32\cmd.exe
-  Arguments: /d /s /c C:\Users\kamma\LambdaSchool\Sprint-Challenge-RDBMS\node_modules\.bin\knex migrate: rollback
-  Directory: C:\Users\kamma\LambdaSchool\Sprint-Challenge-RDBMS
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)
+  Error: https://registry.yarnpkg.com/nodemon--s: Not found
+      at Request.params.callback [as _callback] (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:65019:18)
+      at Request.self.callback (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:132430:22)
       at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:915:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:133413:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Users\kamma\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:133333:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
