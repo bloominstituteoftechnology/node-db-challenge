@@ -20,7 +20,7 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 
 In this challenge, you build an application that lets users track `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
 
-Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
+Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database
 
 This will be akin to the Web API that you built in the last sprint, only this time, you'll be writing the persistence layer.
 
@@ -29,9 +29,20 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+
+RDBMS (relational database management system) is a set of tools used to create and management relational databases. SQL (structured query language) is used to access and manipulate data in a database.
+
+2. Why do tables need a `primary key`?
+
+A primary key, often auto incremented, allows for objects in a database to have a uniquely identifiable key which is very important for quick and scalable lookup of individual objects (rows) in a database.
+
+3. What is the name given to a table column that references the primary key on another table.
+
+foreign key (usually).
+
+4. What do we need in order to have a _many to many_ relationship between two tables.
+
+a foriegn key for each table in the other table?
 
 ## Project Set Up
 
