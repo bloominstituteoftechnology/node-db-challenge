@@ -31,5 +31,26 @@ router.post('/', (req, res) => {
   .catch(err => res.status(500).json({errorMessage: err}));
 });
 
+router.put('/:id', (req, res) => {
+
+  const {id} = req.params;
+  const {description, name, completed} = req.body;
+
+  projectsModel.update(id, {description, name, completed})
+  .then(project => {
+    res.status(201).json(project);
+  })
+  .catch(err => res.status(500).json({errorMessage: err}));
+});
+
+router.delete('/:id', (req, res) => {
+  const {id} = req.params;
+  projectsModel.remove(id)
+  .then(count => {
+    res.status(204).end();
+  })
+  .catch(err => res.status(500).json({errorMessage: err}));
+});
+
 
 module.exports = router;

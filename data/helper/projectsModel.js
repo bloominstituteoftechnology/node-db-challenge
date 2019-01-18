@@ -24,4 +24,18 @@ module.exports = {
     let query = db('projects');
     return query.insert({name, description, completed});
   },
+
+  update(id, {name, description, completed}){
+
+    let query = db('projects');
+    return query.where({id})
+    .update({name, description, completed})
+  },
+
+  remove(id){
+
+    let query = db('projects');
+    return query.where({id})
+    .del()
+  },
 }
