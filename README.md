@@ -33,6 +33,23 @@ Demonstrate your understanding of this week's concepts by answering the followin
 1. What is the name given to a table column that references the primary key on another table.
 1. What do we need in order to have a _many to many_ relationship between two tables.
 
+## Project Set Up
+
+Follow these steps for starting your project.
+
+- [ ] Create a forked copy of this project.
+- [ ] Add your project manager as collaborator on Github.
+- [ ] Clone your OWN version of the repository (Not Lambda's by mistake!).
+- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [ ] Push commits: git push origin `<firstName-lastName>`.
+
+Follow these steps for completing your project.
+
+- [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into master (student's Repo). **Please don't merge your own pull request**
+- [ ] Add your project manager as a reviewer on the pull-request
+- [ ] Your project manager will count the project as complete by merging the branch back into master.
+
 ## Minimum Viable Product
 
 **NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
