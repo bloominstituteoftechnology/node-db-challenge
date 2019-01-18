@@ -20,6 +20,20 @@ server.get('/project', (req, res) =>{
     .catch(err => res.status(500).json(err))
 })
 
+server.get('/project/:id', (req, res) =>{
+    // const pa = db('project').join('actions', {'project.id':'project.actions.id'})
+    const { id }= req.params
+    db('project').where({ id })
+    .then(p => {
+        db('actions')
+            .where({ project_id : id })
+            .then(a => {
+                res.status(200).json({ p, a })
+            }).catch(err => res.status(500).json(err))
+    })
+    .catch(err => res.status(500).json(err))
+})
+
 server.post('/project', (req,res) => {
     db('project').insert(req.body)
     .then(p => {

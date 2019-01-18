@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       tbl.text('description');
       tbl.text('notes');
       tbl.boolean('complete');
+      tbl.integer('project_id').notNullable();
 
   })
 };
