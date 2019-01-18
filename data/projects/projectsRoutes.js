@@ -28,4 +28,14 @@ route.get("/:id", async (req, res) => {
   }
 });
 
+route.post("/", async (req, res) => {
+  const project = req.body;
+  try {
+    await db("projects").insert(project);
+    res.json({ message: "A new project has been created" });
+  } catch (err) {
+    res.json({ error: "Could not create a new project." });
+  }
+});
+
 module.exports = route;
