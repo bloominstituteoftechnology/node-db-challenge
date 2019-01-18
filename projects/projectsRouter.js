@@ -9,25 +9,22 @@ const db = knex(knexConfig.development);
 //middleware
 router.use(express.json());
 
-//endpoints
 router.get('/', (req, res) => {
-    db('projects').then(projects => {
-        res.status(200).json({projects});
+    db('projects')
+      .then(projects => {
+        res.status(200).json(projects);
+      })
+      .catch(err => res.status(500).json(err));
+  });
 
-    }).catch(err => {
-        res.status(400).json(err)
-    })
-    
-})
-
-router.get('/:id', (req, res) => {
-    const id = req.params.id-1
-    db('projects').get(id).then(project => {
-        res.status(201).json(project)
+//endpoints
+router.get('/api/projects/:id/actions', (req, res) => {
+    const id = req.params.id;
+    db('projects').get(id).then(actions => {
+        res.status(201).json(actions)
         
     }).catch(err => res.status(500).json(err))
 });
-
 
 router.post('/', (req, res) => {
     db('projects')
@@ -37,22 +34,6 @@ router.post('/', (req, res) => {
     }).catch(err => res.status(500).json({ message: "something is going wrong, bro"}))
 });
 
-router.delete('/:id', (req, res) => {
-    const id = req.params.id -1;
-    db('projects').get(id)
-      .then(project => {
-        if(project) {
-          db('projects').remove(id).then(count => {
-            res.status(200).json(project);
-        });
-        } else {
-          res
-            .status(404)
-            .json({ message: 'The project with the specified ID does not exist'});
-      }
-    })
-      .catch(err => res.status(500).json(err))
-  })
 
 
 

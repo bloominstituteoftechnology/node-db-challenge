@@ -12,6 +12,12 @@ exports.up = function(knex, Promise) {
 
         tbl.boolean('complete');
 
+        tbl
+          .integer('project_id')
+          .unsigned()
+          .references('id')
+          .inTable('projects')
+
         tbl.unique('name', 'uq_actions_name')
     })
   
