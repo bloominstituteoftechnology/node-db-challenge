@@ -13,12 +13,13 @@ module.exports = {
 
 function findProjectById(id) {
     return db('projects')
-    .select('*')
-    .from('projects')
-    .where({id}).first()
-    .rightJoin('actions', 'projects.id', 'actions.project_id');
+    .join('actions', 'projects.id', 'actions.projectId')
+    .select('projects.id', 'projects.name', 'actions.description')
+    .where({"projects.id": id}).first();
+    // .rightJoin('actions', 'projects.id', 'actions.project_id');
     
 }
+
 
 function addProject(project){
     return db('projects')

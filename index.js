@@ -24,7 +24,7 @@ server.get(`/api/:table`, async (req, res) => {
 });
 
 server.use('/api/projects', projectsRoutes);
-//server.use('/api/actions', actionsRoutes);
+server.use('/api/actions', actionsRoutes);
 
 
 
