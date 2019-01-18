@@ -12,4 +12,21 @@ route.get("/", async (req, res) => {
   }
 });
 
+route.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const action = await db("actions")
+    .where({ id })
+    .first();
+
+  try {
+    !action
+      ? res
+          .status(404)
+          .json({ error: "An action with that ID does not exist." })
+      : res.json({ action });
+  } catch (err) {
+    res.json({ error: "Could not retrieve the action data." });
+  }
+});
+
 module.exports = route;
