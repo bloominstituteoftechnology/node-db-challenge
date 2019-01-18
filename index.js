@@ -11,6 +11,12 @@ const db = knex(dbConfig.development);
 const PORT = process.env.PORT || 5000;
 
 server.use(express.json());
+server.use("/actions", actionRouter);
+server.use("/projects", projectRouter);
+
+server.get("/", (req, res) => {
+    res.send("hello world")
+});
 
 //SERVER
 
