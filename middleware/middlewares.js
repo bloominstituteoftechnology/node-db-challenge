@@ -11,6 +11,6 @@ module.exports = (server) =>{
         morgan('dev')
     );
     server.use('/api/projects', Router.routerProjects);
-    server.use('/api/actions', Router.routerProjects);
+    server.use('/api/actions', Router.routerActions);
     
 }

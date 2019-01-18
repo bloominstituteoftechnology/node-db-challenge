@@ -5,15 +5,19 @@ const projectsTable ='projects';
 const actionsTable = 'actions';
 
 
-const getAllProjects =  (req, res)=>{
-  db.select().table('projects')
+const getAllItems =  (tableName)=>{
+  return(req, res) => {
+  db.select().table(`${tableName}`)
     .then(item =>{
       res.status(200).json(item)
     })
     .catch(err =>{
       res.status(500).json(err)
     })
-}
+}}
+
+const  getAllProjects =  getAllItems(projectsTable);
+const  getAllActions =  getAllItems(actionsTable);
 
 const getprojectsbyId =  (req, res)=>{
       const {id} = req.params;
@@ -59,5 +63,6 @@ module.exports = {
   getprojectsbyId       : getprojectsbyId,
   getAllProjects        : getAllProjects,
   CreateNewProject      : CreateNewProject,
-  CreateNewAction       : CreateNewAction
+  CreateNewAction       : CreateNewAction,
+  getAllActions         : getAllActions
 }

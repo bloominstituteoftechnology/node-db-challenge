@@ -12,9 +12,11 @@ routerProjects.post('/', TaskManager.CreateNewProject);
 
 
 // routes for ACTIONS
+routerActions.get('/', TaskManager.getAllActions);
 routerActions.post('/', TaskManager.CreateNewAction);
 
 
 module.exports = {
-    routerProjects : routerProjects
+    routerProjects : routerProjects,
+    routerActions : routerActions
 };
