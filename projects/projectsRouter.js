@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
+const knex = require('knex');
+const knexConfig = require('../knexfile.js');
+const db = knex(knexConfig.development);
+
 
 //middleware
 router.use(express.json());
 
 //endpoints
 router.get('/', (req, res) => {
-    projects.get().then(users => {
-        res.status(200).json({users});
+    db('projects').then(projects => {
+        res.status(200).json({projects});
 
     }).catch(err => {
         res.status(400).json(err)
@@ -16,71 +20,41 @@ router.get('/', (req, res) => {
     
 })
 
-router.get('/users/:id', (req, res) => {
-    const id = req.params.id;
-
-    projects.get(id)
-        .then(user=> {
-            if(user) {
-                res.status(200).json({user});
-            } else {
-                res.status(404).json({ message: 'project not found'})
-            }
-    })
-    .catch(err => {res.status(500).json(err)})
-    
-})
-
-
-router.post('/', (req, res) => {
-    const projectInfo = req.body;
-    projects.insert(projectInfo)
-        .then(result => {
-            projects.get(result.id)
-                .then(project => {
-                    res.status(201).json(project); 
-                })
-                .catch(err => res.status(500).json({ message: 'the project by id failed', error: err})
-                );
+router.get('/:id', (req, res) => {
+    const id = req.params.id-1
+    db('projects').get(id).then(project => {
+        res.status(201).json(project)
         
-    }).catch(err => res.status(500).json({ message: 'the project failed', error: err})
-)})
-
-router.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    projects.get(id).then(user => {
-        if(user) {
-            projects.remove(id)
-            .then(count => {
-                res.status(200).json(user)
-            })
-        } else {
-            res.status(404).json({message: 'the user with that id does not exist'})
-        }
-    }).catch(err => res.status(500).json(err))
-})
-
-router.put('/:id', (req, res) => {
-    const projectInfo = req.body;
-    projects.update(projectInfo).then(result => {
-        res.status(201).json(result);
     }).catch(err => res.status(500).json(err))
 });
 
-router.get('/users/actions/:id', (req, res) => {
-    const id = req.params.id;
 
-    projects.getProjectActions(id)
-        .then(user=> {
-            if(user) {
-                res.status(200).json({user});
-            } else {
-                res.status(404).json({ message: 'project not found'})
-            }
+router.post('/', (req, res) => {
+    db('projects')
+    .insert(req.body)
+    .then(project => {
+        res.status(201).json(project)
+    }).catch(err => res.status(500).json({ message: "something is going wrong, bro"}))
+});
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id -1;
+    db('projects').get(id)
+      .then(project => {
+        if(project) {
+          db('projects').remove(id).then(count => {
+            res.status(200).json(project);
+        });
+        } else {
+          res
+            .status(404)
+            .json({ message: 'The project with the specified ID does not exist'});
+      }
     })
-    .catch(err => {res.status(500).json(err)})
-    
-})
+      .catch(err => res.status(500).json(err))
+  })
+
+
 
 
 module.exports = router;
