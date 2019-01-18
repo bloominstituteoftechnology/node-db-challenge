@@ -1,5 +1,5 @@
-const server = require('./server.js');
-const actionRoutes = require('./routes/actions.js');
+const server = require('./config/middleware.js');
+const actionRoutes = require('./routes/actionRoutes.js');
 const projectRoutes = require('./routes/projectRoutes.js');
 
 server.use('/actions', actionRoutes);

@@ -15,12 +15,12 @@ module.exports = {
 
     return Promise.all([project, actions]).then(results => {
       const [project, actions] = results;
-      return {project, actions: {...actions}};
+      return {...project, actions: [...actions]};
     })
   },
 
   createProject({name, description, completed = false}){
-    
+
     let query = db('projects');
     return query.insert({name, description, completed});
   },
