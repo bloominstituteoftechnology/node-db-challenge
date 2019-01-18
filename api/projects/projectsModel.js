@@ -11,13 +11,23 @@ module.exports = {
 
 }
 
-function findProjectById(id) {
-    return db('projects')
-    .join('actions', 'projects.id', 'actions.projectId')
-    .select('projects.id', 'projects.name', 'actions.description')
-    .where({"projects.id": id}).first();
-    // .rightJoin('actions', 'projects.id', 'actions.project_id');
+// function findProjectById(id) {
+//     return db('projects')
+//     .join('actions', 'projects.id', 'actions.projectId')
+//     .select('projects.id', 'projects.name', 'actions.description')
+//     .where({"projects.id": id}).first();
     
+// }
+
+function findProjectById(id) {
+
+    let project = db('projects').where({id});
+    let actions = db('actions').where({projectId: id})
+
+    return Promise.all([project, actions]).then(results => {
+      const [project, actions] = results;
+      return {...project, actions: [...actions]};
+    })
 }
 
 
