@@ -18,10 +18,19 @@ router.get('/', (req, res) => {
   });
 
 //endpoints
-router.get('/api/projects/:id/actions', (req, res) => {
-    const id = req.params.id;
-    db('projects').get(id).then(actions => {
-        res.status(201).json(actions)
+
+router.get('/:id/actions', (req, res) => {
+    db('projects')
+      .innerJoin('actions', 'project.id', '=', 'actions.projects_id')
+      .then(actions => {
+        res.status(200).json(actions)
+    })
+});
+
+router.get('/:id/actions', (req, res) => {
+    const id = req.params.id - 1;
+    db('projects').get(id).then(action => {
+        res.status(201).json(action)
         
     }).catch(err => res.status(500).json(err))
 });

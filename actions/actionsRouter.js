@@ -14,11 +14,17 @@ router.use(express.json());
 
 router.post('/', (req, res) => {
     db('actions')
+    .where('project_id', '=', req.params.id)
     .insert(req.body)
-    .then(action => {
-        res.status(201).json(action)
+    .then(ids => {
+        res.status(201).json(ids)
     }).catch(err => res.status(500).json(err))
 });
+
+
+
+
+
 
 
 
