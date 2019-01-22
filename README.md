@@ -80,11 +80,11 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 ### Tasks
 
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [x] Build the database and tables using knex migrations. **Seeding is not needed**.
 - [ ] Build the API with the following endpoints:
 
-  - [ ] POST for adding projects.
-  - [ ] POST for adding actions.
+  - [x] POST for adding projects.
+  - [x] POST for adding actions.
   - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
 
     ```js
@@ -116,7 +116,7 @@ This section is **optional** and not counted towards MVP. Start working on it af
 
 Add the remaining CRUD operations for projects and actions.
 
-Use `knext` to add _data seeding_ scripts for projects and actions.
+Use `knex` to add _data seeding_ scripts for projects and actions.
 
 Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some actions require one or more `contexts` in order to be worked on. For example, the action of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, filing your taxes will not be one of them.
 

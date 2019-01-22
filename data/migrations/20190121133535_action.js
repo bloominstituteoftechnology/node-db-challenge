@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
       table.text('notes')
       table.boolean('is_completed')
   })
-};
+}
 
 exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists('actions')
