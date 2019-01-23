@@ -8,6 +8,7 @@ const PORT = 5100
 server.use(express.json())
 
 server.post('/api/projects', (req, res) => {
+    const project = req.body
   if (project.name && project.description && project.is_complete) {
     db('projects')
       .insert(project)
@@ -30,7 +31,8 @@ server.post('/api/projects', (req, res) => {
 })
 
 server.post('/api/actions', (req, res) => {
-  if (action.name && action.description && action.is_completed) {
+    const action = req.body
+  if (action.name && action.description) {
     db('actions')
       .insert(action)
       .then(ids => {
