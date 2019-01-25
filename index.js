@@ -7,10 +7,14 @@ server.use(express.json());
 
 const db = knex(knexConfig.development);
 
-//GET actions endpoint with ID
+//GET project endpoint with ID
 server.get("/api/projects/:id", (req, res) => {
   const id = req.params.id;
   db(id)
+    .join("actions", "projects.id", "actions.project_Id")
+    .select("projects.id", "projects.name", "actions.description")
+    .where({ "projects.id": id })
+
     .then(project => {
       res.status(200).json(project);
     })
@@ -21,8 +25,7 @@ server.get("/api/projects/:id", (req, res) => {
 
 //Post endpoints
 server.post("/api/actions", (req, res) => {
-  db
-    .insert(req.body)
+  db.insert(req.body)
     .then(action => {
       res.status(200).json(action);
     })
@@ -32,8 +35,7 @@ server.post("/api/actions", (req, res) => {
 });
 
 server.post("/api/projects", (req, res) => {
-  db
-    .insert(req.body)
+  db.insert(req.body)
     .then(project => {
       res.status(200).json(project);
     })
@@ -43,8 +45,7 @@ server.post("/api/projects", (req, res) => {
 });
 
 server.put("/api/actions/:id", (req, res) => {
-  db
-    .update(req.params.id, req.body)
+  db.update(req.params.id, req.body)
     .then(response => {
       res.status(200).json(response);
     })
@@ -56,8 +57,7 @@ server.put("/api/actions/:id", (req, res) => {
 });
 
 server.put("/api/projects/:id", (req, res) => {
-  db
-    .update(req.params.id, req.body)
+  db.update(req.params.id, req.body)
     .then(response => {
       res.status(200).json(response);
     })
@@ -69,8 +69,7 @@ server.put("/api/projects/:id", (req, res) => {
 });
 
 server.delete("/api/actions/:id", (req, res) => {
-  db
-    .remove(req.params.id)
+  db.remove(req.params.id)
     .then(response => {
       res.status(200).json(response);
     })
@@ -80,8 +79,7 @@ server.delete("/api/actions/:id", (req, res) => {
 });
 
 server.delete("/api/projects/:id", (req, res) => {
-  db
-    .remove(req.params.id)
+  db.remove(req.params.id)
     .then(response => {
       res.status(200).json(response);
     })
