@@ -8,19 +8,28 @@ const PORT = 5100
 server.use(express.json())
 
 server.get('/api/projects/:id/actions', (req, res) => {
-  // const { id } = req.params
+  const { id } = req.params
   db('projects')
-    .innerJoin('actions', 'projects.id', 'project_id')
-    .then(projectInfo => {
-      if (projectInfo) {
-        res.json(projectInfo)
-      } else {
-        res
-          .status(404)
-          .json({
-            message: 'There are no actions that exist within this project.'
+    .where('projects.id', id)
+    .then(project => {
+      const thisProject = project[0]
+      db('actions')
+        .select(
+          'actions.id',
+          'actions.todo_description',
+          'actions.notes',
+          'actions.is_completed'
+        )
+        .where('actions.project_id', id)
+        .then(actions => {
+          res.json({
+            id: thisProject.id,
+            name: thisProject.name,
+            description: thisProject.description,
+            is_complete: thisProject.is_complete,
+            actions: actions
           })
-      }
+        })
     })
     .catch(() => {
       res
@@ -28,6 +37,29 @@ server.get('/api/projects/:id/actions', (req, res) => {
         .json({ error: 'Info about this action could not be retrieved.' })
     })
 })
+
+//having trouble with joins
+// server.get('/api/projects/:id/actions', (req, res) => {
+//   const { id } = req.params
+//   db('projects')
+//     .innerJoin('actions', 'projects.id', 'project_id')
+//     .then(projectInfo => {
+//       if (projectInfo) {
+//         res.json(projectInfo)
+//       } else {
+//         res
+//           .status(404)
+//           .json({
+//             message: 'There are no actions that exist within this project.'
+//           })
+//       }
+//     })
+//     .catch(() => {
+//       res
+//         .status(404)
+//         .json({ error: 'Info about this action could not be retrieved.' })
+//     })
+// })
 
 server.post('/api/projects', (req, res) => {
   const project = req.body
