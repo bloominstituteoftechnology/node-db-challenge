@@ -7,6 +7,14 @@ const PORT = 5100
 
 server.use(express.json())
 
+server.get('/api/projects/:id/actions', (req, res) => {
+  // const { id } = req.params
+  db('projects').innerJoin('actions', 'projects.id', 'project_id')
+    .then(projectInfo => {
+      res.send(projectInfo)
+    })
+})
+
 server.post('/api/projects', (req, res) => {
     const project = req.body
   if (project.name && project.description && project.is_complete) {
@@ -32,7 +40,7 @@ server.post('/api/projects', (req, res) => {
 
 server.post('/api/actions', (req, res) => {
     const action = req.body
-  if (action.name && action.description) {
+  if (action.name && action.description && action.is_completed) {
     db('actions')
       .insert(action)
       .then(ids => {
