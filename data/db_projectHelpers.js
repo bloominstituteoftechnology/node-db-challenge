@@ -13,4 +13,8 @@ module.exports = {
     getProjectById: (id) => {
         return db('project').where('id', id);
     },
+
+    addProject: (project) => {
+        return db('project').insert(project);
+    }
 };

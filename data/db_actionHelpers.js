@@ -13,4 +13,8 @@ module.exports = {
     getActionById: (id) => {
         return db('action').where('id', id);
     },
+
+    addAction: (action) => {
+        return db('action').insert(action);
+    }
 };

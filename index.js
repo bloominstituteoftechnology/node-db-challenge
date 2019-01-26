@@ -10,9 +10,9 @@ server.use(express.json());
 
 server.post('/project', (req, res) => {
     const project = req.body;
-    db('project').insert(project)
-        .then(project => {
-            res.status(201).json(project);
+    dbProjectHelpers.addProject(project)
+        .then(projectInfo => {
+            res.send(projectInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to insert project' })
@@ -21,9 +21,9 @@ server.post('/project', (req, res) => {
 
 server.post('/action', (req, res) => {
     const action = req.body;
-    db('action').insert(action)
-        .then(action => {
-            res.status(201).json(action);
+    dbActionHelpers.addAction(action)
+        .then(actionInfo => {
+            res.send(actionInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to insert action' })
