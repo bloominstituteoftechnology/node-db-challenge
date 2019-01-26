@@ -4,27 +4,33 @@ const actsDB = require('../helpers/actionsDB')
 
 router.get('/', (req, res) => {
  actsDB.pull()
-  .then(() => {
-
+  .then((actions) => {
+   res
+    .json(actions)
   })
   .catch(() => {
-
+   res
+    .status(500)
+    .json({error: "There was an error getting actions."})
   })
 })
 
 router.get('/:id', (req, res) => {
+ const { id } = req.params
  actsDB.pullById(id)
-  .then(() => {
-
+  .then((action) => {
+   res
+    .json(action)
   })
   .catch(() => {
-
+   res
+    .json({error: "There was an error getting action."})
   })
 })
 
 router.post('/', (req, res) => {
  const action = req.body
- if (action.name && action.description) {
+ if (action.notes && action.description) {
    actsDB.place(action)
     .then(() => {
      res
@@ -40,7 +46,7 @@ router.post('/', (req, res) => {
   else {
    res
     .status(400)
-    .json({error: "Name and description required to add action to DB."})
+    .json({error: "Notes and description required to add action to DB."})
   }
 })
 
