@@ -15,7 +15,21 @@ module.exports ={
                .where({id: id})
  },
 
- place = (project) => {
+ place: (project) => {
   return projDB("projects")
+               .insert(project)
+               .then(ids => ({id: ids[0]}))
+ },
+
+ alter: (id, project) => {
+  return projDB("projects")
+               .where({id: id})
+               .update(project)
+ },
+
+ clear: (id) => {
+  return projDB("projects")
+               .where({id: id})
+               .del()
  }
 }
