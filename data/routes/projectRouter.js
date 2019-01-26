@@ -46,15 +46,16 @@ router.post('/', (req, res) => {
  }
  else {
   res
+   .status(400)
    .json({error: "Name and description required for project."})
  }
 })
 
-router.put('/', (req, res) => [
+router.put('/:id', (req, res) => [
 
 ])
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
 
 })
 
