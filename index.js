@@ -1,11 +1,11 @@
 const express = require('express');
 const knex = require('knex');
 
-const dbConfig = require('./knexfile');
+const dbConfig = require('./knexfile.js');
 
 const server = express();
-const db = (dbConfig.development);
-const PORT = 0112
+const db = knex(dbConfig.development);
+const PORT = 5000;
 
 server.use(express.json());
 
@@ -31,19 +31,49 @@ server.post('/action', (req, res) => {
         });
 });
 
+server.get('/project', (req, res) => {
+    db('project')
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ err: 'Failed to get projects' })
+        })
+});
+
 server.get('/project/:id', (req, res) => {
     const { id } = req.params;
     db('project').where('id', id)
         .then(project => {
-            res.status(200).json(porject);
+            res.status(200).json(project);
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get project' })
         })
 });
 
+server.get('/action', (req, res) => {
+    db('action')
+        .then(action => {
+            res.status(200).json(action);
+        })
+        .catch(err => {
+            res.status(500).json({ err: 'Failed to get actions' })
+        })
+});
+
+server.get('/action/:id', (req, res) => {
+    const { id } = req.params;
+
+    db('action').where('id', id)
+        .then(action => {
+            res.status(200).json(action);
+        })
+        .catch(err => {
+            res.status(500).json({ err: 'Failed to get action' })
+        })
+});
+
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
-
-//When I run the server it says it's running on port 74, not sure why this is. Unable to test endpoints
