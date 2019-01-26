@@ -1,10 +1,9 @@
 const express = require('express');
-const knex = require('knex');
 
-const dbConfig = require('./knexfile.js');
+const dbProjectHelpers = require('./data/db_projectHelpers');
+const dbActionHelpers = require('./data/db_actionHelpers');
 
 const server = express();
-const db = knex(dbConfig.development);
 const PORT = 5000;
 
 server.use(express.json());
@@ -32,9 +31,9 @@ server.post('/action', (req, res) => {
 });
 
 server.get('/project', (req, res) => {
-    db('project')
-        .then(project => {
-            res.status(200).json(project)
+    dbProjectHelpers.getProjects()
+        .then(projectInfo => {
+            res.send(projectInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get projects' })
@@ -43,9 +42,9 @@ server.get('/project', (req, res) => {
 
 server.get('/project/:id', (req, res) => {
     const { id } = req.params;
-    db('project').where('id', id)
-        .then(project => {
-            res.status(200).json(project);
+    dbProjectHelpers.getProjectById(id)
+        .then(projectInfo => {
+            res.send(projectInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get project' })
@@ -53,9 +52,9 @@ server.get('/project/:id', (req, res) => {
 });
 
 server.get('/action', (req, res) => {
-    db('action')
-        .then(action => {
-            res.status(200).json(action);
+    dbActionHelpers.getActions()
+        .then(actionInfo => {
+            res.send(actionInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get actions' })
@@ -65,9 +64,9 @@ server.get('/action', (req, res) => {
 server.get('/action/:id', (req, res) => {
     const { id } = req.params;
 
-    db('action').where('id', id)
-        .then(action => {
-            res.status(200).json(action);
+    dbActionHelpers.getActionById(id)
+        .then(actionInfo => {
+            res.send(actionInfo)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get action' })
