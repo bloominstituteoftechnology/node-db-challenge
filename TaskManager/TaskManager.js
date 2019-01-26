@@ -55,8 +55,44 @@ const getprojectsbyId =  (req, res)=>{
     
     const CreateNewProject = CreateNewItem(projectsTable);
     const CreateNewAction = CreateNewItem(actionsTable);
-
+//
+const DestroyItem = (tableName) =>{
+  return (req, res)=>{
+      const {id} = req.params;
+      db(`${tableName}`).where({id})
+      .del()
+      .then(ids =>{
+        res.status(200).json(`You've deleted your ${tableName} with id:${ids}`)
+      })
+      .catch(err =>{
+        res.status(500).json(err)
+      })
+  }
  
+}
+
+
+const DestroyProject = DestroyItem(projectsTable);
+const DestroyAction = DestroyItem(actionsTable);
+
+const UpdateItem = (tableName) =>{
+  return (req, res)=>{
+      const {id} = req.params;
+      const newItem = req.body;
+      db(`${tableName}`).where({id})
+      .update(newItem)
+      .then(ids =>{
+        res.status(200).json(`You've updated your ${tableName} with id:${ids}`)
+      })
+      .catch(err =>{
+        res.status(500).json(err)
+      })
+  }
+ 
+}
+const UpdateProject = UpdateItem(projectsTable);
+const UpdateAction = UpdateItem(actionsTable);
+
 
 
 module.exports = {
@@ -64,5 +100,9 @@ module.exports = {
   getAllProjects        : getAllProjects,
   CreateNewProject      : CreateNewProject,
   CreateNewAction       : CreateNewAction,
-  getAllActions         : getAllActions
+  getAllActions         : getAllActions,
+  DestroyProject        : DestroyProject,
+  DestroyAction         : DestroyAction,
+  UpdateProject         : UpdateProject,
+  UpdateAction          : UpdateAction
 }
