@@ -1,5 +1,11 @@
 const express = require('express');
 
+const knex = require('knex');
+
+const db_config = require('./knexfile.js');
+
+const db = knex(db_config.development);
+
 const dbProjectHelpers = require('./data/db_projectHelpers');
 const dbActionHelpers = require('./data/db_actionHelpers');
 
@@ -40,11 +46,33 @@ server.get('/project', (req, res) => {
         })
 });
 
+// server.get('/project/:id', (req, res) => {
+//     const { id } = req.params;
+//     dbProjectHelpers.getProjectById(id)
+//         .then(projectInfo => {
+//             res.send(projectInfo)
+//         })
+//         .catch(err => {
+//             res.status(500).json({ err: 'Failed to get project' })
+//         })
+// });
+
 server.get('/project/:id', (req, res) => {
     const { id } = req.params;
-    dbProjectHelpers.getProjectById(id)
-        .then(projectInfo => {
-            res.send(projectInfo)
+    db('project').where('id', id)
+        .then(pro => {
+            db('action')
+                .then(actions => {
+                    let project = pro[0]
+                    const value = {
+                        id: project.project_id,
+                        name: project.name,
+                        description: project.project_description,
+                        completed: project.complete,
+                        actions: actions,
+                    }
+                    res.status(200).json(value)
+                })
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get project' })
