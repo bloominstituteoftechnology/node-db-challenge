@@ -57,22 +57,11 @@ server.get('/project', (req, res) => {
 //         })
 // });
 
-server.get('/project/:id', (req, res) => {
+server.get('/project/:id/action', (req, res) => {
     const { id } = req.params;
-    db('project').where('id', id)
-        .then(pro => {
-            db('action')
-                .then(actions => {
-                    let project = pro[0]
-                    const value = {
-                        id: project.project_id,
-                        name: project.name,
-                        description: project.project_description,
-                        completed: project.complete,
-                        actions: actions,
-                    }
-                    res.status(200).json(value)
-                })
+    db('action').where('project_id', id)
+        .then(project => {
+            res.json(project)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get project' })
