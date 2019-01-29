@@ -4,11 +4,11 @@ exports.up = function(knex, Promise) {
     table => {
       table.increments()
       table.string('name').notNullable().unique()
-      table.string('description').notNullable()
-      table.boolean('complete')
+      table.string('product_description').notNullable()
+      table.boolean('project_complete').defaultTo(false)
     })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.DropTableIfExists('projects')
+  return knex.schema.dropTableIfExists('projects')
 };
