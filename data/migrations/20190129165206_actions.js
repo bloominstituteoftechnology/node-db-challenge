@@ -6,9 +6,11 @@ exports.up = function(knex, Promise) {
       table.string('action_description').notNullable()
       table.string('notes')
       table.boolean('action_complete').defaultTo(false)
+      table.integer('project_id').unsigned()
+      table.foreign('project_id').references(projects.id)
     })
 };
 
 exports.down = function(knex, Promise) {
-  
+  return knex.schema.dropTableIfExists('actions')
 };
