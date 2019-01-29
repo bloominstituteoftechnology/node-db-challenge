@@ -10,9 +10,15 @@ module.exports = {
         return db('project');
     },
 
-    getProjectById: (id) => {
-        return db('action').where('project_id', id);
-    },
+    // getProjectById: (id) => {
+    //     return db('project')
+    //         .where('id', id)
+    //         .first()
+    //         .then(project => {
+    //             db('action')
+    //                 .where('project_id', id)
+    //         })
+    // },
 
     addProject: (project) => {
         return db('project').insert(project);

@@ -23,15 +23,4 @@ router.get('/', (req, res) => {
         })
 });
 
-router.get('/:id/action', (req, res) => {
-    const { id } = req.params;
-    dbProjectHelpers.getProjectById(id)
-        .then(project => {
-            res.send(project)
-        })
-        .catch(err => {
-            res.status(500).json({ err: 'Failed to get project' })
-        })
-});
-
 module.exports = router;
