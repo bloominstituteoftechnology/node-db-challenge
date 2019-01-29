@@ -51,6 +51,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
+ const { id } = req.params
  actsDB.alter(id, project)
   .then(() => {
 
@@ -61,6 +62,7 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
+ const { id } = req.params
  actsDB.clear(id)
   .then(() => {
 
