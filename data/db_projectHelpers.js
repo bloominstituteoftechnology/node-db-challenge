@@ -11,7 +11,7 @@ module.exports = {
     },
 
     getProjectById: (id) => {
-        return db('project').where('id', id).leftJoin('action', 'project.id', 'action.project_id');
+        return db('action').where('project_id', id);
     },
 
     addProject: (project) => {

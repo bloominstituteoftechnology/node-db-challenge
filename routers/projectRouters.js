@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const knex = require('knex');
-const dbConfig = require('../knexfile.js');
-const db = require(dbConfig.development);
 const dbProjectHelpers = require('../data/db_projectHelpers');
 
 router.post('/', (req, res) => {
@@ -28,9 +25,9 @@ router.get('/', (req, res) => {
 
 router.get('/:id/action', (req, res) => {
     const { id } = req.params;
-    db('action').where('project_id', id)
+    dbProjectHelpers.getProjectById(id)
         .then(project => {
-            res.json(project)
+            res.send(project)
         })
         .catch(err => {
             res.status(500).json({ err: 'Failed to get project' })
