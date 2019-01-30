@@ -17,9 +17,9 @@ module.exports = {
 
   getAction: (id) => {
     if(id) {
-      return db('projects').where('id', id)
+      return db('actions').where('project_id', id)
     }
-    return db('projects')
+    return db('actions')
   },
 
   addAction: (project) => {

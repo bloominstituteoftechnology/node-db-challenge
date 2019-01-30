@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       table.string('notes')
       table.boolean('action_complete').defaultTo(false)
       table.integer('project_id').unsigned()
-      table.foreign('project_id').references(projects.id)
+      table.foreign('project_id').references('projects.id')
     })
 };
 

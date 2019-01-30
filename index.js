@@ -5,7 +5,7 @@ server.use(express.json())
 
 //Routes
 const projectsRoute = require('./data/routes/projectsRoute')
-const actionsRoutes = require('./data/routes/actionsRoutes')
+const actionsRoutes = require('./data/routes/actionsRoute')
 
 server.use('/api/projects', projectsRoute)
 server.use('/api/actions', actionsRoutes)

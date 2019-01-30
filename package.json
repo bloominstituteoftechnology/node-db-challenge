@@ -11,7 +11,7 @@
     "sqlite3": "^4.0.6"
   },
   "scripts": {
-    "sever": "nodemon index.js"
+    "server": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
