@@ -7,6 +7,18 @@ const PORT = 5100
 
 server.use(express.json())
 
+server.get('/api/actions', (req, res) => {
+  db('actions')
+    .then(actions => {
+      res.json(actions)
+    })
+    .catch(() => {
+      res
+        .status(500)
+        .json({ error: 'The actions information can not be retrieved.' })
+    })
+})
+
 server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params
   db('projects')
@@ -39,37 +51,13 @@ server.get('/api/projects/:id', (req, res) => {
     })
 })
 
-//having trouble with joins
-// server.get('/api/projects/:id/actions', (req, res) => {
-//   const { id } = req.params
-//   db('projects')
-//     .innerJoin('actions', 'projects.id', 'project_id')
-//     .then(projectInfo => {
-//       if (projectInfo) {
-//         res.json(projectInfo)
-//       } else {
-//         res
-//           .status(404)
-//           .json({
-//             message: 'There are no actions that exist within this project.'
-//           })
-//       }
-//     })
-//     .catch(() => {
-//       res
-//         .status(404)
-//         .json({ error: 'Info about this action could not be retrieved.' })
-//     })
-// })
-
 server.post('/api/projects', (req, res) => {
   const project = req.body
-  if (project.name && project.description && project.is_complete) {
+  if (project.name) {
     db('projects')
       .insert(project)
       .then(ids => {
-        
-        res.status(201).json(ids)
+        res.status(201).json({ ids: ids[0] })
       })
       .catch(() => {
         res
@@ -85,24 +73,27 @@ server.post('/api/projects', (req, res) => {
 
 server.post('/api/actions', (req, res) => {
   const action = req.body
-  if (
-    action.todo_description &&
-    action.notes &&
-    action.is_completed &&
-    action.project_id
-  ) {
+  if (action.todo_description) {
     db('actions')
-      .insert(action)
-      .then(id => {
-        res.status(201).json({ id: id[0] })
+      .select(action.project_id)
+      .then(projects => {
+        if (projects) {
+          db('actions')
+            .insert(action)
+            .then(ids => {
+              res.status(201).json(ids)
+            })
+            .catch(() => {
+              res
+                .status(500)
+                .json({ error: 'Failed to insert action into database' })
+            })
+        } else {
+          res.status(400).json({
+            error: 'Please provide all fields.'
+          })
+        }
       })
-      .catch(() => {
-        res.status(500).json({ error: 'Failed to insert action into database' })
-      })
-  } else {
-    res.status(400).json({
-      error: 'Please provide all fields.'
-    })
   }
 })
 
