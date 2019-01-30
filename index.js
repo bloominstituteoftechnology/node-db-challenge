@@ -7,7 +7,7 @@ const PORT = 5100
 
 server.use(express.json())
 
-server.get('/api/projects/:id/actions', (req, res) => {
+server.get('/api/projects/:id', (req, res) => {
   const { id } = req.params
   db('projects')
     .where('projects.id', id)
@@ -18,7 +18,8 @@ server.get('/api/projects/:id/actions', (req, res) => {
           'actions.id',
           'actions.todo_description',
           'actions.notes',
-          'actions.is_completed'
+          'actions.is_completed',
+          'actions.project_id'
         )
         .where('actions.project_id', id)
         .then(actions => {
@@ -67,6 +68,7 @@ server.post('/api/projects', (req, res) => {
     db('projects')
       .insert(project)
       .then(ids => {
+        
         res.status(201).json(ids)
       })
       .catch(() => {
@@ -76,27 +78,30 @@ server.post('/api/projects', (req, res) => {
       })
   } else {
     res.status(400).json({
-      error:
-        'Please provide a name and description for the project as well as whether or not it has been completed.'
+      error: 'Please provide all fields.'
     })
   }
 })
 
 server.post('/api/actions', (req, res) => {
   const action = req.body
-  if (action.name && action.description && action.is_completed) {
+  if (
+    action.todo_description &&
+    action.notes &&
+    action.is_completed &&
+    action.project_id
+  ) {
     db('actions')
       .insert(action)
-      .then(ids => {
-        res.status(201).json(ids)
+      .then(id => {
+        res.status(201).json({ id: id[0] })
       })
       .catch(() => {
         res.status(500).json({ error: 'Failed to insert action into database' })
       })
   } else {
     res.status(400).json({
-      error:
-        'Please provide a name and description for the action and whether or not it has been completed.'
+      error: 'Please provide all fields.'
     })
   }
 })
