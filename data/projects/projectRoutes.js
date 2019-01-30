@@ -4,6 +4,18 @@ const knexConfig = require('../../knexfile')
 const db = knex(knexConfig.development)
 const router = express.Router()
 
+router.get('/', (req, res) => {
+  db('projects')
+    .then(projects => {
+      res.json(projects)
+    })
+    .catch(() => {
+      res
+        .status(500)
+        .json({ error: 'Projects cannot be retrieved.' })
+    })
+})
+
 router.get('/:id', (req, res) => {
     const { id } = req.params
     db('projects')

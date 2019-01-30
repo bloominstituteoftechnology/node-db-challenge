@@ -4,7 +4,7 @@ const knexConfig = require('../../knexfile')
 const db = knex(knexConfig.development)
 const router = express.Router()
 
-router.get('/api/actions', (req, res) => {
+router.get('/', (req, res) => {
     db('actions')
       .then(actions => {
         res.json(actions)
@@ -12,11 +12,11 @@ router.get('/api/actions', (req, res) => {
       .catch(() => {
         res
           .status(500)
-          .json({ error: 'The actions information can not be retrieved.' })
+          .json({ error: 'Actions cannot be retrieved.' })
       })
   })
   
-  router.post('/api/actions', (req, res) => {
+  router.post('/', (req, res) => {
     const action = req.body
     db('actions')
       .select(action.project_id)
