@@ -22,7 +22,7 @@ module.exports = {
     return db('actions')
   },
 
-  addAction: (project) => {
-    return db('projects').insert(project)
+  addAction: (action) => {
+    return db('action').insert(action)
   }
 }
