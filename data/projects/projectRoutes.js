@@ -50,7 +50,7 @@ router.get('/:id', (req, res) => {
   
   router.post('/', (req, res) => {
     const project = req.body
-    if (project.name && project.description) {
+    if (project.name && project.description && project.is_complete) {
       db('projects')
         .insert(project)
         .then(ids => {
