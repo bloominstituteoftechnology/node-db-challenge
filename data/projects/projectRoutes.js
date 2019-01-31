@@ -10,28 +10,29 @@ router.get('/', (req, res) => {
       res.json(projects)
     })
     .catch(() => {
-      res
-        .status(500)
-        .json({ error: 'Projects cannot be retrieved.' })
+      res.status(500).json({ error: 'Projects cannot be retrieved.' })
     })
 })
 
 router.get('/:id', (req, res) => {
-    const { id } = req.params
-    db('projects')
-      .where('projects.id', id)
-      .then(project => {
-        const thisProject = project[0]
-        db('actions')
-          .select(
-            'actions.id',
-            'actions.todo_description',
-            'actions.notes',
-            'actions.is_completed',
-            'actions.project_id'
-          )
-          .where('actions.project_id', id)
-          .then(actions => {
+  const { id } = req.params
+  db('projects')
+    .where('projects.id', id)
+    .then(project => {
+      const thisProject = project[0]
+      db('actions')
+        .select(
+          'actions.id',
+          'actions.todo_description',
+          'actions.notes',
+          'actions.is_completed',
+          'actions.project_id'
+        )
+        .where('actions.project_id', id)
+        .then(actions => {
+          if (!thisProject) {
+            res.status(404).json({ err: 'invalid project id' })
+          } else {
             res.json({
               id: thisProject.id,
               name: thisProject.name,
@@ -39,34 +40,34 @@ router.get('/:id', (req, res) => {
               is_complete: thisProject.is_complete,
               actions: actions
             })
-          })
+          }
+        })
+    })
+    .catch(() => {
+      res
+        .status(404)
+        .json({ error: 'Info about this project could not be retrieved.' })
+    })
+})
+
+router.post('/', (req, res) => {
+  const project = req.body
+  if (project.name && project.description && project.is_complete) {
+    db('projects')
+      .insert(project)
+      .then(ids => {
+        res.status(201).json({ ids: ids[0] })
       })
       .catch(() => {
         res
-          .status(404)
-          .json({ error: 'Info about this project could not be retrieved.' })
+          .status(500)
+          .json({ error: 'Failed to insert project into database' })
       })
-  })
-  
-  router.post('/', (req, res) => {
-    const project = req.body
-    if (project.name && project.description && project.is_complete) {
-      db('projects')
-        .insert(project)
-        .then(ids => {
-          res.status(201).json({ ids: ids[0] })
-        })
-        .catch(() => {
-          res
-            .status(500)
-            .json({ error: 'Failed to insert project into database' })
-        })
-    } else {
-      res.status(400).json({
-        error: 'Please provide all fields.'
-      })
-    }
-  })
-
+  } else {
+    res.status(400).json({
+      error: 'Please provide all fields.'
+    })
+  }
+})
 
 module.exports = router
