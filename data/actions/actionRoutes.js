@@ -25,10 +25,18 @@ router.post('/', (req, res) => {
         res.status(404).json({ err: 'invalid project id' })
       } else {
         db('actions')
-          // if (action.todo_description && action.notes && action.is_completed) {
           .insert(action)
           .then(ids => {
-            res.status(201).json(ids)
+            if (
+              action.todo_description &&
+              action.notes &&
+              action.is_completed &&
+              action.project_id
+            ) {
+              res.status(201).json(ids)
+            } else {
+              res.status(404).json({ message: 'Provide all fields' })
+            }
           })
       }
     })
