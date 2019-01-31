@@ -4,45 +4,37 @@ const knexConfig = require('../../knexfile')
 const db = knex(knexConfig.development)
 const router = express.Router()
 
+// GET tested in postman
 router.get('/', (req, res) => {
-    db('actions')
-      .then(actions => {
-        res.json(actions)
-      })
-      .catch(() => {
-        res
-          .status(500)
-          .json({ error: 'Actions cannot be retrieved.' })
-      })
-  })
-  
-  router.post('/', (req, res) => {
-    const action = req.body
-    db('actions')
-      .select(action.project_id)
-      .then(projects => {
-        if (action.todo_description) {
-          actions
-            .insert(action)
-            .then(ids => {
-              res
-                .status(201)
-                .json({ message: 'Action was succussfully added to database.' })
-            })
-            .catch(() => {
-              res
-                .status(500)
-                .json({ error: 'Failed to insert action into database' })
-            })
-        } else {
-          res.status(400).json({
-            error: 'Please provide all fields.'
+  db('actions')
+    .then(actions => {
+      res.json(actions)
+    })
+    .catch(() => {
+      res.status(500).json({ error: 'Actions cannot be retrieved.' })
+    })
+})
+
+router.post('/', (req, res) => {
+  const action = req.body
+  db('projects')
+    .where({ id: action.project_id })
+    .first()
+    .then(project => {
+      if (!project) {
+        res.status(404).json({ err: 'invalid project id' })
+      } else {
+        db('actions')
+          // if (action.todo_description && action.notes && action.is_completed) {
+          .insert(action)
+          .then(ids => {
+            res.status(201).json(ids)
           })
-        }
-      })
-      .catch(() => {
-        res.json({ message: 'The project_id you specified does not exist in the database.'})
-      })
-  })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ err: 'Failed to insert action' })
+    })
+})
 
 module.exports = router
