@@ -4,7 +4,6 @@ const knexConfig = require('../../knexfile')
 const db = knex(knexConfig.development)
 const router = express.Router()
 
-// GET tested in postman
 router.get('/', (req, res) => {
   db('actions')
     .then(actions => {
@@ -17,32 +16,41 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const action = req.body
-  db('projects')
-    .where({ id: action.project_id })
-    .first()
-    .then(project => {
-      if (!project) {
-        res.status(404).json({ err: 'invalid project id' })
-      } else {
-        db('actions')
-          .insert(action)
-          .then(ids => {
-            if (
-              action.todo_description &&
-              action.notes &&
-              action.is_completed &&
-              action.project_id
-            ) {
-              res.status(201).json(ids)
-            } else {
-              res.status(404).json({ message: 'Provide all fields' })
-            }
-          })
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ err: 'Failed to insert action' })
-    })
+  if (
+    action.todo_description &&
+    action.project_id &&
+    action.notes &&
+    typeof action.is_completed === 'boolean'
+  ) {
+    db('projects')
+      .where({ id: action.project_id })
+      .first()
+      .then(project => {
+        if (!project) {
+          res.status(404).json({ err: 'invalid project id' })
+        } else {
+          db('actions')
+            .insert(action)
+            .then(id => {
+              if (id[0]) {
+                db('actions')
+                  .where('actions.id', id[0])
+                  .then(action => {
+                    res.status(201).json(action)
+                  })
+              }
+            })
+            .catch(() => {
+              res.status(500).json({ err: 'Error creating action' })
+            })
+        }
+      })
+      .catch(() => {
+        res.status(500).json({ err: 'Failed to insert action' })
+      })
+  } else {
+    res.status(404).json({ message: 'Provide all fields' })
+  }
 })
 
 module.exports = router

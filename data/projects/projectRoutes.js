@@ -55,8 +55,8 @@ router.post('/', (req, res) => {
   if (project.name && project.description && project.is_complete) {
     db('projects')
       .insert(project)
-      .then(ids => {
-        res.status(201).json({ ids: ids[0] })
+      .then(id => {
+        res.status(201).json({ id: id[0] })
       })
       .catch(() => {
         res
