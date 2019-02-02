@@ -4,6 +4,27 @@ const router = express.Router()
 const db = require('../helpers/db')
 
 // endpoints
+router.post('/', (req,res) => {
+  const project = req.body;
+  if(project.name && project.project_description) {
+    db.addProject(project)
+      .then(id => {
+        res
+          .status(201)
+          .json(id)
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({message: 'Failed to add project'})
+      })
+  } else {
+    res
+      .status(400)
+      .json({message: 'Missing project name/description'})
+  }
+})
+
 router.get('/', (req, res) => {
   db.getProject()
     .then(projects => {
