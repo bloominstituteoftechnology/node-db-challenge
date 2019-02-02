@@ -50,6 +50,7 @@ A joining table which acts as a sort of "bridge" used as a one-to-many in betwee
 
 
 
+
 ## Minimum Viable Product
 
 **NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
