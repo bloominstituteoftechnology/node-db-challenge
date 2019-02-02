@@ -23,6 +23,6 @@ module.exports = {
   },
 
   addAction: (action) => {
-    return db('action').insert(action)
+    return db('actions').insert(action)
   }
 }
