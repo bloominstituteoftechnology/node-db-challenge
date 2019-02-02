@@ -43,7 +43,8 @@ router.get('/:id', (req, res) => {
   const {id} = req.params;
   db.getProject(id)
     .then(project => {
-      if(project) {
+      console.log(project)
+      if(project[0]) {
         
         db.getAction(id)
           .then(actions => {
@@ -61,14 +62,14 @@ router.get('/:id', (req, res) => {
       } else {
         res
           .status(404)
-          .json({message: 'Dish not found under current id'})
+          .json({message: 'Project not found under current id'})
       }
     })
     .catch(err => {
       console.log(err)
       res
         .status(500)
-        .json({message: 'Failed to get dish'})
+        .json({message: 'Failed to get Project'})
     })
 })
 
