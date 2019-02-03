@@ -20,12 +20,10 @@ router.post('/', async (req, res) => {
               .catch(err => {
                 res
                   .status(500)
-                  .json({message: 'no project under current project_id'})
+                  .json({message: 'failed to add action'})
               })
           } else {
-            res
-              .status(404)
-              .json({message: 'No project under that project_id'})
+
           }
         })
       })
@@ -44,7 +42,10 @@ router.post('/', async (req, res) => {
 //           .status(201)
 //           .json(id)
 //       })
-
+//       .catch(() => {
+//         res
+//           .json({message: 'Failed to add action.'})
+//     })
 //   } else {
 //     res
 //       .status(404)
