@@ -2,11 +2,15 @@
   "name": "sprint-challenge-rdbms",
   "version": "1.0.0",
   "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project. This Sprint explored Adding Data Persistence to Web API's and you were taught the following modules: Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeds and Introduction to Data Modeling. In your challenge for this Sprint, you will demonstrate proficiency by creating an application that uses ReactJS to consume live data retrieved from the World Wide Web.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "server": "nodemon"
+    "server": "nodemon",
+    "start": "node server.js"
   },
-  "repository": "git+https://github.com/meganfontenot/Sprint-Challenge-RDBMS.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meganfontenot/Sprint-Challenge-RDBMS.git"
+  },
   "author": "Megan Fontenot",
   "license": "ISC",
   "bugs": {
@@ -21,5 +25,6 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
-  }
+  },
+  "keywords": []
 }
