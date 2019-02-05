@@ -16,6 +16,7 @@ server.use('./action', actionRouter);
 server.get('/project/:id', (req, res) => {
     const { id } = req.params
     db('project')
+    .where({ id })
         .first()
         .then(project => {
             db('action')
