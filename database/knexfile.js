@@ -8,11 +8,13 @@ module.exports = {
       filename: './dev.sqlite3'
     },
     useNullAsDefault:true,
-  
+    seeds: {
+			directory: './database/seeds'
+    },
     
   migrations: {
     directory: './database/migrations'
   }
 
-}
-}
+
+}}
