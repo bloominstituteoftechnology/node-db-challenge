@@ -1,30 +1,19 @@
 const express = require('express');
 const server = express();
+const projectRouter = require('./routes/projRoute');
+const actionRouter = require('./routes/actRoute');
 
-const PORT = process.env.PORT || 3300;
+const knex = require('knex');
+const dbConfig = require('./knexfile');
+const db = knex(dbConfig.development);
+
+const PORT = process.env.PORT || 5000;
 
 server.use(express.json());
 
-server.post('/crayons', (req, res) => {
 
-});
-
-server.get('/crayons', (req, res) => {
-
-});
-
-server.get('/crayons/:id', (req, res) => {
-
-});
-
-server.put('/crayons/:id', (req, res) => {
-
-});
-
-server.delete('/crayons/:id', (req, res) =>{
-
-});
+//SERVER
 
 server.listen(PORT, () => {
-   console.log('it is aliiiiiive')
+    console.log(`Server is listening on ${PORT}`)
 });
