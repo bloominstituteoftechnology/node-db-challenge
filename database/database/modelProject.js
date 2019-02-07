@@ -6,16 +6,13 @@ module.exports={
 addProject:(function(project){
     return db('projects').insert(project).then(id=>id)
     }),
-addActions:(function(action){
+addAction:(function(action){
     return db('actions').insert(action).then(id=>id)
     }),
 getProject:(function(projectId){
     return db('projects').where({ id: projectId }).then(project=>project)
         }),
-getActions:(function(projectId){
-    return db('actions').where({project_id:projectId}).then(actions=>actions)
+getActions:(function(actionId){
+    return db('actions').where({project_id:actionId}).then(actions=>actions)
         }),
-
-
 }
-
