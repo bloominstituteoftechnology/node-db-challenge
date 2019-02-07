@@ -1,5 +1,6 @@
 exports.seed = function(knex, Promise) {
   
+  
   return knex('actions').del()
     .then(function () {
       
