@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
   	table.increments();
   	table.string('action_description').notNullable();
   	table.string('action_notes');
-  	table.boolean('completed');
-  	table.integer('project_id').unsigned();
+  	table.boolean('completed').defaultTo(false);
+  	table.integer('project_id').unsigned().notNullable();
   	table.foreign('project_id').references('id').on('projects');
   })
 };
