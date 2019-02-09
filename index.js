@@ -24,6 +24,7 @@ server.get("/", (req, res) => {
   res.send("Working")
 })
 
+/* Projects **/
 // get projects
 server.get("/api/projects", (req, res) => {
   db("projects")
@@ -108,7 +109,7 @@ server.put("/api/projects/:id", (req, res) => {
 server.delete("/api/projects/:id", (req, res) => {
   const { id } = req.params
   const project_id = {
-    project_id: req.params.id
+    project_id: id
   }
 
   db("projects")
@@ -126,13 +127,9 @@ server.delete("/api/projects/:id", (req, res) => {
           if (!reply || reply.length < 1) {
             res.status(404).json({ error: `Not found.` })
           }
-          res
-            .status(200)
-            .json({
-              message: `Deleted project ${
-                project_id.project_id
-              } and its actions.`
-            })
+          res.status(200).json({
+            message: `Deleted project ${project_id.project_id} and its actions.`
+          })
         })
         .catch(err => {
           res.status(500).json({ err })
@@ -145,6 +142,7 @@ server.delete("/api/projects/:id", (req, res) => {
     })
 })
 
+/** Actions */
 // get all actions
 server.get("/api/actions", (req, res) => {
   db("actions")
@@ -237,5 +235,5 @@ server.delete("/api/actions/:id", (req, res) => {
 
 const PORT = 4000
 server.listen(PORT, function() {
-  console.log(`\Listening on http://localhost:${projects}  \n`)
+  console.log(`\Listening on http://localhost:${PORT}  \n`)
 })
