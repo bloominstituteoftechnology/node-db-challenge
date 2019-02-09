@@ -12,4 +12,4 @@
 
 4. What do we need in order to have a _many to many_ relationship between two tables.
 
-- To have a "many to many" relationship between two tables, you need a third table to act as the middle-man between them; the middle-man table will have foreign keys referencing the two other tables.
+- To have a "many to many" relationship between two tables, you need a third table to act as the middle-man between them; the middle-man table will have foreign keys referencing the two other tables..
