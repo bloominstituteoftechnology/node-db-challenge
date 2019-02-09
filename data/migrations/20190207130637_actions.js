@@ -3,9 +3,11 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.string('actionDescription');
         table.string('actionNotes');
+
         table.integer('projectId').unsigned();
         table.foreign('projectId').references('id').on('projects');
         table.boolean('completed').defaultTo(0);
+        
         
     })
   };
