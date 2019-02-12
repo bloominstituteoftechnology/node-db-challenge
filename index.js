@@ -13,6 +13,36 @@ server.use(express.json());
 
 
 // get project by id
+server.get('/projects/:id', (req, res) => {
+	const { id } = req.params;
+	db('projects')
+		.where('projects.id', id)
+		.then(project => {
+			const projectSelected = project[0];
+			console.log(projectSelected.id);
+			db('actions')
+				.select(
+					'actions.id',
+					'actions.action_description as description',
+					'actions.notes',
+					'actions.actions_complete as complete'
+				)
+				.where('actions.project_id', id)
+				.then(actionResponse => {
+					res.json({
+						id: projectSelected.id,
+						name: projectSelected.name,
+						description: projectSelected.description,
+						completed: projectSelected.complete,
+						actions: actionResponse
+					});
+				});
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(500).json({ message: 'Could not retrieve project'})
+		});
+});
 
 // post project
 server.post('/projects', (req, res) => {
