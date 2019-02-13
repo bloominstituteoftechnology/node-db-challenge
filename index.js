@@ -1,19 +1,18 @@
 const express = require('express');
 const server = express();
-const knex = require('knex');
 
-const dbConfig = require('./knexfile.js');
-const db = knex(dbConfig.development);
+const projectRouter = require('./Routes/projectRoutes');
+const actionRouter = require('./Routes/actionRoutes');
 
 const PORT = 3500;
 
 server.use(express.json());
 
-// get project
-
+server.use('/projects', projectRouter);
+server.use('/actions', actionRouter);
 
 // get project by id
-server.get('/projects/:id', (req, res) => {
+/*server.get('/projects/:id', (req, res) => {
 	const { id } = req.params;
 	db('projects')
 		.where('projects.id', id)
@@ -80,7 +79,7 @@ server.post('/projects/actions', (req, res) => {
 				res.status(500).json({ message: 'Could not create action' });
 			}
 		});
-});
+});*/
 
 // Server Listening
 server.listen(PORT, () => {

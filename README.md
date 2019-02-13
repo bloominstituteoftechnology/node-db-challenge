@@ -53,13 +53,13 @@ Follow these steps for starting your project.
 - [ X ] Add your project manager as collaborator on Github.
 - [ X ] Clone your OWN version of the repository (Not Lambda's by mistake!).
 - [ X ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-- [ ] Push commits: git push origin `<firstName-lastName>`.
+- [ X ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [ X ] Push commits: git push origin `<firstName-lastName>`.
 
 Follow these steps for completing your project.
 
-- [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into master (student's Repo). **Please don't merge your own pull request**
-- [ ] Add your project manager as a reviewer on the pull-request
+- [ X ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into master (student's Repo). **Please don't merge your own pull request**
+- [ X ] Add your project manager as a reviewer on the pull-request
 - [ ] Your project manager will count the project as complete by merging the branch back into master.
 
 ## Minimum Viable Product
@@ -81,12 +81,12 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 ### Tasks
 
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
-- [ ] Build the API with the following endpoints:
+- [ X ] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [ X ] Build the API with the following endpoints:
 
-  - [ ] POST for adding projects.
-  - [ ] POST for adding actions.
-  - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
+  - [ X ] POST for adding projects.
+  - [ X ] POST for adding actions.
+  - [ X ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
 
     ```js
     {
