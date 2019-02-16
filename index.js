@@ -8,7 +8,7 @@ const actionsRouter = require('./data/routes/actionsRouter')
 
 server.use(
  helmet(),
- logger(),
+ logger('dev'),
  express.json()
 )
 

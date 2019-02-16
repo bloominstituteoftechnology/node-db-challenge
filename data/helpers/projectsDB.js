@@ -10,8 +10,8 @@ module.exports ={
 
  pullById: (id) => {
   return projDB('projects')
-               .join('actions', 'projects.id', '=', 'actions.project_id' )
-               .select('projects.name', 'projects.description', 'actions.name')
+               .leftJoin('actions', 'projects.id', '=', 'actions.project_id' )
+               // .select('projects.name', 'projects.description', 'actions.name')
                // .where({id: id})
  },
 
