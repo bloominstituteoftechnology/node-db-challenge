@@ -28,19 +28,22 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+1. Explain the difference between `RDBMS` and `SQL`. An RDBMS is a Relational Database Management System. It is the Database software itself, which manages storage, querying and updating. SQL(Structured Query Language) is a language(or family of closely related languages) which typically is used to query the RDBMS.
+
+1. Why do tables need a `primary key`?  The primary key provides a unique identifier to each row in a table. The PK is mandatory in order to define a Foreign Key relationship between a child table and a parent table.
+
+1. What is the name given to a table column that references the primary key on another table. That would be a Foreign Key
+
+1. What do we need in order to have a _many to many_ relationship between two tables. A many to many relationship is created when the parent table's data can have multiple associated entries in the children table. An example could be Artist to song
 
 ## Project Set Up
 
 Follow these steps for starting your project.
 
-- [ ] Create a forked copy of this project.
+- [x] Create a forked copy of this project.
 - [ ] Add your project manager as collaborator on Github.
-- [ ] Clone your OWN version of the repository (Not Lambda's by mistake!).
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [x] Clone your OWN version of the repository (Not Lambda's by mistake!).
+- [x] Create a new branch: git checkout -b `<firstName-lastName>`.
 - [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
 - [ ] Push commits: git push origin `<firstName-lastName>`.
 
