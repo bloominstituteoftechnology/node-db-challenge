@@ -1,0 +1,31 @@
+{
+  "name": "sprint-challenge-rdbms",
+  "version": "1.0.0",
+  "description": "The sprint challenge for Lambda School's week 2 of back-end",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwthomas/Sprint-Challenge-RDBMS.git"
+  },
+  "author": "Nathan Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nwthomas/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/nwthomas/Sprint-Challenge-RDBMS#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "helmet": "^3.15.1",
+    "knex": "^0.16.3",
+    "morgan": "^1.9.1",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
