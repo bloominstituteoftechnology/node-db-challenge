@@ -5,9 +5,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('actions').insert([
-        {todo_description: 'study js', notes: 'Start studying JS methods more', is_completed: false},
-        {todo_description: 'Cook dinner', notes: 'Cook dinner without setting off smoke alarm and ruining it', is_completed: true},
-        {todo_description: 'Work on RDBMS Sprint challenge for class', notes: 'Finish building the database and writing the routes', is_completed: false}
+        {id: 1, notes: 'Read Training kit material for Authentication', description: 'Study Authentication', is_complete: false},
+        {id: 2, notes: 'Study JavaScript', description: 'Complete some code challenges', is_complete: true},
+        {id: 3, notes: 'Test', description: 'Testing seeds', is_complete: false}
       ]);
     });
 };
