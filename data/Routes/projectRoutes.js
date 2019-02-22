@@ -14,4 +14,40 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params
+    DB('projects')
+      .where('projects.id', id)
+      .then(project => {
+        const thisProject = project[0]
+        DB('actions')
+          .select(
+            'actions.id',
+            'actions.description',
+            'actions.notes',
+            'actions.is_complete',
+            'actions.project_id'
+          )
+          .where('actions.project_id', id)
+          .then(actions => {
+            if (!thisProject) {
+              res.status(404).json({ err: 'invalid project id' })
+            } else {
+              res.json({
+                id: thisProject.id,
+                name: thisProject.name,
+                description: thisProject.description,
+                is_complete: thisProject.is_complete,
+                actions: actions
+              })
+            }
+          })
+      })
+      .catch(() => {
+        res
+          .status(404)
+          .json({ error: 'Info about this project could not be retrieved.' })
+      })
+  })
+
 module.exports = router
