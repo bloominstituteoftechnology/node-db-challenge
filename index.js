@@ -7,6 +7,16 @@ server.use(express.json());
 
 const db = knex(knexConfig.development);
 
+server.get('/', async (req, res) => {
+  try {
+    res.send('SANITY CHECK')
+
+  } catch (error) {
+    res.send(500).json({message: 'Server Error'})
+  }
+
+});
+
 //GET project endpoint with ID
 server.get("/api/projects/:id", (req, res) => {
   const id = req.params.id;
@@ -88,4 +98,4 @@ server.delete("/api/projects/:id", (req, res) => {
     });
 });
 
-server.listen(6000, () => console.log("server up on 6000"));
+server.listen(3000, () => console.log("server up on 3000"));
