@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
           .where('actions.project_id', id)
           .then(actions => {
             if (!thisProject) {
-              res.status(404).json({ err: 'invalid project id' })
+              res.status(404).json({ err: 'A project with that ID could not be found in the DB.' })
             } else {
               res.json({
                 id: thisProject.id,
@@ -49,5 +49,23 @@ router.get('/:id', (req, res) => {
           .json({ error: 'Info about this project could not be retrieved.' })
       })
   })
+
+  router.post('/', (req, res) => {
+      const project = req.body
+      if(project.name && project.description && project.is_complete) {
+          DB('projects')
+          .insert(project)
+          .then(id => {
+              res.status(201).json({ id: id[0]})
+          })
+          .catch(() => {
+              res.status(500).json({error: 'Failed to insert the project into the DB.'})
+          })
+      } else {
+          res.status(400).json({error: 'Please provide a name, description and if project is completed or not.'})
+      }
+  })
+
+
 
 module.exports = router
