@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
         table.increments('id')
         table.string('description', 128).notNullable()
         table.text('notes').notNullable()
-        table.boolean('is_complete').defaultTo(false)
+        table.boolean('is_complete').notNullable()
     })
   }
   
