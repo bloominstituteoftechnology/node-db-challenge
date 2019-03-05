@@ -31,7 +31,8 @@ router.get('/', (req, res) => {
 });
 
 
-router.get("/:id/actions", (req, res) => {
+router.get("/:id", (req, res) => {
+
   actions
     .getProjectActions(req.params.id)
     .then(action => {
@@ -53,7 +54,8 @@ router.get('/:id', async (req, res) => {
     const project = await projects.findById(id);
 
     if (project) {
-      res.status(200).json(project);
+      project == await actions(productsId)
+      res.status(200).json(project.actions);
     } else {
       res.status(404).json({ message: 'project not found' });
     }
