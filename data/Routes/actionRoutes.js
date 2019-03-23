@@ -93,8 +93,10 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const actions = req.body;
-  if (actions.name && actions.description && actions.is_complete && actions.notes) {
+  const { id } = req.params;
+  if (actions.description && actions.is_complete && actions.notes) {
     DB("actions")
+      .where("id", id)
       .update(actions)  // in the process of debugging
       .then(id => {
         res.status(201).json({ id: id[0] });
@@ -105,7 +107,7 @@ router.put("/:id", (req, res) => {
   } else {
     res.status(400).json({
       error:
-        "Please provide a name, description and if action is completed or not."
+        "Please provide a Description, notes and if the action is completed or not."
     });
   }
 });
