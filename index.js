@@ -28,6 +28,32 @@ server.post('/api/actions', async (req, res) => {
   } catch (e) {
     res.status(500).json({error: "Something went wrong with the server."});
   }
+});
+
+server.get('/api/projects/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const project = await db('projects').where('id', id).first();
+    const actions = await db('actions').where('project_id', id);
+    const fullProject = {
+      id: project.id,
+      name: project.project_name,
+      description: project.project_description,
+      completed: project.project_completed === 0 ? false : true,
+      actions: actions.map(el => {
+        return {
+          id: el.id,
+          description: el.action_description,
+          notes: el.action_notes,
+          complete: el.action_completed === 0 ? false : true
+        }
+      })
+    }
+    res.status(200).json(fullProject);
+  } catch (e) {
+    res.status(500).json({error: "Something went wrong with the server."});
+  }
 })
 
 
