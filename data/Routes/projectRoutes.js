@@ -33,11 +33,9 @@ router.get("/:id", (req, res) => {
         .where("actions.project_id", id)
         .then(actions => {
           if (!thisProject) {
-            res
-              .status(404)
-              .json({
-                err: "A project with that ID could not be found in the DB."
-              });
+            res.status(404).json({
+              err: "A project with that ID could not be found in the DB."
+            });
           } else {
             res.json({
               id: thisProject.id,
@@ -70,21 +68,36 @@ router.post("/", (req, res) => {
           .json({ error: "Failed to insert the project into the DB." });
       });
   } else {
-    res
-      .status(400)
-      .json({
-        error:
-          "Please provide a name, description and if project is completed or not."
-      });
+    res.status(400).json({
+      error:
+        "Please provide a name, description and if project is completed or not."
+    });
   }
 });
 
-router.put('/', (req, res) => {
-
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const { name, description } = req.body;
+  const newProject = { name, description };
+  if (!name || !description) {
+    res.status(400).json.apply({
+      message: "The project name and/or description are missing"
+    });
+  } else {
+    DB.update(id, newProject)
+      .then(project => {
+        if (project) {
+          res.json(project);
+        } else {
+          res
+            .status(404)
+            .json({ error: "Project with specified ID not found" });
+        }
+      })
+      .catch(err =>
+        res.status(500).json({ error: "Failed to update project" })
+      );
+  }
 });
-
-router.delete('/:id', (req, res) => {
-  
-})
 
 module.exports = router;
