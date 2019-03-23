@@ -8,12 +8,23 @@ const server = express();
 
 server.use(express.json());
 
-// server.get('/api/projects', async (req, res) => {
-//     try {
+server.get('/api/projects', (req, res) => {
+    return db('projects')
+        .then(projs => {
+            res.status(200).json(projs)
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+})
 
-//     }
-    
-// })
+server.get('/api/actions', (req, res) => {
+    return db('actions')
+        .then(acts => {
+            res.status(200).json(acts)
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+})
 
 server.get('/api/projects/:id', async (req, res) => {
     try {
@@ -28,30 +39,24 @@ server.get('/api/projects/:id', async (req, res) => {
     }
 })
 
-server.post('/api/projects', async (req, res) => {
-    try {
-        if(req.body.project_name && req.body.description) {
-            const newProj = await db.insert(req.body)
-            res.status(200).json(newProj)
-        } else {
-            res.status(500).json({message: 'you are missing some info bro'})
-        }
-    } catch(error) {
-        res.status(500).json(error);
-    }
+server.post('/api/projects', (req, res) => {
+    return db('projects')
+        .insert(req.body)
+        .then(projs => {
+            res.status(200).json(projs)
+        }).catch(err => {
+            res.status(500).json(err)
+        })
 })
 
-server.post('/api/actions', async (req, res) => {
-        try {
-            if(req.body.action && req.body.notes) {
-                const newAct = await db.insert(req.body)
-                res.status(200).json(newAct)
-            } else {
-                res.status(500).json({message: 'you are missing some info bro'})
-            }
-        } catch(error) {
-            res.status(500).json(error);
-        }
+server.post('/api/actions',(req, res) => {
+    return db('actions')
+    .insert(req.body)
+    .then(acts => {
+        res.status(200).json(acts)
+    }).catch(err => {
+        res.status(500).json(err)
+    })
 });
 
 
