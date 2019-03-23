@@ -48,7 +48,7 @@ router.get("/:id", (req, res) => {
     .catch(() => {
       res
         .status(404)
-        .json({ error: "Info about this project could not be retrieved." });
+        .json({ error: "Info about this action could not be retrieved." });
     });
 });
 
@@ -97,7 +97,7 @@ router.put("/:id", (req, res) => {
   if (actions.description && actions.is_complete && actions.notes) {
     DB("actions")
       .where("id", id)
-      .update(actions)  // in the process of debugging
+      .update(actions)
       .then(id => {
         res.status(201).json({ id: id[0] });
       })
@@ -110,6 +110,28 @@ router.put("/:id", (req, res) => {
         "Please provide a Description, notes and if the action is completed or not."
     });
   }
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  DB("actions")
+    .where({ id: id })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json(count);
+      } else {
+        res
+          .status(404)
+          .json({
+            message: "404 - action with that id ${id} not found in the DB."
+          });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
