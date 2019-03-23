@@ -23,5 +23,10 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
+// ROUTE HANDLER TEST
+server.get('/', (req, res) => {
+	res.send("It works!");
+});
+
 const port = process.env.PORT || 9090;
 server.listen(port, () => console.log(`\nrunning on ${port}\n`));
