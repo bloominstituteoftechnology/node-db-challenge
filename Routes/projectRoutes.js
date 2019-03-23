@@ -5,8 +5,8 @@ const actionDB = require('../data/helpers/actionHelpers')
 
 
 // GET
-router.get('/', (req, res) => {
-	projectDB
+router.get('/', async (req, res) => {
+	/*projectDB
 		.getAll()
 		.then(projects => {
 			res.json(projects);
@@ -14,11 +14,22 @@ router.get('/', (req, res) => {
 		.catch(err => {
 			console.log(err);
 			res.status(500).json({ error : err });
-		});
+		});*/
+	try {
+		const allProjects = await projectDB.getAll('projects');
+		res
+			.status(200)
+			.json(allProjects);
+	}
+	catch (error) {
+		res
+			.status(500)
+			.json(error);
+	}
 }); 
 
 // GET by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
 	const { id } = req.params;
 	projectDB
 		.getProject(id)
@@ -85,4 +96,4 @@ router.delete('/:id', (req, res) => {
 });
 
 
-module.express = router;
+module.exports = router;

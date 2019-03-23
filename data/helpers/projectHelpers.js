@@ -12,7 +12,7 @@ module.exports = {
 		return db('projects')
 			.insert(project)
 			.then(ids => ({
-				idL ids[0]
+				id: ids[0]
 			}));
 	},
 	update: function(id, change) {

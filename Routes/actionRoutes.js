@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // GET by ID with contexts
-router.get('/:id' (req, res) => {
+router.get('/:id', (req, res) => {
 	const { id } = req.params;
 	actionDB
 		.getAction(id)
