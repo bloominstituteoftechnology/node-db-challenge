@@ -91,4 +91,23 @@ router.post("/", (req, res) => {
   }
 });
 
+router.put("/:id", (req, res) => {
+  const actions = req.body;
+  if (actions.name && actions.description && actions.is_complete && actions.notes) {
+    DB("actions")
+      .update(actions)  // in the process of debugging
+      .then(id => {
+        res.status(201).json({ id: id[0] });
+      })
+      .catch(() => {
+        res.status(500).json({ error: "Failed to update the action info." });
+      });
+  } else {
+    res.status(400).json({
+      error:
+        "Please provide a name, description and if action is completed or not."
+    });
+  }
+});
+
 module.exports = router;
