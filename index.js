@@ -19,15 +19,37 @@ server.get('/api/projects', (req, res) => {
     .catch(err => res.status(500).json(err));
   });
 
-  //POST for adding projects
+//POST for adding projects
 
-  server.post('/api/project', async (req, res) => {
-    db.addProject(req.body)
-        .then(project => {
-          res.status(201).json(project);
-        })
+server.post('/api/project', async (req, res) => {
+  db.addProject(req.body)
+      .then(project => {
+        res.status(201).json(project);
+      })
+  .catch(err => res.status(500).json(err));
+});
+
+//GET ALL Actions
+
+server.get('/api/actions', (req, res) => {
+  db.getActions()
+  .then(action =>{
+    res.status(200).json(action);
+  })
     .catch(err => res.status(500).json(err));
   });
+
+// POST for adding actions.
+
+server.post('/api/action', async (req, res) => {
+  db.addAction(req.body)
+      .then(action => {
+        res.status(201).json(action);
+      })
+  .catch(err => res.status(500).json(err));
+});
+
+
 
 const port = process.env.PORT || 9000;
 server.listen(port, () => console.log(`\nrunning on ${port}\n`));
