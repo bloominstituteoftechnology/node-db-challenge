@@ -17,6 +17,17 @@ server.post('/api/projects', async (req, res) => {
   } catch (e) {
     res.status(500).json({error: "Something went wrong with the server"});
   }
+});
+
+server.post('/api/actions', async (req, res) => {
+  const newAction = req.body;
+
+  try {
+    const action = await db('actions').insert(newAction);
+    res.status(200).json(action);
+  } catch (e) {
+    res.status(500).json({error: "Something went wrong with the server."});
+  }
 })
 
 
