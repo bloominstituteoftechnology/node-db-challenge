@@ -1,101 +1,58 @@
 const express = require('express');
+const knex = require('knex');
 
-const db = require('./data/dbHelpers');
+const knexConfig = require('./knexfile.js');
+const db = knex(knexConfig.development);
 
 const server = express();
 
 server.use(express.json());
 
-//get all projects listed
-server.get('/projects', async (req, res) => {
-    try {
-        const projects = await db.getAllProjects();
-        res.status(200).json(projects)
-    } catch (e) {
-        res.status(500).json(e)
-    }
-})
-
-//get project by id
-server.get('/projects/:id', async (req, res) => {
-    try {
-        const projs = await db.getProjectsById(req.params.id)
-
-        if(projs) {
-            res.status(200).json(projs);
-        } else {
-            res.status(404).json({message: 'not found'})
-        }
-    } catch (e) {
-        res.status(500).json(e)
-    }
-})
-
-//get all actions listed
-server.get('/actions', async (req, res) => {
-    try {
-        const actions = await db.getAllActions();
-        res.status(200).json(actions)
-    } catch (e) {
-        res.status(500).json(e)
-    }
-})
-
-//get action by id
-server.get('/actions/:id', async (req, res) => {
-    try {
-        const action = await db.getActionsById(req.params.id)
-
-        if(action) {
-            res.status(200).json(action);
-        } else {
-            res.status(404).json({message: 'not found'})
-        }
-    } catch (e) {
-        res.status(500).json(e)
-    }
-})
-
-// server.get('/projects/:id/actions', (req, res) => {
+// server.get('/api/projects', async (req, res) => {
 //     try {
 
-//     } catch (e) {
-//         res.status(500).json(e)
 //     }
+    
 // })
 
-//post new project to projects table
-server.post('/projects', async (req,res) => {
+server.get('/api/projects/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const project = await db('projects').first();
+
+        const actions = await db('actions').where('projects_id', id);
+        res.status(200).json({...project, actions});
+
+    } catch(error) {
+        res.status(500).json(error)
+    }
+})
+
+server.post('/api/projects', async (req, res) => {
     try {
         if(req.body.project_name && req.body.description) {
-            const newProj = await db.addProject(req.body);
+            const newProj = await db.insert(req.body)
             res.status(200).json(newProj)
         } else {
-            res.status(500).json({
-                message: 'Your missing some info dude'
-            })
+            res.status(500).json({message: 'you are missing some info bro'})
         }
-    } catch (e) {
-        res.status(500).json(e)
+    } catch(error) {
+        res.status(500).json(error);
     }
 })
 
-//post new action to actions table
-server.post('/actions', async (req,res) => {
-    try {
-        if(req.body.action && req.body.notes) {
-            const newAction = await db.addAction(req.body);
-            res.status(200).json(newAction)
-        } else {
-            res.status(500).json({
-                message: 'Your missing some info dude'
-            })
+server.post('/api/actions', async (req, res) => {
+        try {
+            if(req.body.action && req.body.notes) {
+                const newAct = await db.insert(req.body)
+                res.status(200).json(newAct)
+            } else {
+                res.status(500).json({message: 'you are missing some info bro'})
+            }
+        } catch(error) {
+            res.status(500).json(error);
         }
-    } catch (e) {
-        res.status(500).json(e)
-    }
-})
-
-server.listen(3300, () => {
-    console.log('server running on port number 3300...')
 });
+
+
+server.listen(3300, () => console.log('\nServer Listening on port: 3300\n'));
