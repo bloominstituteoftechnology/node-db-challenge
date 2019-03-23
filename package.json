@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "server": "nodemon"
-    // "start": "nodemon index.js"
   },
   "dependencies": {
     "express": "^4.16.4",
