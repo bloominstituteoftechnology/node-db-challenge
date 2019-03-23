@@ -95,4 +95,22 @@ router.put("/:id", (req, res) => {
     });
   }
 });
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  DB("projects")
+  .where({ id: id})
+  .del()
+  .then(count => {
+    if(count > 0) {
+      res.status(200).json(count);
+    } else {
+      res.status(404).json({ message: "404 project with that ${id} not found within the DB."})
+    }
+  })
+  .catch(() => {
+    res.status(500).json(err);
+  })
+})
 module.exports = router;
