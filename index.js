@@ -5,7 +5,7 @@ const actionRoutes = require('./data/Routes/actionRoutes')
 const projectRoutes = require('./data/Routes/projectRoutes')
 const DB = knex(knexConfig.development)
 const server = express()
-const PORT = 3300
+const PORT = 9090;
 
 server.use(express.json())
 
