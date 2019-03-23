@@ -3,7 +3,8 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('actions', table => {
     table.increments();
     table.string('action_description')
-      .notNullable();
+      .notNullable()
+      .unique();
     table.string('action_notes')
       .notNullable();
     table.boolean('action_completed');
