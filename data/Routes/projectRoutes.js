@@ -76,28 +76,23 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  const id = req.params.id;
-  const { name, description } = req.body;
-  const newProject = { name, description };
-  if (!name || !description) {
-    res.status(400).json.apply({
-      message: "The project name and/or description are missing"
-    });
-  } else {
-    DB.update(id, newProject)
-      .then(project => {
-        if (project) {
-          res.json(project);
-        } else {
-          res
-            .status(404)
-            .json({ error: "Project with specified ID not found" });
-        }
+  const project = req.body;
+  if (project.name && project.description && project.is_complete) {
+    DB("projects")
+      .update(project)
+      .then(id => {
+        res.status(201).json({ id: id[0] });
       })
-      .catch(err =>
-        res.status(500).json({ error: "Failed to update project" })
-      );
+      .catch(() => {
+        res
+          .status(500)
+          .json({ error: "Failed to update the project info." });
+      });
+  } else {
+    res.status(400).json({
+      error:
+        "Please provide a name, description and if project is completed or not."
+    });
   }
 });
-
 module.exports = router;
