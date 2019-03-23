@@ -41,7 +41,7 @@ Demonstrate your understanding of this week's concepts by answering the followin
 Follow these steps for starting your project.
 
 - [x] Create a forked copy of this project.
-- [ ] Add your project manager as collaborator on Github.
+- [x] Add your project manager as collaborator on Github.
 - [x] Clone your OWN version of the repository (Not Lambda's by mistake!).
 - [x] Create a new branch: git checkout -b `<firstName-lastName>`.
 - [x] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
