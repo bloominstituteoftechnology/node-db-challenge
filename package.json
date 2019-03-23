@@ -1,0 +1,19 @@
+{
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:TaylorBelk1/Sprint-Challenge-RDBMS.git",
+  "author": "Taylorbelk1 <belktaylor12@gmail.com>",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
