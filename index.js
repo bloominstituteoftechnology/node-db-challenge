@@ -50,6 +50,20 @@ server.post('/api/action', async (req, res) => {
 });
 
 
+server.get('/api/projects/:id', async (req, res) => {
+  const id = req.params.id;
+db.getProjectByIdWithActions(id)
+  .then(project => {
+    if (project) {
+      res.status(200).json(project);
+    }else{
+      res.status(404).json({ message: 'project is not found' });
+    }
+    })
+  .catch(err => console.log('error', err));
+});
+
+
 
 const port = process.env.PORT || 9000;
 server.listen(port, () => console.log(`\nrunning on ${port}\n`));

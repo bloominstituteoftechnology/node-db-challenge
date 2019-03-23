@@ -19,4 +19,16 @@ addAction: (action) => {
   return db("actions")
   .insert(action)
 },
+// getProjectByIdWithActions:(id)=>{
+//   return db('projects')
+//   .join('actions', 'projects.id', '=', 'actions.project_id')
+//   .groupBy('actions.id')
+//   .where({ "projects.id": id })
+// }
+
+getProjectByIdWithActions:(id)=>{
+    return db('actions')
+    .join('projects', 'projects.id', '=', 'actions.project_id')
+    .where({ "projects.id": id })
+  }
 }
