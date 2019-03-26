@@ -1,11 +1,3 @@
-## Description
-
-In this challenge, you **design** and build an application for managing `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
-
-Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
-
-This will be akin to the Web API that you built in the last sprint, only this time, you'll be writing the persistence layer.
-
 - [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
 - [ ] Push commits: git push origin `<firstName-lastName>`.
 
@@ -17,24 +9,6 @@ Follow these steps for completing your project.
 
 ## Minimum Viable Product
 
-**NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
-
-- [ ] A `project` can contain multiple actions and has:
-  - [ ] a unique Id.
-  - [ ] a name.
-  - [ ] a description.
-  - [ ] a flag that indicates if the project is complete or not.
-- [ ] An `action` belongs to only one project. An action has:
-  - [ ] a unique id.
-  - [ ] a description of what needs to be done.
-  - [ ] a notes column to add additional information.
-  - [ ] a flag that indicates if the action has been completed.
-
-Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
-
-### Tasks
-
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
 - [ ] Build the API with the following endpoints:
 
   - [ ] POST for adding projects.
