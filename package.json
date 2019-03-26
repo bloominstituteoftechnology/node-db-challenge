@@ -1,0 +1,19 @@
+{
+  "name": "sprint-challenge-rdbms",
+  "version": "1.0.0",
+  "description": "Project for Lambda school, SQL, EXPRESS, NODE.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jerrardsmith215/Sprint-Challenge-RDBMS.git"
+  },
+  "author": "Jerrard Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jerrardsmith215/Sprint-Challenge-RDBMS/issues"
+  },
+  "homepage": "https://github.com/Jerrardsmith215/Sprint-Challenge-RDBMS#readme"
+}
