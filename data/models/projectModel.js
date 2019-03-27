@@ -20,3 +20,12 @@ const insert = (project) => {
         .insert(project)
         .into('projects')
 }
+// READ
+const find = () => db('projects')
+
+// READ BY ID
+const findById = (id) => {
+    db('projects')
+        .where({ id })
+        .first();
+}
