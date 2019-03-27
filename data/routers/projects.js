@@ -52,4 +52,36 @@ router.get('/', (req, res) => {
         });
 })
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    if (numberIdCheck(id)) {
+        db
+        .findById(id)
+        .then(project => {
+            if (project) {
+                res
+                .status(200)
+                .json(project);
+            } else if (!project) {
+                res
+                .status(404)
+                .json({ err: 'Could not find project with specified ID from database' });
+            }
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ err: 'Could not retrieve projects from database' });
+        });
+    } else if (id && !numberIdCheck(id)) {
+        res
+            .status(400)
+            .json({ err: 'Could not retrieve project from database (ID is not valid)'});
+    } else {
+        res
+            .status(500)
+            .json({ err: 'Error (Bad field input or Internal error)....'})
+    }
+})
+
 module.exports = router;
