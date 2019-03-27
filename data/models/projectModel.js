@@ -29,3 +29,17 @@ const findById = (id) => {
         .where({ id })
         .first();
 }
+
+// UPDATE
+const update = (id, changes) => {
+    db('projects')
+        .where('id', id)
+        .update(changes);
+}
+
+// DELETE
+const remove = (id) => {
+    db('projects')
+        .where('id', id)
+        .del();
+}
