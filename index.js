@@ -1,7 +1,7 @@
 // initialize server and routes
 const express = require('express');
 const server = express();
-// const actions = require('./data/routers/actions');
+const actions = require('./data/routers/actions');
 const projects = require('./data/routers/projects');
 
 
@@ -20,7 +20,7 @@ server.use(
     );
 
 // define routes and launch server
-// server.use('/api/actions', actions);
+server.use('/api/actions', actions);
 server.use('/api/projects', projects);
 
 server.listen(port, () => {

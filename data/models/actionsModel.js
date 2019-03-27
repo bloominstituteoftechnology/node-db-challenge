@@ -12,8 +12,9 @@ const insert = (newAction) => {
 }
 
 // READ
-const find = () => db('actions');
-
+const find = () => {
+    return db('actions');
+}
 // READ BY ID
 const findById = (id) => {
     return db('actions')

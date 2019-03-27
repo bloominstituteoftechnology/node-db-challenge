@@ -61,14 +61,14 @@ router.get('/:id', (req, res) => {
         .then(project => {
             if (project) {
                 const projectId = project.id;
-                async function getActions () {
+                async function getActionsReturnProject () {
                     let actions = await actionDb.findByProjectId(projectId);
-                    return actions;
+                    project.actions = actions;
+                    res
+                    .status(200)
+                    .json(project)
                     }
-                project.actions = getActions();
-                res
-                .status(200)
-                .json(project);
+                getActionsReturnProject();
             } else if (!project) {
                 res
                 .status(404)
