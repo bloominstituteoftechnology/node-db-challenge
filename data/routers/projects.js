@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models/projectModel');
+const actionDb = require('../models/actionsModel');
 
 // add middleware
 const numberIdCheck = require('../middleware/numberIdCheck');
@@ -59,6 +60,12 @@ router.get('/:id', (req, res) => {
         .findById(id)
         .then(project => {
             if (project) {
+                const projectId = project.id;
+                async function getActions () {
+                    let actions = await actionDb.findByProjectId(projectId);
+                    return actions;
+                    }
+                project.actions = getActions();
                 res
                 .status(200)
                 .json(project);
@@ -73,14 +80,10 @@ router.get('/:id', (req, res) => {
                 .status(500)
                 .json({ err: 'Could not retrieve projects from database' });
         });
-    } else if (id && !numberIdCheck(id)) {
+    } else if (!numberIdCheck(id)) {
         res
             .status(400)
             .json({ err: 'Could not retrieve project from database (ID is not valid)'});
-    } else {
-        res
-            .status(500)
-            .json({ err: 'Error (Bad field input or Internal error)....'})
     }
 })
 
