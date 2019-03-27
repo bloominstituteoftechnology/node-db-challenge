@@ -12,8 +12,8 @@ exports.seed = function(knex, Promise) {
           completed: false // or true
         },
         {
-          id: 7,
-          description: 'A finished action!',
+          id: 4,
+          description: 'A finished action! belonging to project with id 4',
           notes: 'This action is finished',
           completed: true // or true
         }

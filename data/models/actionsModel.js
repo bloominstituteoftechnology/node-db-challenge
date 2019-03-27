@@ -46,7 +46,7 @@ module.exports = {
     // CRUD operation exports
         find, // [x] logic for READ/get
         findById, // [x] logic for READ/get by ID
-        findByProjectId,
+        findByProjectId, // [x] logic for getting actions by project id
         insert, // [x] logic for CREATE/post
         remove, // [] logic for DELETE/delete
         update, // [] logic for PUT/update

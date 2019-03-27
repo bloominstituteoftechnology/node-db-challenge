@@ -73,12 +73,12 @@ Feel free to name the tables and fields anything you want. **Add relationships**
 
 ### Tasks
 
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
-- [ ] Build the API with the following endpoints:
+- [X] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [X] Build the API with the following endpoints:
 
   - [x] POST for adding projects.
-  - [ ] POST for adding actions.
-  - [X] GET for retrieving a `project` by its `id` that returns an object with the following structure:
+  - [X] POST for adding actions.
+  - [] GET for retrieving a `project` by its `id` that returns an object with the following structure:
 
     ```js
     {
