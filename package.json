@@ -4,7 +4,7 @@
   "description": "https://trello.com/b/ppLJYmLf",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "supervisor index.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
   }
 }
