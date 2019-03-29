@@ -68,25 +68,25 @@ Follow these steps for completing your project.
 [x] Load dependencies and create index.js file / server (express, helmet, knex, knexConfig), initialize knex
 [ ] Add directories and files for dbConfig and migrations
 [ ] Add the routes for project and action
-[ ] Add the routers to the server
-[ ] Add migrations
+[x] Add the routers to the server
+[x] Add migrations
 
-- [ ] A `project` can contain multiple actions and has:
-  - [ ] a unique Id.
-  - [ ] a name.
-  - [ ] a description.
-  - [ ] a flag that indicates if the project is complete or not.
-- [ ] An `action` belongs to only one project. An action has:
-  - [ ] a unique id.
-  - [ ] a description of what needs to be done.
-  - [ ] a notes column to add additional information.
-  - [ ] a flag that indicates if the action has been completed.
+- [x] A `project` can contain multiple actions and has:
+  - [x] a unique Id.
+  - [x] a name.
+  - [x] a description.
+  - [x] a flag that indicates if the project is complete or not.
+- [x] An `action` belongs to only one project. An action has:
+  - [x] a unique id.
+  - [x] a description of what needs to be done.
+  - [x] a notes column to add additional infxormation.
+  - [x] a flag that indicates if the action has been completed.
 
 Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
 
 ### Tasks
 
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
+- [x] Build the database and tables using knex migrations. **Seeding is not needed**.
 - [ ] Build the API with the following endpoints:
 
   - [ ] POST for adding projects.
