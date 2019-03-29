@@ -13,6 +13,8 @@ const knexConfig = {
 const db = knex(knexConfig);
 const router = express.Router();
 
+// GET ALL PROJECTS
+
 router.get('/', async (req, res) => {
   try {
     const projects = await db('projects');
@@ -21,6 +23,9 @@ router.get('/', async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+// GET ALL ACTIONS
+
 router.get('/actions', async (req, res) => {
   try {
     const actions = await db('actions');
@@ -29,49 +34,8 @@ router.get('/actions', async (req, res) => {
     res.status(500).json(error);
   }
 });
-router.post('/', async (req, res) => {
-  try {
-    await db('projects')
-      .insert(req.body)
-      .then(project => {
-        res.status(201).json(project);
-      });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
 
-router.post('/:id/actions', (req, res) => {
-  db('actions')
-    .where('project_id', '=', req.params.id)
-    .insert(req.body)
-    .then(ids => {
-      res.status(201).json(ids);
-    })
-    .catch(err => res.status(500).json(err));
-});
-
-router.post('/:id/actions', (req, res) => {
-  db('projects')
-    .innerJoin('actions', 'project.id', '=', 'actions.project_id')
-    .then(actions => {
-      res.status(200).json(actions);
-    });
-});
-
-router.get('/:id/actions', (req, res) => {
-  try {
-    const id = req.params.id;
-    db('projects')
-      .get(id)
-      .then(action => {
-        res.status(201).json(action);
-      });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
+// GET PROJECT BY ID WITH ACTIONS
 router.get('/:id', async (req, res) => {
   try {
     const project = await db
@@ -89,4 +53,32 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ msg: 'Not working' });
   }
 });
+
+// POST NEW PROJECT
+
+router.post('/', async (req, res) => {
+  try {
+    await db('projects')
+      .insert(req.body)
+      .then(project => {
+        res.status(201).json(project);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// POST NEW ACTION
+router.post('/:id/actions', async (req, res) => {
+  try {
+    await db('actions')
+      .insert(req.body)
+      .then(ids => {
+        res.status(201).json(ids);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;
