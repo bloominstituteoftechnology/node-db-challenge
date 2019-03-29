@@ -4,8 +4,8 @@ const helmet= require('helmet');
 
 server.use(express.json());
 server.use(helmet());
-const project = require('./router/project.js')
-const action = require('./router/action.js')
+const project = require('./router/projects.js')
+const action = require('./router/actions.js')
 
 
 
