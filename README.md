@@ -32,20 +32,27 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-1. Explain the difference between `RDBMS` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+[x] Explain the difference between `RDBMS` and `SQL`.
+  They aren't really the same thing at all. SQL is the query language used inside of a database system such as SQLite. It's like the difference between Javascript and repl.it.
+
+[x] Why do tables need a `primary key`?
+  Primary keys are for identifying a specific entry in the table. The key changes every time another entry is generated. Therefore, when referencing the primary key, you will always be able to identify that entry (versus another entry with a shared attribute).
+
+[x] What is the name given to a table column that references the primary key on another table.
+  Foreign key.
+
+[x] What do we need in order to have a _many to many_ relationship between two tables.
+  A new table?
 
 ## Project Set Up
 
 Follow these steps for starting your project.
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your project manager as collaborator on Github.
-- [ ] Clone your OWN version of the repository (Not Lambda's by mistake!).
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [x] Create a forked copy of this project.
+- [x] Add your project manager as collaborator on Github.
+- [x] Clone your OWN version of the repository (Not Lambda's by mistake!).
+- [x] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [x] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
 - [ ] Push commits: git push origin `<firstName-lastName>`.
 
 Follow these steps for completing your project.
@@ -57,6 +64,12 @@ Follow these steps for completing your project.
 ## Minimum Viable Product
 
 **NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
+
+[ ] Load dependencies and create index.js file / server (express, helmet, knex, knexConfig), initialize knex
+[ ] Add directories and files for dbConfig and migrations
+[ ] Add the routes for project and action
+[ ] Add the routers to the server
+[ ] Add migrations
 
 - [ ] A `project` can contain multiple actions and has:
   - [ ] a unique Id.
