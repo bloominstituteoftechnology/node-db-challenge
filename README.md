@@ -65,7 +65,7 @@ Follow these steps for completing your project.
 
 **NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
 
-[ ] Load dependencies and create index.js file / server (express, helmet, knex, knexConfig), initialize knex
+[x] Load dependencies and create index.js file / server (express, helmet, knex, knexConfig), initialize knex
 [ ] Add directories and files for dbConfig and migrations
 [ ] Add the routes for project and action
 [ ] Add the routers to the server
