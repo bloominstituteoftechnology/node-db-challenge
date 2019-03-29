@@ -7,8 +7,8 @@ exports.up = function(knex, Promise) {
       //.references('id).inTable('projects)
       .notNullable();
     tbl.string("description", 100).notNullable();
-    tbl.string("additional_notes", 200);
-    tbl.boolean("completed");
+    tbl.string("additional_notes", 200).defaultTo("");
+    tbl.boolean("completed").defaultTo(false);
   });
 };
 
