@@ -4,7 +4,7 @@
   "description": "https://trello.com/b/ppLJYmLf",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "supervisor index.js"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,12 @@
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "helmet": "^3.14.0",
-    "knex": "^0.15.2",
+    "knex": "^0.16.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
   }
 }
