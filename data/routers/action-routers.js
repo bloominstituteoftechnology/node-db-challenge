@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message:'Error getting action'
+            message:'Error retrieving action'
         });
     }
 });
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
     catch (error) {
         console.log(error)
         res.status(500).json({
-            message:'Error posting action'
+            message:'Error adding the action'
         });
     }
 });

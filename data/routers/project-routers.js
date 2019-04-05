@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message:'Error getting project'
+            message:'Error getting  the project'
         });
     }
 });
@@ -23,12 +23,12 @@ router.get('/:id', async (req, res) => {
         if(project){
             res.status(200).json(project);
         }else{
-            res.status(404).json({message: 'Project not found'})
+            res.status(404).json({message: 'The Project Was not found'})
         }
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message:'Error getting project'
+            message:'Error retrieving project'
         });
     }
 });
