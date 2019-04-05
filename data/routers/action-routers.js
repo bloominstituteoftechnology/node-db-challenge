@@ -11,7 +11,7 @@ router.post('/', async (req, res) =>{
         const action = await actionDB.insert(req.body);
         res.status(201).json(action);
         }else{
-            res.status(400).json({message: "Must have a Project ID"})
+            res.status(400).json({message: "Must have an Action ID"})
         }
     }catch(error){
         res.status(500).json({

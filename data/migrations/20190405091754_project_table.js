@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
       tbl.increments();
       tbl.string('name', 128).notNullable().unique();
       tbl.string('description').notNullable();
-      tbl.boolean('finished').defaultTo(false);
-      tbl.integer('project_id')
+      tbl.boolean('completed').defaultTo(false);
+      tbl.integer('id')
 });
 }
 
