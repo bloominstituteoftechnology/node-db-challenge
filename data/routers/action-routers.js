@@ -1,25 +1,34 @@
-const express = require ('express');
-const actionDB = require ('../../data/helpers/actionModel.js');
+const express = require('express');
+
+const Action = require('../helpers/actionModel.js');
+
 const router = express.Router();
 
-
-router.post('/', async (req, res) =>{
-    
-    try{
-        const actionHolder = (req.body)
-        if(actionHolder.id){
-        const action = await actionDB.insert(req.body);
-        res.status(201).json(action);
-        }else{
-            res.status(400).json({message: "Must have an Action ID"})
-        }
-    }catch(error){
+router.get('/', async (req, res) => {
+    try {
+        const action = await Action.get(req.params.query);
+        res.status(200).json(action);
+    } catch (error) {
+        console.log(error)
         res.status(500).json({
-            message: "Error adding action"
-        })
+            message:'Error getting action'
+        });
     }
-})
+});
 
+router.post('/', async (req, res) => {
+    try {
+        const action = await Action.insert(req.body);
+        console.log(action);
+            res.status(201).json(action);
+    } 
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message:'Error posting action'
+        });
+    }
+});
 
 
 

@@ -4,8 +4,8 @@
   "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "server": "nodemon index.js"
+    "start": "nodemon",
+    "server": "nodemon"
   },
   "repository": {
     "type": "git",

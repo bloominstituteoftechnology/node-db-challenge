@@ -2,8 +2,13 @@ const db = require('../dbConfig.js');
 const mappers = require('./mappers');
 
 module.exports = {
-  get: function(id) {
-    let query = db('projects as p');
+  get,
+  getProjectActions,
+  insert,
+  remove
+}
+function get(id) {
+    let query = db('project as p');
 
     if (id) {
       query.where('p.id', id).first();
@@ -21,26 +26,19 @@ module.exports = {
     return query.then(projects => {
       return projects.map(project => mappers.projectToBody(project));
     });
-  },
-  getProjectActions: function(projectId) {
-    return db('actions')
+  }
+function getProjectActions(projectId) {
+    return db('action')
       .where('project_id', projectId)
       .then(actions => actions.map(action => mappers.actionToBody(action)));
-  },
-  insert: function(project) {
-    return db('projects')
+  }
+function insert(project) {
+    return db('project')
       .insert(project)
       .then(([id]) => this.get(id));
-  },
-  update: function(id, changes) {
-    return db('projects')
-      .where('id', id)
-      .update(changes)
-      .then(count => (count > 0 ? this.get(id) : null));
-  },
-  remove: function(id) {
-    return db('projects')
+  }
+function remove(id) {
+    return db('project')
       .where('id', id)
       .del();
-  },
-};
+  }

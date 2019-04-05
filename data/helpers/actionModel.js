@@ -1,9 +1,13 @@
 const db = require('../dbConfig.js');
-const mappers = require('./mappers.js');
+const mappers = require('./mappers');
 
 module.exports = {
-  get: function(id) {
-    let query = db('actions');
+  get,
+  insert,
+  remove
+}
+function get(id) {
+    let query = db('action');
 
     if (id) {
       return query
@@ -15,21 +19,14 @@ module.exports = {
     return query.then(actions => {
       return actions.map(action => mappers.actionToBody(action));
     });
-  },
-  insert: function(action) {
-    return db('actions')
+  }
+function insert(action) {
+    return db('action')
       .insert(action)
       .then(([id]) => this.get(id));
-  },
-  update: function(id, changes) {
-    return db('actions')
-      .where('id', id)
-      .update(changes)
-      .then(count => (count > 0 ? this.get(id) : null));
-  },
-  remove: function(id) {
-    return db('actions')
+  }
+function remove(id) {
+    return db('action')
       .where('id', id)
       .del();
-  },
-};
+  }
