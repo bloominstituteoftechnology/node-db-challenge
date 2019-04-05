@@ -1,14 +1,16 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('projects', tbl => {
-        // primary key called id, data-type: integer, auto-increments
-      tbl.increments()
-      tbl.string('name', 128).notNullable().unique()
+      tbl.increments();
+      tbl.string('name', 128).notNullable().unique();
+      tbl.string('description').notNullable();
+      tbl.boolean('finished').defaultTo(false);
+      tbl.integer('project_id')
 });
 }
 
 exports.down = function(knex, Promise) {
-    exports.down = function(knex, Promise) {
+
     return knex.schema.dropTableIfExists('projects')
-}
+
 }

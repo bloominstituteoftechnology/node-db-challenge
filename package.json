@@ -4,8 +4,7 @@
   "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +21,7 @@
     "express": "^4.16.4",
     "helmet": "^3.16.0",
     "knex": "^0.16.3",
+    "node": "^11.12.0",
     "nodemon": "^1.18.10",
     "sqlite3": "^4.0.6"
   }
