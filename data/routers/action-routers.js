@@ -7,7 +7,7 @@ router.post('/', async (req, res) =>{
     
     try{
         const actionHolder = (req.body)
-        if(actionHolder.project_id){
+        if(actionHolder.id){
         const action = await actionDB.insert(req.body);
         res.status(201).json(action);
         }else{
