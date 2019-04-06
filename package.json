@@ -9,5 +9,8 @@
     "nodemon": "^1.18.10",
     "package.json": "^2.0.1",
     "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "knex-cleaner": "^1.1.4"
   }
 }
