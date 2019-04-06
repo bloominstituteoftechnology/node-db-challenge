@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "knex": "^0.16.3",
+    "nodemon": "^1.18.10",
+    "package.json": "^2.0.1",
+    "sqlite3": "^4.0.6"
+  }
+}
