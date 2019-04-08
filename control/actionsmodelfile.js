@@ -4,7 +4,6 @@ module.exports = {
   getActions,
   getAction,
   getActionsByProject,
-  getContextsByAction,
   addAction,
   deleteAction,
   updateAction
@@ -22,10 +21,6 @@ function getAction(id) {
 
 function getActionsByProject(id) {
   return db("actions").where({ project_id: id });
-}
-
-function getContextsByAction(id) {
-  return db("contexts").where({ action_id: id });
 }
 
 function addAction(action) {

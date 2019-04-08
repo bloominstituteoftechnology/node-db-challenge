@@ -1,6 +1,30 @@
 {
+  "name": "Sprint-Challenge-RDBMS",
+  "version": "1.0.0",
+  "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "server": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melvin-merlos/Sprint-Challenge-RDBMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melvin-merlos/Sprint-Challenge-RDBMS/issues"
+  },
   "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
     "knex": "^0.16.3",
     "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "knex-cleaner": "^1.1.4",
+    "nodemon": "^1.18.11"
   }
 }
