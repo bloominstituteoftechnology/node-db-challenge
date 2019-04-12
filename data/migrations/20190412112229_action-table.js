@@ -1,7 +1,8 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('actions', function(tbl) {
         
-      tbl.increments();
+      tbl.increments()
+      .unique()
   
       tbl
         .string('description')
