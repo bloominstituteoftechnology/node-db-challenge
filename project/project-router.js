@@ -17,16 +17,18 @@ const db = knex(knexConfig);
 //     res.send('Hello World!')
 // });
 
-// router.get('/', (req, res) => {
-//     db('projects')
-//     .then(projects => {
-//         res.status(200).json(projects)
-//     })
-//     .catch(err => {
-//         res.status(500).json(err)
-//     })
-// }); 
+//check
+router.get('/', (req, res) => {
+    db('projects')
+    .then(projects => {
+        res.status(200).json(projects)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+}); 
 
+//check
 router.post('/', async (req, res) => {
     try {
         const project = await db('projects').insert(req.body)
@@ -37,7 +39,7 @@ router.post('/', async (req, res) => {
 });
 
 
-router.get('/:id', (req, res) => {
+router.get('/project/:id', (req, res) => {
     const { id } = req.params;
         db('projects')
            .where({ id: id })
@@ -45,7 +47,7 @@ router.get('/:id', (req, res) => {
            .then(projects => {
                db('actions')
                  .where({ project_id: id }).then(actions => {
-                (projects,actions = actions);
+                (projects.actions = actions);
                   return res.status(200).json(projects);
                 });
            })

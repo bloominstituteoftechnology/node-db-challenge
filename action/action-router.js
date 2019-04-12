@@ -17,9 +17,22 @@ const db = knex(knexConfig);
 //     res.send('Hello World!')
 // });
 
+
+//check
+router.get('/', (req, res) => {
+    db('actions')
+    .then(actions => {
+        res.status(200).json(actions)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+});
+
+//check
 router.post('/', async (req, res) => {
     try {
-        const action = await db('action').insert(req.body)
+        const action = await db('actions').insert(req.body)
         res.status(201).json(action)
     } catch (error) {
         res.status(500).json({ error: 'There was an error posting that!' })
