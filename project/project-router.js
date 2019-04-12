@@ -13,14 +13,23 @@ const knexConfig = {
 const db = knex(knexConfig);
 
 //check
+// router.get('/', (req, res) => {
+//     res.send('Hello World!')
+// });
+
 router.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+    db('projects')
+    .then(projects => {
+        res.status(200).json(projects)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    })
+}); 
 
 router.post('/', async (req, res) => {
     try {
-        const [id] = await db('projects').insert(req.body);
-        const project = await db('projects')
+        const project = await db('projects').insert(req.body)
         .where({ id })
         .first()
         res.status(201).json(project)

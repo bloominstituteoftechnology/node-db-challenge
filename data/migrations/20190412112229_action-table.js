@@ -12,12 +12,6 @@ exports.up = function(knex, Promise) {
         .notNullable()
 
       tbl
-        .integer('project_id') 
-        .notNullable() 
-        .references('id')
-        .inTable('projects') 
-
-      tbl
         .boolean('completed').defaultTo('false');  
     })
   };
