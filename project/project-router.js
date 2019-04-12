@@ -17,21 +17,19 @@ const db = knex(knexConfig);
 //     res.send('Hello World!')
 // });
 
-router.get('/', (req, res) => {
-    db('projects')
-    .then(projects => {
-        res.status(200).json(projects)
-    })
-    .catch(err => {
-        res.status(500).json(err)
-    })
-}); 
+// router.get('/', (req, res) => {
+//     db('projects')
+//     .then(projects => {
+//         res.status(200).json(projects)
+//     })
+//     .catch(err => {
+//         res.status(500).json(err)
+//     })
+// }); 
 
 router.post('/', async (req, res) => {
     try {
         const project = await db('projects').insert(req.body)
-        .where({ id })
-        .first()
         res.status(201).json(project)
     } catch (error) {
         res.status(500).json({ error: 'There was an error posting that!' })
@@ -39,5 +37,21 @@ router.post('/', async (req, res) => {
 });
 
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+        db('projects')
+           .where({ id: id })
+           .first()
+           .then(projects => {
+               db('actions')
+                 .where({ project_id: id }).then(actions => {
+                (projects,actions = actions);
+                  return res.status(200).json(projects);
+                });
+           })
+            .catch(err => {
+                res.status(500).json({ Error: "There was an error getting that" })
+            });
+});
 
 module.exports = router;

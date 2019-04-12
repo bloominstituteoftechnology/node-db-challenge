@@ -12,15 +12,13 @@ exports.up = function(knex, Promise) {
         .string('description')
         .notNullable()
 
+    //   tbl
+    //     .string('id')  
+    //     .notNullable()
+     
       tbl
-        .integer('project_id') 
-        .unsigned()
-        .notNullable() 
-        .references('id')
-        .inTable('actions') 
-
-      tbl
-        .boolean('completed').defaultTo(false);  
+        .boolean('completed')
+        .notNullable()  
     })
   };
   

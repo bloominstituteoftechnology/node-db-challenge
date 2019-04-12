@@ -8,11 +8,19 @@ exports.up = function(knex, Promise) {
         .notNullable()
 
       tbl
-        .string('notes')  
-        .notNullable()
-
+        .string('notes')   
+        
       tbl
-        .boolean('completed').defaultTo('false');  
+        .integer('project_id') 
+        .unsigned()
+        .notNullable() 
+        .references('id')
+        .inTable('projects') 
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE')
+  
+      tbl
+        .boolean('completed')
     })
   };
   
