@@ -17,8 +17,17 @@ router.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-router.post
-
+router.post('/', async (req, res) => {
+    try {
+        const [id] = await db('projects').insert(req.body);
+        const project = await db('projects')
+        .where({ id })
+        .first()
+        res.status(201).json(project)
+    } catch (error) {
+        res.status(500).json({ error: 'There was an error posting that!' })
+    }
+});
 
 
 
