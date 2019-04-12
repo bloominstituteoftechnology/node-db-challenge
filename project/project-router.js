@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-
+//check
 router.get('/project/:id', (req, res) => {
     const { id } = req.params;
         db('projects')
