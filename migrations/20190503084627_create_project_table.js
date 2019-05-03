@@ -33,7 +33,7 @@ exports.up = function(knex, Promise) {
     //     PRIMARY KEY (`id`),
     //     KEY `FK` (`project_id`)
     //   );
-    .createTablee('actions', tbl => {
+    .createTable('actions', tbl => {
         tbl
             .increments()
 
@@ -44,6 +44,9 @@ exports.up = function(knex, Promise) {
         tbl
             .string('notes', 288)
             .notNullable()
+
+        tbl
+            .boolean('completed')
 
         tbl
             .integer('project_id')
