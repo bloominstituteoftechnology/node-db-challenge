@@ -24,6 +24,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const projects = await Projects.getProjects()
+        const actions = await db('actions')
         res.status(200).json(projects)
     } catch (error) {
         res.status(500).json({
