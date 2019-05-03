@@ -117,6 +117,6 @@ A `context` can be applied to more than one `action`. An action can be tied to m
 
 When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
 
-**Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.**
+**Remember to run `yarn init` to generate a _package.json_ before adding your dependencies.**
 
 _Good luck and have fun!_
