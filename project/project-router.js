@@ -13,11 +13,6 @@ const knexConfig = {
 const db = knex(knexConfig);
 
 //check
-// router.get('/', (req, res) => {
-//     res.send('Hello World!')
-// });
-
-//check
 router.get("/", (req, res) => {
   db("projects")
     .then(projects => {
