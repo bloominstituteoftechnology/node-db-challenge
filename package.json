@@ -5,11 +5,13 @@
     "server": "nodemon"
   },
   "dependencies": {
+    "3": "^2.1.0",
     "express": "^4.16.4",
     "helmet": "^3.16.0",
     "knex": "^0.16.5",
     "knex-cleaner": "^1.1.4",
     "nodemon": "^1.18.11",
+    "sqlite": "^3.0.3",
     "sqlite3": "^4.0.6"
   }
 }
