@@ -4,6 +4,10 @@ const Projects = require('./projects-model')
 
 const router = express.Router()
 
+const knex = require('knex')
+const config = require('../../knexfile')
+const db = knex(config.development)
+
 
 router.post('/', async (req, res) => {
     try {
@@ -39,5 +43,20 @@ router.get('/:id', async (req, res) => {
         })
     }
 })
+
+router.get('/:id/actions', async (req, res) => {
+    try {
+        const actions = await db('actions')
+            .where({ project_id: req.params.id })
+            .first()
+        res.status(200).json({actions})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "Couldn't find those actions."
+        })
+    }
+})
+
 
 module.exports = router

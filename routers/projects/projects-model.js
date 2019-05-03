@@ -7,6 +7,7 @@ module.exports = {
     getProjects,
     getProject,
     addProject
+    // getProjectsActions
 }
 
 function getProjects() {
@@ -24,3 +25,4 @@ function addProject(project) {
         .insert(project)
         .then(ids => ({ id: ids[0] }))
 }
+
