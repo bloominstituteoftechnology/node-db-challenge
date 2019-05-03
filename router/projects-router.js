@@ -33,7 +33,35 @@ router.get("/projects/:id/", (req, res) => {
       });
   });
 
-  
+//   router.post("/projects/", (req, res) => {
+//     Projects.add(project)
+//       .then(inserted => {
+//         res.status(200).json(inserted);
+//       })
+//       .catch(err => {
+//         res
+//           .status(500)
+//           .json({ message: " we ran into error retrieving the project" });
+//       });
+//   });
+
+  router.post('/projects/', async (req, res) => {
+    const project = req.body;
+    if (project.name) {
+      try {
+        const inserted = await Projects.add(project);
+        res.status(201).json(inserted);
+      } catch (error) {
+        res
+          .status(500)
+          .json({ message: 'We ran into an error creating the project' });
+      }
+    } else {
+      res.status(400).json({ message: 'Please provide name of the dish' });
+    }
+  });
+
+
 
 
 module.exports = router;
