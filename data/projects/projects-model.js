@@ -18,10 +18,12 @@ function getById(id) {
 }
 
 function getByIdComplete(id) {
-  return db("actions as a")
-    .join("projects as p", "p.id", "a.projects_id")
-    .select("p.*", "a.*")
-    .where({ projects_id: id });
+  return (
+    db("actions as a")
+      // .join("projects as p", "p.id", "a.projects_id")
+      .select("p.*", "a.*")
+      .where({ projects_id: id })
+  );
 }
 
 function insert(project) {

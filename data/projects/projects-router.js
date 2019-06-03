@@ -1,6 +1,7 @@
 const express = require("express");
 
 const projectsDb = require("./projects-model.js");
+const actionsDb = require("../actions/actions-model.js");
 
 const router = express.Router();
 
@@ -11,19 +12,20 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: "We ran into an error retrieving the tracks" });
+      .json({ message: "We ran into an error retrieving the project" });
   }
 });
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const projects = await projectsDb.getByIdComplete(id);
-    res.status(200).json(projects);
+    const projects = await projectsDb.getById(id);
+    const actions = await actionsDb.getByIdComplete(id);
+    res.status(200).json({ ...projects, actions: actions });
   } catch (err) {
     res
       .status(500)
-      .json({ message: "We ran into an error retrieving the tracks" });
+      .json({ message: "We ran into an error retrieving the project" });
   }
 });
 
