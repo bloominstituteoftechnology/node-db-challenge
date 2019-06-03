@@ -1,0 +1,30 @@
+{
+  "name": "web-db-sprint-challenge",
+  "version": "1.0.0",
+  "description": "Sprint Challenge - Web DB Sprint Challenge",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekjones-io/webdb-challenge.git"
+  },
+  "author": "Derek Jones",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/derekjones-io/webdb-challenge/issues"
+  },
+  "homepage": "https://github.com/derekjones-io/webdb-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "knex": "^0.17.3",
+    "morgan": "^1.9.1",
+    "node-dev": "^4.0.0",
+    "sqlite3": "^4.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
