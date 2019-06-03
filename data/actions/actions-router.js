@@ -1,25 +1,18 @@
-const db = require("../dbConfig.js");
+const express = require("express");
 
-module.exports = {
-  find,
-  getById,
-  insert
-};
+const actionsDb = require("./actions-model.js");
 
-function find() {
-  return db("actions");
-}
+const router = express.Router();
 
-function getById(id) {
-  return db("actions")
-    .where({ id })
-    .first();
-}
+router.get("/", async (req, res) => {
+  try {
+    const actions = await actionsDb.find();
+    res.status(200).json(actions);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "We ran into an error retrieving the tracks" });
+  }
+});
 
-function insert(project) {
-  return db("actions")
-    .insert(project)
-    .then(ids => {
-      return getById(ids[0]);
-    });
-}
+module.exports = router;

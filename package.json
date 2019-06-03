@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "Backend Sprint II",
   "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
   "repository": "https://github.com/raberin/webdb-challenge.git",
   "author": "raberin <rmvaberin@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "knex": "^0.17.3",
     "nodemon": "^1.19.1",
     "sqlite3": "^4.0.8"

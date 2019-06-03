@@ -6,6 +6,16 @@ module.exports = {
     connection: {
       filename: "./data/lambda.db3"
     },
-    useNullAsDefault: true // needed for sqlite
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
+
+      useNullAsDefault: true // needed for sqlite
+    }
+  },
+  migrations: {
+    directory: "./migrations",
+    tableName: "knex_migrations"
   }
 };
