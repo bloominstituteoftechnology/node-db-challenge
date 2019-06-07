@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
-        {id: 1, name: 'groom the cat', decription: "make the cat pretty again", completed: 0},
+        {id: 1, name: 'groom the cat', description: "make the cat pretty again", completed: 0},
       ]);
     });
 };
