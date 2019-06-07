@@ -49,13 +49,14 @@ async function add(dbn, item, fixcomplete = true)
     {
       case"actions":
         if(fixcomplete) update("projects", item.project_id, {completed: false});
+        await db("action_map").insert({ project_id: item.project_id, action_id: newitem[0]});
         break;
       case "projects":
         await actions.forEach(async function(x)
         {
           x.project_id = newitem[0];
           let action = await db("actions").insert(x, "*");
-          await db("action_map").insert({ project_id: newitem[0], action_id: action[0]});
+          let a = await db("action_map").insert({ project_id: newitem[0], action_id: action[0]});
         });
       break;
     }
