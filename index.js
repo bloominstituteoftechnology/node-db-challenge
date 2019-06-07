@@ -30,5 +30,5 @@ server.post("/api/actions/",
     (req,res) => db.add("actions", req.body).then(result => res.status(200).json({id: result})).catch(err=>res.status(500).json({error: err, message:"could not create actions"}))
 );
 server.post("/api/projects/",
-    (req,res) => db.add("projects",  req.body).then(result => {delete result.actions; res.status(200).json({id: result})})//.catch(err=>res.status(500).json({error: err, message:"could not create projects"}))
+    (req,res) => db.add("projects",  req.body).then(result => {delete result.actions; res.status(200).json({id: result})}).catch(err=>res.status(500).json({error: err, message:"could not create projects"}))
 );
