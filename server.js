@@ -2,8 +2,8 @@ const express = require('express');
 const helmet = require('helmet');
 const knex = require('knex');
 // const knexConfig = require('knexfile.js');
-// const projectModel = require('./data/helpers/projectModel');
-// const actionModel = require('./data/helpers/actiontModel');
+const projectModel = require('./data/helpers/projectModel');
+const actionModel = require('./data/helpers/actionModel');
 
 
 
@@ -20,45 +20,41 @@ server.get('/', (req, res) => {
 
 server.post('/projects', (req, res) => {
     const projectInfo = req.body;
-    projecModel.insert(projectInfo)
-    .then(project => {
-        res.status(201).json({ success: true, project });
-    })
-    .catch(err => {
-        res.status(404).json({
-            success: false,
-            message: 'I cannot find the project you are looking for'
-        });
-    })
+    projectModel.insert(projectInfo)
+        .then(project => {
+            res.status(201).json({ success: true, project });
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                message: 'Oops Something went wrong'
+            });
+        })
 })
 
 
 server.post('/actions', (req, res) => {
     const actionInfo = req.body;
     actionModel.insert(actionInfo)
-    .then(count => {
-        if(count) {
-            res.status(201).end()
-        }
-        else {
-            res.status(404).json({message: 'There is no action with specified id'})
-        }
-    })
-    .catch(err => res.status(500).json({message: 'Error deleting that id'}))
+        .then(action=> {
+            res.status(201).json({ success: true, action });
+        })
+        .catch(err => res.status(500).json({ message: 'Error adding the action' }))
 })
 
 
 server.get('/projects/:id', (req, res) => {
     const id = req.params.id;
-    projectModel.getProjectActions(id)
-    .then(actions => {
-        res.status(200).json(actions)
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: 'error retrieving the actions'
+    projectModel.findById(id)
+        .then(project => {
+            res.status(200).json(project)
         })
-    })
+        .catch(err => {
+            res.status(500).json({
+                error: 'error retrieving the project'
+            })
+        })
 })
+
 
 module.exports = server;
