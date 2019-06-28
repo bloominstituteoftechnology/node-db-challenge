@@ -15,3 +15,8 @@ function add(projects) {
         });
 }
 
+function getById(id) {
+    return db('projects')
+        .where({ id })
+        .first();
+}
