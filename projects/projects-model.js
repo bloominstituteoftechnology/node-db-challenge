@@ -2,9 +2,16 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
     add,
-    get,
+    getById,
 };
 
-function get() {
-    return db('projects');
+function add(projects) {
+    return db('projects')
+        .insert(projects, id)
+        .then(ids => {
+            const [id] = ids;
+
+            return getById(id);
+        });
 }
+
