@@ -1,9 +1,7 @@
 module.exports = {
-
   find,
   findById,
   add
-
 }
 const db = require('./dbcon.js')
 
