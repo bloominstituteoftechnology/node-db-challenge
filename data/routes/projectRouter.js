@@ -52,9 +52,22 @@ router.post('/', (req, res) => {
  }
 })
 
-router.put('/:id', (req, res) => [
-
-])
+router.put('/:id', async (req, res) => {
+ const project = req.body
+ const { id } = req.params
+ 
+ projDB.alter(id, project)
+  .then((project) => {
+   res
+    .status(201)
+    .json(project)
+  })
+  .catch((err) => {
+   res
+    .status(400)
+    .json({message: 'Error updating project', err: err.message})
+  })
+})
 
 router.delete('/:id', (req, res) => {
  const { id } = req.params
