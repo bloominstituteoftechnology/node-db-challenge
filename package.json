@@ -1,0 +1,31 @@
+{
+  "name": "webdb-challenge",
+  "version": "1.0.0",
+  "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "server": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbrian97/webdb-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kbrian97/webdb-challenge/issues"
+  },
+  "homepage": "https://github.com/kbrian97/webdb-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "knex": "^0.19.0",
+    "knex-cleaner": "^1.2.1",
+    "nodemon": "^1.19.1",
+    "server": "^1.0.19",
+    "sqlite3": "^4.0.9"
+  }
+}
