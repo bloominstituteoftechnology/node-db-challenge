@@ -1,0 +1,28 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "Sprint Challenge",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.19.0",
+    "nodemon": "^1.19.1",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Celaira/node-db-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Celaira/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/Celaira/node-db-challenge#readme"
+}
