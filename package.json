@@ -1,0 +1,30 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worksofhart/node-db-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worksofhart/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/worksofhart/node-db-challenge#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.19.0",
+    "knex-cleaner": "^1.2.1",
+    "sqlite3": "^4.0.9"
+  }
+}
