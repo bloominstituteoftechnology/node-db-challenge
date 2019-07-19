@@ -14,6 +14,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const action = await Actions.findById(id);
+
+    if (action) {
+      res.json(action);
+    } else {
+      res.status(404).json({ message: 'Could not find action with given id.' })
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Failed to get action' });
+  }
+});
+
 router.post('/', async (req, res) => {
   const actionData = req.body;
 

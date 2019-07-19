@@ -23,7 +23,7 @@ exports.up = function(knex) {
       tbl
         .boolean('completed')
         .defaultTo(false);
-    })
+    });
 };
 
 exports.down = function(knex) {
