@@ -42,4 +42,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const project = await Projects.update(id, req.body);
+    if (project) {
+      res.status(200).json(project);
+    } else {
+      res.status(404).json({ message: "No project found with that id" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "The project information could not be modified" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = await Projects.remove(id);
+    if (deleted) {
+      res.status(204).json(deleted);
+    } else {
+      res.status(404).json({ message: "No project matching that id" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "The project could not be removed" });
+  }
+});
+
 module.exports = router;

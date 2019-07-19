@@ -1,7 +1,7 @@
 const db = require('../data/');
 
 module.exports = {
-  find, findById, add
+  find, findById, add, update, remove
 }
 
 function find() {
@@ -25,4 +25,19 @@ async function add(project) {
     .insert(project, 'id')
     .returning('*');
   return findById(id);
+}
+
+async function update(changes, id) {
+  await db('projects')
+    .where({ id })
+    .update(changes);
+  return findById(id);
+}
+
+async function remove(id) {
+  const removedProject = await findById(id)
+  const removed = await db('projects')
+    .where({ id })
+    .del();
+  return removed ? removedProject : null;
 }

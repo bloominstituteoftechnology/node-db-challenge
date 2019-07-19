@@ -42,4 +42,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const action = await Actions.update(id, req.body);
+    if (action) {
+      res.status(200).json(action);
+    } else {
+      res.status(404).json({ message: "No action found with that id" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "The action information could not be modified" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = await Actions.remove(id);
+    if (deleted) {
+      res.status(204).json(deleted);
+    } else {
+      res.status(404).json({ message: "No action matching that id" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "The action could not be removed" });
+  }
+});
+
 module.exports = router;
