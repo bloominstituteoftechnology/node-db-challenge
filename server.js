@@ -10,6 +10,8 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
+
+
 server.post('/projects', (req, res) => {
     const projectInfo = req.body;
     projectModel.insert(projectInfo)
