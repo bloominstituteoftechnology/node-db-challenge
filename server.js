@@ -2,8 +2,8 @@ const express = require('express');
 const helmet = require('helmet')
 const knex = require('knex');
 
-// const projectModel = require('./data/helpers/projectModel');
-// const actionModel = require('./data/helpers/actionModel');
+const projectModel = require('./data/helpers/projectModel');
+const actionModel = require('./data/helpers/actionModel');
 
 const server = express();
 
