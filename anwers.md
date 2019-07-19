@@ -14,4 +14,4 @@ a foreign key
 
 1. What do we need in order to have a _many to many_ relationship between two tables.
 
-we need a  foreign key that reference the primary key on the related tables.
+we need a  foreign key that reference the primary key on the related tables. 
