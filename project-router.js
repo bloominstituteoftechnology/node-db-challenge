@@ -56,4 +56,32 @@ router.get("/resource", (req, res) => {
     });
 });
 
+// post task
+router.post("/:id/task", (req, res) => {
+  project
+    .addTask(req.body)
+    .then(task => {
+      res.status(201).json(task);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "There was an error adding the task." });
+    });
+});
+
+// get task
+router.get("/task", (req, res) => {
+  if (project.getTasks()) {
+    project
+      .getTasks()
+      .then(task => {
+        res.status(200).json(task);
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({ message: "There was an error getting the tasks." });
+      });
+  }
+});
+
 module.exports = router;
