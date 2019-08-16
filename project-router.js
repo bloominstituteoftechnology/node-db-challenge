@@ -16,10 +16,19 @@ router.post("/", (req, res) => {
 
 // get project
 router.get("/", (req, res) => {
+  let projects = project.getProjects();
+
   project
     .getProjects()
-    .then(project => {
-      res.status(200).json(project);
+    .then(projects => {
+      for (let i = 0; i < projects.length; i++) {
+        if (projects[i].completed === 0) {
+          projects[i].completed = false;
+        } else {
+          projects[i].completed = true;
+        }
+      }
+      res.status(200).json(projects);
     })
     .catch(error => {
       res
@@ -57,10 +66,11 @@ router.get("/resource", (req, res) => {
 });
 
 // post task
-router.post("/:id/task", (req, res) => {
+router.post("/task", (req, res) => {
   project
     .addTask(req.body)
     .then(task => {
+      console.log(task);
       res.status(201).json(task);
     })
     .catch(error => {
@@ -70,18 +80,17 @@ router.post("/:id/task", (req, res) => {
 
 // get task
 router.get("/task", (req, res) => {
-  if (project.getTasks()) {
-    project
-      .getTasks()
-      .then(task => {
-        res.status(200).json(task);
-      })
-      .catch(error => {
-        res
-          .status(500)
-          .json({ message: "There was an error getting the tasks." });
-      });
-  }
+  project
+    .getTasks()
+    .then(task => {
+      console.log(task);
+      res.status(200).json(task);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ message: "There was an error getting the tasks." });
+    });
 });
 
 module.exports = router;

@@ -36,11 +36,11 @@ function getTasks() {
   // FROM task
   // INNER JOIN project on project.id = task.project_id
   return db("task")
-    .innerJoin("project", "project.id", "=", "task.project_id")
+    .innerJoin("project", "project.id", "task.project_id")
     .select(
       "task.id",
-      "project.name",
-      "project.description",
+      //   "project.name",
+      //   "project.description",
       "task.description",
       "task.notes",
       "task.completed"
