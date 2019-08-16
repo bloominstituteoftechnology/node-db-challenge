@@ -11,28 +11,10 @@ router.get('/', (req, res) => {
             res.status(200).json(task);
         })
         .catch(error => {
-            res.status(500).json({ message: 'failed to get resource' })
+            res.status(500).json({ message: 'failed to get task' })
         })
 });
 
-
-router.get('/:id', (req, res) => {
-    taskRouter
-        .where({ id })
-        .first()
-        .then(task => {
-            if (task) {
-                return taskRouter(id).then(task => {
-                    project.task = task
-                    return project;
-                })
-            } else {
-                return null
-
-            }
-
-        })
-})
 router.post('/', (req, res) => {
     const description = req.body
     const notes = req.body

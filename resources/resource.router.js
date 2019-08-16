@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     resourceModel
-        .find()
+        .find(id)
         .then(resource => {
             res.status(200).json(resource);
         })
@@ -14,6 +14,13 @@ router.get('/', (req, res) => {
             res.status(500).json({ message: 'failed to get resource' })
         })
 });
+
+// router.get('/api/task', (req, res) => {
+//     const task = db('task')
+//         .leftJoin('resource_id', 'project_id');
+//     res.status(200).json(task);
+
+// })
 
 router.post('/', (req, res) => {
     const description = req.body
