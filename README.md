@@ -1,122 +1,172 @@
 # Sprint Challenge: Node DB Sprint
 
-This challenge allows you to practice the concepts and techniques learned over the past Sprint and apply them in a concrete project.
+## Description
 
-This Sprint explored Adding Data Persistence to Web APIs and you were taught the following modules: Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeding and Introduction to Data Modeling.
-
-In your challenge for this Sprint, you will demonstrate proficiency by creating an API that persist data to SQLite3.
+In this challenge, you design and build a Data Model and a RESTful API that stores data into a Relational Database.
 
 ## Instructions
 
 **Read these instructions carefully. Understand exactly what is expected _before_ starting this Sprint Challenge.**
 
-This is an individual assessment. All work must be your own. Your challenge score is a measure of your ability to work independently using the material covered through this sprint. You need to demonstrate proficiency in the concepts and objectives introduced and practiced in preceding days.
+This is an individual assessment, please work on it alone. It is an opportunity to demonstrate proficiency in the concepts and objectives introduced and practiced in preceding days.
 
-You are not allowed to collaborate during the Sprint Challenge. However, you are encouraged to follow the twenty-minute rule and seek support from your PM and Instructor in your cohort help channel on Slack. Your work reflects your proficiency Adding Data Persistence to Web APIs and your command of the concepts and techniques in the Introduction to Relational Databases and SQL, Inserting and Modifying Data, Querying Data; Migrations and Seeding and Introduction to Data Modeling modules.
+If the instructions are not clear, please seek support from your TL and Instructor on Slack.
 
-You have three hours to complete this challenge. Plan your time accordingly.
+The Minimum Viable Product must be completed in three hours.
+
+Follow these steps to set up and work on your project:
+
+- [ ] Create a forked copy of this project.
+- [ ] Add your _Team Lead_ as collaborator on Github.
+- [ ] Clone your forked version of the Repository.
+- [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
+- [ ] Implement the project on this Branch, committing changes regularly.
+- [ ] Push commits: git push origin `firstName-lastName`.
+
+Follow these steps for completing your project.
+
+- [ ] Submit a Pull-Request to merge `firstName-lastName` Branch into master on **your fork, don't make Pull Requests against Lambda's repository**.
+- [ ] Please don't merge your own pull request.
+- [ ] Add your _Team Lead_ as a Reviewer on the Pull-request
+- [ ] Your _Team Lead_ will count the challenge as done by merging the branch into _master_.
 
 ## Commits
 
-Commit your code regularly and meaningfully. This helps both you (in case you ever need to return to old code for any number of reasons and your project manager.
-
-## Description
-
-In this challenge, you **design** and build an application for managing `Projects` and `Actions` in the spirit of David Allen's _Getting Things Done (GTD)_ methodology.
-
-Use _Node.js_, _Express.js_ and _Knex_ to build a RESTful API for a `Project Tracker` application that persists data to a _SQLite_ database.
-
-This will be akin to the Web API that you built in the last sprint, only this time, you'll be writing the persistence layer.
+Commit your code regularly and use descriptive messages. This helps both you (in case you ever need to return to old code) and your Team Lead.
 
 ## Self-Study/Essay Questions
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-1. Explain the difference between `Relational Databases` and `SQL`.
-1. Why do tables need a `primary key`?
-1. What is the name given to a table column that references the primary key on another table.
-1. What do we need in order to have a _many to many_ relationship between two tables.
+- [ ] Explain the difference between `Relational Databases` and `SQL`.
 
-## Project Set Up
+- [ ] Why do tables need a `primary key`?
 
-Follow these steps for starting your project.
+- [ ] What is the name given to a table column that references the primary key on another table.
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your project manager as collaborator on Github.
-- [ ] Clone your OWN version of the repository (Not Lambda's by mistake!).
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-- [ ] Push commits: git push origin `<firstName-lastName>`.
-
-Follow these steps for completing your project.
-
-- [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into master (student's Repository). **Please don't merge your own pull request**
-- [ ] Add your project manager as a reviewer on the pull-request
-- [ ] Your project manager will count the project as complete by merging the branch back into master.
+- [ ] What do we need in order to have a _many to many_ relationship between two tables.
 
 ## Minimum Viable Product
 
-**NOTE** There is no boilerplate for you for this project. You will need to take the steps necessary for creating this project from scratch. Start by initializing your project with a `package.json` file and go from there.
+Take the steps necessary to complete the project from scratch. Start by initializing your project with a `package.json` and go from there.
 
-- [ ] A `project` can contain multiple actions and has:
-  - [ ] a unique Id.
-  - [ ] a name.
-  - [ ] a description.
-  - [ ] a flag that indicates if the project is complete or not.
-- [ ] An `action` belongs to only one project. An action has:
-  - [ ] a unique id.
-  - [ ] a description of what needs to be done.
-  - [ ] a notes column to add additional information.
-  - [ ] a flag that indicates if the action has been completed.
+Complete the following tasks:
 
-Feel free to name the tables and fields anything you want. **Add relationships** as you see fit.
+- [ ] Design the data model and use _knex migrations_ to create the database and tables.
+- [ ] Build an API with endpoints for:
+  - [ ] adding resources.
+  - [ ] retrieving a list of resources.
+  - [ ] adding projects.
+  - [ ] retrieving a list of projects.
+  - [ ] adding tasks.
+  - [ ] retrieving a list of tasks. **The list of tasks should include the project name and project description**.
+- [ ] When returning `project` or `task` information, the completed property should be `true` or `false`.
 
-### Tasks
+For example, instead of returning a `task` that looks like this:
 
-- [ ] Build the database and tables using knex migrations. **Seeding is not needed**.
-- [ ] Build the API with the following endpoints:
+```js
+{
+  id: 1,
+  name: 'convert to boolean',
+  completed: 1 // the database stores a 1 to represent true values on a boolean field
+}
+```
 
-  - [ ] POST for adding projects.
-  - [ ] POST for adding actions.
-  - [ ] GET for retrieving a `project` by its `id` that returns an object with the following structure:
+The API should return:
 
-    ```js
-    {
-      id: 1,
-      name: 'project name here',
-      description: 'the project description',
-      completed: false, // or true, the database will return 1 for true and 0 for false
-      actions: [
-        {
-          id: 1,
-          description: 'action description',
-          notes: 'the action notes',
-          completed: false // or true
-        },
-        {
-          id: 7,
-          description: 'another action description',
-          notes: 'the action notes',
-          completed: false // or true
-        }
-      ]
-    }
-    ```
+```js
+{
+  id: 1,
+  name: 'convert to boolean',
+  completed: true // write code to convert the 1 to true and 0 to false
+}
+```
+
+### Business Rules
+
+- a `project` can have multiple `tasks`.
+- a `task` belongs to only one `project`.
+- a `project` can use multiple `resources`.
+- the same `resource` can be used in multiple `projects`.
+- when adding `projects` the client must provide a name, the description is optional.
+- when adding `resources` the client must provide a name, the description is optional.
+- when adding a `task` the client must provide a description, the notes are optional.
+- when adding a `task` the client must provide the `id` of an existing project.
+- for `projects` and `tasks` if no value is provided for the `completed` property, the API should provide a default value of `false`.
+
+### Entities
+
+A `project` is what needs to be done. We want to store the following data about a `project`:
+
+- [ ] a unique Id.
+- [ ] a name. This column is required.
+- [ ] a description.
+- [ ] a boolean that indicates if the project has been completed. This column cannot be NULL, the default value should be `false`.
+
+A `resource` is anything needed to complete a project, some examples are: a person, a tool, a meeting room or a software license. We want to store the following data about a `resource`:
+
+- [ ] a unique Id.
+- [ ] a name. This column is required.
+- [ ] a description.
+
+The database should not allow resources with duplicate names.
+
+An `task` one of the steps needed to complete the project. We want to store the following data about an `task`.
+
+- [ ] a unique id.
+- [ ] a description of what needs to be done. This column is required.
+- [ ] a notes column to add additional information.
+- [ ] a boolean that indicates if the task has been completed. This column cannot be NULL, the default value should be `false`.
 
 ## Stretch Problem
 
 This section is **optional** and not counted towards MVP. Start working on it after you're done with the main assignment.
 
-Add the remaining CRUD operations for projects and actions.
+Add an endpoint for retrieving a `project` by its `id` that returns an object with the following structure:
 
-Use `knex` to add _data seeding_ scripts for projects and actions.
+```js
+{
+  id: 1,
+  name: 'project name here',
+  description: 'the project description',
+  completed: false, // or true, the database will return 1 for true and 0 for false
+  tasks: [
+    {
+      id: 1,
+      description: 'task description',
+      notes: 'the task notes',
+      completed: false // or true
+    },
+    {
+      id: 7,
+      description: 'another task description',
+      notes: 'the task notes',
+      completed: false // or true
+    }
+  ],
+  resources: [
+    {
+      id: 1,
+      name: 'Lambda Student',
+      description: 'a soon to be hired developer'
+    },
+    {
+      id: 2,
+      name: 'MacBook Pro #1'
+      description: 'an overly expensive laptop computer'
+    }
+  ]
+}
+```
 
-Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some actions require one or more `contexts` in order to be worked on. For example, the action of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending actions you could do in your current context, filing your taxes will not be one of them.
+Add the remaining CRUD operations for projects and tasks.
 
-A `context` can be applied to more than one `action`. An action can be tied to more than one context, like in the example above.
+Use `knex` to add _data seeding_ scripts for projects and tasks.
 
-When retrieving an `action` by _id_, add a property that lists all the `contexts` related to that action.
+Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some tasks require one or more `contexts` in order to be worked on. For example, the task of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending tasks you could do in your current context, filing your taxes will not be one of them.
 
-**Remember to run `npm init -y` to generate a _package.json_ before adding your dependencies.**
+A `context` can be applied to more than one `task`. An task can be tied to more than one context, like in the example above.
+
+When retrieving an `task` by _id_, add a property that lists all the `contexts` related to that task.
 
 _Good luck and have fun!_
