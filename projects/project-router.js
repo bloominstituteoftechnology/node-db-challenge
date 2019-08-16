@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
             res.status(200).json(projects);
         })
         .catch(error => {
-            res.status(500).json({ message: 'failed to get Resources' })
+            res.status(500).json({ message: 'failed to get project' })
         });
 });
 
