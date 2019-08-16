@@ -2,6 +2,19 @@ const express = require("express");
 const project = require("./project-model");
 const router = express.Router();
 
+// post project
+router.post("/", (req, res) => {
+  project
+    .addProject(req.body)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "There was an error add the project." });
+    });
+});
+
+// get project
 router.get("/", (req, res) => {
   project
     .getProjects()
@@ -15,6 +28,21 @@ router.get("/", (req, res) => {
     });
 });
 
+// post resource
+router.post("/resource", (req, res) => {
+  project
+    .addResource(req.body)
+    .then(resource => {
+      res.status(201).json(resource);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ message: "There was an error adding the resource." });
+    });
+});
+
+// get resource
 router.get("/resource", (req, res) => {
   project
     .getResources()
