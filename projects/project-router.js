@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Projects = require('./helper-model.js/index.js');
+const Projects = require('./helper-model.js');
 
 const router = express.Router();
 
