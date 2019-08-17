@@ -1,37 +1,40 @@
 
+
 exports.up = function(knex) {
-    return knex.schema
-    .createTable('projects', tbl =>{
-        tbl.increments();
-        tbl.text('name',128)
-        .notNullable();
-        tbl.text('description',128)
-        .notNullable();
-        tbl.boolean('completed')
-        .notNullable();
+    return knex.schema.createTable('projects', table => {
+        table.increments();
+        table.string('name', 128).notNullable();
+        table.string('description');
+        table.boolean('completed').defaultTo(false);
     })
-
-    .createTable('resources', tbl =>{
-        tbl.increments();
-        tbl.text('task_name')
-        .notNullable();
-        tbl.text('resource_description')
+    
+    .createTable('resources', table => {
+        table.increments();
+        table.string('name', 128).notNullable();
+        table.string('description');
+        table.integer('project.id')
+        .notNullable()
+        .unsigned()
+        .references('projects.id')
     })
-    .createTable('tasks', tbl=>{
-        tbl.increments();
-        tbl.text('task-name', 128)
-        .notNullable();
-        tbl.text('notes')
-        tbl.integer('project_id')
-        .notNullable();
+    
+    .createTable('project_resources', table => {
+        table.integer('project_id').unsigned()
+        .notNullable().references('id').inTable('projects').onUpdate('CASCADE').onDelete('CASCADE');
+        table.integer('resource_id').unsigned().notNullable().references('id').inTable('projects').onUpdate('CASCADE').onDelete('CASCADE');
+        table.primary(['project_id', 'resource_id']);
     })
-  
+    
+    .createTable('tasks', table => {
+        table.increments();
+        table.integer('project_id').unsigned().notNullable().references('id').inTable('projects').onUpdate('CASCADE').onDelete('CASCADE');
+        table.string('description').notNullable();
+        table.string('notes');
+        table.boolean('completed').notNullable();
+    });
 };
-
+​
 exports.down = function(knex) {
-    return knex.schema
-    .dropTableIfExists('tasks')
-    .dropTableIfExists('resources')
-    .dropTableIfExists('projects');
-  
+    return knex.schema.dropTableIfExists('tasks').dropTableIfExists('project_resources').dropTableIfExists('resources').dropTableIfExists('projects');
 };
+​

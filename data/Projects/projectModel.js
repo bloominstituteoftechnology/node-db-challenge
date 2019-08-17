@@ -12,11 +12,11 @@ module.exports = {
 }
 
 function find(){
-    return db('schemes')
+    return db('projects')
 }
 
 async function add (project){
-    const [id]= await db('schemes').insert(project);
+    const [id]= await db('projects').insert(project);
     return findById(id)
 }
 
