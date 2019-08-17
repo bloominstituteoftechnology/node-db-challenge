@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const project = await Project.findById(id);
+    const project = await Projects.findById(id);
 
     if (project) {
       res.json(project);
@@ -41,12 +41,30 @@ router.get('/:id/tasks', async (req, res) => {
   try {
     const tasks = await Projects.findTasks(id);
 
-    if (actions.length) {
+    if (tasks.length) {
       res.json(tasks);
     } else {
       res
         .status(404)
         .json({ message: 'Could not find tasks for given project' });
+    }
+  } catch (err) {
+    res.status(500).json({ err: err.message, message: 'Failed to get task' });
+  }
+});
+
+router.get('/:id/resources', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resources = await Projects.findResources(id);
+
+    if (resources.length) {
+      res.json(resources);
+    } else {
+      res
+        .status(404)
+        .json({ message: 'Could not find resources for given project' });
     }
   } catch (err) {
     res.status(500).json({ err: err.message, message: 'Failed to get task' });
@@ -74,7 +92,7 @@ router.post('/:id/tasks', async (req, res) => {
     const project = await Projects.findById(id);
 
     if (project) {
-      const task = await Projects.addAction(taskData, id);
+      const task = await Projects.addTask(taskData, id);
       res.status(201).json(task);
     } else {
       res
@@ -85,6 +103,28 @@ router.post('/:id/tasks', async (req, res) => {
     res
       .status(500)
       .json({ err: err.message, message: 'Failed to create new task' });
+  }
+});
+
+router.post('/:id/resources', async (req, res) => {
+  const resourceData = req.body;
+  const { id } = req.params;
+
+  try {
+    const project = await Projects.findById(id);
+
+    if (project) {
+      const resource = await Projects.addResource(resourceData, id);
+      res.status(201).json(resource);
+    } else {
+      res
+        .status(404)
+        .json({ message: 'Could not find project with given id.' });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ err: err.message, message: 'Failed to create new resource.' });
   }
 });
 

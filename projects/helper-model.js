@@ -4,8 +4,11 @@ module.exports = {
   find,
   findById,
   findTasks,
+  findResources,
   add,
   findTaskById,
+  findResourceById,
+  addResource,
   addTask,
   update,
   remove
@@ -21,21 +24,42 @@ function findById(id) {
     .first();
 }
 
-function findTasks(id) {
+function findTasks(project_id) {
   return db('tasks as t')
-    .join('projects as p', 't.project_id', 'p.id')
+    .join('projects as p', 'p.id', 't.project_id')
     .select(
       't.id',
-      't.task_number',
+      't.task_name as task',
+      't.description',
+      't.notes',
+      't.completed',
       'p.id as project_id',
-      'p.project_name as project',
-      't.instructions'
+      'p.project_name as project'
     )
-    .where('p.id', id);
+    .where({ project_id });
+}
+
+function findResources(project_id) {
+  return db('resources as r')
+    .join('projects as p', 'p.id', 'r.project_id')
+    .select(
+      'r.id',
+      'r.resource_name',
+      'r.description',
+      'p.id as project_id',
+      'p.project_name as project'
+    )
+    .where({ project_id });
 }
 
 function findTaskById(id) {
   return db('tasks')
+    .where({ id })
+    .first();
+}
+
+function findResourceById(id) {
+  return db('resources')
     .where({ id })
     .first();
 }
@@ -50,6 +74,11 @@ async function addTask(task) {
   return findTaskById(id);
 }
 
+async function addResource(resource) {
+  const [id] = await db('resources').insert(resource);
+  return findTaskById(id);
+}
+
 async function update(changes, id) {
   await db('projects')
     .where({ id })
@@ -57,12 +86,19 @@ async function update(changes, id) {
   return findById(id);
 }
 
-async function update(changes, id) {
-  await db('tasks')
-    .where({ id })
-    .update(changes);
-  return findTaskById(id);
-}
+// async function update(changes, id) {
+//   await db('tasks')
+//     .where({ id })
+//     .update(changes);
+//   return findTaskById(id);
+// }
+
+// async function update(changes, id) {
+//   await db('resources')
+//     .where({ id })
+//     .update(changes);
+//   return findResourceById(id);
+// }
 
 function remove(id) {
   return db('projects')
@@ -70,8 +106,14 @@ function remove(id) {
     .del();
 }
 
-function remove(id) {
-  return db('tasks')
-    .where({ id })
-    .del();
-}
+// function remove(id) {
+//   return db('tasks')
+//     .where({ id })
+//     .del();
+// }
+
+// function remove(id) {
+//   return db('resource')
+//     .where({ id })
+//     .del();
+// }
