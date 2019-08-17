@@ -35,23 +35,21 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/:id/actions', async (req, res) => {
+router.get('/:id/tasks', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const actions = await Projects.findActions(id);
+    const tasks = await Projects.findTasks(id);
 
     if (actions.length) {
-      res.json(actions);
+      res.json(tasks);
     } else {
       res
         .status(404)
-        .json({ message: 'Could not find actions for given scheme' });
+        .json({ message: 'Could not find tasks for given project' });
     }
   } catch (err) {
-    res
-      .status(500)
-      .json({ err: err.message, message: 'Failed to get actions' });
+    res.status(500).json({ err: err.message, message: 'Failed to get task' });
   }
 });
 
@@ -68,16 +66,16 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/:id/actions', async (req, res) => {
-  const actionData = req.body;
+router.post('/:id/tasks', async (req, res) => {
+  const taskData = req.body;
   const { id } = req.params;
 
   try {
     const project = await Projects.findById(id);
 
     if (project) {
-      const action = await Projects.addAction(actionData, id);
-      res.status(201).json(action);
+      const task = await Projects.addAction(taskData, id);
+      res.status(201).json(task);
     } else {
       res
         .status(404)
@@ -86,7 +84,7 @@ router.post('/:id/actions', async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ err: err.message, message: 'Failed to create new action' });
+      .json({ err: err.message, message: 'Failed to create new task' });
   }
 });
 

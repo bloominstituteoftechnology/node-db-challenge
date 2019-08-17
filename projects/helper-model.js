@@ -3,10 +3,10 @@ const db = require('../data/db-config');
 module.exports = {
   find,
   findById,
-  findActions,
+  findTasks,
   add,
-  findActionById,
-  addAction,
+  findTaskById,
+  addTask,
   update,
   remove
 };
@@ -21,21 +21,21 @@ function findById(id) {
     .first();
 }
 
-function findActions(id) {
-  return db('actions as a')
-    .join('projects as p', 'a.project_id', 'p.id')
+function findTasks(id) {
+  return db('tasks as t')
+    .join('projects as p', 't.project_id', 'p.id')
     .select(
-      'a.id',
-      'a.action_number',
+      't.id',
+      't.task_number',
       'p.id as project_id',
       'p.project_name as project',
-      'a.instructions'
+      't.instructions'
     )
     .where('p.id', id);
 }
 
-function findActionById(id) {
-  return db('actions')
+function findTaskById(id) {
+  return db('tasks')
     .where({ id })
     .first();
 }
@@ -45,9 +45,9 @@ async function add(project) {
   return findById(id);
 }
 
-async function addAction(action) {
-  const [id] = await db('actions').insert(action);
-  return findActionById(id);
+async function addTask(task) {
+  const [id] = await db('tasks').insert(task);
+  return findTaskById(id);
 }
 
 async function update(changes, id) {
@@ -58,10 +58,10 @@ async function update(changes, id) {
 }
 
 async function update(changes, id) {
-  await db('actions')
+  await db('tasks')
     .where({ id })
     .update(changes);
-  return findByActionId(id);
+  return findTaskById(id);
 }
 
 function remove(id) {
@@ -71,7 +71,7 @@ function remove(id) {
 }
 
 function remove(id) {
-  return db('actions')
+  return db('tasks')
     .where({ id })
     .del();
 }
