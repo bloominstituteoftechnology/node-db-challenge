@@ -1,0 +1,17 @@
+{
+    "name": "node-db-challenge",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "server": "nodemon index.js",
+        "knex": "knex"
+    },
+    "repository": "https://github.com/EvaGurtovaia/node-db-challenge.git",
+    "author": "EvaGurtovaia <eva.gurtovaya@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "knex": "^0.19.1",
+        "sqlite3": "^4.1.0"
+    }
+}
