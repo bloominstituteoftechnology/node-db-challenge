@@ -27,6 +27,3 @@ function insert(project) {
         .then(([id]) => this.getById(id));
 }
 
-function find() {
-    return db("projects");
-}
