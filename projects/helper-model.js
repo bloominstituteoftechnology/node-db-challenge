@@ -28,7 +28,7 @@ function findTasks(project_id) {
   return db('tasks as t')
     .join('projects as p', 'p.id', 't.project_id')
     .select(
-      't.id',
+      't.id as task_id',
       't.task_name as task',
       't.description',
       't.notes',
@@ -43,7 +43,7 @@ function findResources(project_id) {
   return db('resources as r')
     .join('projects as p', 'p.id', 'r.project_id')
     .select(
-      'r.id',
+      'r.id as resource_id',
       'r.resource_name',
       'r.description',
       'p.id as project_id',

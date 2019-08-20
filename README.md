@@ -38,13 +38,23 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] Explain the difference between `Relational Databases` and `SQL`.
+- [√] Explain the difference between `Relational Databases` and `SQL`.
 
-- [ ] Why do tables need a `primary key`?
+Relational Databases(RDBMS) is a system which manages storage, querying and updating. While SQL is the language used to interact with the system.
 
-- [ ] What is the name given to a table column that references the primary key on another table.
+- [√] Why do tables need a `primary key`?
 
-- [ ] What do we need in order to have a _many to many_ relationship between two tables.
+The major function of a primary key when creating a database is to implement relationships between tables in a relational database, you can not declare a foreign key in table Q to relate with table R unless you have defined the primary key in table Q. Primary keys allows you to create a unique identifier for each row in your table. It is important because it helps you link your table to other tables (relationships) using primary key as links.
+
+Primary keys also provide a means to specifically and uniquely identify a row of data (or record) in a table when building access database. For example, in an employee table, the primary key would be the employee number, unique to each employee.
+
+- [√] What is the name given to a table column that references the primary key on another table.
+
+Foreign Key.
+
+- [√] What do we need in order to have a _many to many_ relationship between two tables.
+
+We would need to separate the two entities and create two one-to-many relationship between them with a third entity. The intersect entity usually contains attributes from both connecting entities.
 
 ## Minimum Viable Product
 
