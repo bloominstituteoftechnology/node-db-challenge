@@ -11,11 +11,30 @@ module.exports = {
 };
 
 function get() {
-    return db("tasks");
+    return db("tasks as t")
+        .join("projects as p", "t.project_id", "p.id")
+        .select(
+            "t.id",
+            "t.description",
+            "t.notes",
+            "t.complete",
+            "t.project_id",
+            "p.name as project_name",
+            "p.description as project_description"
+        )
+        .then(tasks =>
+            tasks.map(task => {
+                if (task.complete == 1) {
+                    task.complete = true;
+                } else task.complete = false;
+                return task;
+            })
+        );
 }
+
 function getById(id) {
     let query = db("tasks as t");
-    query.where("r.id", id).first();
+    query.where("t.id", id).first();
     return query.then(function(results) {
         return results;
     });
@@ -23,6 +42,6 @@ function getById(id) {
 
 function insert(task) {
     return db("tasks")
-        .insert()
+        .insert(task)
         .then(([id]) => this.getById(id));
 }

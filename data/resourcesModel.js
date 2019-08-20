@@ -23,6 +23,6 @@ function getById(id) {
 
 function insert(resource) {
     return db("resources")
-        .insert()
+        .insert(resource)
         .then(([id]) => this.getById(id));
 }

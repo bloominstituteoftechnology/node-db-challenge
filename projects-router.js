@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Projects = require("./data/dbConfig.js");
+const Projects = require("./data/projectsModel.js");
 
 const router = express.Router();
 
@@ -9,10 +9,10 @@ module.exports = router;
 router.post("/", async (req, res) => {
     const newProject = req.body;
 
-    if (newProject.name && newProject.desciption) {
+    if (newProject.name) {
         try {
             const project = await Projects.insert(req.body);
-            res.status(201).json(post);
+            res.status(201).json(project);
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -22,15 +22,15 @@ router.post("/", async (req, res) => {
         }
     } else {
         res.status(400).json({
-            err: "Please provide name and description for the project."
+            err: "Please provide name  for the project."
         });
     }
 });
 
 router.get("/", async (req, res) => {
     try {
-        const projects = await Projects.find(req.query);
-        res.status(200).json(posts);
+        const projects = await Projects.get(req.query);
+        res.status(200).json(projects);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -41,10 +41,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const project = await Projects.findById(req.params.id);
+        const project = await Projects.getById(req.params.id);
 
-        if (post) {
-            res.status(200).json(post);
+        if (project) {
+            res.status(200).json(project);
         } else {
             res.status(404).json({
                 message: "The project with the specified ID does not exist"

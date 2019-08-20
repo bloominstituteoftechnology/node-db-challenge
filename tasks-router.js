@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Tasks = require("./data/dbConfig.js");
+const Tasks = require("./data/tasksModel.js");
 
 const router = express.Router();
 
@@ -9,10 +9,10 @@ module.exports = router;
 router.post("/", async (req, res) => {
     const newTask = req.body;
 
-    if (newTask.description && newTask.notes) {
+    if (newTask.description) {
         try {
-            const tasks = await Tasks.insert(req.body);
-            res.status(201).json(post);
+            const task = await Tasks.insert(req.body);
+            res.status(201).json(task);
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -22,15 +22,15 @@ router.post("/", async (req, res) => {
         }
     } else {
         res.status(400).json({
-            err: "Please provide description and notes for the resources."
+            err: "Please provide description for the resources."
         });
     }
 });
 
 router.get("/", async (req, res) => {
     try {
-        const tasks = await Tasks.find(req.query);
-        res.status(200).json(posts);
+        const tasks = await Tasks.get(req.query);
+        res.status(200).json(tasks);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -41,10 +41,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const tasks = await Tasks.findById(req.params.id);
+        const tasks = await Tasks.getById(req.params.id);
 
         if (post) {
-            res.status(200).json(post);
+            res.status(200).json(task);
         } else {
             res.status(404).json({
                 message: "The task with the specified ID does not exist"

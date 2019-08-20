@@ -2,8 +2,8 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable("tasks", tbl => {
         tbl.increments();
         tbl.string("description")
-            .notNullable()
-            .unique();
+            .notNullable();
+           
         tbl.string("notes").nullable();
         tbl.boolean("complete").defaultTo(false);
         tbl.decimal("project_id")

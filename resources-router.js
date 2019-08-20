@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Resources = require("./data/dbConfig.js");
+const Resources = require("./data/resourcesModel.js");
 
 const router = express.Router();
 
@@ -9,10 +9,10 @@ module.exports = router;
 router.post("/", async (req, res) => {
     const newResource = req.body;
 
-    if (newResource.name && newResource.desciption) {
+    if (newResource.name) {
         try {
-            const resources = await Resources.insert(req.body);
-            res.status(201).json(post);
+            const resource = await Resources.insert(req.body);
+            res.status(201).json(resource);
         } catch (err) {
             console.log(err);
             res.status(500).json({
@@ -22,15 +22,15 @@ router.post("/", async (req, res) => {
         }
     } else {
         res.status(400).json({
-            err: "Please provide name and description for the resources."
+            err: "Please provide name  for the resources."
         });
     }
 });
 
 router.get("/", async (req, res) => {
     try {
-        const resources = await Resources.find(req.query);
-        res.status(200).json(posts);
+        const resources = await Resources.get(req.query);
+        res.status(200).json(resources);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -41,10 +41,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const resources = await Resources.findById(req.params.id);
+        const resources = await Resources.getById(req.params.id);
 
-        if (post) {
-            res.status(200).json(post);
+        if (resource) {
+            res.status(200).json(resource);
         } else {
             res.status(404).json({
                 message: "The resource with the specified ID does not exist"
