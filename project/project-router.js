@@ -30,7 +30,7 @@ router.get('/resources', (req, res) => {
       res.json(Projects);
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to get resources' });
+      res.status(500).json({ message: 'Failed to get tasks' });
     });
   });
 
@@ -69,105 +69,5 @@ router.post('/resources', (req, res) => {
     res.status(500).json({ message: 'Failed to create new resource' });
   });
 });
-
-// router.get('/:id', (req, res) => {
-//   const { id } = req.params;
-
-//   Projects.findById(id)
-//   .then(Project => {
-//     if (Project) {
-//       res.json(Project);
-//     } else {
-//       res.status(404).json({ message: 'Could not find Project with given id.' })
-//     }
-//   })
-//   .catch(err => {
-//     res.status(500).json({ message: 'Failed to get Projects' });
-//   });
-// });
-
-// router.get('/:id/steps', (req, res) => {
-//   const { id } = req.params;
-
-//   Projects.findSteps(id)
-//   .then(steps => {
-//     if (steps.length) {
-//       res.json(steps);
-//     } else {
-//       res.status(404).json({ message: 'Could not find steps for given Project' })
-//     }
-//   })
-//   .catch(err => {
-//     res.status(500).json({ message: 'Failed to get steps' });
-//   });
-// });
-
-// router.post('/', (req, res) => {
-//   const ProjectData = req.body;
-
-//   Projects.add(ProjectData)
-//   .then(Project => {
-//     res.status(201).json(Project);
-//   })
-//   .catch (err => {
-//     res.status(500).json({ message: 'Failed to create new Project' });
-//   });
-// });
-
-// router.post('/:id/steps', (req, res) => {
-//   const stepData = req.body;
-//   const { id } = req.params; 
-
-//   Projects.findById(id)
-//   .then(Project => {
-//     if (Project) {
-//       Projects.addStep(stepData, id)
-//       .then(step => {
-//         res.status(201).json(step);
-//       })
-//     } else {
-//       res.status(404).json({ message: 'Could not find Project with given id.' })
-//     }
-//   })
-//   .catch (err => {
-//     res.status(500).json({ message: 'Failed to create new step' });
-//   });
-// });
-
-// router.put('/:id', (req, res) => {
-//   const { id } = req.params;
-//   const changes = req.body;
-
-//   Projects.findById(id)
-//   .then(Project => {
-//     if (Project) {
-//       Projects.update(changes, id)
-//       .then(updatedProject => {
-//         res.json(updatedProject);
-//       });
-//     } else {
-//       res.status(404).json({ message: 'Could not find Project with given id' });
-//     }
-//   })
-//   .catch (err => {
-//     res.status(500).json({ message: 'Failed to update Project' });
-//   });
-// });
-
-// router.delete('/:id', (req, res) => {
-//   const { id } = req.params;
-
-//   Projects.remove(id)
-//   .then(deleted => {
-//     if (deleted) {
-//       res.json({ removed: deleted });
-//     } else {
-//       res.status(404).json({ message: 'Could not find Project with given id' });
-//     }
-//   })
-//   .catch(err => {
-//     res.status(500).json({ message: 'Failed to delete Project' });
-//   });
-// });
 
 module.exports = router;

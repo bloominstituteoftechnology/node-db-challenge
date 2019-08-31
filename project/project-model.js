@@ -24,7 +24,9 @@ function findResources(){
     return db('resource'); 
  }
  function findTasks(){
-    return db('task') 
+    return db('task as t')
+        .join('projects as p', 't.id', 'p.id')
+        .select('t.description', 't.notes', 't.completed', 'p.name', 'p.description') 
     .then(tasks =>
         tasks.map(task => {
             if (task.complete == 1) {
@@ -35,7 +37,7 @@ function findResources(){
     );
  }
 
- function addResource(resourceData){
+function addResource(resourceData){
     return db('resource').insert(resourceData)
     
 }
@@ -47,61 +49,7 @@ function addTask(taskData){
 
 function addProject(projectData){
     return db('projects').insert(projectData)
-    .then(ids=>{
-        return findByID(ids[0])
-    })
 }
 
-function findByPosts(id){
-    return  db("task as t")
-        .join('projects as p', 'p.id')
-        .select('t.id', 't.description', 'p.name')
-        .where({id})
-    }
 
-function findByID(id){
-   return db('project').where({ id }).first()
 
-}
-
-function findByIDtask(id){
-    return db('task')
- 
- }
-
-// function findByPosts(user_id){
-// return  db("posts as p")
-//     .join('users as u', 'u.id', 'p.user_id')
-//     .select('p.id', 'p.contents', 'u.username')
-//     .where({user_id})
-// }
-
-// function add(resource){
-//     return db('newUsers').insert(userData)
-//     .then(ids=>{
-//         return findByID(ids[0])
-//     })
-// }
-// function add(task){
-//     return db('newUsers').insert(userData)
-//     .then(ids=>{
-//         return findByID(ids[0])
-//     })
-// }
-// function add(project){
-//     return db('newUsers').insert(userData)
-//     .then(ids=>{
-//         return findByID(ids[0])
-//     })
-// }
-
-// function update(changes, id){
-//   return  db('users').where({ id }).update(changes)
-//   .then(count=>{
-//       return findByID(id);
-//   })  
-// }
-
-// function remove(id){
-//   return db('users').where({ id }).del()  
-// }
