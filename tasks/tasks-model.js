@@ -5,7 +5,7 @@ const db = require('../data/db-config.js')
 const find = () =>
   db('tasks as t')
     .leftJoin('projects as p', 'p.id', 't.proj_id')
-    .select('t.id', 't.task_desc', 't.notes', 'p.name', 'p.desc')
+    .select('t.id', 't.task_desc', 't.notes', 't.completed', 'p.name', 'p.desc')
 // --------------------------------------------|
 const findById = id =>
   db('tasks')

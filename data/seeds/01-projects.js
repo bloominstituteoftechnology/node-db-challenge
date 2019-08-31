@@ -3,22 +3,22 @@ exports.seed = function(knex, Promise) {
     {
       name: 'Test Project 1',
       desc: 'Test Project description',
-      completed: 1
+      completed: true
     },
     {
       name: 'Test Project 2',
       desc: 'Test Project description',
-      completed: 0
+      completed: false
     },
     {
       name: 'Test Project 3',
       desc: 'Test Project description',
-      completed: 1
+      completed: true
     },
     {
       name: 'Test Project 4',
       desc: 'Test Project description',
-      completed: 0
+      completed: false
     }
   ])
 }
