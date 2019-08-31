@@ -1,6 +1,6 @@
 // DATABASE HELPER METHODS - Projects =========|
 // --------------------------------------------|
-const db = require('./data/db-config.js')
+const db = require('../data/db-config.js')
 // --------------------------------------------|
 const find = () => db('projects')
 // --------------------------------------------|

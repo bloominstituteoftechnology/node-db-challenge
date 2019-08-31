@@ -42,7 +42,7 @@ exports.up = function(knex) {
           .notNullable()
           .references('id')
           .inTable('resources')
-        tbl.primary(['proj_id', 'animal_id'])
+        tbl.primary(['proj_id', 'res_id'])
       })
   )
 }
