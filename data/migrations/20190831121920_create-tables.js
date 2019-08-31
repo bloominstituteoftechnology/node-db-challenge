@@ -17,7 +17,7 @@ exports.up = function(knex) {
       // a task belongs only to one project
       .createTable('tasks', tbl => {
         tbl.increments()
-        tbl.string('desc').notNullable()
+        tbl.string('task_desc').notNullable()
         tbl.string('notes')
         tbl.boolean('completed')
         // foreign key
@@ -47,4 +47,11 @@ exports.up = function(knex) {
   )
 }
 
-exports.down = function(knex) {}
+exports.down = function(knex) {
+  return knex.schema.dropTableIfExists(
+    'projects_resources',
+    'tasks',
+    'resources',
+    'projects'
+  )
+}

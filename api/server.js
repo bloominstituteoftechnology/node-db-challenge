@@ -5,7 +5,8 @@ const express = require('express')
 // bring in routers
 // --------------------------------------------|
 const ProjectsRouter = require('../projects/projects-router.js')
-const ResRouter = require('../resources/res-router')
+const ResRouter = require('../resources/res-router.js')
+const TaskRouter = require('../tasks/tasks-router.js')
 // initialize express server
 // --------------------------------------------|
 const server = express()
@@ -18,6 +19,7 @@ server.use(express.json())
 // --------------------------------------------|
 server.use('/api/projects', ProjectsRouter)
 server.use('/api/resources', ResRouter)
+server.use('/api/tasks', TaskRouter)
 
 // export server
 // --------------------------------------------|
