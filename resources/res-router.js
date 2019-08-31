@@ -4,67 +4,59 @@ const router = require('express').Router()
 
 // Bring in DB Helper Methods
 // --------------------------------------------|
-const Projects = require('./projects-model.js')
+const Resources = require('./res-model.js')
 
-// GET Request - Get all projects from db
+// GET Request - Get all resources from db
 // --------------------------------------------|
 router.get('/', async (req, res) => {
   try {
-    const projects = await Projects.find()
+    const resources = await Resources.find()
 
-    res.json(projects)
+    res.json(resources)
   } catch (err) {
     console.log(err)
     res.status(500).json({
-      message: 'Failed to get projects'
+      message: 'Failed to get resources'
     })
   }
 })
 
-// GET Request - Get project from db by id
+// GET Request - Get resource from db by id
 // --------------------------------------------|
 router.get('/:id', async (req, res) => {
   const { id } = req.params
 
   try {
-    const project = await Projects.findById(id)
+    const resource = await Resources.findById(id)
 
-    if (project) {
-      res.json(project)
+    if (resource) {
+      res.json(resource)
     } else {
       res.status(404).json({
-        message: 'Invalid Project ID'
+        message: 'Invalid Resource ID'
       })
     }
   } catch {
     console.log(err)
     res.status(500).json({
-      message: 'Failed to get project'
+      message: 'Failed to get resource'
     })
   }
 })
 
-// POST Request - Add new project to db
+// POST Request - Add new resource to db
 // --------------------------------------------|
 router.post('/', async (req, res) => {
-  let newProject = req.body
-
-  // default the completed field to false
-  if (!req.body.completed || req.body.completed === null) {
-    newProject = { ...req.body, completed: false }
-  }
+  let newResource = req.body
 
   try {
-    const addedProject = await Projects.add(newProject)
+    const addedResource = await Resources.add(newResource)
 
-    // convert completed field api response to a boolean
-    addedProject.completed = Boolean(addedProject.completed)
-
-    res.status(201).json(addedProject)
+    res.status(201).json(addedResource)
   } catch (err) {
     console.log(err)
     res.status(500).json({
-      message: 'Failed to add project'
+      message: 'Failed to add resource'
     })
   }
 })

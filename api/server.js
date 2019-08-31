@@ -5,7 +5,7 @@ const express = require('express')
 // bring in routers
 // --------------------------------------------|
 const ProjectsRouter = require('../projects/projects-router.js')
-
+const ResRouter = require('../resources/res-router')
 // initialize express server
 // --------------------------------------------|
 const server = express()
@@ -17,6 +17,7 @@ server.use(express.json())
 // define routes
 // --------------------------------------------|
 server.use('/api/projects', ProjectsRouter)
+server.use('/api/resources', ResRouter)
 
 // export server
 // --------------------------------------------|
