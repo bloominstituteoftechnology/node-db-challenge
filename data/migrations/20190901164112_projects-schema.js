@@ -33,7 +33,7 @@ exports.up = function(knex) {
         .references('id')
         .inTable('resources');
     tbl.primary(['projects_id', 'resources_id'])
-}
+})
 };
 
 exports.down = function(knex) {
