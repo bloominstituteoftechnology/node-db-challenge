@@ -23,10 +23,20 @@ router.get('/tasks', (req, res) => {
         })
 })
 
+router.get('/resources', (req, res) => {
+    Projects.getResources()
+        .then(resources => {
+            res.status(200).json(resources)
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error getting tasks.' })
+        })
+})
+
 router.post('/', (req, res) => {
     const project = req.body;
 
-    Projects.getProjects()
+    Projects.postProject()
         .insert(project)
         .then(post => {
             res.status(201).json(post)
@@ -37,14 +47,26 @@ router.post('/', (req, res) => {
 })
 
 router.post('/tasks', (req, res) => {
-    tasks = req.body;
+    const task = req.body;
   
-    Projects.addTask(tasks)
+    Projects.postTask(task)
     .then(task => {
       res.status(201).json(task);
     })
     .catch (err => {
       res.status(500).json({ message: 'Error creating new task' });
+    });
+  });
+
+  router.post('/resources', (req, res) => {
+    const resource = req.body;
+  
+    Projects.postResources(resource)
+    .then(resource => {
+      res.status(201).json(resource);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Error creating new resource' });
     });
   });
 
