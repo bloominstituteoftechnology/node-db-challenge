@@ -1,0 +1,8 @@
+1.  The difference between a Relational Database and SQL is that Relational Database is what holds the data and SQL
+    is what interacts with the data.
+
+2.  Tables need primary keys to identify each unique entry in a table.
+
+3.  The name given to a table column that references a primary key is called a foriegn key.
+
+4.  To have a many-to-many relationship, you would need primary keys & foriegn keys to match the primany keys.
