@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('projects').insert([
-        {projects_name:  'html project', projects_description: 'do some html on a page'},
-        {projects_name: 'javascript project', projects_description: 'do some javascript on a page'},
-        {projects_name: 'react project', projects_description: 'do some react on a page'}
+        {name:  'html project', description: 'do some html on a page'},
+        {name: 'javascript project', description: 'do some javascript on a page'},
+        {name: 'react project', description: 'do some react on a page'}
       ]);
     });
 };

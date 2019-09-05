@@ -1,52 +1,15 @@
 const db = require('../data/dbConfig')
 const express = require('express');
-const knex = require('knex');
 const router= express.Router();
 
 
-//projects 
 
-router.get('/', (req, res) => {
-  db('projects')
-  .then(projects => {
-    res.json(projects); 
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to retrieve projects' });
-  });
-});
-
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  db('projects').where({ id }).first()
-  .then(project => {
-    res.json(project);
-  }) 
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to retrieve project' });
-  });
-});
-
-router.post('/', (req, res) => {
-  const newProject = req.body;
-  db('projects').insert(projectData)
-  .then(ids => {
-    db('projects').where({ id: ids[0] })
-    .then(newProjectEntry => {
-      res.status(201).json(newProjectEntry);
-    });
-  })
-  .catch (err => {
-    console.log('POST error', err);
-    res.status(500).json({ message: "Failed to store data" });
-  });
-});
 
 //resources
 
 router.get('/resources', (req, res) => {
-    db('projects')
+    db('resources')
+
     .then(resources => {
       res.json(resources); 
     })
@@ -58,7 +21,7 @@ router.get('/resources', (req, res) => {
 router.get('/resources/:id', (req, res) => {
     const { id } = req.params;
   
-    db('resources').where({ id }).first()
+    db('resources').where({ id })
     .then(resource => {
       res.json(resource);
     }) 
@@ -86,9 +49,11 @@ router.post('/resources/:id', (req, res) => {
   //tasks
 
   router.get('/tasks', (req, res) => {
+    console.log('projects-router')
     db('tasks')
+
     .then(tasks => {
-      res.json(tasks); 
+      res.status(200).json({tasks}); 
     })
     .catch (err => {
       res.status(500).json({ message: 'Failed to retrieve tasks' });
@@ -99,7 +64,7 @@ router.post('/resources/:id', (req, res) => {
   router.get('/tasks/:id', (req, res) => {
     const { id } = req.params;
   
-    db('tasks').where({ id }).first()
+    db('tasks').where({ id })
     .then(task => {
       res.json(task);
     }) 
@@ -122,4 +87,46 @@ router.post('/resources/:id', (req, res) => {
       res.status(500).json({ message: "Failed to store data" });
     });
   });
+
+  //projects 
+
+router.get('/', (req, res) => {
+  db('projects')
+  .then(projects => {
+    res.json(projects); 
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to retrieve projects' });
+  });
+});
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+console.log(id)
+
+  db('projects').where('id', id)
+  .then(project => {
+    res.json(project);
+  }) 
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to retrieve project', err});
+  });
+});
+
+router.post('/', (req, res) => {
+  const newProject = req.body;
+  db('projects').insert(projectData)
+  .then(ids => {
+    db('projects').where({ id: ids[0] })
+    .then(newProjectEntry => {
+      res.status(201).json(newProjectEntry);
+    });
+  })
+  .catch (err => {
+    console.log('POST error', err);
+    res.status(500).json({ message: "Failed to store data" });
+  });
+});
+
+  module.exports= router;
 

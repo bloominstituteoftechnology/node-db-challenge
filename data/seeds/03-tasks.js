@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('tasks').insert([
-        {tasks_description: 'add a header, body, and footer to the webpage', tasks_notes: '<header><body><footer>', project_id: 1, completed: true},
-        {tasks_description: 'create an animal object that uses a speak method', tasks_notes: null, project_id: 2, completed: true},
-        {tasks_description: 'create a react app of your choosing', tasks_notes: null, project_id: 3, completed: false}
+        {description: 'add a header, body, and footer to the webpage', notes: '<header><body><footer>', project_id: 1, completed: true},
+        {description: 'create an animal object that uses a speak method', notes: null, project_id: 2, completed: true},
+        {description: 'create a react app of your choosing', notes: null, project_id: 3, completed: false}
       ]);
     });
 };
