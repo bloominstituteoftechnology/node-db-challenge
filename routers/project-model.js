@@ -20,7 +20,7 @@ function getTasks() {
         .then(tasks => 
             tasks.map(task => {
                 if (task.completed == 1) {
-                    tasks.completed = true;
+                    task.completed = true;
                 } else task.completed = false;
                 return tasks;
             })
