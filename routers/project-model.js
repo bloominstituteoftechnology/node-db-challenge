@@ -17,14 +17,14 @@ function getTasks() {
     return db('tasks as t')
         .join('projects as p', 'p.id', 't.id')
         .select( 'p.name', 'p.description', 't.description', 't.notes', 't.completed')
-        
-}
-
-function getResources() {
-    return db('tasks as t')
-        .join('projects as p', 'p.id', 't.id')
-        .select('t.description', 't.notes', 't.completed', 'p.name', 'p.description')
-        
+        .then(tasks => 
+            tasks.map(task => {
+                if (task.completed == 1) {
+                    tasks.completed = true;
+                } else task.completed = false;
+                return tasks;
+            })
+        )
 }
 
 function getResources() {
