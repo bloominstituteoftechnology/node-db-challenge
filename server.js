@@ -1,9 +1,11 @@
 const express = require('express');
-const ProjectRouter = require('./projects/project-router');
+const ProjectRouter = require('./projects/project-router.js');
+
+const db = require('./data/db-config.js');
 
 const server = express();
 
 server.use(express.json());
-server.use('/projects', ProjectRouter);
+server.use('/api/projects', ProjectRouter);
 
 module.exports = server;

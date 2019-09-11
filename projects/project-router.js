@@ -47,13 +47,13 @@ router.get('/', (req, res) => {
 
   router.post('/', (req, res) => {
     const projectData = req.body;
-  
+  console.log('projectData', projectData);
     Projects.add(projectData)
     .then(project => {
       res.status(201).json(project);
     })
     .catch (err => {
-      res.status(500).json({ message: 'Failed to create new project' });
+      res.status(500).json({ err, message: 'Failed to create new project' });
     });
   });
 
@@ -109,7 +109,7 @@ router.get('/', (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).json({ message: 'Failed to delete project' });
+      res.status(500).json(err);
     });
   });
   
