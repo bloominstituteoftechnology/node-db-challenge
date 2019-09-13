@@ -1,0 +1,30 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "Sprint API Challenge",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LambdaSchool/Sprint-Challenge-Node-Express.git"
+  },
+  "keywords": [
+    "webapi",
+    "challenge"
+  ],
+  "author": "Lambda School",
+  "license": "ISC",
+  "devDependencies": {
+    "knex-cleaner": "^1.3.0",
+    "nodemon": "^1.19.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.21.0",
+    "knex": "^0.19.4",
+    "sqlite3": "^4.1.0"
+  }
+}
