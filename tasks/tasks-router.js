@@ -17,7 +17,10 @@ router.get('/:id', (req,res) => {
     Tasks.getById(id)
         .then(task => {
             if(task){
-                res.status(200).json(task);
+                if(task.completed == 1){
+                    
+                }
+                // res.status(200).json(task);
             }
             else{
                 res.status(404).json({message: `error retrieving the project.`})
