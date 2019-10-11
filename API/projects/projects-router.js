@@ -14,6 +14,16 @@ router.post('/', (req, res) => {
         })
 })
 
+router.post('/resources', (req, res) => {
+    Projects.addResource(req.body)
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+})
+
 //Read - get all resources, projects, and tasks
 router.get('/', (req, res) => {
     Projects.getProjects()
