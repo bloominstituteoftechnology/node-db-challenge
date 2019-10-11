@@ -4,7 +4,7 @@
   "description": "## Description",
   "main": "index.js",
   "scripts": {
-    "server": "noddmon index.js",
+    "server": "nodemon index.js",
     "start":"node index.js"
   },
   "repository": {

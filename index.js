@@ -1,4 +1,4 @@
-const server = requires('./server.js');
+const server = require('./server.js');
 
 const port = 7890;
 

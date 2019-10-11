@@ -4,9 +4,9 @@ const server = express();
 
 server.use(express.json());
 
-const R = require('./R.js');
+const pRouter = require('./projects/projects-router.js');
 
-server.use('/R', R);
+server.use('/api/projects', pRouter);
 
 server.get('/', (req, res) => {
     res.send(`
