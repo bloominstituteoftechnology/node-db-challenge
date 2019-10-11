@@ -3,7 +3,7 @@ exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('p_r').truncate()
     .then(() => knex('resources').truncate())
-    //truncate tasks here later
+    .then(()=> knex('tasks').truncate())
     .then(() => knex('projects').truncate())
     .then(() => {
       return knex('projects').insert([
@@ -32,7 +32,15 @@ exports.seed = function(knex) {
         {project_id: 3, resource_id: 6, location: 'Kitchen'}
       ])
     })
-    //insert tasks here
+    .then(()=> {
+      return knex('tasks').insert([
+        {project_id: 1, description: "Go to Home Depot", notes: "The one in College Station"}, 
+        {project_id: 1, description: "Research", notes: "How I want the table finished."},
+        {project_id: 3, description: "Go to store", notes: "Purchase party decorations!"},
+        {project_id: 3, description: "Clean House", notes: "Need to focus on cleaning the kitchen and living room."},
+        {project_id: 3, description: "Prepare food", notes: "Need to make a 3 course meal for 20 guests."}
+      ])
+    })
 
 
 };

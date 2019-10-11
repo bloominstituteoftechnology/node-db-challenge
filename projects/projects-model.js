@@ -18,3 +18,4 @@ function insert(project) {
         .insert(project, 'id')
         .then(([id]) => getById(id));
 }
+
