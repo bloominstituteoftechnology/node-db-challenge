@@ -25,6 +25,18 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/resources', (req, res) => {
+    Projects.getResources()
+        .then(resources => {
+            res.status(200).json(resources)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+})
+
+
+
 //Update
 
 //Delete
