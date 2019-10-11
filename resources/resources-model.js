@@ -6,15 +6,15 @@ module.exports = {
 }
 
 function get(){
-    return db('projects');
+    return db('resources');
 }
 
 function getById(id){
     return get().where({ id }).first();
 }
 
-function insert(project) {
-    return db('projects')
-        .insert(project, 'id')
+function insert(resource) {
+    return db('resources')
+        .insert(resource, 'id')
         .then(([id]) => getById(id));
 }

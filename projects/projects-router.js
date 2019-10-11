@@ -25,4 +25,17 @@ router.get('/:id', (req,res) => {
         })
 })
 
+router.post('/', (req,res) => {
+    const { name, description } = req.body
+    Projects.insert({ name, description })
+        .then(project => {
+            console.log(project);
+            res.status(200).json(project);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({error: `error posting a new project! `})
+        });
+})
+
 module.exports = router;
