@@ -18,7 +18,7 @@ exports.seed = function(knex) {
         {id: 2, name: "Blueprint", description: "For directing the schema to build from scratch."},
         {id: 3, name: "Paint", description: "an array of colors available"},
         {id: 4, name: "Canvas", description: "8 by 16 canvas"},
-        {id: 5, name: "baloons", description: "Pink baloons that have elephants displayed"},
+        {id: 5, name: "Baloons", description: "Pink baloons that have elephants displayed"},
         {id: 6, name: "cake decorations", description: "Elephant animal"}
       ])
     })
