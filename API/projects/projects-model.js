@@ -24,7 +24,7 @@ function addProject(project) {
 function getTasks() {
     return db('task as t')
     .join('project as p', 'p.id', '=', 't.project_id')
-    .select('p.project_name', 'p.description', 't.completed')
+    .select('t.id','p.project_name', 'p.description as projectDescription', 't.description as task','t.completed')
 }
 
 function addTask(task) {
