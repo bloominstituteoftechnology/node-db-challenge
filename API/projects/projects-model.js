@@ -22,7 +22,9 @@ function addProject(project) {
 //task
 
 function getTasks() {
-    return db('task')
+    return db('task as t')
+    .join('project as p', 'p.id', '=', 't.project_id')
+    .select('p.project_name', 'p.description', 't.completed')
 }
 
 function addTask(task) {
