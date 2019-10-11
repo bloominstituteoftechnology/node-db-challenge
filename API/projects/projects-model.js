@@ -26,7 +26,7 @@ function getTasks() {
 }
 
 function addTask(task) {
-    return('task')
+    return db('task')
         .insert(task)
 }
 
