@@ -15,12 +15,13 @@ exports.up = function(knex) {
         .notNullable()
       tbl.string('notes', 255)//optional
       tbl.boolean('completed')//required defaults to false
-        .notNullable()
         .defaultTo(false)
+        .notNullable()
+
       tbl.integer('project_id')//foreign key references id in project table
         .references('id')
         .inTable('project')
-        .UNSIGNED()
+        .unsigned()
         .notNullable()
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
