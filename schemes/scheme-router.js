@@ -4,8 +4,20 @@ const Schemes = require('./scheme-model.js');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/projects', (req, res) => {
   Schemes.find()
+  .then(schemes => {
+    
+
+    res.json(schemes);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get schemes' });
+  });
+});
+
+router.get('/resources', (req, res) => {
+  Schemes.findRes()
   .then(schemes => {
     res.json(schemes);
   })
@@ -14,7 +26,24 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+
+router.get('/resources/:id', (req, res) => {
+  const { id } = req.params;
+
+  Schemes.findResById(id)
+  .then(scheme => {
+    if (scheme) {
+      res.json(scheme);
+    } else {
+      res.status(404).json({ message: 'Could not find scheme with given id.' })
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get schemes' });
+  });
+});
+
+router.get('/projects/:id', (req, res) => {
   const { id } = req.params;
 
   Schemes.findById(id)
@@ -30,23 +59,23 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.get('/:id/steps', (req, res) => {
+router.get('/projects/:id/tasks', (req, res) => {
   const { id } = req.params;
 
-  Schemes.findSteps(id)
+  Schemes.getTasks(id)
   .then(steps => {
     if (steps.length) {
       res.json(steps);
     } else {
-      res.status(404).json({ message: 'Could not find steps for given scheme' })
+      res.status(404).json({ message: 'Could not find tasks for given project' })
     }
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get steps' });
+    res.status(500).json({ message: 'Failed to get tasks' });
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/projects', (req, res) => {
   const schemeData = req.body;
 
   Schemes.add(schemeData)
@@ -58,11 +87,27 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/:id/tasks', (req, res) => {
+
+router.post('/resources', (req, res) => {
+  const schemeData = req.body;
+
+  Schemes.addRes(schemeData)
+  .then(scheme => {
+    res.status(201).json(scheme);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new resource' });
+  });
+});
+
+router.post('/projects/:id/tasks', (req, res) => {
   const stepData = req.body;
   const { id } = req.params; 
 
-  Schemes.findById(id)
+  stepData.completed = stepData ? 1 : 0;
+  stepData.project_id = id;
+
+  Schemes.addTask(stepData)
   .then(scheme => {
     if (scheme) {
       Schemes.addTask(stepData, id)
@@ -78,7 +123,7 @@ router.post('/:id/tasks', (req, res) => {
   });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/projects/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -98,7 +143,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/projects/:id', (req, res) => {
   const { id } = req.params;
 
   Schemes.remove(id)

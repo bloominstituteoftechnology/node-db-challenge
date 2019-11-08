@@ -8,6 +8,6 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
-server.use('/api/projects', schemeRouter);
+server.use('/api', schemeRouter);
 
 module.exports = server;
