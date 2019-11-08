@@ -36,4 +36,25 @@ router.post("/", (req, res) => {
     });
 });
 
+//STRETCH
+//getting project by ID
+router.get("/:id", (req, res) => {
+  Projects.getProjectById(req.params.id)
+    .then(project => {
+      if (project) {
+        const updated = {
+          ...project,
+          completed: project.completed === 1 ? true : false
+        };
+        res.status(200).json(updated);
+      } else {
+        res.status(404).json({ message: "Could not find project" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Could not get project" });
+    });
+});
+
 module.exports = router;
