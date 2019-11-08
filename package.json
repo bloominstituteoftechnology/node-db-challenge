@@ -1,0 +1,26 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "In this challenge, you design and build a Data Model and a RESTful API that stores data into a Relational Database.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.20.1",
+    "nodemon": "^1.19.4",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-bit/node-db-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hector-bit/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/Hector-bit/node-db-challenge#readme"
+}
