@@ -53,6 +53,43 @@ router.get('/tasks/:id', validateTaskId, (req, res) => {
     .catch(err => res.status(500).json({ error: err }));
 })
 
+router.get('/:id/tasks', validateProjectId, (req, res) => {
+    const id = req.params.id;
+    db.getTasksByProject(id)
+    .then(tasks => {
+        res.status(200).json(tasks);
+    })
+    .catch(err => res.status(500).json({ message: 'Unable to fetch tasks for project by ID.', error: err }));
+})
+
+router.post('/', (req, res) => {
+    const project = req.body;
+    db.addProject(project)
+    .then(response => {
+        res.status(200).json(response);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
+
+router.post('/resources', (req, res) => {
+    const resource = req.body;
+    db.addResource(resource)
+    .then(response => {
+        res.status(200).json(response);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
+
+router.post('/tasks', (req, res) => {
+    const task = req.body;
+    db.addTask(task)
+    .then(response => {
+        res.status(200).json(response);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
+
+
 //MIDDLEWARE
 
 function validateProjectId (req, res, next) {
