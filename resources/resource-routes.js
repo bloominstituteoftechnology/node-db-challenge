@@ -1,12 +1,30 @@
+const express = require('express');
+
+const resources = require('./resource-model');
+
+const router = express.Router();
+
 router.get('/', (req, res) => {
-    projects.find()
-  .then(project => {
-    res.json(project);
+    resources.find()
+  .then(resource => {
+    res.json(resource);
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get resources' });
   });
 });
+
+router.post('/', (req, res) => {
+    const resourceData = req.body;
+  
+    resources.add(resourceData)
+    .then(resource => {
+      res.status(201).json(resource);
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new resource' });
+    });
+  });
 
 // router.get('/:id', (req, res) => {
 //   const { id } = req.params;
