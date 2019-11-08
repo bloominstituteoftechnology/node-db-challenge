@@ -1,5 +1,6 @@
 const express = require("express");
 const Projects = require("./model");
+const Tasks = require("../tasks/model");
 const router = express.Router();
 
 //retrieving a list of projects.
@@ -33,6 +34,27 @@ router.post("/", (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json({ message: "Could not create new project" });
+    });
+});
+
+//adding tasks
+router.post("/:id/task", (req, res) => {
+  Projects.getProjectById(req.params.id)
+    .then(project => {
+      if (project) {
+        const taskToAdd = { ...req.body, completed: 0 };
+        Tasks.addTask(taskToAdd, req.params.id).then(task => {
+          res.status(201).json(task);
+        });
+      } else {
+        res.status(404).json({
+          message: "Could not find project with the ID to add the taske"
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Could create new task" });
     });
 });
 
