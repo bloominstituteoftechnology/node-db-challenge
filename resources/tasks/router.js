@@ -43,4 +43,25 @@ router.get("/", (req, res) =>
       res.status(500).json({ message: "Could not get tasks" });
     })
 );
+
+//STRETCH
+router.get("/:id", (req, res) => {
+  Tasks.getTaskById(req.params.id)
+    .then(task => {
+      if (task) {
+        const updated = {
+          ...task,
+          completed: task.completed === 1 ? true : false
+        };
+        res.status(200).json(updated);
+      } else {
+        res.status(404).json({ message: "Could not find the task" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Could not to get task" });
+    });
+});
+
 module.exports = router;
