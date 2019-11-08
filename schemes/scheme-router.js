@@ -65,7 +65,8 @@ router.get('/projects/:id/tasks', (req, res) => {
   Schemes.getTasks(id)
   .then(steps => {
     if (steps.length) {
-      res.json(steps);
+      const pro = steps.map(e => ({...e, completed: Boolean(e.completed)}))
+      res.json(pro);
     } else {
       res.status(404).json({ message: 'Could not find tasks for given project' })
     }
