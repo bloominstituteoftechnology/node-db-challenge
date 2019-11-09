@@ -7,9 +7,13 @@ module.exports = {
 }
 
 function find() {
+    // .update(req.body)
+    // .into('accounts')
+    // .where('id', '=', req.params.id)
     return db
     .select('*')
     .from('project')
+    // .where(project_completed = 0)r.insert('true')
 }
 
 function findById(id) {

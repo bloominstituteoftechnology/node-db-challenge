@@ -3,10 +3,10 @@ exports.up = function(knex) {
     return knex.schema
     .createTable('project', tbl => {
       tbl.increments();
-      tbl.text('project_name', 128)
+      tbl.string('project_name')
         .unique()
         .notNullable();
-      tbl.text('project_description', 500)
+      tbl.string('project_description')
       tbl.boolean('project_completed', false)
     })
     .createTable('resource', tbl => {
@@ -14,14 +14,14 @@ exports.up = function(knex) {
       tbl.integer('resource_number')
         .unsigned()
         .notNullable();
-      tbl.text('resource_name')
+      tbl.string('resource_name')
         .notNullable();
-      tbl.text('resource_description', 500)
+      tbl.string('resource_description')
     })
     .createTable('task', tbl => {
       tbl.increments();
-      tbl.text('task_description', 800).notNullable();
-      tbl.text('task_notes', 500);
+      tbl.string('task_description').notNullable();
+      tbl.string('task_notes');
       tbl.boolean('task_completed', false)
     })
 };

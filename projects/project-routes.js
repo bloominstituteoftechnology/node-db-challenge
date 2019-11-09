@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     projects.find()
   .then(project => {
+    console.log(project)
     res.json(project);
   })
   .catch(err => {
