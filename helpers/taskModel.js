@@ -3,7 +3,9 @@ const db = require('../data/db-config');
 
 // Return all Tasks
 function find() {
-    return db('task');
+    return db('task')
+      .join('task.id', 'project.id')
+      .select('task', 'project.name', 'project.desc')
   }
 
 // Included to provide "under the hood" functionality so Add returns an object not an id
