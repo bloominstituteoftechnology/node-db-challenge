@@ -1,0 +1,28 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndailey000/node-db-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ndailey000/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/ndailey000/node-db-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "knex": "^0.20.2",
+    "knex-cleaner": "^1.3.0",
+    "nodemon": "^2.0.1",
+    "sqlite3": "^4.1.0"
+  }
+}
