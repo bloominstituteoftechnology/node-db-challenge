@@ -1,0 +1,28 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "In this challenge, you design and build a Data Model and a RESTful API that stores data into a Relational Database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomBruno/node-db-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DomBruno/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/DomBruno/node-db-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "knex": "^0.20.2",
+    "knex-cleaner": "^1.3.0",
+    "nodemon": "^2.0.1",
+    "sqlite3": "^4.1.0"
+  }
+}
