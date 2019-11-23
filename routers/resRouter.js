@@ -32,7 +32,6 @@ router.get('/:id', (req, res) => {
 });
 
 // POST endpoint
-// POST endpoint
 router.post('/', (req, res) => {
   const newRes = req.body;
 
