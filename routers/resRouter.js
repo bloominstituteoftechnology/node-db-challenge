@@ -4,6 +4,7 @@ const resources = require('../helpers/resModel.js');
 
 const router = express.Router();
 
+// GET endpoints
 router.get('/', (req, res) => {
   resources.find()
   .then(resources => {
@@ -30,6 +31,22 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// POST endpoint
+// POST endpoint
+router.post('/', (req, res) => {
+  const newRes = req.body;
+
+  resources.add(newRes)
+  .then(resource => {
+    res.status(201).json(resource);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new resource', err });
+  });
+});
+
+
+// Delete endpoint
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
   

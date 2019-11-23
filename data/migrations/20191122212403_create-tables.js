@@ -3,18 +3,18 @@ exports.up = function(knex, Promise) {
     return knex.schema
     .createTable('project', tbl => {
         tbl.increments();
-        tbl.text('name', 128)
+        tbl.text('name')
             .unique()
             .notNullable();
-        tbl.text('description', 255);
-        tbl.bool('completed')
+        tbl.text('description');
+        tbl.boolean('completed')
             .notNullable()
-            .default('0');
+            .defaultTo('0');
       })
 
       .createTable('resource', tbl => {
         tbl.increments();
-        tbl.text('name', 255)
+        tbl.text('name')
           .unique()
           .notNullable();
         tbl.text('description');
@@ -22,10 +22,10 @@ exports.up = function(knex, Promise) {
 
       .createTable('task', tbl => {
         tbl.increments();
-        tbl.text('description', 255)
+        tbl.text('description')
             .notNullable();
         tbl.text('notes', 255);
-        tbl.bool('completed')
+        tbl.boolean('completed')
             .notNullable()
             .default('0');
         tbl.integer('project_id')
@@ -38,7 +38,7 @@ exports.up = function(knex, Promise) {
       })
 
       .createTable('project_resource', tbl => {
-        tbl.primary('resource_id', 'project_id');
+        tbl.primary(['resource_id', 'project_id']);
         tbl.integer('project_id')
           .unsigned()
           .notNullable()

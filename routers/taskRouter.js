@@ -4,6 +4,7 @@ const tasks = require('../helpers/taskModel.js');
 
 const router = express.Router();
 
+// GET Endpoints
 router.get('/', (req, res) => {
   tasks.find()
   .then(tasks => {
@@ -30,6 +31,10 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//POST Endpoint
+
+
+// Delete Endpoint
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
   

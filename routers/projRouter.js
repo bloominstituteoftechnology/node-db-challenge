@@ -4,6 +4,7 @@ const projects = require('../helpers/projModel.js');
 
 const router = express.Router();
 
+// GET endpoints
 router.get('/', (req, res) => {
   projects.find()
   .then(projects => {
@@ -30,6 +31,20 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// POST endpoint
+router.post('/', (req, res) => {
+  const newProj = req.body;
+
+  projects.add(newProj)
+  .then(project => {
+    res.status(201).json(project);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new project', err });
+  });
+});
+
+//Delete endpoint
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
   
