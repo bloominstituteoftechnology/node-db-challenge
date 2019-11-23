@@ -31,8 +31,19 @@ router.get('/:id', (req, res) => {
   });
 });
 
-//POST Endpoint
 
+// POST endpoint
+router.post('/', (req, res) => {
+  const newTask = req.body;
+
+  tasks.add(newTask)
+  .then(task => {
+    res.status(201).json(task);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new task', err });
+  });
+});
 
 // Delete Endpoint
 router.delete('/:id', (req, res) => {
