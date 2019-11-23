@@ -1,16 +1,21 @@
 const express = require('express');
 const helmet = require('helmet');
 
-/* insert routers here when completed like:
-const SchemeRouter = require('./schemes/scheme-router.js');
-*/
+
+const taskRouter = require('./routers/taskRouter');
+const resourceRouter = require('./routers/resRouter');
+const projectRouter = require('./helpers/projModel');
+
 
 const server = express();
 
 server.use(express.json());
 server.use(helmet);
-/* insert routers here when completed like:
-server.use('/api/schemes', SchemeRouter);
-*/
+
+
+server.use('/api/tasks', taskRouter);
+server.use('/api/resources', resourceRouter);
+server.use('/api/projects', projectRouter);
+
 
 module.exports = server;
