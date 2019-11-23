@@ -1,6 +1,6 @@
 const express = require('express');
 
-const tasks = require('../helpers/taskModel');
+const tasks = require('../helpers/taskModel.js');
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     res.json(tasks);
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get tasks' });
+    res.status(500).json({ message: 'Failed to get tasks', err });
   });
 });
 

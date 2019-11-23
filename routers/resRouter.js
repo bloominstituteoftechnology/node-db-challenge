@@ -1,6 +1,6 @@
 const express = require('express');
 
-const resources = require('../helpers/resModel');
+const resources = require('../helpers/resModel.js');
 
 const router = express.Router();
 

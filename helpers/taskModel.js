@@ -5,7 +5,7 @@ const db = require('../data/db-config');
 function find() {
     return db('task')
       .join('task.id', 'project.id')
-      .select('task', 'project.name', 'project.desc')
+      .select('task', 'project.name', 'project.desc');
   }
 
 // Included to provide "under the hood" functionality so Add returns an object not an id
