@@ -7,21 +7,21 @@ exports.seed = function(knex) {
       return knex("tasks").insert([
         {
           projects_id: 1,
-          description: "start challenge",
-          notes: "",
-          completed: false
+          task_description: "start challenge",
+          notes: null,
+          task_completed: false
         },
         {
           projects_id: 2,
-          description: "study",
-          notes: "",
-          completed: false
+          task_description: "study",
+          notes: null,
+          task_completed: false
         },
         {
           projects_id: 2,
-          description: "learn",
-          notes: "",
-          completed: false
+          task_description: "learn",
+          notes: null,
+          task_completed: false
         }
       ]);
     });

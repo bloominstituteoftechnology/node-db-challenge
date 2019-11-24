@@ -7,11 +7,13 @@ exports.seed = function(knex) {
       return knex("projects").insert([
         {
           project_name: "DB Challenge",
-          description: "Complete Sprint Challenge"
+          project_description: "Complete Sprint Challenge",
+          project_completed: false
         },
         {
           project_name: "Learn New Language",
-          description: "Learn a new programing language"
+          project_description: "Learn a new programing language",
+          project_completed: true
         }
       ]);
     });

@@ -54,13 +54,14 @@ router.post("/", (req, res) => {
     return res
       .status(400)
       .json({ message: "Please add whether or not the project was completed" });
-  } else {
-  }
-  Project.add(projectBody)
-    .then(project => res.status(201).json(project))
-    .catch(err =>
-      res.status(500).json({ message: "There was an error adding the project" })
-    );
+  } else
+    Project.add(projectBody)
+      .then(project => res.status(201).json(project))
+      .catch(err =>
+        res
+          .status(500)
+          .json({ message: "There was an error adding the project" })
+      );
 });
 
 router.get("/:id/tasks", (req, res) => {
