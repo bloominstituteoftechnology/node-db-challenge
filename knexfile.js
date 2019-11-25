@@ -12,6 +12,11 @@ module.exports = {
       migrations: {
         directory: './migrations'
       },
+      pool: {
+        afterCreate: (conn, done) => {
+          conn.run('foreign_keys = on', done)
+        }
+      }
     }
 
 

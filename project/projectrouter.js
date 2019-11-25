@@ -1,13 +1,13 @@
 const db = require('../data/db-config')
 const express = require('express')
-const project = require('./projectmodel')
+const projectdb = require('./projectmodel')
 
 const router = express.Router();
 
 
 
 router.get('/', (req, res) => {
-    project.get()
+    projectdb.get()
         .then(project => {
             res.status(201).json(project)
         })
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req,res) => {
     const { id } = req.body.id
     console.log(req.body)
-    project.getById(id)
+    projectdb.getById(id)
         .then(project => {
             res.status(201).json({message: "it worked"})
         })
@@ -29,10 +29,9 @@ router.get('/:id', (req,res) => {
 })
 
 
-router.post('/:id', (req,res) => {
-    const proID = req.body.id
+router.post('/', (req,res) => {
     const projectObj = req.body;
-    project.update(proID, projectObj)
+    projectdb.insert(projectObj)
     .then(project => {
         res.status(201).json({message: "project updated"})
     })
