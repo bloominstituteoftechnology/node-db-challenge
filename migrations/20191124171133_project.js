@@ -4,36 +4,36 @@ exports.up = function (knex) {
     return knex.schema
         .createTable('project', (tbl) => {
             tbl.increments('id').unique()
-            tbl.integar('project_id')
+            tbl.integer('project_id')
                 .unique()
                 .notNullable()
             tbl.text('name')
-            tbl.integar('description')
+            tbl.integer('description')
             tbl.boolean('completed')
                 .notNullable()
-            tbl.integar('taskQuantity')
-
+            tbl.integer('taskQuantity')
 
 
 
         })
         .createTable('resource', (tbl) => {
             tbl.increments('id')
-            tbl.integar('resource_id')
+            tbl.integer('resource_id')
                 .unique()
                 .notNullable()
-            tbl.integar('name')
-            tbl.integar('project_id')
+            tbl.integer('name')
+            tbl.integer('project_id')
                 .unsigned()
                 .notNullable()
             tbl.text('description')
                 .notNullable()
 
 
+
         })
         .createTable('task', (tbl) => {
             tbl.increments('id')
-            tbl.integar('task_id')
+            tbl.integer('task_id')
                 .unique()
                 .notNullable()
             tbl.text('description')
