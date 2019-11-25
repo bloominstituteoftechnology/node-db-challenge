@@ -57,7 +57,7 @@ You could use: The Bridge Table, The Boolean Column, or the Multiple Column Meth
 
 ## Minimum Viable Product
 
-Take the steps necessary to complete the project from scratch. Start by initializing your project with a `package.json` and go from there.
+X Take the steps necessary to complete the project from scratch. Start by initializing your project with a `package.json` and go from there.
 
 Complete the following tasks:
 
