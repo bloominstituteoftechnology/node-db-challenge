@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.20.2",
     "nodemon": "^2.0.1",
     "sqlite3": "^4.1.0"
   }
