@@ -49,7 +49,7 @@ In order to identify each entry into the database, it gives them a unique identi
 
 - [X] What is the name given to a table column that references the primary key on another table.
 
-Foreign key
+Foreign key and Joins
 
 - [X] What do we need in order to have a _many to many_ relationship between two tables.
 
