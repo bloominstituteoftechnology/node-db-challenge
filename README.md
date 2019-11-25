@@ -40,11 +40,17 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+A relational database is a set of formally described tables from which data can be accessed or reassembled. SQL (Structured Query Language) is the programming (API) used to work with the database.
+
 - [ ] Why do tables need a `primary key`?
 
+A primary key is a table column that serves a special purpose. Each database table needs a primary key because it ensures row level accessibility. Each table has one and only one primary key, which can consist of one or many columns.
+
 - [ ] What is the name given to a table column that references the primary key on another table.
+Foreign key
 
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+We need an intermediary table to bridge (the .join() keyword) relationships between two tables.
 
 ## Minimum Viable Product
 
