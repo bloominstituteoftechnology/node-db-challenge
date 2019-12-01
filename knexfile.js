@@ -7,19 +7,19 @@ module.exports = {
     connection: {
       filename: './data/project.sqlite3'
     },
-      useNullAsDefault: true,
-
-      migrations: {
-        directory: './migrations'
+    useNullAsDefault: true,
+    
+    migrations: {
+      directory: './migrations'
+    },
+    
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done)
       },
-      pool: {
-        afterCreate: (conn, done) => {
-          conn.run('foreign_keys = on', done)
-        }
-      }
-    }
+    },
+  },
+
 
 
 };
-
-
