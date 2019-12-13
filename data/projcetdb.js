@@ -8,7 +8,8 @@ module.exports={
     addTask,
     findTask,
     addResource,
-    connectResource
+    connectResource,
+    findProjectResource
 
 }
 
@@ -34,7 +35,7 @@ function addTask(task){
 
 function findTask(id){
     return db("tasks")
-        .select('tasks.description','tasks.notes','projects.name')
+        .select('tasks.description','tasks.notes','tasks.completed','projects.name')
         .join('projects','projects.id','tasks.projectID')
         .where("projectID", id);
 }
@@ -45,4 +46,13 @@ function addResource(resource){
 
 function connectResource(resourceID,projectID){
     return db.insert({resourceID:resourceID,projectID:projectID},"*").into("projectDetails");
+}
+
+function findProjectResource(projectID){
+    return db
+        .select('resources.name','resources.decription','projects.name as projectName')
+        .from("projectDetails")
+        .join("resources","resources.id","projectDetails.resourceID")
+        .join("projects", "projects.id","projectDetails.projectID")
+        .where("projectDetails.projectID", projectID);
 }
