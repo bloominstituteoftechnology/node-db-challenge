@@ -1,0 +1,22 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "Lambda School Sprint Challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loremenius/node-db-challenge.git"
+  },
+  "author": "Marcellino Fernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Loremenius/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/Loremenius/node-db-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
