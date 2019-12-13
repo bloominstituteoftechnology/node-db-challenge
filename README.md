@@ -170,3 +170,22 @@ A `context` can be applied to more than one `task`. An task can be tied to more 
 When retrieving an `task` by _id_, add a property that lists all the `contexts` related to that task.
 
 _Good luck and have fun!_
+
+
+## Self-Study
+
+Explain the differences between relational databases and SQL
+
+- SQL is a language used to query through the relational database
+
+Why do tables need a primary key?
+
+- tables need primary keys because they are used for joining multiple tables
+
+What is the name given to a table that references the primary key on another table?
+
+- foreign key
+
+What do we need in order to have a many to many relationship between two tables?
+
+- A third table is needed to mediate between the many to many relationships
