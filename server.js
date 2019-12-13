@@ -3,9 +3,8 @@ const express = require("express"),
     ProjectRouter = require("./projects/project-router"),
     server = express();
 
-server
-    .use(helmet())
-    .use(express.json())
-    .use("/api/projects", ProjectRouter);
+server.use(helmet())
+server.use(express.json())
+server.use("/api/projects", ProjectRouter);
 
 module.exports = server;
