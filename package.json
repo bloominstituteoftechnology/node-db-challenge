@@ -1,0 +1,29 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "sprint challenge: adding data persistence",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoosheBot/node-db-challenge.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sqlite3",
+    "database",
+    "data",
+    "modeling",
+    "multi-table",
+    "queries"
+  ],
+  "author": "susheela bhat harkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoosheBot/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/SoosheBot/node-db-challenge#readme"
+}
