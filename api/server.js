@@ -13,6 +13,6 @@ server.get('/', (req, res) => {
 server.use(helmet())
 server.use(express.json())
 
-server.use('/api/tasks', tasksRouter)
+server.use('/api', tasksRouter)
 
 module.exports = server
