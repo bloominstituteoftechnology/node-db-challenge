@@ -3,7 +3,7 @@ const db = require("../data/db-configs")
 module.exports = {
     getProjectResources,
     getProjects,
-    getProjectTask,
+    getProjectTasks,
     findProject,
     addProject,
     addResource,
@@ -11,14 +11,15 @@ module.exports = {
 }
 
 
+
+
 // adding resources.
 function addResource(resource){
-    return db(resource, "id")
+    return db("resource")
+        .insert(resource)
         .then(ids => {
             const [id] = ids;
-            return db("project as p")
-                .select("*")
-                .join("resource as r", "p.id", "r.p_id")
+            return db("project")
                 .where({id})
                 .first();
         })
@@ -29,8 +30,7 @@ function getProjectResources(project_id){
     return db("project as p")
         .select("r.id", "r.name", "r.description")
         .join("resource as r", "p.id", "r.p_id")
-        .where({id})
-        .first();
+        .where("r.p_id", project_id)
 }
 
 // find project by id
@@ -52,18 +52,17 @@ function addProject(project){
 
 // retrieving a list of projects.
 function getProjects(){
-    return("project")
-        .then(item => item.completed === 1 ? {completed: true} : {completed: false});
+    return db("project")
 }
+
 
 // adding tasks.
 function addTask(task){
-    return db(task, "id")
+    return db("task")
+        .insert(task)
         .then(ids => {
             const [id] = ids;
-            return db("project as p")
-                .select("*")
-                .join("task as t", "p.id", "t.proj_id")
+            return db("task")
                 .where({id})
                 .first()
         })
@@ -71,9 +70,9 @@ function addTask(task){
 }
 
 // retrieving a list of tasks. The list of tasks should include the project name and project description.
-function getProjectTask(project_id){
+function getProjectTasks(project_id){
     return db("project as p")
         .select("p.name", "p.description", "t.description", "t.notes", "t.completed")
         .join("task as t", "p.id", "t.proj_id")
-        .then(item => item.completed === 1 ? {completed: true} : {completed: false});
+        .where("t.proj_id", project_id)
 }

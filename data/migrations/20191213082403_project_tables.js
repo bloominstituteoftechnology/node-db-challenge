@@ -14,7 +14,7 @@ exports.up = function(knex) {
         .createTable("Resource", table => {
             table.increments().unique();
 
-            table.string("name", 255).unique().notNullable();
+            table.string("name", 255).notNullable().unique();
 
             table.string("description", 255);
 
@@ -30,14 +30,13 @@ exports.up = function(knex) {
         .createTable("Task", table => {
             table.increments().unique();
 
-            table.string("description").notNullable();
+            table.string("description").notNullable().unique();
 
             table.string("notes", 255);
 
             table.boolean("completed").defaultTo(false).notNullable();
 
             table.integer("proj_id")
-                .unique()
                 .unsigned()
                 .notNullable()
                 .references("id")
