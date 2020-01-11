@@ -1,0 +1,18 @@
+{
+    "name": "node-db-challenge",
+    "version": "1.0.0",
+    "description": "Challenge for Node Sprint",
+    "main": "index.js",
+    "scripts": {
+        "server": "nodemon index.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "knex": "^0.20.7",
+        "knex-cleaner": "^1.3.0",
+        "sqlite3": "^4.1.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    }
+}
