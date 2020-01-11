@@ -18,18 +18,18 @@ function findById(id) {
         .first()
 }
 
-async function add(recipeName) {
+async function add(project_resource) {
     const [id] = await db("project_resource")
-        .insert(recipeName)
+        .insert(project_resource)
     return db("project_resource")
         .where({ id })
         .first()
 }
 
-function update(ingredients, id) {
+function update(project_resource, id) {
     return db("project_resource")
         .where({ id })
-        .update(ingredients)
+        .update(project_resource)
 }
 
 function remove(id) {

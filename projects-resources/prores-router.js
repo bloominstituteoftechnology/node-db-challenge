@@ -5,7 +5,7 @@ const Project_resources = require("./prores.model")
 
 const router = express.Router()
 
-router.get("/api/project_resources", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         return res.json(await Project_resources.find())
     }
@@ -14,7 +14,7 @@ router.get("/api/project_resources", async (req, res, next) => {
     }
 })
 
-router.get("/api/project_resource/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const project_resource = await Project_resources.findById(id)
@@ -31,9 +31,9 @@ router.get("/api/project_resource/:id", async (req, res, next) => {
     }
 })
 
-router.post("/api/project_resources", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
-        const [id] = await Project_resources.add(req.body) //returns an array
+        const id = await Project_resources.add(req.body) //returns an array
 
         const projectResource = await Project_resources.findById(id)
 
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.delete("/api/project_resource/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const { id } = await db("project_resources")
             .where({ id: req.params.id })
@@ -72,3 +72,5 @@ router.delete("/api/project_resource/:id", async (req, res, next) => {
         next(err)
     }
 })
+
+module.exports = router
