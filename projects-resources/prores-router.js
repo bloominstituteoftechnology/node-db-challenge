@@ -14,7 +14,7 @@ router.get("/api/project_resources", async (req, res, next) => {
     }
 })
 
-router.get("/api/project_resources/:id", async (req, res, next) => {
+router.get("/api/project_resource/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const project_resource = await Project_resources.findById(id)
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.del("/api/project_resources/:id", async (req, res, next) => {
+router.delete("/api/project_resource/:id", async (req, res, next) => {
     try {
         const { id } = await db("project_resources")
             .where({ id: req.params.id })

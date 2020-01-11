@@ -14,7 +14,7 @@ router.get("/api/resources", async (req, res, next) => {
     }
 })
 
-router.get("/api/resources/:id", async (req, res, next) => {
+router.get("/api/resource/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const resource = await Resources.findById(id)
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.del("/api/resources/:id", async (req, res, next) => {
+router.delete("/api/resource/:id", async (req, res, next) => {
     try {
         const { id } = await db("resources")
             .where({ id: req.params.id })
