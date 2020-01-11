@@ -5,7 +5,7 @@ const Resources = require("./resource-model")
 
 const router = express.Router()
 
-router.get("/api/resources", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         return res.json(await Resources.find())
     }
@@ -14,7 +14,7 @@ router.get("/api/resources", async (req, res, next) => {
     }
 })
 
-router.get("/api/resource/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const resource = await Resources.findById(id)
@@ -31,9 +31,9 @@ router.get("/api/resource/:id", async (req, res, next) => {
     }
 })
 
-router.post("/api/resources", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
-        const [id] = await Resources.add(req.body) //returns an array
+        const id = await Resources.add(req.body) //returns an array
 
         const resource = await Resources.findById(id)
 
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.delete("/api/resource/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const { id } = await db("resources")
             .where({ id: req.params.id })
@@ -72,3 +72,5 @@ router.delete("/api/resource/:id", async (req, res, next) => {
         next(err)
     }
 })
+
+module.exports = router
