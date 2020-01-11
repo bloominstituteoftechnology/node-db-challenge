@@ -9,31 +9,31 @@ module.exports = {
 }
 
 function find() {
-    return db("projects")
+    return db("project")
 }
 
 function findById(id) {
-    return db("projects")
+    return db("project")
         .where({ id })
         .first()
 }
 
-async function add(recipeName) {
-    const [id] = await db("projects")
-        .insert(recipeName)
-    return db("projects")
+async function add(project) {
+    const [id] = await db("project")
+        .insert(project)
+    return db("project")
         .where({ id })
         .first()
 }
 
-function update(ingredients, id) {
-    return db("projects")
+function update(project, id) {
+    return db("project")
         .where({ id })
-        .update(ingredients)
+        .update(project)
 }
 
 function remove(id) {
-    return db("projects")
+    return db("project")
         .where({ id })
         .del()
 }

@@ -5,7 +5,7 @@ const Projects = require("./project-model")
 
 const router = express.Router()
 
-router.get("/api/projects", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         return res.json(await Projects.find())
     }
@@ -14,7 +14,7 @@ router.get("/api/projects", async (req, res, next) => {
     }
 })
 
-router.get("/api/project/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const project = await Projects.findById(id)
@@ -31,9 +31,9 @@ router.get("/api/project/:id", async (req, res, next) => {
     }
 })
 
-router.post("/api/projects", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
-        const [id] = await Projects.add(req.body) //returns an array
+        const id = await Projects.add(req.body) //returns an array
 
         const project = await Projects.findById(id)
 
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.delete("/api/project/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const { id } = await db("projects")
             .where({ id: req.params.id })
@@ -72,3 +72,5 @@ router.delete("/api/project/:id", async (req, res, next) => {
         next(err)
     }
 })
+
+module.exports = router
