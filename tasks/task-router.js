@@ -5,7 +5,7 @@ const Tasks = require("./task-model")
 
 const router = express.Router()
 
-router.get("/api/tasks", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         return res.json(await Tasks.find())
     }
@@ -14,7 +14,7 @@ router.get("/api/tasks", async (req, res, next) => {
     }
 })
 
-router.get("/api/task/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const task = await Tasks.findById(id)
@@ -31,9 +31,9 @@ router.get("/api/task/:id", async (req, res, next) => {
     }
 })
 
-router.post("/api/tasks", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
-        const [id] = await Tasks.add(req.body) //returns an array
+        const id = await Tasks.add(req.body) //returns an array
 
         const task = await Tasks.findById(id)
 
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
     }
 })
 
-router.delete("/api/task/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const { id } = await db("tasks")
             .where({ id: req.params.id })
@@ -72,3 +72,5 @@ router.delete("/api/task/:id", async (req, res, next) => {
         next(err)
     }
 })
+
+module.exports = router
