@@ -1,4 +1,5 @@
 exports.up = function(knex) {
+    // represents the change we want to make to our schema
     return (
         knex.schema.createTable('resources', tbl => {
             tbl.increments();
@@ -9,6 +10,7 @@ exports.up = function(knex) {
   };
   
   exports.down = function(knex) {
+       // represents undoing that change
     return(
         knex.schema.dropTableIfExists('resources')
     );
