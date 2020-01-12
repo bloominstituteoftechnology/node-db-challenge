@@ -6,7 +6,7 @@ const db = require("./data/db-config.js");
 const server = express();
 
 server.use(helmet());
-server.us(expres.json());
+server.use(express.json());
 
 // get projects
 server.get("/api/projects", (request, response) => {
@@ -15,7 +15,7 @@ server.get("/api/projects", (request, response) => {
     // .leftJoin('projects as s ', 's.id', 'a.projects_id' ) change projects to sub title
     // .select('a.id', 'a.project_name', 'a.projeck_description', 'a.project_name') 
     // change project name at the end to the sub title
-    .then(projects => {
+    .then(project => {
       response.status(500).json(error);
     });
 });
@@ -30,11 +30,11 @@ server.post('/api/projects', (request, response) => {
         .where({ id })
         .first()
         .then(project => {
-            response.status(201).json(project);
+            response.status(201).json({message: "Project created sucessfully"});
         });
     })
     .catch(error => {
-        response.status(500).json(error);
+        response.status(500).json({message: "Project not created, error" });
     });
 });
 
