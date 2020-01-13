@@ -18,6 +18,7 @@
   "homepage": "https://github.com/nottolivc/node-db-challenge#readme",
   "dependencies": {
     "knex": "^0.20.7",
+    "nodemon": "^2.0.2",
     "sqlite3": "^4.1.1"
   }
 }
