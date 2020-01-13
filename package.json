@@ -1,24 +1,19 @@
 {
-  "name": "db-challenge",
+  "name": "node-db-challenge",
   "version": "1.0.0",
-  "description": "node db build with knex and sqlite for node server",
+  "description": "node-db-sprint",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "server": "nodemon index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nottolivc/node-db-challenge.git"
-  },
-  "author": "nottolivc",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nottolivc/node-db-challenge/issues"
-  },
-  "homepage": "https://github.com/nottolivc/node-db-challenge#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
     "knex": "^0.20.7",
-    "nodemon": "^2.0.2",
     "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
