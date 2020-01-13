@@ -1,7 +1,7 @@
 // many to many sql knex db create and export for schema
 exports.up = function (knex) {
     return knex.schema
-        .createTable('project_resources', tbl => {
+        .createTable('projects', tbl => {
             tbl.increments();
             tbl.string('name')
                 .notNullable();
@@ -10,7 +10,7 @@ exports.up = function (knex) {
             tbl.boolean('completed')
                 .defaultTo(0);
         })
-        .createTable('resources', tbl => {
+        .createTable('project_resources', tbl => {
             tbl.increments();
             tbl.string('resource_name')
                 .notNullable()
@@ -34,7 +34,7 @@ exports.up = function (knex) {
             tbl.boolean('completed')
                 .defaultTo(0);
         })
-        .createTable('project_resources', tbl => {
+        .createTable('projects_resources', tbl => {
             tbl.increments();
             tbl.integer('resource_id')
                 .unsigned()
