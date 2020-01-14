@@ -7,5 +7,6 @@ exports.seed = function (knex) {
         { id: 2, name: 'deploy server', project_description: 'use heroku', project_id: 2, completed: 0 },
       ]);
     });
-}; 
+};  
+
 //above seeding db projects complete

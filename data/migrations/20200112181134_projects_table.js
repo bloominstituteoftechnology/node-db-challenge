@@ -40,7 +40,7 @@ exports.up = function (knex) {
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('resources')
+                .inTable('project_resources')
                 .onDelete('RESTRICT')
                 .onUpdate('CASCADE');
             tbl.integer('project_id')
@@ -52,7 +52,6 @@ exports.up = function (knex) {
                 .onUpdate('CASCADE');
         })
 };
-
 
 exports.down = function (knex) {
     return knex.schema

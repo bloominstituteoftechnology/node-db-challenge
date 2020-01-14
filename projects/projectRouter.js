@@ -8,10 +8,10 @@ router.get("/", (req, res) => {
     projects.findProjects()
         .then(project_list => {
             project_list.map(projects => {
-                if (project_list.completed) {
-                    project_list.completed = true
+                if (projects.completed) {
+                    projects.completed = true
                 } else {
-                    project_list.completed = false
+                    projects.completed = false
                 }
             })
             return res.status(200).json(project_list)
