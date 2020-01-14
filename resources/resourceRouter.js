@@ -5,8 +5,8 @@ const resources = require('./model_resources.js');
 
 router.get("/", (req, res) => {
         resources.findResources()
-        .then(resources_list => {
-            res.status(200).json(resources_list);
+        .then(resources => {
+            res.status(200).json(resources);
         })
         .catch(err => {
             console.log(err);
