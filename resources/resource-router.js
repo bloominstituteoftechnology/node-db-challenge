@@ -20,7 +20,7 @@ router.get("/:id", async (req, res, next) => {
         const resource = await Resources.findById(id)
 
         if (resource) {
-            return res.json(resource)
+            return res.status(200).json(resource)
         } else {
             return res.status(404).json({ message: "Could not find resource with this Id." })
         }

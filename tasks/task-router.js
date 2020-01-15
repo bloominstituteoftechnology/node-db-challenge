@@ -20,7 +20,7 @@ router.get("/:id", async (req, res, next) => {
         const task = await Tasks.findById(id)
 
         if (task) {
-            return res.json(task)
+            return res.status(200).json(task)
         } else {
             return res.status(404).json({ message: "Could not find task with this Id." })
         }

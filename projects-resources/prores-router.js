@@ -20,7 +20,7 @@ router.get("/:id", async (req, res, next) => {
         const project_resource = await Project_resources.findById(id)
 
         if (project_resource) {
-            return res.json(project_resource)
+            return res.status(200).json(project_resource)
         } else {
             return res.status(404).json({ message: "Could not find project_resource with this Id." })
         }

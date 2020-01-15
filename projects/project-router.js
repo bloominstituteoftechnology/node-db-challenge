@@ -20,7 +20,7 @@ router.get("/:id", async (req, res, next) => {
         const project = await Projects.findById(id)
 
         if (project) {
-            return res.json(project) //always included status(200) for successes.
+            return res.status(200).json(project) //always included status(200) for successes.
         } else {
             return res.status(404).json({ message: "Could not find project with this Id." })
         }
