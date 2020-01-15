@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
     try {
         const { id } = req.params //returns an object
-        const task = await taskModel.update(id, req.body)
+        const task = await Tasks.update(req.body, id)
 
         if (task) {
             res.json(task)
