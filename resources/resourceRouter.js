@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
 
     resources.addResources(req.body)
         .then(newResource => {
-            res.status(201).json(newResource);
+            res.status(200).json(newResource);
         })
         .catch(err => {
             res.status(500).json({ message: 'Could not add resource!' })
