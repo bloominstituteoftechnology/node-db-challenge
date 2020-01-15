@@ -4,7 +4,7 @@ exports.up = async function (knex) {
         table.increments("id")
         table.string("description").notNullable()
         table.string("notes")
-        table.boolean("completed")
+        table.boolean("completed").defaultTo(false)
         table.integer("project_id")
             .notNullable()
             .references("id")
