@@ -5,7 +5,7 @@ const router = express.Router();
 const projectRouter = require('./projects/projectRouter');
 const resourceRouter = require('./resources/resourceRouter');
 const taskRouter = require('./tasks/taskRouter.js');
-
+const port = 5000;
 const server = express();
 
 server.use(helmet());
@@ -17,9 +17,8 @@ server.use('/api/projects', projectRouter);
 server.use('/api/resources', resourceRouter);
 server.use('/api/tasks', taskRouter);
  
-
 server.get("/", (req, res) => {
-    res.send(`<h1> Server: started on port 4004....</h2>`);
+    res.send(`<h1> Server: started on port ${port}....</h2>`);
 });
 
 

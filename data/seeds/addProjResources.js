@@ -10,3 +10,6 @@ exports.seed = function (knex) {
       ]);
     });
 };
+
+
+ 
