@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router()
 
-const resources = require('./model_resources.js');
+const resources_list = require('./model_resources.js');
 
 router.get("/", (req, res) => {
-        resources.findResources()
+    resources_list.findResources()
         .then(resources => {
             res.status(200).json(resources);
         })
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
 
-        resources.addResources(req.body)
+    resources_list.addResources(req.body)
         .then(newResource => {
             res.status(201).json(newResource);
         })
@@ -25,4 +25,4 @@ router.post("/", (req, res) => {
         });
 });
 
-module.exports = router;
+module.exports = router; 
