@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
     try {
         const { id } = req.params //returns an object
-        const resource = await resourceModel.update(id, req.body)
+        const resource = await Resources.update(req.body, id)
 
         if (resource) {
             res.json(resource)
