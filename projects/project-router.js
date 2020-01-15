@@ -13,14 +13,14 @@ router.get("/", async (req, res, next) => {
         next(err)
     }
 })
-
+//.get id parameter
 router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
         const project = await Projects.findById(id)
 
         if (project) {
-            return res.json(project)
+            return res.json(project) //always included status(200) for successes.
         } else {
             return res.status(404).json({ message: "Could not find project with this Id." })
         }
@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
     try {
         const { id } = req.params //returns an object
-        const project = await projectModel.update(id, req.body)
+        const project = await Projects.update(req.body, id)
 
         if (project) {
             res.json(project)
