@@ -1,3 +1,5 @@
+//model interfaces with the db. Without models, you have to write raw SQL. Router to model, model to db.
+
 const db = require("../data/db-config")
 
 module.exports = {
@@ -14,8 +16,8 @@ function find() {
 
 function findById(id) {
     return db("project")
-        .where({ id })
-        .first()
+        .where({ id }) //accepts an id parameter. 
+        .first()//returns first item (row) in the array, which is an object. 
 }
 
 async function add(project) {
