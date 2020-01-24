@@ -1,18 +1,18 @@
 const db = require("../data/dbConfig.js");
 
 module.exports = {
-  getProjects,
-  getProjectById
+  getTasks,
+  getTaskById
   // add,
   // update,
   // remove
 };
 
-function getProjects() {
+function getTasks() {
   return db("recipes");
 }
 
-function getProjectById(id) {
+function getTaskById(id) {
   return db("recipes")
     .where({ id })
     .first();
