@@ -9,11 +9,11 @@ module.exports = {
 };
 
 function getResources() {
-  return db("recipes");
+  return db("resources");
 }
 
 function getResourceById(id) {
-  return db("recipes")
+  return db("resources")
     .where({ id })
     .first();
 }
