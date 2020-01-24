@@ -4,7 +4,8 @@
   "description": "In this challenge, you design and build a Data Model and a RESTful API that stores data into a Relational Database.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
