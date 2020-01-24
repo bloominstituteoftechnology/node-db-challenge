@@ -1,9 +1,16 @@
 const db = require('../data/dbConfig.js')
 
 module.exports = {
-   getResources
+   findAll,
+   add
 }
 
-function getResources() {
-    return db('resources')
+function findAll() {
+    return db("resources")
 }
+
+function add(data) {
+    return db("resources").insert(data)
+
+}
+
