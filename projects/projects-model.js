@@ -9,11 +9,11 @@ module.exports = {
 };
 
 function getProjects() {
-  return db("recipes");
+  return db("projects");
 }
 
 function getProjectById(id) {
-  return db("recipes")
+  return db("projects")
     .where({ id })
     .first();
 }
