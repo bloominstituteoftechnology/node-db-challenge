@@ -3,9 +3,9 @@ const db = require("../data/dbConfig.js");
 module.exports = {
   getResources,
   getResourceById,
-  add
+  add,
   // update,
-  // remove
+  remove
 };
 
 function getResources() {
@@ -33,8 +33,8 @@ function add(post) {
 //     .update(changes);
 // }
 
-// function remove(id) {
-//   return db("schemes")
-//     .where("id", id)
-//     .del();
-// }
+function remove(id) {
+  return db("resources")
+    .where("id", id)
+    .del();
+}

@@ -34,14 +34,14 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", validateId, (req, res) => {
+router.post("/", (req, res) => {
   const projectBody = req.body;
   // console.log(resourceBody, "taskData tasks-router line 37");
 
   Projects.add(projectBody)
     .then(createProject => {
       // console.log(createProject, "task line 40");
-      res.status(201).json(createProject);
+      res.status(201).json({ message: "New task created!", createProject });
     })
     .catch(err => {
       console.log(err);
@@ -68,11 +68,9 @@ router.delete("/:id", validateId, (req, res) => {
         });
     })
     .catch(() => {
-      res
-        .status(500)
-        .json({
-          message: "Deleting the project...Something went wrong, try again!"
-        });
+      res.status(500).json({
+        message: "Deleting the project...Something went wrong, try again!"
+      });
     });
 });
 
@@ -83,6 +81,7 @@ function validateId(req, res, next) {
   const id = req.params.id;
   Projects.getProjectById(id)
     .then(id => {
+      console.log(id, "id line 84");
       req.project = id;
     })
     .catch(() => {

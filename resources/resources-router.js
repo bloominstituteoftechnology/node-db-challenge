@@ -34,14 +34,16 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", validateId, (req, res) => {
+router.post("/", (req, res) => {
   const resourceBody = req.body;
   // console.log(resourceBody, "taskData tasks-router line 37");
 
   Resources.add(resourceBody)
     .then(createResource => {
       // console.log(createResource, "task line 40");
-      res.status(201).json(createResource);
+      res
+        .status(201)
+        .json({ message: "New resource created!", createResource });
     })
     .catch(err => {
       console.log(err);
@@ -52,7 +54,7 @@ router.post("/", validateId, (req, res) => {
 router.delete("/:id", validateId, (req, res) => {
   const id = req.params.id;
 
-  Resources.getResourcesById(id)
+  Resources.getResourceById(id)
     .then(deleteResource => {
       Resources.remove(id)
         .then(deleted => {
@@ -68,11 +70,9 @@ router.delete("/:id", validateId, (req, res) => {
         });
     })
     .catch(() => {
-      res
-        .status(500)
-        .json({
-          message: "Deleting the resource...Something went wrong, try again!"
-        });
+      res.status(500).json({
+        message: "Deleting the resource...Something went wrong, try again!"
+      });
     });
 });
 
