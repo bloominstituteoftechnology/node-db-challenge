@@ -9,42 +9,42 @@ exports.seed = function(knex) {
           id: 1,
           description: "Pass this sprint",
           notes: "must...hurry",
-          completed: "false",
+          completed: false,
           project_id: 1
         },
         {
           id: 2,
           description: "Work on resume",
           notes: "",
-          completed: "false",
+          completed: false,
           project_id: 1
         },
         {
           id: 3,
           description: "Apply for jobs",
           notes: "look for job openings",
-          completed: "false",
+          completed: false,
           project_id: 2
         },
         {
           id: 4,
           description: "Keep skills sharp!",
           notes: "continue practicing to code",
-          completed: "false",
+          completed: false,
           project_id: 2
         },
         {
           id: 5,
           description: "Plan time to go.",
           notes: "discuss options",
-          completed: "false",
+          completed: false,
           project_id: 3
         },
         {
           id: 6,
           description: "Buy tickets",
           notes: "need lots of money for this",
-          completed: "false",
+          completed: false,
           project_id: 3
         }
       ]);
