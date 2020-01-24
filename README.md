@@ -40,12 +40,16 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
-- [ ] Why do tables need a `primary key`?
+Sql is the language and relational databases are where we use that language.
+
+- [ ] Why do tables need a `primary key`? to give them a unique identification
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
-- [ ] What do we need in order to have a _many to many_ relationship between two tables.
+forgiegn keys 
 
+- [ ] What do we need in order to have a _many to many_ relationship between two tables.
+We need to have a table that holds forigen keys  that reference the primary key 
 ## Minimum Viable Product
 
 Take the steps necessary to complete the project from scratch. Start by initializing your project with a `package.json` and go from there.
