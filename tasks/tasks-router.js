@@ -32,4 +32,34 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.post("/", validateId, (req, res) => {
+  const taskBody = req.body;
+  console.log(taskBody, "taskData tasks-router line 37");
+
+  Tasks.add(taskBody)
+    .then(createTask => {
+      console.log(createTask, "task line 40");
+      res.status(201).json(createTask);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to create new task" });
+    });
+});
+
+// custom middleware-----------------------------
+
+// Validation of ID
+function validateId(req, res, next) {
+  const id = req.params.id;
+  Tasks.getTasks(id)
+    .then(id => {
+      req.project = id;
+    })
+    .catch(() => {
+      res.status(400).json({ message: "invalid project id" });
+    });
+  next();
+}
+
 module.exports = router;

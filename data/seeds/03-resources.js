@@ -7,23 +7,23 @@ exports.seed = function(knex) {
       return knex("resources").insert([
         {
           id: 1,
-          name: "computer",
-          description: "preferably a new mac"
+          resource_name: "computer",
+          resource_description: "preferably a new mac"
         },
         {
           id: 2,
-          name: "internet",
-          description: "the faster the better"
+          resource_name: "internet",
+          resource_description: "the faster the better"
         },
         {
           id: 3,
-          name: "camping gear",
-          description: "should be lightweight"
+          resource_name: "camping gear",
+          resource_description: "should be lightweight"
         },
         {
           id: 4,
-          name: "money",
-          description: "can always use more of this"
+          resource_name: "money",
+          resource_description: "can always use more of this"
         }
       ]);
     });

@@ -7,22 +7,22 @@ exports.seed = function(knex) {
       return knex("projects").insert([
         {
           id: 1,
-          name: "Complete Lambda School",
-          description:
+          project_name: "Complete Lambda School",
+          project_description:
             "Pass all remaining sprints and build weeks. Get through Labs, CS and finally Lambda X.",
-          completed: false
+          project_completed: false
         },
         {
           id: 2,
-          name: "Get a job",
-          description: "Must...find...work...",
-          completed: false
+          project_name: "Get a job",
+          project_description: "Must...find...work...",
+          project_completed: false
         },
         {
           id: 3,
-          name: "Go back to Alaska",
-          description: "Take another vacation to Alaska.",
-          completed: false
+          project_name: "Go back to Alaska",
+          project_description: "Take another vacation to Alaska.",
+          project_completed: false
         }
       ]);
     });

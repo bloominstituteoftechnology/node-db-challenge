@@ -2,29 +2,30 @@ const db = require("../data/dbConfig.js");
 
 module.exports = {
   getTasks,
-  getTaskById
-  // add,
+  getTaskById,
+  add
   // update,
   // remove
 };
 
 function getTasks() {
-  return db("tasks");
+  return db("tasks as t")
+    .join("projects as p", "p.id", "t.task_project_id")
+    .select("p.project_name", "p.project_description", "*");
 }
 
 function getTaskById(id) {
-  return db("tasks")
-    .where({ id })
-    .first();
+  return db("tasks as t").where({ task_project_id: id });
 }
 
-// function add(scheme) {
-//   return db("schemes")
-//     .insert(scheme)
-//     .then(ids => {
-//       return findById(ids[0]);
-//     });
-// }
+function add(post) {
+  console.log(post, "post tasks-model line 22");
+  return db("tasks")
+    .insert(post)
+    .then(ids => {
+      return getTaskById(ids[0]);
+    });
+}
 
 // function update(changes, id) {
 //   return db("schemes")
