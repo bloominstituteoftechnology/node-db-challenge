@@ -2,10 +2,10 @@ const db = require("../data/dbConfig.js");
 
 module.exports = {
   getProjects,
-  getProjectById
-  // add,
+  getProjectById,
+  add,
   // update,
-  // remove
+  remove
 };
 
 function getProjects() {
@@ -18,13 +18,14 @@ function getProjectById(id) {
     .first();
 }
 
-// function add(scheme) {
-//   return db("schemes")
-//     .insert(scheme)
-//     .then(ids => {
-//       return findById(ids[0]);
-//     });
-// }
+function add(post) {
+  // console.log(post, "post tasks-model line 22");
+  return db("projects")
+    .insert(post)
+    .then(ids => {
+      return getProjectById(ids[0]);
+    });
+}
 
 // function update(changes, id) {
 //   return db("schemes")
@@ -32,8 +33,8 @@ function getProjectById(id) {
 //     .update(changes);
 // }
 
-// function remove(id) {
-//   return db("schemes")
-//     .where("id", id)
-//     .del();
-// }
+function remove(id) {
+  return db("projects")
+    .where("id", id)
+    .del();
+}

@@ -2,8 +2,8 @@ const db = require("../data/dbConfig.js");
 
 module.exports = {
   getResources,
-  getResourceById
-  // add,
+  getResourceById,
+  add
   // update,
   // remove
 };
@@ -18,13 +18,14 @@ function getResourceById(id) {
     .first();
 }
 
-// function add(scheme) {
-//   return db("schemes")
-//     .insert(scheme)
-//     .then(ids => {
-//       return findById(ids[0]);
-//     });
-// }
+function add(post) {
+  // console.log(post, "post tasks-model line 22");
+  return db("resources")
+    .insert(post)
+    .then(ids => {
+      return getResourceById(ids[0]);
+    });
+}
 
 // function update(changes, id) {
 //   return db("schemes")
