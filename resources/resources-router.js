@@ -22,6 +22,15 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-router.post
+router.post('/', async (req, res, next) => {
+    try {
+
+        const id = await Resources.add(req.body)
+        res.status(200).json(await Resources.getById(id))
+
+    } catch (errpr) {
+        next (error)
+    }
+} ) 
 
 module.exports = router
