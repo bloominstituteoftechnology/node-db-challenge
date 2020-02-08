@@ -38,13 +38,13 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] Explain the difference between `Relational Databases` and `SQL`.
+- [ x ] Explain the difference between `Relational Databases` and `SQL`. -- A relational database is a set of tables that store data. The database is constructed as a series of tables (that are themselves composed of columns and rows), some of which reference each other, hence the name 'relational'. SQL is the language used to create, update, and access the database.
 
-- [ ] Why do tables need a `primary key`?
+- [ x ] Why do tables need a `primary key`? This is to allow records to be distinguished when their other properties are identical. For example, there might be several people named "John Smith", and without a primary key there would be no way to distinguish between records with identical properties.
 
-- [ ] What is the name given to a table column that references the primary key on another table.
+- [ x ] What is the name given to a table column that references the primary key on another table. -- Foreign key
 
-- [ ] What do we need in order to have a _many to many_ relationship between two tables.
+- [ x ] What do we need in order to have a _many to many_ relationship between two tables. -- An intermediary table whose primary key is the composite of both tables' primary key.
 
 ## Minimum Viable Product
 
