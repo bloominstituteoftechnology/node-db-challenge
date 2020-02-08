@@ -1,8 +1,48 @@
 const db = require("./db-config.js");
 
-const getRecipes = () => {
-  console.log("db-model>getRecipes");
-  return db("recipes");
+const getAll = endpoint => {
+  console.log("db-model>getRecipes", endpoint);
+  return db(endpoint);
+};
+
+const addNew = async (endpoint, newInput) => {
+  // console.log("model > add:", endpoint, newInput);
+  //inserts new data, and returns an ID
+  const [id] = await db(endpoint).insert(newInput);
+  console.log("model > add:", id, endpoint, newInput);
+  return findById(endpoint, id);
+};
+
+const findById = (endpoint, id) => {
+  console.log("model > findById:", id, endpoint);
+
+  switch (endpoint) {
+    case "resources":
+      console.log("model > resources");
+      return db("resources")
+        .where({ resource_id: id }) //searching by id
+        .first(); //first data that matches
+    case "projects":
+      console.log("model > projects");
+      return db("projects")
+        .where({ project_id: id }) //searching by id
+        .first(); //first data that matches
+    case "tasks":
+      console.log("model > tasks");
+      return db("tasks")
+        .where({ task_id: id }) //searching by id
+        .first(); //first data that matches
+    default:
+      console.log("no matches");
+      break;
+  }
+
+  /* ====THIS SHOULD WORK!!!!=====
+  const table_id = `${endpoint}_id`.replace("s_", "_");
+  return db(endpoint)
+    .where({ `${table_id}`: id }) //searching by id
+    .first(); //first data that matches
+    */
 };
 
 const getShoppingList = recipe_id => {
@@ -36,7 +76,9 @@ const getRecipesByIngredient = ingredient_id => {
 };
 
 module.exports = {
-  getRecipes,
+  addNew,
+  getAll,
+  findById,
   getShoppingList,
   getInstructions,
   getRecipesByIngredient

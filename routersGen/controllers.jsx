@@ -1,5 +1,6 @@
 // const controller = require("../utils/db-config.js");
 const controller = require("../utils/db-config.js");
+const helper = require("../utils/db-model.js");
 const { validAddition } = require("./middleWare.jsx");
 console.log("controllers");
 //
@@ -12,10 +13,12 @@ console.log("controllers");
 // @desc    GET all recipes
 // @route   GET to /api/recipes
 exports.getAll = (req, res, next) => {
+  // remove the endpoint from the url
   const pathName = req.route.path.replace("/", "");
   console.log("getAll", pathName);
-  controller(pathName)
-    // .find()
+  // search the migration file using the endpoint url.
+  helper
+    .getAll(pathName)
     // .limit(limit)
     // .orderBy(sortby, sortdir) //orders the returns in ascending order
     .then(allReturns => {
@@ -36,11 +39,13 @@ exports.getAll = (req, res, next) => {
 // @desc    GET recipes with :id
 // @route   GET to /api/recipes/:id
 exports.getIndividual = (req, res, next) => {
-  console.log("getIndividual");
-  controller("recipes")
+  const pathName = req.route.path.replace("/", "").replace("/:id", "");
+  console.log("getIndividual", pathName);
+  helper
+    .findById(pathName, req.params.id)
     // .get()
-    .where({ id: req.params.id })
-    .first()
+    // .where({ id: req.params.id })
+    // .first()
     .then(individual => {
       console.log("getIndividual", individual);
       if (individual) {
@@ -64,13 +69,17 @@ exports.getIndividual = (req, res, next) => {
 // @desc    POST/CREATE new car
 // @route   POST to /api/recipes
 exports.createNew = (req, res, next) => {
-  if (validAddition(req.body)) {
-    console.log("addNew: ", req.body);
-    controller("recipes")
+  // remove the endpoint from the url
+  const pathName = req.route.path.replace("/", "");
+  // helper.add(pathName, req.body)
+  if (!!req.body) {
+    console.log("addNew: ", req.body, pathName);
+    // controller(pathName)
+    /*
       .insert(req.body, "id")
       .then(([id]) => id)
       .then(id => {
-        controller("recipes")
+        controller(pathName)
           .where({ id })
           .first()
           .then(recipes => {
@@ -78,6 +87,14 @@ exports.createNew = (req, res, next) => {
               .status(201) //success
               .json(recipes);
           });
+      })
+      */
+    helper
+      .addNew(pathName, req.body)
+      .then(returned => {
+        res
+          .status(201) //success
+          .json(returned);
       })
       .catch(e => {
         res

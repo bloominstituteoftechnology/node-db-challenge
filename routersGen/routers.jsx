@@ -24,10 +24,11 @@ router
   .get(getAll)
   .post(createNew);
 
-router
-  .route("/projects/:id")
-  .get(getIndividual)
-  .delete(deleteIndividual)
-  .put(updateIndividual);
+router.route("/resources/:id").get(getIndividual);
+// .delete(deleteIndividual)
+// .put(updateIndividual);
+router.route("/projects/:id").get(getIndividual);
+
+router.route("/tasks/:id").get(getIndividual);
 
 module.exports = router;
