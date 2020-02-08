@@ -1,8 +1,19 @@
 const db = require("./db-config.js");
 
 const getAll = endpoint => {
-  console.log("db-model>getRecipes", endpoint);
-  return db(endpoint);
+  console.log("db-model>getAll", endpoint);
+  if (endpoint === "tasks") {
+    return db("tasks as t")
+      .join("projects as p", "p.project_id", "t.project_id")
+      .select(
+        "t.task_desc",
+        "t.task_note",
+        "t.task_completed",
+        "p.project_name"
+      );
+  } else {
+    return db(endpoint);
+  }
 };
 
 const addNew = async (endpoint, newInput) => {
