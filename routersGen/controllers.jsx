@@ -12,9 +12,9 @@ console.log("controllers");
 // @desc    GET all recipes
 // @route   GET to /api/recipes
 exports.getAll = (req, res, next) => {
-  // const { limit, sortby, sortdir } = req.query;
-  console.log("getAll", req.params);
-  controller("recipes")
+  const pathName = req.route.path.replace("/", "");
+  console.log("getAll", pathName);
+  controller(pathName)
     // .find()
     // .limit(limit)
     // .orderBy(sortby, sortdir) //orders the returns in ascending order

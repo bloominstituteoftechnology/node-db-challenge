@@ -10,12 +10,22 @@ const {
 } = require("./controllers.jsx");
 
 router
-  .route("/recipes")
+  .route("/resources")
   .get(getAll)
   .post(createNew);
 
 router
-  .route("/recipes/:id")
+  .route("/projects")
+  .get(getAll)
+  .post(createNew);
+
+router
+  .route("/tasks")
+  .get(getAll)
+  .post(createNew);
+
+router
+  .route("/projects/:id")
   .get(getIndividual)
   .delete(deleteIndividual)
   .put(updateIndividual);
