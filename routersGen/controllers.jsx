@@ -71,24 +71,8 @@ exports.getIndividual = (req, res, next) => {
 exports.createNew = (req, res, next) => {
   // remove the endpoint from the url
   const pathName = req.route.path.replace("/", "");
-  // helper.add(pathName, req.body)
   if (!!req.body) {
     console.log("addNew: ", req.body, pathName);
-    // controller(pathName)
-    /*
-      .insert(req.body, "id")
-      .then(([id]) => id)
-      .then(id => {
-        controller(pathName)
-          .where({ id })
-          .first()
-          .then(recipes => {
-            res
-              .status(201) //success
-              .json(recipes);
-          });
-      })
-      */
     helper
       .addNew(pathName, req.body)
       .then(returned => {
@@ -115,13 +99,19 @@ exports.createNew = (req, res, next) => {
 // @route   DELETE to /api/recipes/:id
 exports.deleteIndividual = (req, res, next) => {
   console.log("deleteIndividual: ", req.body);
-  controller("recipes")
-    .where({ id: req.params.id })
-    .del()
-    .then(unit => {
-      res
-        .status(200) //success
-        .json({ message: `Project ID of ${req.params.id} was deleted` });
+  const pathName = req.route.path.replace("/", "").replace("/:id", "");
+  helper
+    .deleteUnit(pathName, req.params.id)
+    .then(deleted => {
+      if (deleted) {
+        res
+          .status(200) //success
+          .json({ message: `${pathName} ID of ${req.params.id} was deleted` });
+      } else {
+        res
+          .status(404) //error
+          .json({ message: "Count not find id" });
+      }
     })
     .catch(e => {
       console.log("deleteIndividual err: ", e);

@@ -6,6 +6,7 @@ const getAll = endpoint => {
     return db("tasks as t")
       .join("projects as p", "p.project_id", "t.project_id")
       .select(
+        "t.task_id",
         "t.task_desc",
         "t.task_note",
         "t.task_completed",
@@ -17,7 +18,6 @@ const getAll = endpoint => {
 };
 
 const addNew = async (endpoint, newInput) => {
-  // console.log("model > add:", endpoint, newInput);
   //inserts new data, and returns an ID
   const [id] = await db(endpoint).insert(newInput);
   console.log("model > add:", id, endpoint, newInput);
@@ -35,9 +35,25 @@ const findById = (endpoint, id) => {
         .first(); //first data that matches
     case "projects":
       console.log("model > projects");
-      return db("projects")
-        .where({ project_id: id }) //searching by id
-        .first(); //first data that matches
+      return (
+        db("projects")
+          .where({ project_id: id }) //searching by id
+          .first() //first data that matches
+          // .join("tasks", "projects.project_id", "tasks.project_id")
+          // .join(
+          //   "project_resources as pR",
+          //   "pr.project_id",
+          //   "projects.project_id"
+          // )
+          // .join("resources as pR", "pR.project_id", "projects.project_id")
+          .select(
+            "projects.project_id",
+            "projects.project_name",
+            "projects.project_desc",
+            "projects.project_completed"
+          )
+      );
+    //
     case "tasks":
       console.log("model > tasks");
       return db("tasks")
@@ -47,50 +63,43 @@ const findById = (endpoint, id) => {
       console.log("no matches");
       break;
   }
+};
 
-  /* ====THIS SHOULD WORK!!!!=====
-  const table_id = `${endpoint}_id`.replace("s_", "_");
-  return db(endpoint)
-    .where({ `${table_id}`: id }) //searching by id
-    .first(); //first data that matches
+const deleteUnit = (endpoint, id) => {
+  console.log("model > deleteUnit:", endpoint, id);
+
+  switch (endpoint) {
+    case "resources":
+      console.log("model > resources");
+      return db("resources")
+        .where({ resource_id: id }) //searching by id
+        .del();
+    case "projects":
+      console.log("model > projects");
+      return db("projects")
+        .where({ project_id: id }) //searching by id
+        .del();
+    //
+    case "tasks":
+      console.log("model > tasks");
+      return db("tasks")
+        .where({ task_id: id }) //searching by id
+        .del();
+    default:
+      console.log("no matches");
+      break;
+  }
+  /*  =====THIS SHOULD WORK!!!!=====
+  const whereID = `${endpoint.replace("s", "")}_id`;
+  return db(endpoint.replace("/:id", ""))
+    .where(`${whereID} : ${id}`)
+    .del();
     */
-};
-
-const getShoppingList = recipe_id => {
-  console.log("db-model>getShoppingList");
-
-  return db("ingredient_list")
-    .select("ingredients.ingredient_name")
-    .where({ recipe_id })
-    .join("ingredients", "ingredients.id", "ingredient_list.ingredient_id");
-};
-
-const getInstructions = recipe_id => {
-  console.log("db-model>getInstructions");
-
-  return db("instructions")
-    .select("instructions.step", "instructions.id")
-    .where({ recipe_id })
-    .join("recipes", "recipes.id", "instructions.recipe_id");
-};
-
-const getRecipesByIngredient = ingredient_id => {
-  console.log("db-model>getRecipesByIngredient", ingredient_id);
-
-  return (
-    db("ingredient_list as iL")
-      .join("recipes", "recipe_id", "ingredient_id")
-      .where({ ingredient_id: ingredient_id })
-      // .join("ingredients", "ingredient_id", "ingredient_name")
-      .select("recipe_name", "iL.QTY")
-  );
 };
 
 module.exports = {
   addNew,
   getAll,
   findById,
-  getShoppingList,
-  getInstructions,
-  getRecipesByIngredient
+  deleteUnit
 };
