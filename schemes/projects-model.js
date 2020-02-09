@@ -14,16 +14,20 @@ const findById = project_id => {
   }
 };
 
-const add = () => {
-  return true;
+const add = project => {
+  return db("projects").insert(project);
 };
 
-const update = () => {
-  return true;
+const update = (id, obj) => {
+  return db("projects")
+    .where({ id })
+    .update(obj);
 };
 
-const remove = () => {
-  return true;
+const remove = id => {
+  return db("projects")
+    .where({ id })
+    .del();
 };
 
 module.exports = {
