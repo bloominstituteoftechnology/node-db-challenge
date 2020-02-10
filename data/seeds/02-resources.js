@@ -9,7 +9,7 @@ exports.seed = function(knex) {
     {
       id: 2, 
       resource_name: 'Lambda',
-      resource_desc: 'Lambda descrition',
+      resource_desc: 'Lambda description',
     },
     {
       id: 3, 
