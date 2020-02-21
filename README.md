@@ -40,11 +40,27 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+    SQL is Structured Query Language and it is used to query a relational database
+
 - [ ] Why do tables need a `primary key`?
+    Each database table needs a primary key because it ensures row-level accessibility
+
+    It makes your table joinable..  
+    They allow you to have a way to uniquely identify a given row in a table to ensure that there're no duplicates.
+    The RDBMS enforces this constraint for you, so you don't have to write additional code to check for duplicates before inserting, avoiding a full table scan, which implies better performance here.
+
+  PKs allow you to create foreign keys (FKs) to create relations between tables in a way that the RDBMS is "aware" of them. Without PKs/FKs, the relationship only exists inside the programmer's mind, and the referenced table might have a row with its "PK" deleted, and the other table with the "FK" still thinks the "PK" exists. This is bad, which leads to the next point.
+
+  It allows the RDBMS to enforce integrity constraints. Is TableA.id referenced by TableB.table_a_id? If TableB.table_a_id = 5 then, you're guaranteed to have a row with id = 5 in TableA. Data integrity and consistency is maintained, and that is good.
+
+  It allows the RDBMS to perform faster searches b/c PK fields are indexed, which means that a table doesn't need to have all of its rows checked when searching for something (e.g. a binary search on a tree structure). 
 
 - [ ] What is the name given to a table column that references the primary key on another table.
+  foreign key
 
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+a join table  that bridges the gap  
 
 ## Minimum Viable Product
 
