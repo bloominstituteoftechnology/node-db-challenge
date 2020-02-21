@@ -1,0 +1,33 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "index.js": "^0.0.3",
+    "knex": "^0.20.10",
+    "node": "^13.8.0",
+    "server.js": "^1.0.0",
+    "sqlite3": "^4.1.1",
+    "start": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesley-moody/node-db-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wesley-moody/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/wesley-moody/node-db-challenge#readme"
+}
