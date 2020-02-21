@@ -25,6 +25,16 @@ router.get("/resources", (req, res) => {
     });
 });
 
+router.get("/tasks", (req, res) => {
+  Business.getTasks()
+    .then(tasks => {
+      res.json(tasks);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to get tasks" });
+    });
+});
+
 router.post("/resources", (req, res) => {
   const resourceData = req.body;
 
@@ -46,6 +56,17 @@ router.post("/", (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to create new project" });
+    });
+});
+router.post("/tasks", (req, res) => {
+  const taskData = req.body;
+
+  Business.addTask(taskData)
+    .then(task => {
+      res.status(201).json(task);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to create new task" });
     });
 });
 
