@@ -43,22 +43,6 @@ router.get("/:id/resources", (request, response) => {
     });
 });
 
-// router.get("/:id/tasks", (request, response) => {
-//   const { id } = request.params;
-//   Projects.getTasks(id)
-//     .then(tasks => {
-//       if (tasks.length) {
-//         response.status(200).json(tasks);
-//       } else {
-//         response.status(404).json({ message: "Tasks not found" });
-//       }
-//     })
-//     .catch(error => {
-//       console.log("Error: ", error);
-//       response.status(500).json({ message: "Failed to retrieve tasks" });
-//     });
-// }); // DOESN'T WORK
-
 router.get("/:id/tasks", (request, response) => {
   Projects.getTasks(request.params.id)
     .then(tasks => {
@@ -84,24 +68,33 @@ router.post("/", (request, response) => {
 });
 
 router.post("/:id/resources", (request, response) => {
-  const { id } = request.params;
-  const resources = { ...request.body, project_id: id };
-  Projects.addResources(resources)
-    .then(inserted => {
-      response.status(201).json(inserted);
+  const resourceData = request.body;
+  Projects.addResources(resourceData)
+    .then(resource => {
+      const index = { project_id: request.params.id, resource_id: resource.id };
+      Projects.addResourceIndex(index)
+        .then(resourceIndex => {
+          response.status(201).json(resourceIndex);
+        })
+        .catch(error => {
+          console.log("Error: ", error);
+          response
+            .status(404)
+            .json({ error: "Failed to retrieve specified resource" });
+        });
     })
     .catch(error => {
       console.log("Error: ", error);
-      res.status(500).json({ errorMessage: "Failed to add new resource" });
+      response.status(500).json({ message: "Failed to create new resource" });
     });
-}); // DOESN'T WORK
+});
 
 router.post("/:id/tasks", (request, response) => {
-  const task = request.body;
-  task.project_id = request.params.id;
-  Projects.addTasks(task)
+  const { id } = request.params;
+  const tasks = { ...request.body, project_id: id };
+  Projects.addTasks(tasks)
     .then(() => {
-      Projects.getTasks(request.params.id)
+      Projects.getTasks(id)
         .then(tasks => {
           response.status(201).json(tasks);
         })
@@ -116,6 +109,6 @@ router.post("/:id/tasks", (request, response) => {
       console.log("Error: ", error);
       response.status(500).json({ errorMessage: "Failed to add task" });
     });
-}); // DOESN'T WORK
+});
 
 module.exports = router;

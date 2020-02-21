@@ -40,11 +40,23 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+Relational Database Management Systems are the database software itself, which manages storage, querying, and updating. Specifically, an RDBMS uses a relational model of data, as the name suggests. If you want to work on an RDBMS, you’ll need to learn its implementation language (often C), relational model theory, and a lot of nitty-gritty stuff about filesystem access, transactional logging, scalability, synchronisation, and so on.
+
+SQL, the Structured Query Language, is a language (or a family of closely related languages or dialects) which is typically used to query the RDBMS. If you want to work with SQL, you just learn SQL and maybe a tiny bit of relational model theory for background.
+
+So: the RDBMS is the system, and SQL is the language used to interact with the system. In principle you could have an RDBMS that uses some other language for access, and in principle you could use SQL to interact with some other kind of database system, though in practice the two are closely coupled.
+
 - [ ] Why do tables need a `primary key`?
+
+A primary key is a table column that serves a special purpose. Each database table needs a primary key because it ensures row-level accessibility. The values that compose a primary key column are unique; no two values are the same. Each table has one and only one primary key, which can consist of one or many columns.
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+A Foreign Key is a field (or collection of fields) in one table that refers to the Primary Key in another table. The table containing the foreign key is called the child table, and the table containing the candidate key is called the referenced or parent table.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+A many-to-many relationship occurs when multiple records in a table are associated with multiple records in another table. For example, a many-to-many relationship exists between customers and products: customers can purchase various products, and products can be purchased by many customers.
 
 ## Minimum Viable Product
 
