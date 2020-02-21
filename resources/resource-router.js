@@ -11,4 +11,10 @@ router.get('/', (req, res) => {
 }
 )
 
+router.post('/', (req, res) => {
+    Resources.addResource(req.body)
+        .then(resource => res.status(201).json(resource))
+        .catch( err => res.status(500).json({message: "Sorry unnable to add resource"})
+        )
+})
 module.exports = router;

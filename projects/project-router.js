@@ -22,4 +22,13 @@ router.post('/', (req, res) => {
         .catch(err => res.status(500).json({message: "Sorry unable to add project"}))
 
 })
+
+router.post('/:id/tasks', (req, res) => {
+    const task = {...req.body, project_id: req.params.id}
+    Projects.addTasks(task)
+        .then(task => res.status(201).json(task))
+        .catch(err => res.status(500).json({message: "Sorry unable to add task"}))
+
+})
+
 module.exports = router;
