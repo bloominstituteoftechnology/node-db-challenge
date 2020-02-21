@@ -40,11 +40,19 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+`A relational DB is an accumulation of data that is related to each other. SQL is the language used to manage and manipulate that data.`
+
 - [ ] Why do tables need a `primary key`?
+
+`Tables need a primary key to assure the data is organized in a way to prevent anomalies and make the data contained in the table easily accessible.`
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+`Foreign Key (FK)`
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+`In order to have a many to many relationship, a table must have multiple columns/records in a table relate to multiple columns/records in at least one other table.`
 
 ## Minimum Viable Product
 
