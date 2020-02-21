@@ -25,4 +25,28 @@ router.get("/resources", (req, res) => {
     });
 });
 
+router.post("/resources", (req, res) => {
+  const resourceData = req.body;
+
+  Business.addResources(resourceData)
+    .then(resourceNew => {
+      res.status(201).json(resource);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to create new resource" });
+    });
+});
+
+router.post("/", (req, res) => {
+  const projectData = req.body;
+
+  Business.addProject(projectData)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to create new project" });
+    });
+});
+
 module.exports = router;
