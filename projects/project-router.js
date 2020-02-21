@@ -9,4 +9,9 @@ router.get('/', (req, res) => {
         .catch(err => res.status(500).json({message: "Sorry unable to obtain list of projects"}))
 })
 
+router.get('/:id/tasks', (req, res) => {
+    Projects.getTasksByProject(req.params.id)
+        .then(tasks => res.status(200).json(tasks))
+        .catch(err => res.status(500).json({message: "Sorry unable to obtain list of tasks"}))
+})
 module.exports = router;
