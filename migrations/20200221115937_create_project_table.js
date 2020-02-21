@@ -29,9 +29,11 @@ exports.up = function(knex) {
         .onUpdate("CASCADE");
     })
     .createTable("project-resources", tbl => {
+      tbl.primary(["project_id", "resource_id"]);
       tbl
         // Foreign Key that directs to the projects table
         .integer("project_id")
+        .unsigned()
         .notNullable()
         .references("id")
         .inTable("projects")
@@ -40,12 +42,12 @@ exports.up = function(knex) {
       tbl
         // Foreign Key that directs to the resources table
         .integer("resource_id")
+        .unsigned()
         .notNullable()
         .references("id")
         .inTable("resources")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
-      tbl.primary(["project_id", "resource_id"]);
     });
 };
 
