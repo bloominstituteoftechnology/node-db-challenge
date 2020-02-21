@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Projects = require("./project-model,js");
+const Projects = require("./project-model.js");
 
 const router = express.Router();
 
