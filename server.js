@@ -1,10 +1,10 @@
 const express = require("express");
 
-const BussinessRouter = require("./rules/rules-router.js");
+const rulesRouter = require("./rules/rules-router.js");
 
 const server = express();
 
 server.use(express.json());
-server.use("/api/rules", RulesRouter);
+server.use("/api/projects", rulesRouter);
 
 module.exports = server;
