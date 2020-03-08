@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
             res.status(200).json(projects);
         })
         .catch(() => {
-            res.status(500).json({ errorMessage: "Unable to access DB"});
+            res.status(500).json({ errorMessage: "Unable to access DB4444"});
         });
 });
 
@@ -35,7 +35,7 @@ router.get('/resources', (req, res) => {
         res.status(200).json(resources);
     })
     .catch(() => {
-        res.status(500).json({ errorMessage: "Unable to access DB"});
+        res.status(500).json({ errorMessage: "Unable to access DB3333"});
     });
 });
 
@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
             res.status(200).json(projects);
         })
         .catch(() => {
-            res.status(500).json({ errorMessage: "Unable to access DB"});
+            res.status(500).json({ errorMessage: "Unable to access DB1111"});
         });
     })
     .catch(() => {
@@ -90,7 +90,7 @@ router.post('/:id/tasks', (req, res) => {
             res.status(200).json(resources);
           })
           .catch(() => {
-            res.status(500).json({ errorMessage: "Unable to access DB" });
+            res.status(500).json({ errorMessage: "Unable to access DB2222" });
           });
       })
       .catch(() => {
