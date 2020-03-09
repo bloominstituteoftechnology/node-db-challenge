@@ -1,0 +1,29 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "Node DB Challenge",
+  "main": "index.js",
+  "scripts": {
+    "db:seed": "knex seed:run",
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlong5795/node-db-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlong5795/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/jlong5795/node-db-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "knex": "^0.20.11",
+    "nodemon": "^2.0.2",
+    "sqlite3": "^4.1.1"
+  }
+}
