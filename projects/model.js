@@ -63,3 +63,6 @@ function removeProject(id) {
 		.where({ id })
 		.delete();
 }
+
+// REMOVE TASKS
+// REMOVE RESOURCES
