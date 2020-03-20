@@ -7,13 +7,13 @@ module.exports = {
 	findAllResources,
 	addProject,
 	addTask,
-	updateProject,
-	updateTask,
-	updateResources,
+	// updateProject,
+	// updateTask,
+	// updateResources,
 	addResources,
-	removeProject,
-	removeTask,
-	removeResources
+	removeProject
+	// removeTask,
+	// removeResources
 };
 
 async function findAllProjects() {
