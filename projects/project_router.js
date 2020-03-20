@@ -52,7 +52,7 @@ router.get('/:id/tasks', (req, res) => {
 router.get('/:id/resources', (req, res) => {
 	const { id } = req.params;
 
-	Model.findAllResources(id)
+	Model.findAllProjectResources(id)
 		.then(resource => {
 			if (resource.length > 0) {
 				res.status(201).json(resource);
@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 
 	Model.addProject(newProject)
 		.then(project => {
-			if (newProject.name && newProject.description) {
+			if (newProject.projects_name && newProject.projects_description) {
 				res.status(201).json(project);
 			} else {
 				res.status(404).json({
@@ -88,7 +88,7 @@ router.post('/:id/tasks', (req, res) => {
 	const newTask = req.body;
 	Model.addTask(newTask)
 		.then(task => {
-			if (newTask.description && newTask.project_id) {
+			if (newTask.tasks_description && newTask.project_id) {
 				if (newTask.completed === null) {
 					{
 						completed: 0;
@@ -111,7 +111,7 @@ router.post('/:id/resources', (req, res) => {
 	const newResource = req.body;
 	Model.addResources(newResource)
 		.then(resource => {
-			if (newResource.name && newResource.project_id) {
+			if (newResource.resources_name && newResource.project_id) {
 				res.status(201).json(resource);
 			} else {
 				res.status(404).json({
