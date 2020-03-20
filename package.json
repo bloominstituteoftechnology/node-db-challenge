@@ -4,7 +4,8 @@
   "description": "## Description",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.20.12",
+    "nodemon": "^2.0.2",
     "sqlite3": "^4.1.1"
   }
 }
