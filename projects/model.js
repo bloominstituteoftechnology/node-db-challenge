@@ -34,13 +34,13 @@ function findAllTasks(projectId) {
 	return db('projects')
 		.select('projects.name', 'tasks.description', 'tasks.completed')
 		.join('tasks', 'tasks.project_id', 'projects.id')
-		.where('projects_id', projectId);
+		.where('projects.id', projectId);
 }
 
 function findAllResources(projectId) {
 	return db('projects')
 		.select('projects.name', 'resources.description')
-		.join('resources', 'resources.project_id', 'project.id')
+		.join('resources', 'resources.project_id', 'projects.id')
 		.where('projects.id', projectId);
 }
 
