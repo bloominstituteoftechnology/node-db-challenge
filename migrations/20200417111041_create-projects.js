@@ -23,6 +23,16 @@ exports.up = function(knex) {
             tbl.increments('id').primary().unique();
             tbl.string('name').notNullable();
             tbl.string('description')
+            tbl
+                .varchar('task_id')
+                .notNullable()
+                .references('id')
+                .inTable('tasks');
+            tbl
+                .varchar('project_id')
+                .notNullable()
+                .references('id')
+                .inTable('projects');
         })
   )
 };
