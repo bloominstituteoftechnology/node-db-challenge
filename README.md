@@ -40,11 +40,23 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+
+*** SQL and relational databases are two different concepts. Relational databases just use SQL as the main interface for manipulating data but other database types can also support SQL.
+
 - [ ] Why do tables need a `primary key`?
+
+
+*** We use primary key to identify data by unique id, and to join tables.
+
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+ *** A Foreign Key
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+ ***  We need to create join table between two tables by using foreign key. 
+
 
 ## Minimum Viable Product
 
