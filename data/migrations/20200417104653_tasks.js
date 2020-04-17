@@ -4,7 +4,15 @@ exports.up = function(knex) {
 
     tbl.string('description').notNullable();
     tbl.string('notes');
-    tbl.bool('completed').defaultTo('false');
+    tbl.bool('completed').defaultTo(false);
+
+    tbl
+      .integer('project_id')
+      .notNullable()
+      .references('id')
+      .inTable('projects')
+      .onDelete('RESTRICT')
+      .onUpdate('CASCADE');
   });
 };
 

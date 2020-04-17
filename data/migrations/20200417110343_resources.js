@@ -2,15 +2,23 @@ exports.up = function(knex) {
   return knex.schema.createTable('resources', tbl => {
     tbl.increments();
 
+    tbl
+      .string('name')
+      .notNullable()
+      .unique();
+
     tbl.string('description').notNullable();
 
-    tbl.string('notes');
-
     tbl
-      .bool('completed')
+      .integer('project_id')
       .notNullable()
-      .defaultTo('false');
+      .references('id')
+      .inTable('projects')
+      .onDelete('RESTRICT')
+      .onUpdate('CASCADE');
   });
 };
 
-exports.down = function(knex) {};
+exports.down = function(knex) {
+  return knex.schema.dropTableIfExists('resources');
+};

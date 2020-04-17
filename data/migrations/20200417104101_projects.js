@@ -4,7 +4,7 @@ exports.up = function(knex) {
 
     tbl.string('name').notNullable();
     tbl.string('description').notNullable();
-    tbl.bool('completed').defaultTo('false');
+    tbl.bool('completed').defaultTo(false);
   });
 };
 
