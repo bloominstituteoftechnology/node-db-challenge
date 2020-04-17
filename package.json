@@ -1,0 +1,30 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "knex": "knex"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidShestopal/node-db-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidShestopal/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/DavidShestopal/node-db-challenge#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.20.15",
+    "sqlite3": "^4.1.1"
+  }
+}
