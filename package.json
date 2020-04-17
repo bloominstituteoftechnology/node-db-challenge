@@ -1,0 +1,19 @@
+{
+  "name": "node-db-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/karkisunil1200/node-db-challenge.git",
+  "author": "Sunil Karki <karkisunil1200@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.20.15",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
