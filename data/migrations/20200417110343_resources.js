@@ -11,7 +11,6 @@ exports.up = function(knex) {
 
     tbl
       .integer('project_id')
-      .notNullable()
       .references('id')
       .inTable('projects')
       .onDelete('RESTRICT')
