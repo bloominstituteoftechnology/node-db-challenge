@@ -7,7 +7,7 @@ module.exports = {
       filename: './dev.sqlite3'
     },
     useNullAsDefualt: true,
-    migration: {
+    migrations: {
       directory: './data/migrations'
     },
     seeds: {
