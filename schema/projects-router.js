@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({ message: "Server error."})
+      res.status(500).json({ message: "Unable to get Project by id."})
     })
 })
 

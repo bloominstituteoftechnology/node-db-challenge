@@ -30,13 +30,16 @@ function getById(id) {
     let query = db('projects');
     if (id) {
       return query
-        .where('id', id)
-        .first()
+        .where({ id })
         .join('Tasks', 'Tasks.project_id', 'Projects.id')
-        .join('Resources', 'Resources.project_id', 'Projects.id')
+        .insert({tasks: 'Tasks'})
+        // .join('Resources', 'Resources.project_id', 'Projects.id')
+        // .first()
         .then((project) => {
           if (project) {
-              return project
+            console.log(project, ' is project!')
+            // query.insert({tasks: 'Tasks'})
+            return query
           } else {
             return null;
           }
