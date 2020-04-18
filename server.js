@@ -3,36 +3,18 @@ const helmet = require("helmet");
 const db = require ("./data/db-config.js");
 
 const server = express();
+const projectRouter= require("./api/project-router")
+const resourceRouter= require("./api/resource-router")
+const taskRouter = require("./api/taskRouter")
 
 server.use(helmet());
 server.use(express.json());
 
-server.get('/projects', (req, res)=>{
-    db("projects")
-    .then(projects=> {
-        res.status(200).json(projects);
-    })
-    .catch(err =>{
-        res.status(500).json(error)
-    })
-});
-server.get('/tasks', (req, res)=>{
-    db("tasks")
-    .then(tasks=> {
-        res.status(200).json(tasks);
-    })
-    .catch(err =>{
-        res.status(500).json(error)
-    })
-});
-server.get('/resources', (req, res)=>{
-    db("resources")
-    .then(resources=> {
-        res.status(200).json(resources);
-    })
-    .catch(err =>{
-        res.status(500).json(error)
-    })
-});
+server.use("/api/project", projectRouter),
+server.use("/api/resource", resourceRouter),
+server.use("/api/task", taskRouter),
+
+
+
 
 module.exports= server;
