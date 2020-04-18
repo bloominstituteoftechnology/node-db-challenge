@@ -12,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/projects", projectRoute);
-app.use("/api/projects/:project_id/tasks", taskRoute);
-app.use("/api/projects/:project_id/resources", resourcesRoute);
+app.use("/api/tasks", taskRoute);
+app.use("/api/resources", resourcesRoute);
 
 app.get('/api/status', (req, res) => {
     res.json({api: "up"})

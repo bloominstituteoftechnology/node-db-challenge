@@ -1,7 +1,32 @@
-const resourcesRoute = require('express').Router();
+const express = require('express');
 
-resourcesRoute.get('/status', (req, res) =>{
-    res.json({ resourcesRoute: "up" });
-})
+const Resources = require('./resources-model.js');
 
-module.exports = resourcesRoute
+const router = express.Router();
+
+router.get('/', (req, res) => {
+   try {
+    const resources = Resources.getResources()
+    resources
+    ? res.json(resources)
+    : res.status(400)
+   } catch (error) {
+        res.status(500).json({ message: 'server error', error: error.message} )
+   }        
+});
+
+/* POST to create a new resource */
+router.post('/', async (req, res) => {
+    const newResource = req.body;
+
+    try {
+        const inserted = Resources.addResource(newResource)
+        inserted
+        ? res.json(inserted)
+        : res.status(401).json({ message: 'information misssing'})
+    } catch (error) {
+        res.status(500).json({ message: 'server error', error: error.message})
+    }
+});
+
+module.exports = router;
