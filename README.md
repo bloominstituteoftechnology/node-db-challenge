@@ -16,10 +16,10 @@ The Minimum Viable Product must be completed in three hours.
 
 Follow these steps to set up and work on your project:
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your _Team Lead_ as collaborator on Github.
-- [ ] Clone your forked version of the Repository.
-- [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
+- [x] Create a forked copy of this project.
+- [x] Add your _Team Lead_ as collaborator on Github.
+- [x] Clone your forked version of the Repository.
+- [https://github.com/LambdaSchool/node-db-challenge.git ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
 - [ ] Implement the project on this Branch, committing changes regularly.
 - [ ] Push commits: git push origin `firstName-lastName`.
 
@@ -40,11 +40,18 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+    SQL is a type of relational database? Relational databases are ones that present data to the user as relations between tables and provide relational operators to manipulate the data. SQL as a language interacts with relational databases that it creates.
+
 - [ ] Why do tables need a `primary key`?
+
+    Tables need a primart key becuse they need a value to joinn other tables on. Without a primary key you will not have a value to use to reference and join other tables on which opens up a lot of data functionality.
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+    A foreign key is the table column that references the primary key on another table.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+    You need a table joined with two one-to-many relationships for example if we wanted a many to many relatioonship between Table A and Table B we would join a table with two foreign keys create a relationship such as A -> AB and B -> AB. In this case the logical primary key for AB is formed fromt eh two foreign keys (i.e. copies of primary keys of A and B). 
 
 ## Minimum Viable Product
 

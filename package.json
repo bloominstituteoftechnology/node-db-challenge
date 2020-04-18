@@ -1,0 +1,36 @@
+{
+  "name": "project-manager",
+  "version": "1.0.0",
+  "description": "api built with express and sqlite3 to manage projects and their associated tasks and resources.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodyBrewer/node-db-challenge.git"
+  },
+  "keywords": [
+    "express",
+    "knex",
+    "sqlite3"
+  ],
+  "author": "CodyBrewer (https://github.com/CodyBrewer)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodyBrewer/node-db-challenge/issues"
+  },
+  "homepage": "https://github.com/CodyBrewer/node-db-challenge#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "knex": "^0.20.15",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
