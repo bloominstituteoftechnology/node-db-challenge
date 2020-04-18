@@ -16,9 +16,9 @@ The Minimum Viable Product must be completed in three hours.
 
 Follow these steps to set up and work on your project:
 
-- [ ] Create a forked copy of this project.
+- [x] Create a forked copy of this project.
 - [ ] Add your _Team Lead_ as collaborator on Github.
-- [ ] Clone your forked version of the Repository.
+- [x] Clone your forked version of the Repository.
 - [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
 - [ ] Implement the project on this Branch, committing changes regularly.
 - [ ] Push commits: git push origin `firstName-lastName`.
@@ -38,13 +38,17 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] Explain the difference between `Relational Databases` and `SQL`.
+- [x] Explain the difference between `Relational Databases` and `SQL`.
+Relational database is a database whereas SQL is a query language. SQL is different from other languages like javascript, java etc as it can not execute functions, array methods, loops etc. SQL can just query a database to get back data. In Relational database data is persistant and cannot be changed unless we specifically ask to do so. SQL or structured query language is a part of relational database.
 
-- [ ] Why do tables need a `primary key`?
+- [x] Why do tables need a `primary key`?
+Primary key is needed to autoincrement fields in the table. It is used to identify data points uniquely in a table.
 
-- [ ] What is the name given to a table column that references the primary key on another table.
+- [x] What is the name given to a table column that references the primary key on another table.
+Foreign key
 
-- [ ] What do we need in order to have a _many to many_ relationship between two tables.
+- [x] What do we need in order to have a _many to many_ relationship between two tables.
+many to many relationships needs an intermediary table that will link the two tables.
 
 ## Minimum Viable Product
 
