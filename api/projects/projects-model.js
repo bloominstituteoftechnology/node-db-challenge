@@ -32,11 +32,48 @@ const get  = (id) => {
     }
 }
 
-const insert = () => {}
+const insert = (body) => {
+    let query = db('projects')
+    if (body) {
+        return query
+            .insert(body)
+            .then((insertedProject) => {
+                return insertedProject
+                    ? insertedProject
+                    : null;
+            })
+            .catch( (err) => {
+                console.log(err);
+            })
+    }
+}
 
-const update = () => {}
+const update = (id, changes) => {
+    let query = db('projects')
+    if (id && changes) {
+        return query
+            .where({ id })
+            .update(changes)
+            .then( (updatedProject) => {
+                if (updatedProject) {
+                    return updatedProject
+                } else {
+                    return null;
+                }
+            }).catch( (err) => {
+                console.log(err)
+            })
+    }
+}
 
-const remove = () => {}
+const remove = (id) => {
+    let query = db('projects')
+    if (id) {
+        return query
+            .where({ id })
+            .del()
+    }
+}
 
 module.exports = {
     get,
