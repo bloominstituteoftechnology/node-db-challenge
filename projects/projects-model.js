@@ -4,7 +4,7 @@ function find() {
   return db('projects');
 }
 function findById(id) {
-  return db('projects').where({ id });
+  return db('projects').where({ id }).first();
 }
 
 function addProject(projectData) {
@@ -28,7 +28,7 @@ function findProjectResources(id) {
 function findProjectTasks(id) {
   return db('project_task as pt')
     .join('tasks as t', 't.id', 'pt.task_id')
-    .select('t.id', 't.task_name', 't.notes', 't.completed')
+    .select('t.id', 'pt.project_id', 't.task_name', 't.notes', 't.completed')
     .where({ 'pt.project_id': id });
 }
 function addResources(resource, id) {
@@ -39,26 +39,42 @@ function addResources(resource, id) {
     .where({ 'pr.project_id': id })
     .insert(resource);
 }
-// function findFullProject(id, Promise) {
-//   return db('projects as p')
-//     .join('project_task as pt', 'p.id', 'pt.project_id')
-//     .join('tasks as t', 't.id', 'pt.task_id')
-//     .select('p.*', 't.*')
-//     .where({ 'pt.project_id': id })
-//     .then((db('resources as r')
-//       .join('project-resource as pr', 'r.id', 'pr.resource_id')
-//       .select('r.*')
-//     ));
-// }
+function update(change, id) {
+  return db('projects').where({ id }).update(change);
+}
+function remove(id) {
+  return db('projects')
+    .where({ id }).del();
+}
+
 // function findFullProject(id) {
-//   const project = findById(id);
-//   const tasks = findProjectTasks(id);
-//   const resources = findProjectResources(id);
-//  // project.tasks = tasks;
-//   // project.resources = resources;
-//  // console.log(project);
-//   return (project, tasks, resources);
+//   return db('tasks as t')
+//     .join('project_task as pt', 't.id', 'pt.task_id')
+//     .join('projects as p', 'pt.project_id', 'p.id')
+//     .join('project-resource as pr', 'p.id', 'pr.project_id')
+//     .join('resources as r', 'r.id', 'pr.resource_id')
+//     .select('p.*', 't.*', 'r.*')
+//     .where({ 'p.id': id });
 // }
+
+// function findFullProject(id) {
+//   const project = db('projects').where({ id });
+
+//   const tasks = db('project_task as pt')
+//     .join('tasks as t', 't.id', 'pt.task_id')
+//     .select('t.id', 't.task_name', 't.notes', 't.completed')
+//     .where({ 'pt.project_id': id });
+
+//   const resources = db('project-resources as pr')
+//     .join('resources as r', 'r.id', 'pr.resource_id')
+//     .select('r.id', 'r.resource_name', 'r.resource_description')
+//     .where({ 'pr.project_id': id });
+
+//   const full = { ...project, ...tasks, ...resources };
+//   console.log(full, 'full');
+//   return full;
+// }
+
 
 module.exports = {
   find,
@@ -67,5 +83,7 @@ module.exports = {
   findProjectResources,
   addResources,
   findProjectTasks,
-  findFullProject,
+  // findFullProject,
+  update,
+  remove,
 };
