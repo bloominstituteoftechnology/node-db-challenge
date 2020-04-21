@@ -21,7 +21,7 @@ function findProjectResources(id) {
 function findProjectTasks(id) {
   return db('tasks as t')
     .join('projects as p', 'p.id', 't.project_id')
-    .select('p.project_name', 'p.project_description', 't.id', 't.task_name', 't.completed')
+    .select('t.id', 't.task_name', 't.completed')
     .where({ 'p.id': id });
 }
 // function addResources(resource, id) {
@@ -31,6 +31,13 @@ function findProjectTasks(id) {
 //     .where({ 'pr.project_id': id })
 //     .insert(resource);
 // }
+function addTask(task, id) {
+  return db('tasks as t')
+    .join('projects as p', 'p.id', 't.project_id')
+    .select('t.id', 't.project_id', 't.task_name')
+    .where({ project_id: id })
+    .insert(task);
+}
 
 function update(change, id) {
   return db('projects').where({ id }).update(change);
@@ -45,9 +52,9 @@ module.exports = {
   findById,
   addProject,
   findProjectResources,
+  addTask,
   // addResources,
   findProjectTasks,
-  // findFullProject,
   update,
   remove,
 };

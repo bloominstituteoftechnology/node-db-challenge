@@ -69,6 +69,7 @@ router.get('/:id/resources', (req, res) => {
     });
 });
 
+//  returns a list of tasks for a specific project
 router.get('/:id/tasks', (req, res) => {
   const { id } = req.params;
   projects.findProjectTasks(id)
@@ -123,25 +124,31 @@ router.delete('/:id', (req, res) => {
 });
 
 
-// adds a new resource but not under the project, in the general list of resoureces :(
-// router.post('/:id/addresources', (req, res) => {
-//   const stepData = req.body;
-//   const { id } = req.params;
+// adds a new step under a specifc project
+// -----request body shape----->
+//  {
+//    "project_id":3,
+//    "task_name": "STRETCH",
+//    "completed": 0
+//   }
+router.post('/:id/tasks', (req, res) => {
+  const taskData = req.body;
+  const { id } = req.params;
 
-//   projects.findById(id)
-//     .then((scheme) => {
-//       if (scheme) {
-//         projects.addResources(stepData, id)
-//           .then((step) => {
-//             res.status(201).json(step);
-//           });
-//       } else {
-//         res.status(404).json({ message: 'Could not find scheme with given id.' });
-//       }
-//     })
-//     .catch(() => {
-//       res.status(500).json({ message: 'Failed to create new step' });
-//     });
-// });
+  projects.findById(id)
+    .then((project) => {
+      if (project) {
+        projects.addTask(taskData, id)
+          .then((step) => {
+            res.status(201).json(step);
+          });
+      } else {
+        res.status(404).json({ message: 'Could not find project with given id.' });
+      }
+    })
+    .catch(() => {
+      res.status(500).json({ message: 'Failed to create new step' });
+    });
+});
 
 module.exports = router;
