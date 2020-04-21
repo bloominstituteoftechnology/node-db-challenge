@@ -48,9 +48,21 @@ function addResources(resource){
     })
 }
 
+function addResourceToProject(resource_id, project_id){
+    return db('resource_detail').insert({project_id: project_id, resource_id: resource_id })
+    .then(response =>{
+        return response;
+    })
+    .catch(err =>{
+        console.log(err);
+        return null;
+    })
+}
+
 function addTasks(task, project_id){
     return db('task').insert({task_description: task.description, notes: task.notes, project_id: project_id})
     .then(response =>{
+        console.log(response)
         return response;
     })
     .catch(err =>{
@@ -100,6 +112,7 @@ module.exports = {
     getTasks,
     addProject,
     addResources,
+    addResourceToProject,
     addTasks,
     getProject
 }

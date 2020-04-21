@@ -60,6 +60,23 @@ router.post('/resources', (req, res) => {
     })
 });
 
+router.post('/:id/resources', (req,res) =>{
+    const { id } = req.params;
+    const resource = req.body;
+
+    projects.addResourceToProject(resource.resource_id, id).then(resource =>{
+        if(resource){
+            res.json(resource);
+        } else {
+            res.status(400).json({message: 'please provide valid params'})
+        }
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).json({message: 'Failed to add resource to specified project'})
+    })
+})
+
 router.post('/:id/tasks', (req, res) => {
     const task = req.body;
     const { id } = req.params;
