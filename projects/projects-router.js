@@ -122,25 +122,26 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-// adds a new resource but not under the project, in the general list of resoureces :(
-router.post('/:id/addresources', (req, res) => {
-  const stepData = req.body;
-  const { id } = req.params;
 
-  projects.findById(id)
-    .then((scheme) => {
-      if (scheme) {
-        projects.addResources(stepData, id)
-          .then((step) => {
-            res.status(201).json(step);
-          });
-      } else {
-        res.status(404).json({ message: 'Could not find scheme with given id.' });
-      }
-    })
-    .catch(() => {
-      res.status(500).json({ message: 'Failed to create new step' });
-    });
-});
+// adds a new resource but not under the project, in the general list of resoureces :(
+// router.post('/:id/addresources', (req, res) => {
+//   const stepData = req.body;
+//   const { id } = req.params;
+
+//   projects.findById(id)
+//     .then((scheme) => {
+//       if (scheme) {
+//         projects.addResources(stepData, id)
+//           .then((step) => {
+//             res.status(201).json(step);
+//           });
+//       } else {
+//         res.status(404).json({ message: 'Could not find scheme with given id.' });
+//       }
+//     })
+//     .catch(() => {
+//       res.status(500).json({ message: 'Failed to create new step' });
+//     });
+// });
 
 module.exports = router;

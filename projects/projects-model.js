@@ -24,14 +24,14 @@ function findProjectTasks(id) {
     .select('p.project_name', 'p.project_description', 't.id', 't.task_name', 't.completed')
     .where({ 'p.id': id });
 }
-function addResources(resource, id) {
-  return db('resources as r')
-    .join('project-resources as pr', 'pr.resource_id', 'r.id')
-    .join('projects as p', 'p.id', 'pr.project_id')
-    .select('p.id', 'r.resource_name', 'r.resource_description')
-    .where({ 'pr.project_id': id })
-    .insert(resource);
-}
+// function addResources(resource, id) {
+//   return db('resources as r')
+//     .join('project-resources as pr', 'pr.resource_id', 'r.id')
+//     .select('pr.project_id', 'r.resource_name', 'r.resource_description')
+//     .where({ 'pr.project_id': id })
+//     .insert(resource);
+// }
+
 function update(change, id) {
   return db('projects').where({ id }).update(change);
 }
@@ -45,7 +45,7 @@ module.exports = {
   findById,
   addProject,
   findProjectResources,
-  addResources,
+  // addResources,
   findProjectTasks,
   // findFullProject,
   update,

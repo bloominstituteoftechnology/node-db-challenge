@@ -1,7 +1,9 @@
 const db = require('../data/db-config.js');
 
 function findTasks() {
-  return db('tasks');
+  return db('tasks as t')
+    .join('projects as p', 't.project_id', 'p.id')
+    .select('t.*', 'p.project_name', 'p.project_description');
 }
 
 function findTaskById(id) {
