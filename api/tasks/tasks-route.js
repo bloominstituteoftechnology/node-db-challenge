@@ -1,4 +1,5 @@
 const tasksRoute = require('express').Router();
+const Tasks = require('./tasks-model')
 
 tasksRoute.get('/status', (req, res) =>{
     res.json({ tasksRoute: "up" });

@@ -1,9 +1,7 @@
-const Tasks = require('../../data/dbConfig')
+const db = require('../../data/dbConfig')
 
 const getTasks = () => {
     return db('tasks')
-        .join('projects', 'tasks.project_id', 'projects.id')
-        .select('tasks.*', 'projects.project_name', 'projects.project_desc')
 }
 
 const addTask = (task) => {
