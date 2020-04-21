@@ -1,5 +1,5 @@
   
-const db = require('../../data/db-config');
+const db = require('../data/db-config');
 
 module.exports ={
     getResource,

@@ -1,47 +1,29 @@
 const express= require("express");
-const Projects = require('./projects-model');
+const Projects = require('./project-model');
 const router= express.Router()
 
-router.get("/", (req, res)=>{
-    Projects.get()
-    .then(projects =>{
-        res.status(200).json(projects);
-    })
-    .catch(err =>{
-        res.status(500).json(err);
-    })
-})
-router.get("/:id", (req, res)=>{
-    const {id}= req.params;
-    Projects.getById(id)
-    .then(project =>{
-        res.status(200).json(project)
-    })
-    .catch(err =>{
-        res.status(500).json(err);
-    })
-})
-router.post('/', (req, res) => {
-    const projectData = req.body;
-    Projects.add(projectData)
+router.get('/project', (req, res) => {
+    Projects.getProject()
         .then(project => {
-            res.status(201).json(project)
+            res.status(200).json(project)
         })
         .catch(err => {
-            console.log(err)
-            res.status(500).json({message: 'failed to add the project to the db'})
+            console.log("GET Project", err)
+            res.status(500).json({ message: 'Failed to get list of projects' })
         })
+        router.post('/', (req, res) => {
+            const newProject = req.body
+            Projects.insert(newProject)
+                .then(project => {
+                    res.status(201).json(project)
+                })
+                .catch(err => {
+                    console.log("POST Project", err)
+                    res.status(500).json({ error: "Could not save the project to the database" })
+                })
+        
+        })
+});
 
-})
-router.post('/:id/tasks', (req,res)=> {
-    const id = req.params.id
-    const taskData = req.body;
-    Projects.addTask(taskData, id)
-    .then(task => {
-        res.status(201).json(task)
-    })
-    .catch(err => {
-        console.log(err.message)
-        res.status(500).json({message: 'failed to add task'})
-    })
-})
+
+module.exports= router
