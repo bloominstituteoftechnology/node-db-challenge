@@ -27,12 +27,22 @@ exports.up = function(knex) {
             tbl.increments();
             tbl.text('resource_name')
             .notNullable();
-            tbl.text('resource_description')
+            tbl.text('resource_description');
+        })
+        .createTable('resource_detail', tbl =>{
+            tbl.increments();
             tbl.integer('project_id')
             .unsigned()
             .notNullable()
             .references('id')
             .inTable('project')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE');
+            tbl.integer('resource_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('resource')
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
         })

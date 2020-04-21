@@ -37,8 +37,8 @@ function addProject(project){
     })
 }
 
-function addResources(resource, project_id){
-    return db('resource').insert({resource_name: resource.name, resource_description: resource.description, project_id: project_id})
+function addResources(resource){
+    return db('resource').insert({resource_name: resource.name, resource_description: resource.description})
     .then(response =>{
         return response;
     })
@@ -69,7 +69,11 @@ function getProject(project_id){
                 task.task_completed = !!task.task_completed;
             })
             project.tasks = tasks
-            return db('resource').where('resource.project_id', '=', project_id).then(resources =>{
+            return db.select('resource.resource_name', 'resource.resource_description', 'resource.id').from('project')
+            .where('project.id', '=', project_id)
+            .join('resource_detail', 'resource_detail.project_id', '=', 'project.id')
+            .join('resource', 'resource_detail.resource_id', '=', 'resource.id')
+            .then(resources =>{
                 project.resources = resources
                 console.log(project)
                 return project;

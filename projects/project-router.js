@@ -45,11 +45,10 @@ router.post('/', (req, res) => {
     })
 });
 
-router.post('/:id/resources', (req, res) => {
+router.post('/resources', (req, res) => {
     const resource = req.body;
-    const { id } = req.params;
 
-    projects.addResources(resource, id).then(resources =>{
+    projects.addResources(resource).then(resources =>{
         if(resources){
             res.json(resources);
         } else {
