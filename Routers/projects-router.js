@@ -11,4 +11,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  res.json(
+    await db("Projects").insert({
+      name: req.body.name,
+      description: req.body.description,
+      completed: req.body.completed,
+    })
+  );
+});
+
 module.exports = router;
