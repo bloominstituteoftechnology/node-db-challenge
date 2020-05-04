@@ -1,11 +1,12 @@
-
 exports.seed = function(knex) {
-  return knex('schemes').insert([
-    {scheme_name: 'World Domination'},
-    {scheme_name: 'Get Rich Quick'},
-    {scheme_name: 'Revenge'},
-    {scheme_name: 'More Instagram Followers'},
-    {scheme_name: 'Find the Holy Grail'},
-    {scheme_name: 'Steal Coworker\'s Identity'},
+  return knex('project').insert([
+    {project_name: 'World Domination',
+    project_description: 'Conquer the world by nerding out',
+    project_completed: false
+  },
+  {project_name: 'Make Nerd T-Shirts',
+    project_description: 'Conquer the world by selling nerd t-shirts',
+    project_completed: false
+  }
   ]);
 };

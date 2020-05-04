@@ -1,34 +1,34 @@
 const db = require("../data/config")
 
 function find(){
-    return db("schemes")
+    return db("project")
         .select("*")
     }
 
 function findById(id){
-    return db('schemes').where({ id }).first();
+    return db('project').where({ id }).first();
     }
 
 function findSteps(id){
-    return db('schemes')
-        .join('steps', 'steps.scheme_id', '=', 'schemes.id')
-        .select('schemes.id', 'schemes.scheme_name','steps.step_number', 'steps.instructions')
-        .where("schemes.id", id)
+    return db('project')
+        .join('steps', 'steps.scheme_id', '=', 'project.id')
+        .select('project.id', 'project.scheme_name','steps.step_number', 'steps.instructions')
+        .where("project.id", id)
     }
 
 function add(scheme){
-    return db('schemes')
+    return db('project')
     .insert({scheme_name: scheme.scheme_name})
     }
 
 function update(changes, id){
-    return db('schemes')
+    return db('project')
     .where({id})
     .update({scheme_name: changes.scheme_name})
 }
 
 function remove(id){
-    return db('schemes')
+    return db('project')
     .where({id})
     .del()
 }

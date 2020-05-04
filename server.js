@@ -1,10 +1,10 @@
 const express = require('express');
 
-const SchemeRouter = require('./schemes/scheme-router.js');
+const projectRouter = require('./projects/project-router.js');
 
 const server = express();
 
 server.use(express.json());
-server.use('/api/schemes', SchemeRouter);
+server.use('/api/projects', projectRouter);
 
 module.exports = server;
