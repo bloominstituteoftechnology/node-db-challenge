@@ -18,6 +18,7 @@ exports.up = async function (knex) {
     table.increments("id");
     table.text("Name").notNull();
     table.text("Description");
+    table.integer("Project_ID").references("id").inTable("Projects");
   });
 };
 
