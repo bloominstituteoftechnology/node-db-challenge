@@ -28,8 +28,7 @@ exports.up = function(knex) {
             tbl.increments();
             tbl.text('resource_name')
             .notNullable();
-            // tbl.text('resource_description')
-            tbl.text('resource_description');
+             tbl.text('resource_description');
         })
         .createTable('resource_detail', tbl =>{
             tbl.increments();
@@ -52,6 +51,7 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
     return knex.schema
+        .dropTableIfExists('resourse_detail')
         .dropTableIfExists('resource')
         .dropTableIfExists('task')
         .dropTableIfExists('project');
