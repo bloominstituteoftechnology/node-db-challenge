@@ -9,30 +9,117 @@ function findById(id){
     return db('project').where({ id }).first();
     }
 
-function findSteps(id){
-    return db('project')
-        .join('steps', 'steps.scheme_id', '=', 'project.id')
-        .select('project.id', 'project.scheme_name','steps.step_number', 'steps.instructions')
-        .where("project.id", id)
+function findResources(){
+    return db("resource")
+        .select("*")
     }
 
-function add(scheme){
-    return db('project')
-    .insert({scheme_name: scheme.scheme_name})
+function findTasks() {
+    return db("tasks")
+        .select("*")
+    }
+function findResourceById(id){
+    return db('resource').where({ id }).first();
     }
 
-function update(changes, id){
+function addProject(scheme){
+    if(!scheme.project_completed && !scheme.project_description){
+        return db('project')
+        .insert({
+        project_name: scheme.project_name, 
+        project_description: "none",
+        project_completed: false    
+    })
+    }
+    if(!scheme.project_completed){
+        return db('project')
+        .insert({
+        project_name: scheme.project_name, 
+        project_description: scheme.project_description,
+        project_completed: false    
+    })
+    }
+     if(!scheme.project_description){
+        return db('project')
+        .insert({
+        project_name: scheme.project_name, 
+        project_description: "none",
+        project_completed: scheme.project_completed
+    })
+    }
     return db('project')
-    .where({id})
-    .update({scheme_name: changes.scheme_name})
+    .insert({
+        project_name: scheme.project_name, 
+        project_description: scheme.project_description,
+        project_completed: scheme.project_completed
+    })
+    }
+
+function addResource(resource){
+        if(!resource.resource_description){
+        return db('resource')
+        .insert({
+        resource_name: resource.resource_name, 
+        resource_description: "none"
+    })
+    }
+    return db('resource')
+    .insert({
+        resource_name: resource.resource_name, 
+        resource_description: resource.resource_description
+    })
+    }
+
+function addTask(task){
+//     if(!task.task_description){
+//     return db('tasks')
+//     .insert({
+//     task_name: task.task_name, 
+//     task_description: "none"
+// })
+// }
+return db('tasks')
+.insert({
+    project_id: task.project_id,
+    task_notes: task.task_notes, 
+    task_description: task.task_description,
+    task_completed: task.task_completed
+})
 }
 
-function remove(id){
-    return db('project')
-    .where({id})
-    .del()
-}
+function findResourcesByProject(id){
+
+    return db("project_resource")
+    .join("project", "project.id", "project_resource.project_id")
+    .join("resource", "resource.id", "project_resource.resource_id")
+    .where("project_id", id)
+    .select("project_resource.project_id", "resource.*")
+    // return db('project')
+    //     .join('resource', 'resource.project_id', '=', 'project.id')
+    //     .select('project.id', 'project.project_name','resource.id', 'resource.description')
+    //     .where("project.id", id)
+    }
+
+function findTasksByProject(id){
+    return db('tasks')
+        .where("project_id", id)
+        // .join('tasks', 'tasks.project_id', '=', 'project.id')
+        // .select('project.id', 'project.project_name','tasks.id', 'tasks.description')
+        // .where("project.id", id)
+    }
+
+// function update(changes, id){
+//     return db('project')
+//     .where({id})
+//     .update({scheme_name: changes.scheme_name})
+// }
+
+// function remove(id){
+//     return db('project')
+//     .where({id})
+//     .del()
+// }
 
     module.exports = {
-        findById, find, findSteps, add, update, remove,
+        findById, find, findResources, addProject, findResourceById, addResource,findTasksByProject, findTasks, findResourcesByProject, addTask,
     }

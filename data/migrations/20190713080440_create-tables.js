@@ -7,18 +7,43 @@ exports.up = function(knex) {
         .notNullable();
       tbl.text('project_description')
       // .unsigned()
-      .notNullable();
+      // .notNullable();
       tbl.boolean('project_completed')
-      .notNullable()
+      // .notNullable()
       .defaultTo(false)
     })
+    .createTable('tasks', tbl => {
+      tbl.increments();
+      tbl.integer('project_id')
+        // .unique()
+        .unsigned()
+        // .notNullable()
+        .references('id')
+        .inTable('project')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      tbl.text('task_notes')
+      // .unsigned()
+      // .notNullable();
+      tbl.text('task_description', 128)
+        // .unique()
+        .notNullable();
+      
+      tbl.boolean('task_completed')
+      .notNullable()
+      .defaultTo(false)
+      // tbl.integer('task_number')
+      //   .unsigned()
+      
+    })
+
     .createTable('resource', tbl => {
       tbl.increments();
       tbl.text('resource_name')
         // .unsigned()
         .notNullable();
       tbl.text('resource_description')
-        .notNullable();
+        // .notNullable();
       // tbl.integer('scheme_id')
       //   .unsigned()
       //   .notNullable()
@@ -27,23 +52,31 @@ exports.up = function(knex) {
       //   .onUpdate('CASCADE')
       //   .onDelete('CASCADE');
     })
-    .createTable('tasks', tbl => {
-      tbl.increments();
-      tbl.text('task_description', 128)
-        // .unique()
-        .notNullable();
-      tbl.text('task_notes')
-      // .unsigned()
-      .notNullable();
-      tbl.boolean('task_completed')
-      .notNullable()
-      .defaultTo(false)
-    })
+    
+    .createTable('project_resource', tbl => {
+      tbl.integer('project_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        // this table must exist already
+        .inTable('project')
+      tbl.integer('resource_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        // this table must exist already
+        .inTable('resource')
+    
+      // the combination of the two keys becomes our primary key
+      // will enforce unique combinations of ids
+      tbl.primary(['project_id', 'resource_id']);
+    });
     
 };
 
 exports.down = function(knex) {
   return knex.schema
+    .dropTableIfExists('project_resource')
     .dropTableIfExists('resource')
     .dropTableIfExists('project')
     .dropTableIfExists('tasks')
