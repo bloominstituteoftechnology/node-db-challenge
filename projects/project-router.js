@@ -192,7 +192,6 @@ router.post('/projects/:id/tasks', (req, res) => {
 
 router.get('/projects/:id/tasks', (req, res) => {
   console.log(req.params.id)
-
   Schemes.findTasksByProject(req.params.id)
   .then(task => {
     console.log(task)
