@@ -147,7 +147,7 @@ router.post('/projects', (req, res) => {
   }
   const schemeData = req.body;
 
-  Schemes.add(schemeData)
+  Schemes.addProject(schemeData)
   .then(scheme => {
     res.status(201).json(scheme);
   })
@@ -182,11 +182,11 @@ router.post('/projects/:id/tasks', (req, res) => {
   const schemeData = req.body;
 
   Schemes.addTask(schemeData)
-  .then(resource => {
-    res.status(201).json(resource);
+  .then(task => {
+    res.status(201).json(task);
   })
   .catch (err => {
-    res.status(500).json({ message: 'Failed to create new resource' });
+    res.status(500).json({ message: 'Failed to create new task' });
   });
 });
 

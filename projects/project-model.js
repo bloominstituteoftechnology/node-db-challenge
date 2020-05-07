@@ -78,6 +78,34 @@ function addTask(task){
 //     task_description: "none"
 // })
 // }
+if(!task.task_completed && !task.task_notes){
+    return db('tasks')
+    .insert({
+    project_id: task.project_id,
+    task_notes: "none", 
+    task_description: task.task_description,
+    task_completed: false    
+})
+}
+if(!task.task_completed){
+    return db('tasks')
+    .insert({
+        project_id: task.project_id,
+    task_notes: task.task_notes, 
+    task_description: task.task_description,
+    task_completed: false    
+})
+}
+ if(!task.task_notes){
+    return db('tasks')
+    .insert({
+        project_id: task.project_id,
+    task_notes: "none", 
+    task_description: task.task_description,
+    task_completed: task.task_completed
+})
+}
+
 return db('tasks')
 .insert({
     project_id: task.project_id,
