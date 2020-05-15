@@ -1,6 +1,6 @@
 const express = require("express");
 
-const ProjectRouter = require("./data/projects/project-router");
+const ResourcesRouter = require("./data/projects/project-router");
 
 const server = express();
 
@@ -10,6 +10,6 @@ server.get("/", (req, res) => {
   res.status(200).json({ api: "up" });
 });
 
-server.use("/api/projects", ProjectRouter);
+server.use("/api/projects", ResourcesRouter);
 
 module.exports = server;

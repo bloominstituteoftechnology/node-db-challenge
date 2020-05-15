@@ -1,11 +1,53 @@
 const express = require("express");
 
-const Projects = require("./Projects-model");
+const Projects = require("./project-model");
+const Resources = require("./resource-model");
+const Tasks = require("./tasks-model");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  Projects.getRecipes()
+router.post("/addResources", (req, res) => {
+  // adding resources.
+  const resourceData = req.body;
+
+  Resources.addResource(resourceData)
+    .then((resource) => {
+      res.status(201).json(resource);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to create new resource" });
+    });
+});
+
+router.get("/:id/resources", (req, res) => {
+  // retrieving a list of resources.
+  const { id } = req.params;
+  Resources.findByResourcesId(id)
+    .then((resource) => {
+      res.json(resource);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get resources" });
+    });
+});
+
+router.post("/addProject", (req, res) => {
+  // adding projects.
+  const projectData = req.body;
+
+  Projects.addProject(projectData)
+    .then((project) => {
+      res.status(201).json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to create new project" });
+    });
+});
+
+router.get("/:id/tasks/project", (req, res) => {
+  // retrieving a list of resources.
+  const { id } = req.params;
+  Projects.findByProjectId(id)
     .then((Projects) => {
       res.json(Projects);
     })
@@ -14,130 +56,51 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id/shoppingList", (req, res) => {
+router.get("/:id/project", (req, res) => {
+  // retrieving a list of resources.
   const { id } = req.params;
-
-  Projects.getShoppingList(id)
-    .then((project) => {
-      if (project) {
-        res.json(project);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id." });
-      }
+  Projects.findById(id)
+    .then((Projects) => {
+      res.json(Projects);
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to get Projects" });
     });
 });
 
-router.get("/:id/instruction", (req, res) => {
-  const { id } = req.params;
-
-  Projects.getInstructions(id)
-    .then((tasks) => {
-      if (tasks.length) {
-        res.json(tasks);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find tasks for given scheme" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to get tasks" });
-    });
-});
-
-router.get("/:id/recipes", (req, res) => {
-  const { id } = req.params;
-
-  Projects.getRecipesByIngredients(id)
-    .then((tasks) => {
-      if (tasks.length) {
-        res.json(tasks);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find tasks for given scheme" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to get tasks" });
-    });
-});
-
-router.post("/", (req, res) => {
-  const projectData = req.body;
-
-  Projects.add(projectData)
-    .then((project) => {
-      res.status(201).json(project);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to create new scheme" });
-    });
-});
-
-router.post("/:id/tasks", (req, res) => {
+router.post("/addTask", (req, res) => {
+  // adding projects.
   const taskData = req.body;
-  const { id } = req.params;
 
-  Projects.findById(id)
-    .then((project) => {
-      if (project) {
-        Projects.addtask(taskData, id).then((task) => {
-          res.status(201).json(task);
-        });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id." });
-      }
+  Tasks.addTask(taskData)
+    .then((task) => {
+      res.status(201).json(task);
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to create new task" });
     });
 });
 
-router.put("/:id", (req, res) => {
+router.get("/:id/detail", (req, res) => {
+  // retrieving a list of resources.
   const { id } = req.params;
-  const changes = req.body;
-
-  Projects.findById(id)
-    .then((project) => {
-      if (project) {
-        Projects.update(changes, id).then((updatedproject) => {
-          res.json(updatedproject);
-        });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id" });
-      }
+  Tasks.findByTaskId(id)
+    .then((Projects) => {
+      res.json(Projects);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to update scheme" });
+      res.status(500).json({ message: "Failed to get a list of Tasks" });
     });
 });
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-
-  Projects.remove(id)
-    .then((deleted) => {
-      if (deleted) {
-        res.json({ removed: deleted });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to delete scheme" });
-    });
-});
-
+// router.get("/:id/detail", (req, res) => {
+//   // retrieving a list of tasks. The list of tasks should include the project name and project description.
+//   Projects.getResources()
+//     .then((Projects) => {
+//       res.json(Projects);
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ message: "Failed to get Projects" });
+//     });
+// });
 module.exports = router;
