@@ -12,9 +12,9 @@ function findByTaskId(id) {
   return db
     .select(
       "p.name",
-      "p.descriptions as projectDesc",
+      "p.descriptions as projectDescription",
       "t.id as TaskNumber",
-      "t.descriptions"
+      "t.descriptions as taskDescription"
     )
     .from("tasks as t")
     .join("project as p", "t.project_id", "=", "p.id")
