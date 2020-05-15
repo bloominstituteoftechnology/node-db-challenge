@@ -1,5 +1,5 @@
 const express = require("express");
-// const { getRecipes, getShoppingList, getInstructions } = require('./router/recipe_model');
+const { getProjects, getResources, getTasks } = require('./projectsRouterModel/projects-model');
 
 const server = express()
 const port = process.env.PORT || 5000
