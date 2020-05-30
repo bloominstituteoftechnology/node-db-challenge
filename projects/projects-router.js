@@ -4,6 +4,7 @@ const Projects = require('./projects-model.js');
 
 const router = express.Router();
 
+// Gets
 router.get('/', (req, res) => {
   Projects.find()
   .then(project => {
