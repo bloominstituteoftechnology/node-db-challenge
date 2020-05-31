@@ -18,10 +18,10 @@ function findById(id) {
 // Get resource for project
 function findResources(id) {
   return db('resources')
-      .select('projects.id', 'projects.project_name', 'resources.resource_name', 'resources.description')
-      .join('projects', 'resources.project_id', 'projects.id')
-      .where('projects.id', id)
-      .orderBy('resources.resource_name', 'asc');
+      .select('resouces', 'projects.name', 'resources.name', 'resources.description')
+      .from('resources')
+      .join('projects', 'resources.id', 'projects.id')
+      .orderBy('resources.id');
 }
 
 // Delete Project

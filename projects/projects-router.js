@@ -69,6 +69,7 @@ router.post('/:id/resources', (req, res) => {
 });
 
 // Delete
+// Delete project
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
