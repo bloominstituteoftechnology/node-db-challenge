@@ -15,7 +15,7 @@ comment: false
 label: false
 
 # Close issues and pull requests
-close: true
+close: false
 
 # Lock issues and pull requests
 lock: true
