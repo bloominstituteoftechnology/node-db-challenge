@@ -12,25 +12,39 @@ router.get('/', (req, res) => {
     res.json(project);
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get projects' });
+    res.status(500).json({ message: 'Failed to get projects', err });
   });
 });
+
+// Get project by id
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Projects.findById(id)
+  .then(project => {
+
+    if (project) {
+      res.json(project);
+    } else {
+      res.status(404).json({message: ''})
+    }
+  })
+  .catch(err => {
+    res.status(500).json({mesasge: '', err})
+  })
+})
 
 // Get resources
 router.get('/:id/resources', (req, res) => {
   const { id } = req.params;
 
-  Schemes.findResources(id)
+  Projects.findResources(id)
   .then(resource => {
-    if (steps.length) {
-      res.json(resource);
-    } else {
-      res.status(404).json({ message: 'Could not find resource for given project' })
-    }
+    res.json(resource);
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get resources' });
-  });
+    res.status(500).json({message: 'failed to retreive resources', err})
+  })
 });
 
 // Posts

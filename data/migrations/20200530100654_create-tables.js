@@ -18,35 +18,35 @@ exports.up = function(knex) {
           .notNullable()
           .unique();
         tbl.text('description', 128);
-        // tbl.integer('project_id')
-        // .unsigned()
-        // .notNullable()
-        // .references('id')
-        // .inTable('projects');
+        tbl.integer('project_id')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('projects');
       })
       .createTable('tasks', tbl => {
         tbl.increments('id');
         tbl.text('description', 128)
           .notNullable();
         tbl.text('note');
-        // tbl.integer('project_id')
-        //   .unsigned()
-        //   .references('projects.id');
+        tbl.integer('project_id')
+          .unsigned()
+          .references('projects.id');
         tbl.boolean('completed')
           .notNullable()
           .defaultsTo(false);
       })
-      .createTable('projects_resources', tbl => {
-        tbl.integer('projects_id')
-          .unsigned()
-          .notNullable()
-          .references('projects.id')
-        tbl.integer('resources_id')
-          .unsigned()
-          .notNullable()
-          .references('resources.id')
-        tbl.primary(['projects_id', 'resources_id'])
-      })
+      // .createTable('projects_resources', tbl => {
+      //   tbl.integer('projects_id')
+      //     .unsigned()
+      //     .notNullable()
+      //     .references('projects.id')
+      //   tbl.integer('resources_id')
+      //     .unsigned()
+      //     .notNullable()
+      //     .references('resources.id')
+      //   tbl.primary(['projects_id', 'resources_id'])
+      // })
   );
 };
 
