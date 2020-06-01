@@ -11,7 +11,8 @@ module.exports = {
     getProjectById,
     addResource,
     addTaskByProjectId,
-    getTaskByProjectID
+    getTaskByProjectID,
+    getResourceByProjectId
 
 }
 
@@ -66,24 +67,33 @@ function getProjectTask(project_Id) {
         .then(tasks => tasks.map(task => mappers.taskToBody(task)));
 }
 
+function getResourceByProjectId(id) {
+    return db('resourceProject as RP')
+        .join('project as P', 'RP.project_id', 'P.id')
+        .join('resource as R', 'RP.resource_id', 'R.id')
+        .where('RP.project_id', '=', id)
+        .select('R.id', 'R.resource_name as Name', 'R.resource_desc as Description')
+}
 function getProjectById(id) {
     let query = db.select('id', 'project_name as Name', 'project_desc as Description', 'completed').from("project as p");
 
     if (id) {
         query.where("p.id", id).first();
 
-        const promises = [query, getProjectTask(id)]; // [ projects, task ]
+        const promises = [query, getProjectTask(id), getResourceByProjectId(id)]; // [ projects, task ]
 
         return Promise.all(promises).then(function (results) {
-            let [project, tasks] = results;
+            let [project, tasks, resources] = results;
 
             if (project) {
                 project.tasks = tasks;
+                project.resources = resources;
 
                 return mappers.projectToBody(project);
             } else {
                 return null;
             }
+
         });
     } else {
         return query.then(projects => {
@@ -91,3 +101,4 @@ function getProjectById(id) {
         });
     }
 }
+

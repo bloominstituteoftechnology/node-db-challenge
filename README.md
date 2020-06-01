@@ -154,3 +154,17 @@ A `context` can be applied to more than one `task`. An task can be tied to more 
 When retrieving an `task` by _id_, add a property that lists all the `contexts` related to that task.
 
 _Good luck and have fun!_
+
+Method	          Description	                         Endpoint
+POST	            Create a Project	                    /Project
+GET	              Gets * Project	                      /Project
+GET	              Gets specific Project                 /Project/:id
+POST	            Create a Resource	                    /Resource
+GET	              Get * Resource	                      /Resource
+POST	            Create Task for specific project	    /Project/:id/Task
+GET	              Gets Tasks for Specific project	      /Project/:id/Task
+
+	Base URL:  https://project-task-resource.herokuapp.com/api/
+
+	Running on : https://project-task-resource.herokuapp.com/
+
