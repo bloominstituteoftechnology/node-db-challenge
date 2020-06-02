@@ -47,6 +47,19 @@ router.get('/:id/resources', (req, res) => {
   })
 });
 
+// Get tasks
+router.get('/:id/tasks', (req, res) => {
+  const { id } = req.params;
+
+  Projects.findtasks(id)
+  .then(task => {
+    res.json(task);
+  })
+  .catch(err => {
+    res.status(500).json({message: 'failed to retreive tasks', err})
+  })
+});
+
 // Posts
 // Projects
 router.post('/', (req, res) => {
@@ -62,24 +75,19 @@ router.post('/', (req, res) => {
 });
 
 // Resources
-router.post('/:id/resources', (req, res) => {
+router.post('/resources', (req, res) => {
   const resourcesData = req.body;
-  const { id } = req.params;
 
-  Projects.findById(id)
-  .then(project => {
-    if (project) {
-      Projects.addResource(resourcesData, id)
+  // Projects.findById(id)
+  // .then(project => {
+      Projects.addResources(resourcesData)
       .then(resource => {
         res.status(201).json(resource);
       })
-    } else {
-      res.status(404).json({ message: 'Could not find project with given id.' })
+      .catch (err => {
+        res.status(500).json({ message: 'Failed to create new resource', err });
     }
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new resource', err });
-  });
+  )
 });
 
 // Delete

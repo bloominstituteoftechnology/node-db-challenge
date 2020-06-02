@@ -19,10 +19,10 @@ function findById(id) {
 
 // Get resource for project
 function findResources(id){
-  return db('resource as r')
-    .join('projects as p', 'p.id', 'r.project_id')
-    .select('r.id', 'p.name', 'r.name')
-    .where({projects_id: id})
+  return db('resources')
+    // .join('projects as p', 'p.id', 'r.project_id')
+    // .select('r.id', 'p.name', 'r.name')
+    // .where({projects_id: id})
 }
 // function findResources(id) {
 //   return db('resources')
@@ -31,6 +31,23 @@ function findResources(id){
 //       .join('projects', 'resources.id', 'projects.id')
 //       .orderBy('resources.id');
 // }
+
+// Get task
+function findTask(id){
+  return db('task as t')
+    .join('projects as p', 'p.id', 't.project_id')
+    .select('t.id', 'p.name', 't.name')
+    .where({projects_id: id})
+}
+
+// Add resource
+function addResources(resourcesData) {
+  return db('resources').insert(resourcesData)
+  .then(ids => {
+    const [ id ] = ids;
+    return findById(id);
+  })
+}
 
 // Delete Project
 function remove(id) {
@@ -42,5 +59,7 @@ module.exports = {
   add,
   findResources,
   remove, 
-  findById
+  findById,
+  addResources,
+  findTask
 }
