@@ -40,6 +40,15 @@ function findTask(id){
     .where({projects_id: id})
 }
 
+// Add tasks
+function addTask(taskData) {
+  return db('tasks').insert(taskData)
+  .then(ids => {
+    const [ id ] = ids;
+    return findById(id);
+  })
+}
+
 // Add resource
 function addResources(resourcesData) {
   return db('resources').insert(resourcesData)
@@ -61,5 +70,6 @@ module.exports = {
   remove, 
   findById,
   addResources,
-  findTask
+  findTask, 
+  addTask
 }

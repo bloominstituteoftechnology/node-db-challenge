@@ -51,7 +51,7 @@ router.get('/:id/resources', (req, res) => {
 router.get('/:id/tasks', (req, res) => {
   const { id } = req.params;
 
-  Projects.findtasks(id)
+  Projects.findTask(id)
   .then(task => {
     res.json(task);
   })
@@ -89,6 +89,19 @@ router.post('/resources', (req, res) => {
     }
   )
 });
+
+// Tasks
+router.post('/tasks', (req, res) => {
+  const taskData = req.body;
+
+  Projects.addTask(taskData)
+  .then(task => {
+    res.status(201).json(task);
+  })
+  .catch(err => {
+    res.status(500).json({message: 'Failed to add task', err});
+  })
+})
 
 // Delete
 // Delete project
