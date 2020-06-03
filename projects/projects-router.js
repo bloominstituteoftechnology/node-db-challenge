@@ -78,8 +78,6 @@ router.post('/', (req, res) => {
 router.post('/resources', (req, res) => {
   const resourcesData = req.body;
 
-  // Projects.findById(id)
-  // .then(project => {
       Projects.addResources(resourcesData)
       .then(resource => {
         res.status(201).json(resource);

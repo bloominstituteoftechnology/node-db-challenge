@@ -31,7 +31,9 @@ exports.up = function(knex) {
         tbl.text('note');
         tbl.integer('project_id')
           .unsigned()
-          .references('projects.id');
+          .notNullable()
+          .references('id')
+          .inTable('projects');
         tbl.boolean('completed')
           .notNullable()
           .defaultsTo(false);

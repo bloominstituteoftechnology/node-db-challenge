@@ -20,24 +20,14 @@ function findById(id) {
 // Get resource for project
 function findResources(id){
   return db('resources')
-    // .join('projects as p', 'p.id', 'r.project_id')
-    // .select('r.id', 'p.name', 'r.name')
-    // .where({projects_id: id})
 }
-// function findResources(id) {
-//   return db('resources')
-//       .select('resouces', 'projects.name', 'resources.name', 'resources.description')
-//       .from('resources')
-//       .join('projects', 'resources.id', 'projects.id')
-//       .orderBy('resources.id');
-// }
 
 // Get task
 function findTask(id){
-  return db('task as t')
+  return db('tasks as t')
     .join('projects as p', 'p.id', 't.project_id')
-    .select('t.id', 'p.name', 't.name')
-    .where({projects_id: id})
+    .select('t.id', 'p.name', 't.description')
+    .where({project_id: id})
 }
 
 // Add tasks
